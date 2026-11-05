@@ -25,8 +25,16 @@ impl SoundCloudClient {
             .build()
             .unwrap_or_default();
 
-        let home = std::env::var("HOME").unwrap_or_else(|_| "/home/aluynon".to_string());
-        let config_path = PathBuf::from(home).join(".config/soundcloud-desktop/auth.json");
+        let base_dir = if cfg!(windows) {
+            std::env::var("APPDATA")
+                .or_else(|_| std::env::var("USERPROFILE"))
+                .map(PathBuf::from)
+                .unwrap_or_else(|_| PathBuf::from("."))
+        } else {
+            let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+            PathBuf::from(home).join(".config")
+        };
+        let config_path = base_dir.join("soundcloud-desktop").join("auth.json");
 
         let mut saved_token = if config_path.exists() {
             fs::read_to_string(&config_path)
@@ -753,13 +761,21 @@ impl SoundCloudClient {
 }
 
 fn auto_import_browser_token_sync() -> Option<String> {
-    let home = std::env::var("HOME").unwrap_or_else(|_| "/home/aluynon".to_string());
-    let script_path = PathBuf::from(&home).join(".gemini/antigravity/scratch/soundcloud-desktop/extract_browser_token.py");
-    if !script_path.exists() {
-        return None;
+    let mut candidate_paths = vec![PathBuf::from("extract_browser_token.py")];
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(parent) = exe.parent() {
+            candidate_paths.push(parent.join("extract_browser_token.py"));
+        }
+    }
+    if let Ok(home) = std::env::var("HOME") {
+        candidate_paths.push(PathBuf::from(&home).join(".gemini/antigravity/scratch/soundcloud-desktop/extract_browser_token.py"));
+        candidate_paths.push(PathBuf::from(&home).join(".gemini/antigravity/scratch/SoundCloud-Ultimate/desktop/extract_browser_token.py"));
     }
 
-    let output = Command::new("python3").arg(script_path).output().ok()?;
+    let script_path = candidate_paths.into_iter().find(|p| p.exists())?;
+    let python_cmd = if cfg!(windows) { "python" } else { "python3" };
+
+    let output = Command::new(python_cmd).arg(script_path).output().ok()?;
     if !output.status.success() {
         return None;
     }
