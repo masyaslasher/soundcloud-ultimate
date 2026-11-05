@@ -1,0 +1,1073 @@
+/* =========================================================================
+   SoundCloud Ultimate — Smooth Modern Bento (Amber & Orange Atmospheric Smoke)
+   Multi-Layer Ambient Smoke Mist • Translucent Glass Bento • Signature Orange
+   Architecture: 100% Pure CSS • High Performance • Rock-Solid Stability
+   ========================================================================= */
+
+:root {
+  /* Dark Smooth Base Palette */
+  --sc-bg-canvas: #09090D;
+  --sc-surface-bento: rgba(20, 19, 25, 0.82);
+  --sc-surface-card: rgba(28, 27, 34, 0.78);
+  --sc-surface-hover: rgba(38, 36, 46, 0.92);
+  --sc-border-smooth: rgba(255, 255, 255, 0.08);
+  --sc-border-hover: rgba(255, 85, 0, 0.55);
+
+  /* SIGNATURE VIVID SOUNDCLOUD ORANGE & WARM GOLDEN AMBER */
+  --sc-orange: #FF5500;
+  --sc-orange-light: #FF7020;
+  --sc-orange-subtle: rgba(255, 85, 0, 0.15);
+  --sc-amber: #FFAA00;
+  --sc-gradient-orange: linear-gradient(135deg, #FF5500 0%, #FF8800 100%);
+  --sc-gradient-smoke: radial-gradient(ellipse at center, rgba(255, 85, 0, 0.15) 0%, transparent 70%);
+
+  /* Typography */
+  --sc-text-main: #FFFFFF;
+  --sc-text-body: #B0AAB8;
+  --sc-text-muted: #7E7886;
+
+  /* Smooth Curvature Hierarchy (Squircle / Soft Pill Radii) */
+  --sc-radius-sm: 12px;
+  --sc-radius-md: 20px;
+  --sc-radius-lg: 28px;
+  --sc-radius-pill: 9999px;
+  
+  /* Smooth Shadows & Glow */
+  --sc-shadow-card: 0 10px 32px rgba(0, 0, 0, 0.55);
+  --sc-shadow-hover: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 24px rgba(255, 85, 0, 0.22);
+  --sc-shadow-player: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 85, 0, 0.18);
+}
+
+/* =========================================================================
+   1. AMBIENT SMOKE & ATMOSPHERIC MIST (Smooth, Organic, Zero GPU Lag)
+   ========================================================================= */
+html {
+  background-color: var(--sc-bg-canvas) !important;
+}
+
+body {
+  background-color: transparent !important;
+  color: var(--sc-text-main) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif !important;
+  position: relative !important;
+  min-height: 100vh !important;
+}
+
+/* Layer 1: Ambient Warm Amber & Orange Smoke Billows */
+body::before {
+  content: '' !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: 
+    /* Top-left drifting smoke plume (Amber/Orange) */
+    radial-gradient(ellipse 65% 50% at 16% 16%, rgba(255, 95, 0, 0.16) 0%, rgba(255, 140, 0, 0.06) 42%, transparent 75%),
+    /* Top-right warm ember haze */
+    radial-gradient(ellipse 55% 45% at 84% 22%, rgba(255, 170, 0, 0.14) 0%, rgba(255, 85, 0, 0.05) 48%, transparent 75%),
+    /* Mid-left organic smoke swirl */
+    radial-gradient(ellipse 48% 58% at 8% 65%, rgba(255, 110, 20, 0.12) 0%, rgba(255, 85, 0, 0.04) 50%, transparent 75%),
+    /* Center atmospheric warmth */
+    radial-gradient(circle 650px at 50% 48%, rgba(255, 100, 10, 0.07) 0%, transparent 70%),
+    /* Lower-center deep ambient smoke mist */
+    radial-gradient(ellipse 75% 55% at 52% 84%, rgba(255, 85, 0, 0.14) 0%, rgba(220, 70, 0, 0.04) 52%, transparent 80%),
+    /* Deep warm charcoal base falloff (zero purple) */
+    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(26, 20, 16, 0.65) 0%, rgba(9, 9, 13, 0.98) 85%) !important;
+  pointer-events: none !important;
+  z-index: -2 !important;
+}
+
+/* Layer 2: Subtle Cinematic Vignette for Depth & Soft Focus */
+body::after {
+  content: '' !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: radial-gradient(ellipse 88% 85% at 50% 48%, transparent 42%, rgba(6, 6, 9, 0.72) 100%) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+#app,
+.sc-classic,
+.l-fixedHeader,
+.l-container,
+.l-main {
+  background-color: transparent !important;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+/* Page content centered normally with smooth breathing room */
+.l-container,
+.l-main {
+  margin: 0 auto !important;
+  max-width: 1320px !important;
+  padding: 28px 24px 140px 24px !important;
+}
+
+/* Hide clutter */
+.l-header-subnav,
+.sidebarHeader__premium,
+.soundBadge__premium,
+.premiumUpsell,
+.announcementBar,
+.upsellBanner,
+.header__upgrade,
+.proBadge,
+.l-sidebar-right,
+.l-product-banners,
+.banner {
+  display: none !important;
+}
+
+/* =========================================================================
+   2. TOP HEADER & FIXED SEARCH BAR (Smooth Glass Pill Aesthetic)
+   ========================================================================= */
+.header {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 64px !important;
+  background: rgba(16, 15, 20, 0.86) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border-bottom: 1px solid var(--sc-border-smooth) !important;
+  z-index: 1000 !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+.header__inner {
+  max-width: 1320px !important;
+  height: 100% !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 24px !important;
+}
+
+/* Left Section: Logo & Nav items with Smooth Orange Pill */
+.header__left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.header__navMenu {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-left: 16px !important;
+}
+
+.header__navMenuItem {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+  padding: 0 22px !important;
+  border-radius: var(--sc-radius-pill) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--sc-text-body) !important;
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+.header__navMenuItem:hover {
+  background: var(--sc-surface-card) !important;
+  color: #FFFFFF !important;
+}
+
+/* Active Nav Pill: Pure Vivid Orange */
+.header__navMenuItem.selected {
+  background: var(--sc-orange) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(255, 85, 0, 0.4) !important;
+}
+
+/* Search Bar (Centered Pill with Integrated Search Icon) */
+.header__middle {
+  flex: 1 !important;
+  max-width: 480px !important;
+  margin: 0 32px !important;
+}
+
+.header__search {
+  width: 100% !important;
+}
+
+.headerSearch {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.headerSearch__input {
+  width: 100% !important;
+  height: 42px !important;
+  background: rgba(28, 27, 34, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-radius: var(--sc-radius-pill) !important;
+  color: var(--sc-text-main) !important;
+  font-size: 13px !important;
+  padding-left: 20px !important;
+  padding-right: 48px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+.headerSearch__input::placeholder {
+  color: var(--sc-text-muted) !important;
+  opacity: 0.9 !important;
+}
+
+.headerSearch__input:hover {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: var(--sc-surface-hover) !important;
+}
+
+.headerSearch__input:focus {
+  border-color: var(--sc-orange) !important;
+  background: rgba(32, 30, 40, 0.96) !important;
+  box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  outline: none !important;
+}
+
+.headerSearch__submit {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--sc-text-muted) !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+.headerSearch__submit:hover {
+  color: var(--sc-orange) !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+.headerSearch__submit svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: currentColor !important;
+}
+
+/* Right Section: Buttons shifted cleanly to the right */
+.header__right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-left: auto !important;
+}
+
+.header__loginMenu {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+/* Sign In & Create Account Pill Buttons */
+.header__loginMenu .loginButton {
+  height: 38px !important;
+  padding: 0 18px !important;
+  border-radius: var(--sc-radius-pill) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  background: var(--sc-surface-card) !important;
+  color: #FFFFFF !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.header__loginMenu .loginButton:hover {
+  border-color: var(--sc-orange) !important;
+  background: var(--sc-surface-hover) !important;
+}
+
+.header__loginMenu .signupButton {
+  height: 38px !important;
+  padding: 0 22px !important;
+  border-radius: var(--sc-radius-pill) !important;
+  background: var(--sc-orange) !important;
+  border: none !important;
+  color: #FFFFFF !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(255, 85, 0, 0.4) !important;
+  transition: all 0.2s ease !important;
+}
+
+.header__loginMenu .signupButton:hover {
+  background: var(--sc-orange-light) !important;
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+.header__upload a {
+  color: var(--sc-text-body) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease !important;
+}
+
+.header__upload a:hover {
+  color: var(--sc-orange) !important;
+}
+
+/* =========================================================================
+   3. TRANSLUCENT BENTO CARDS (Glassmorphic Modules over Smoke Fog)
+   ========================================================================= */
+/* Large Bento Section Module */
+.mixedModularHome__item,
+.modularHome__item {
+  background: var(--sc-surface-bento) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-radius: var(--sc-radius-lg) !important;
+  padding: 32px 36px !important;
+  margin-bottom: 28px !important;
+  box-shadow: var(--sc-shadow-card) !important;
+}
+
+.mixedModularHome__item h2,
+.modularHome__item h2,
+.soundTitle__title {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: var(--sc-text-main) !important;
+  margin-bottom: 22px !important;
+  letter-spacing: -0.4px !important;
+}
+
+/* Modular Playable Tiles */
+.playableTile {
+  background: var(--sc-surface-card) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-radius: var(--sc-radius-md) !important;
+  padding: 16px !important;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              background-color 0.25s ease !important;
+}
+
+.playableTile:hover {
+  background: var(--sc-surface-hover) !important;
+  border-color: var(--sc-border-hover) !important;
+  box-shadow: var(--sc-shadow-hover) !important;
+  transform: translateY(-4px) !important;
+}
+
+.playableTile__artwork,
+.sound__coverArt,
+.image__full {
+  border-radius: var(--sc-radius-sm) !important;
+  overflow: hidden !important;
+}
+
+.playableTile__artwork img,
+.sound__coverArt img {
+  border-radius: var(--sc-radius-sm) !important;
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+.playableTile:hover .playableTile__artwork img,
+.soundList__item:hover .sound__coverArt img {
+  transform: scale(1.04) !important;
+}
+
+/* Regular Track Items */
+.soundList__item,
+.trackItem {
+  background: var(--sc-surface-bento) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-radius: var(--sc-radius-md) !important;
+  padding: 18px 24px !important;
+  margin-bottom: 14px !important;
+  transition: all 0.2s ease !important;
+}
+
+.soundList__item:hover,
+.trackItem:hover {
+  background: var(--sc-surface-card) !important;
+  border-color: var(--sc-orange) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Waveforms & Sound Detail */
+.waveformCommentsNode {
+  filter: contrast(1.15) brightness(1.05) !important;
+  opacity: 0.95 !important;
+}
+
+/* =========================================================================
+   4. BUTTONS & INTERACTIVE CONTROLS (Pills & Orange Focus)
+   ========================================================================= */
+/* Only style buttons that are NOT icon-only and NOT in player controls */
+.sc-button:not(.sc-button-icon):not(.sc-ir):not(.playControls__control):not(.skipControl):not(.playControl):not(.shuffleControl):not(.repeatControl):not(.volume__button) {
+  border-radius: var(--sc-radius-pill) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  color: var(--sc-text-main) !important;
+  background: var(--sc-surface-card) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+.sc-button:not(.sc-button-icon):not(.sc-ir):not(.playControls__control):hover {
+  border-color: var(--sc-border-hover) !important;
+  background: var(--sc-surface-hover) !important;
+  color: #FFFFFF !important;
+}
+
+/* Explicitly strip text from all bottom player buttons and icon buttons */
+.playControls button,
+.playControls .sc-ir,
+.playControls .sc-button-icon,
+.playControls .skipControl,
+.playControls .playControl,
+.playControls .shuffleControl,
+.playControls .repeatControl,
+.playControls .volume__button,
+.playbackSoundBadge__like,
+.playbackSoundBadge__showQueue,
+.sc-ir,
+.sc-button-icon {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* Ensure SVG icons remain visible, crisp and colored */
+.playControls button svg,
+.playControls .skipControl svg,
+.playControls .shuffleControl svg,
+.playControls .repeatControl svg,
+.playControls .playControl svg,
+.playControls .volume__button svg,
+.playbackSoundBadge__like svg,
+.playbackSoundBadge__showQueue svg,
+.sc-button-icon svg,
+.sc-ir svg {
+  color: var(--sc-text-main) !important;
+  fill: currentColor !important;
+  display: inline-block !important;
+}
+
+.sc-button-cta,
+.sc-button-orange,
+.sc-button-selected {
+  background: var(--sc-orange) !important;
+  border-color: var(--sc-orange) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(255, 85, 0, 0.4) !important;
+}
+
+.sc-button-cta:hover,
+.sc-button-orange:hover {
+  background: var(--sc-orange-light) !important;
+  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.55) !important;
+  transform: translateY(-1px) !important;
+}
+
+.sc-button-like.sc-button-selected,
+.sc-button-like:hover {
+  color: var(--sc-orange) !important;
+}
+
+.sc-button-repost.sc-button-selected,
+.sc-button-repost:hover {
+  color: var(--sc-amber) !important;
+}
+
+.soundTags .sc-tag {
+  background: var(--sc-surface-card) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-radius: var(--sc-radius-pill) !important;
+  color: var(--sc-text-body) !important;
+  transition: all 0.2s ease !important;
+}
+
+.soundTags .sc-tag:hover {
+  border-color: var(--sc-orange) !important;
+  color: #FFFFFF !important;
+}
+
+/* =========================================================================
+   5. SEAMLESS BOTTOM GLASS DOCK (Signature AMOLED Glass & Orange Theme)
+   ========================================================================= */
+.playControls {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 72px !important;
+  transform: none !important;
+  visibility: visible !important;
+  background: rgba(14, 13, 18, 0.94) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-top: 1px solid var(--sc-border-smooth) !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0 !important;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.7) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 1000 !important;
+}
+
+/* Remove default SoundCloud background overlay */
+.playControls__bg {
+  display: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.playControls__inner {
+  transform: translateY(0) !important;
+  height: 100% !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.playControls__wrapper {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.playControls__elements {
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+/* Reset default button styling inside player (excluding the play button) */
+.playControls button:not(.playControl),
+.playControls .sc-button:not(.playControl) {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+/* 1. Track Info (SoundBadge) on LEFT */
+.playControls__soundBadge {
+  order: 1 !important;
+  min-width: 240px !important;
+  max-width: 320px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.playbackSoundBadge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+.playbackSoundBadge__avatar {
+  border-radius: var(--sc-radius-sm) !important;
+  overflow: hidden !important;
+  width: 46px !important;
+  height: 46px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+  flex-shrink: 0 !important;
+}
+
+.playbackSoundBadge__titleContextContainer {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.playbackSoundBadge__titleLink {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.playbackSoundBadge__lightLink {
+  color: var(--sc-text-body) !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.playbackSoundBadge__actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-left: 8px !important;
+}
+
+/* 2. Controls in CENTER (Ordered Harmoniously & Laser-Aligned) */
+.playControls__control,
+.playControls__prev,
+.playControls__play,
+.playControls__next,
+.playControls__shuffle,
+.playControls__repeat {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.playControls__prev { order: 2 !important; }
+.playControls__play { order: 3 !important; }
+.playControls__next { order: 4 !important; }
+.playControls__shuffle { order: 5 !important; }
+.playControls__repeat { order: 6 !important; }
+
+/* Signature Vivid Orange Circular Play Button (Perfect Geometric Circle) */
+.playControls .playControl,
+button.playControl {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  flex: 0 0 44px !important;
+  flex-shrink: 0 !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  aspect-ratio: 1 / 1 !important;
+  background: var(--sc-gradient-orange) !important;
+  background-color: var(--sc-orange) !important;
+  box-shadow: 0 4px 16px rgba(255, 85, 0, 0.45) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #FFFFFF !important;
+  margin: 0 8px !important;
+  padding: 0 !important;
+  border: none !important;
+  cursor: pointer !important;
+  position: relative !important;
+  opacity: 1 !important;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease !important;
+}
+
+.playControls .playControl:hover,
+button.playControl:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 6px 22px rgba(255, 85, 0, 0.65) !important;
+}
+
+/* Hide text label completely */
+.playControl .sc-button-label {
+  display: none !important;
+}
+
+/* Ensure inner container is centered */
+.playControl div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Perfectly center SVG icon with +1px optical compensation for right-pointing play triangle */
+.playControl svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: #FFFFFF !important;
+  color: #FFFFFF !important;
+  display: block !important;
+  margin: 0 !important;
+  transform: translateX(1px) !important;
+}
+
+/* When playing, pause icon is symmetrical */
+.playControl.playing svg {
+  transform: none !important;
+}
+
+/* Skip Previous / Next */
+.skipControl {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  flex: 0 0 32px !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  color: var(--sc-text-main) !important;
+  margin: 0 4px !important;
+  padding: 0 !important;
+  border: none !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+.skipControl div,
+.shuffleControl div,
+.repeatControl div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.skipControl:hover svg {
+  color: var(--sc-orange) !important;
+  fill: var(--sc-orange) !important;
+  transform: scale(1.1) !important;
+}
+
+.skipControl svg {
+  width: 20px !important;
+  height: 20px !important;
+  fill: currentColor !important;
+  display: block !important;
+}
+
+/* Shuffle & Repeat */
+.shuffleControl,
+.repeatControl {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  flex: 0 0 30px !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--sc-text-muted) !important;
+  cursor: pointer !important;
+  margin: 0 2px !important;
+  padding: 0 !important;
+  border: none !important;
+  transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.shuffleControl:hover svg,
+.repeatControl:hover svg {
+  color: var(--sc-text-main) !important;
+  transform: scale(1.1) !important;
+}
+
+.shuffleControl.m-active svg,
+.repeatControl.m-active svg {
+  color: var(--sc-orange) !important;
+  fill: var(--sc-orange) !important;
+}
+
+.shuffleControl svg,
+.repeatControl svg {
+  width: 16px !important;
+  height: 16px !important;
+  fill: currentColor !important;
+  display: block !important;
+}
+
+/* 3. Timeline (Stretching Across) */
+.playControls__timeline {
+  order: 7 !important;
+  flex: 1 !important;
+  margin: 0 20px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.playbackTimeline {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 12px !important;
+}
+
+.playbackTimeline__timePassed,
+.playbackTimeline__duration {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--sc-text-muted) !important;
+  font-variant-numeric: tabular-nums !important;
+  min-width: 36px !important;
+  text-align: center !important;
+}
+
+.playbackTimeline__progressWrapper {
+  flex: 1 !important;
+  height: 6px !important;
+  border-radius: var(--sc-radius-pill) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  transition: height 0.15s ease !important;
+}
+
+.playbackTimeline__progressWrapper:hover {
+  height: 8px !important;
+}
+
+.playbackTimeline__passed {
+  background: var(--sc-gradient-orange) !important;
+  border-radius: var(--sc-radius-pill) !important;
+  box-shadow: 0 0 10px rgba(255, 85, 0, 0.45) !important;
+}
+
+.playbackTimeline__progressHandle {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  border: 2px solid var(--sc-orange) !important;
+  box-shadow: 0 0 8px rgba(255, 85, 0, 0.6) !important;
+  top: -4px !important;
+  transition: transform 0.15s ease !important;
+}
+
+.playbackTimeline__progressWrapper:hover .playbackTimeline__progressHandle {
+  transform: scale(1.2) !important;
+}
+
+/* 4. Volume on RIGHT */
+.playControls__volume {
+  order: 8 !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+.volume {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.playControls__castControl {
+  order: 9 !important;
+}
+
+.volume__button {
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--sc-text-body) !important;
+  cursor: pointer !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.volume:hover .volume__button,
+.volume.expanded .volume__button,
+.volume__button:hover {
+  color: var(--sc-orange) !important;
+  transform: scale(1.08) !important;
+}
+
+.volume__button svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: currentColor !important;
+}
+
+/* Volume Slider - Glass Bento Popup */
+.volume:not(.expanded) .volume__sliderWrapper {
+  display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.volume.expanded .volume__sliderWrapper,
+.volume:hover .volume__sliderWrapper {
+  display: block !important;
+  position: absolute !important;
+  bottom: 48px !important;
+  left: -4px !important;
+  width: 40px !important;
+  height: 152px !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  background: rgba(20, 19, 26, 0.96) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75), 0 0 16px rgba(255, 85, 0, 0.25) !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 100 !important;
+}
+
+.volume__sliderWrapper::before,
+.volume__sliderWrapper::after {
+  display: none !important;
+}
+
+.volume__sliderBackground {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 2px !important;
+  width: 4px !important;
+  height: 120px !important;
+  bottom: 16px !important;
+  left: 0 !important;
+  margin-left: 18px !important;
+  position: absolute !important;
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.volume__sliderProgress {
+  background: var(--sc-gradient-orange) !important;
+  background-color: var(--sc-orange) !important;
+  border-radius: 2px !important;
+  width: 4px !important;
+  bottom: 16px !important;
+  left: 0 !important;
+  margin-left: 18px !important;
+  position: absolute !important;
+  box-shadow: 0 0 8px rgba(255, 85, 0, 0.6) !important;
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.volume__sliderHandle {
+  box-sizing: border-box !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  border: 2px solid var(--sc-orange) !important;
+  box-shadow: 0 0 10px rgba(255, 85, 0, 0.7) !important;
+  margin-left: 13px !important;
+  left: 0 !important;
+  position: absolute !important;
+  cursor: pointer !important;
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* 5. Queue Drawer */
+.queue {
+  background: rgba(18, 17, 24, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  border-bottom: none !important;
+  border-radius: 24px 24px 0 0 !important;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.8) !important;
+}
+
+.queue__panel {
+  border-bottom: 1px solid var(--sc-border-smooth) !important;
+}
+
+.queue__title {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+
+.queue__clear {
+  border-radius: var(--sc-radius-pill) !important;
+  border: 1px solid var(--sc-border-smooth) !important;
+  background: var(--sc-surface-card) !important;
+  color: #FFFFFF !important;
+  font-size: 12px !important;
+  padding: 4px 14px !important;
+}
+
+.queue__clear:hover {
+  border-color: var(--sc-orange) !important;
+  background: var(--sc-surface-hover) !important;
+}
+
+.queueItemView:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.queueItemView.m-active {
+  background: rgba(255, 85, 0, 0.15) !important;
+  border-left: 3px solid var(--sc-orange) !important;
+}
+
+/* =========================================================================
+   6. SMOOTH ORANGE SCROLLBAR
+   ========================================================================= */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sc-bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sc-surface-card);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sc-orange);
+}

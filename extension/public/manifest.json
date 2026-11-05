@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "SoundCloud Ultimate — Bento Orange Edition",
+  "version": "1.0.0",
+  "description": "Smooth Bento Grid & Warm Amber/Orange Atmospheric Smoke theme for SoundCloud. 100% Pure CSS, zero JS.",
+  "content_scripts": [
+    {
+      "matches": ["*://soundcloud.com/*"],
+      "css": ["assets/theme.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

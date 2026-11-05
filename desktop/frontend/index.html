@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundCloud Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Smoke & Mist Background -->
+  <canvas id="smoke-canvas"></canvas>
+
+  <!-- Main App Shell -->
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand" id="brand-home">
+        <div class="brand-logo">
+          <!-- Cloud SVG Icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+          </svg>
+        </div>
+        <div class="brand-title">SoundCloud</div>
+        <div class="brand-badge">Ultimate Rust</div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="search-wrapper">
+        <input type="text" id="search-input" class="search-input" placeholder="Поиск треков, исполнителей, альбомов..." autocomplete="off">
+        <svg class="search-icon" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+      </div>
+
+      <!-- Right Header: Status & User Auth -->
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span id="backend-status" style="font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 6px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #00FF66; box-shadow: 0 0 8px #00FF66;"></span>
+          Rust Engine
+        </span>
+
+        <!-- Auth Button (when logged out) -->
+        <button class="auth-btn" id="btn-login-trigger">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+          Войти в аккаунт
+        </button>
+
+        <!-- User Profile Badge (when logged in) -->
+        <div class="user-badge" id="user-badge" style="display: none;">
+          <img class="user-avatar" id="user-avatar" src="" alt="Avatar">
+          <span class="user-name" id="user-name">User</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M7 10l5 5 5-5z"/>
+          </svg>
+
+          <!-- Dropdown -->
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="dropdown-item" id="btn-view-my-profile">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+              Мой профиль
+            </div>
+            <div class="dropdown-item" id="btn-logout" style="color: #FF5555;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+              Выйти
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Genre & Library Chips Bar -->
+    <div class="chips-bar" id="chips-bar">
+      <div class="chip active" data-type="genre" data-val="all-music">🔥 В тренде</div>
+      <div class="chip" data-type="lib" data-val="likes" id="chip-likes" style="display: none;">❤️ Мои Лайки</div>
+      <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists" style="display: none;">📂 Мои Плейлисты</div>
+      <div class="chip" data-type="lib" data-val="stream" id="chip-stream" style="display: none;">📡 Моя Лента</div>
+      <div class="chip" data-type="lib" data-val="history" id="chip-history" style="display: none;">🕒 История</div>
+      <div class="chip" data-type="genre" data-val="phonk">Phonk</div>
+      <div class="chip" data-type="genre" data-val="electronic">Electronic</div>
+      <div class="chip" data-type="genre" data-val="hiphoprap">Hip-Hop</div>
+      <div class="chip" data-type="genre" data-val="ambient">Ambient</div>
+      <div class="chip" data-type="genre" data-val="rock">Rock</div>
+      <div class="chip" data-type="genre" data-val="danceedm">EDM</div>
+      <div class="chip" data-type="genre" data-val="rbsoul">R&B</div>
+      <div class="chip" data-type="genre" data-val="indie">Indie</div>
+    </div>
+
+    <!-- Content Area -->
+    <main class="content-area">
+      <!-- Hero Bento Showcase -->
+      <section class="hero-bento" id="hero-section" style="display: none;">
+        <div class="bento-card-large" id="hero-card">
+          <img class="hero-bg-art" id="hero-bg-art" src="" alt="">
+          <div class="hero-tag">🔥 Топ недели</div>
+          <h2 class="hero-title" id="hero-title">Загрузка...</h2>
+          <div class="hero-artist" id="hero-artist">SoundCloud Ultimate</div>
+          <button class="hero-play-btn" id="hero-play-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Слушать сейчас
+          </button>
+        </div>
+      </section>
+
+      <!-- Section Title -->
+      <h2 class="section-title" id="grid-title">Популярные треки <span>•</span> Discover</h2>
+
+      <!-- Tracks Bento Grid -->
+      <div class="tracks-grid" id="tracks-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </main>
+
+    <!-- Floating Bottom Player Dock -->
+    <div class="player-dock-wrapper">
+      <div class="player-dock">
+        <!-- Left: Current Track Info + Like + Download + Radio -->
+        <div class="dock-left">
+          <img class="dock-art" id="player-art" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' fill='%23222'%3E%3Crect width='48' height='48'/%3E%3C/svg%3E' alt="Artwork">
+          <div class="dock-info">
+            <div class="dock-title" id="player-title">Выберите трек для воспроизведения</div>
+            <div class="dock-artist" id="player-artist" style="cursor: pointer;">SoundCloud Ultimate</div>
+          </div>
+          <!-- Real Like Button in Player -->
+          <button class="like-btn" id="dock-like-btn" title="Добавить в любимые (L)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <!-- Comments Button in Player -->
+          <button class="action-icon-btn" id="dock-comments-btn" title="Комментарии трека (C)">
+            <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+          </button>
+          <!-- Related Radio Button in Player -->
+          <button class="action-icon-btn" id="dock-radio-btn" title="Радио трека (Станция)">
+            <svg viewBox="0 0 24 24"><path d="M3.24 6.15C2.51 7.43 2 8.94 2 10.55c0 4.41 3.59 8 8 8 2.08 0 3.97-.79 5.4-2.1l-1.43-1.43C12.83 15.68 11.48 16.2 10 16.2c-3.12 0-5.65-2.53-5.65-5.65 0-1.19.38-2.3 1.03-3.21L3.24 6.15zM20.76 6.15l-2.14 1.19c.65.91 1.03 2.02 1.03 3.21 0 3.12-2.53 5.65-5.65 5.65-1.48 0-2.83-.52-3.97-1.18l-1.43 1.43C10.03 17.76 11.92 18.55 14 18.55c4.41 0 8-3.59 8-8 0-1.61-.51-3.12-1.24-4.4zM12 2C7.58 2 4 5.58 4 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+          </button>
+          <!-- Download Button in Player -->
+          <button class="download-btn" id="dock-download-btn" title="Скачать трек в MP3 (D)">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          </button>
+        </div>
+
+        <!-- Center: Controls & Scrubber -->
+        <div class="dock-center">
+          <div class="dock-controls">
+            <!-- Shuffle -->
+            <button class="control-btn" id="btn-shuffle" title="Перемешать (S)">
+              <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+            </button>
+            <!-- Prev -->
+            <button class="control-btn" id="btn-prev" title="Предыдущий (Alt+Left)">
+              <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <!-- Play/Pause 44x44 -->
+            <button class="play-btn" id="btn-play" title="Воспроизведение (Space)">
+              <svg class="play-triangle" id="play-icon-svg" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+            <!-- Next -->
+            <button class="control-btn" id="btn-next" title="Следующий (Alt+Right)">
+              <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+            <!-- Repeat -->
+            <button class="control-btn" id="btn-repeat" title="Повтор (R)">
+              <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+            </button>
+          </div>
+
+          <!-- Timeline Scrubber -->
+          <div class="timeline-row">
+            <span class="time-label" id="time-current">0:00</span>
+            <div class="progress-track" id="progress-track">
+              <div class="progress-fill" id="progress-fill"></div>
+              <div class="progress-handle" id="progress-handle"></div>
+            </div>
+            <span class="time-label" id="time-total">0:00</span>
+          </div>
+        </div>
+
+        <!-- Right: Extra Features (Equalizer, Visualizer, Volume, Queue) -->
+        <div class="dock-right">
+          <!-- Equalizer Button -->
+          <button class="control-btn" id="btn-eq-toggle" title="Эквалайзер & Бас (E)">
+            <svg viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
+          </button>
+
+          <!-- Visualizer Button -->
+          <button class="control-btn" id="btn-vis-toggle" title="Полноэкранный плеер (V)">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
+
+          <!-- Volume Container with Popup Slider -->
+          <div class="volume-control-wrapper" id="volume-wrapper">
+            <button class="volume-btn" id="btn-volume" title="Громкость / Без звука (M)">
+              <svg id="volume-icon-svg" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+            </button>
+
+            <!-- Laser Centered Popup Slider Card -->
+            <div class="volume-popup" id="volume-popup">
+              <div class="volume-slider-track" id="volume-track">
+                <div class="volume-slider-fill" id="volume-fill"></div>
+                <div class="volume-slider-knob" id="volume-knob"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Queue Toggle -->
+          <button class="queue-toggle-btn" id="btn-queue-toggle" title="Очередь воспроизведения (Q)">
+            <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Queue Drawer -->
+    <div class="queue-drawer" id="queue-drawer">
+      <div class="queue-header">
+        <div class="queue-title">Очередь воспроизведения</div>
+        <button class="queue-clear-btn" id="btn-queue-clear">Очистить</button>
+      </div>
+      <div class="queue-list" id="queue-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       IN-APP MODALS (100% Native, No Redirects)
+       ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- 1. Authentication Modal -->
+  <div class="bento-modal-overlay" id="auth-modal-overlay">
+    <div class="bento-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          Вход в аккаунт SoundCloud
+        </div>
+        <button class="modal-close-btn" id="btn-close-auth-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <button class="auth-submit-btn" id="btn-import-browser" style="background: var(--gradient-orange); font-size: 15px; padding: 16px;">
+          ⚡ Авторизоваться в 1 клик (из Chromium)
+        </button>
+
+        <div class="auth-help-box">
+          <strong>Вход без ручного ввода токенов:</strong><br>
+          Если вы уже вошли на soundcloud.com в Chromium, нажмите кнопку выше — приложение автоматически подключит ваш аккаунт!
+        </div>
+
+        <button class="auth-submit-btn" id="btn-open-sc-signin" style="background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle); box-shadow: none;">
+          🌐 Открыть страницу входа SoundCloud в браузере
+        </button>
+
+        <div style="display: flex; align-items: center; gap: 12px; margin: 4px 0;">
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">или введите токен сессии</span>
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+        </div>
+
+        <div class="auth-input-group">
+          <label class="auth-label">OAuth Token (oauth_token)</label>
+          <input type="password" id="auth-token-input" class="auth-text-input" placeholder="например: 2-293847-1928374-xxxxxx">
+        </div>
+
+        <button class="auth-submit-btn" id="btn-submit-token">
+          Подключить аккаунт
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. In-App Artist / User Profile Modal -->
+  <div class="bento-modal-overlay" id="profile-modal-overlay">
+    <div class="bento-modal profile-modal">
+      <div class="profile-hero">
+        <button class="modal-close-btn" id="btn-close-profile-modal" style="position: absolute; top: 16px; right: 20px;">✕</button>
+        <img class="profile-hero-avatar" id="prof-avatar" src="" alt="Avatar">
+        <div class="profile-hero-info">
+          <div class="profile-hero-name" id="prof-name">Artist Name</div>
+          <div class="profile-hero-loc" id="prof-loc">Location</div>
+          <div class="profile-hero-desc" id="prof-desc"></div>
+          <div class="profile-stats-row">
+            <span class="profile-stat"><strong id="prof-stat-tracks">0</strong> треков</span>
+            <span class="profile-stat"><strong id="prof-stat-followers">0</strong> подписчиков</span>
+            <span class="profile-stat"><strong id="prof-stat-likes">0</strong> лайков</span>
+          </div>
+        </div>
+        <button class="profile-follow-btn" id="prof-follow-btn">+ Подписаться</button>
+      </div>
+
+      <div class="profile-content">
+        <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Треки исполнителя</h3>
+        <div class="tracks-grid" id="prof-tracks-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+          <!-- Tracks rendered here -->
+        </div>
+
+        <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-top: 14px;">Плейлисты и Альбомы</h3>
+        <div class="playlists-grid" id="prof-playlists-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+          <!-- Playlists rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. In-App Playlist & Album Inspector Modal -->
+  <div class="bento-modal-overlay" id="playlist-modal-overlay">
+    <div class="bento-modal playlist-modal">
+      <button class="modal-close-btn" id="btn-close-playlist-modal" style="position: absolute; top: 16px; right: 20px; z-index: 10;">✕</button>
+      <div class="playlist-header-row">
+        <img class="playlist-header-art" id="pl-modal-art" src="" alt="Cover">
+        <div class="playlist-header-info">
+          <div class="playlist-header-title" id="pl-modal-title">Playlist Title</div>
+          <div class="playlist-header-artist" id="pl-modal-artist">Artist</div>
+          <div class="playlist-header-meta" id="pl-modal-meta">0 треков • 0 минут</div>
+          <button class="playlist-play-all-btn" id="pl-modal-play-all">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Слушать плейлист
+          </button>
+        </div>
+      </div>
+      <div class="playlist-tracks-list" id="pl-modal-tracks-list">
+        <!-- Track rows rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. In-App Track Comments Modal -->
+  <div class="bento-modal-overlay" id="comments-modal-overlay">
+    <div class="bento-modal comments-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+          Комментарии к треку
+        </div>
+        <button class="modal-close-btn" id="btn-close-comments-modal">✕</button>
+      </div>
+
+      <div class="comments-list" id="comments-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="comment-post-box">
+        <input type="text" class="comment-input" id="new-comment-input" placeholder="Написать комментарий на текущей секунде...">
+        <button class="comment-send-btn" id="btn-send-comment">Отправить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Equalizer Modal -->
+  <div class="bento-modal-overlay" id="eq-modal-overlay">
+    <div class="bento-modal eq-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
+          Студийный Эквалайзер & Бас
+        </div>
+        <button class="modal-close-btn" id="btn-close-eq-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="eq-presets-row">
+          <div class="eq-preset-chip active" data-preset="flat">Flat</div>
+          <div class="eq-preset-chip" data-preset="bass">Bass Boost 🔥</div>
+          <div class="eq-preset-chip" data-preset="electronic">Electronic ⚡</div>
+          <div class="eq-preset-chip" data-preset="vocal">Vocal 🎤</div>
+          <div class="eq-preset-chip" data-preset="rock">Rock 🎸</div>
+        </div>
+
+        <div class="eq-bands-container">
+          <div class="eq-band-col">
+            <span class="eq-band-val" id="eq-val-0">0dB</span>
+            <input type="range" class="eq-slider-vertical" id="eq-band-0" min="-12" max="12" step="1" value="0">
+            <span class="eq-band-label">60Hz</span>
+          </div>
+          <div class="eq-band-col">
+            <span class="eq-band-val" id="eq-val-1">0dB</span>
+            <input type="range" class="eq-slider-vertical" id="eq-band-1" min="-12" max="12" step="1" value="0">
+            <span class="eq-band-label">250Hz</span>
+          </div>
+          <div class="eq-band-col">
+            <span class="eq-band-val" id="eq-val-2">0dB</span>
+            <input type="range" class="eq-slider-vertical" id="eq-band-2" min="-12" max="12" step="1" value="0">
+            <span class="eq-band-label">1kHz</span>
+          </div>
+          <div class="eq-band-col">
+            <span class="eq-band-val" id="eq-val-3">0dB</span>
+            <input type="range" class="eq-slider-vertical" id="eq-band-3" min="-12" max="12" step="1" value="0">
+            <span class="eq-band-label">4kHz</span>
+          </div>
+          <div class="eq-band-col">
+            <span class="eq-band-val" id="eq-val-4">0dB</span>
+            <input type="range" class="eq-slider-vertical" id="eq-band-4" min="-12" max="12" step="1" value="0">
+            <span class="eq-band-label">12kHz</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Fullscreen Vinyl Visualizer Overlay -->
+  <div class="visualizer-overlay" id="visualizer-overlay">
+    <button class="vis-close-btn" id="btn-close-vis" title="Закрыть (Esc / V)">✕</button>
+    <div class="vinyl-record" id="vinyl-record">
+      <img class="vinyl-center-art" id="vis-art" src="" alt="Vinyl Art">
+    </div>
+    <div class="vis-title" id="vis-title">Трек не выбран</div>
+    <div class="vis-artist" id="vis-artist">SoundCloud Ultimate</div>
+  </div>
+
+  <!-- Hidden Audio Engine -->
+  <audio id="audio-engine" preload="auto" crossorigin="anonymous"></audio>
+
+  <!-- Scripts -->
+  <script src="hls.min.js"></script>
+  <script src="smoke.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

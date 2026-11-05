@@ -1,0 +1,448 @@
+mod launcher;
+mod models;
+mod soundcloud;
+
+use axum::{
+    body::Body,
+    extract::{Path, Query, State},
+    http::{header, HeaderMap, HeaderValue, StatusCode},
+    response::{IntoResponse, Response},
+    routing::{delete, get, post},
+    Json, Router,
+};
+use mime_guess::from_path;
+use models::PostCommentPayload;
+use rust_embed::RustEmbed;
+use soundcloud::SoundCloudClient;
+use std::{net::SocketAddr, sync::Arc};
+use tower_http::cors::CorsLayer;
+
+#[derive(RustEmbed)]
+#[folder = "frontend/"]
+struct Assets;
+
+#[derive(Clone)]
+struct AppState {
+    sc: Arc<SoundCloudClient>,
+}
+
+#[derive(serde::Deserialize)]
+struct SearchParams {
+    q: Option<String>,
+    limit: Option<usize>,
+    offset: Option<usize>,
+}
+
+#[derive(serde::Deserialize)]
+struct TrendingParams {
+    genre: Option<String>,
+    limit: Option<usize>,
+}
+
+#[derive(serde::Deserialize)]
+struct StreamParams {
+    id: u64,
+}
+
+#[derive(serde::Deserialize)]
+struct LoginPayload {
+    token: String,
+}
+
+#[derive(serde::Deserialize)]
+struct LikesParams {
+    limit: Option<usize>,
+    offset: Option<usize>,
+}
+
+#[tokio::main]
+async fn main() {
+    println!("═══════════════════════════════════════════════════════════");
+    println!("     SOUNDCLOUD ULTIMATE — RUST STANDALONE DESKTOP        ");
+    println!("═══════════════════════════════════════════════════════════");
+
+    let sc_client = Arc::new(SoundCloudClient::new());
+
+    // Proactively refresh client_id in background
+    let sc_clone = sc_client.clone();
+    tokio::spawn(async move {
+        println!("🔍 Discovering active SoundCloud client_id...");
+        match sc_clone.refresh_client_id().await {
+            Ok(id) => println!("✨ Active SoundCloud client_id verified: {}", id),
+            Err(e) => eprintln!("⚠️ Could not auto-refresh client_id, using cached default: {}", e),
+        }
+    });
+
+    let state = AppState { sc: sc_client };
+
+    let app = Router::new()
+        // Core API
+        .route("/api/status", get(api_status))
+        .route("/api/search", get(api_search))
+        .route("/api/trending", get(api_trending))
+        .route("/api/stream", get(api_stream))
+        .route("/api/track/{id}", get(api_track))
+        .route("/api/download", get(api_download))
+        // Auth API
+        .route("/api/auth/status", get(api_auth_status))
+        .route("/api/auth/login", post(api_auth_login))
+        .route("/api/auth/logout", post(api_auth_logout))
+        .route("/api/auth/import-browser", post(api_auth_import_browser))
+        // User Library API
+        .route("/api/me/likes", get(api_me_likes))
+        .route("/api/me/playlists", get(api_me_playlists))
+        .route("/api/me/stream", get(api_me_stream))
+        .route("/api/me/history", get(api_me_history))
+        .route("/api/tracks/{id}/like", post(api_track_like))
+        .route("/api/tracks/{id}/like", delete(api_track_unlike))
+        // Artist & Profile API
+        .route("/api/artists/{id}", get(api_artist_profile))
+        .route("/api/artists/{id}/follow", post(api_artist_follow))
+        .route("/api/artists/{id}/follow", delete(api_artist_unfollow))
+        // Comments & Related Radio API
+        .route("/api/tracks/{id}/comments", get(api_track_comments))
+        .route("/api/tracks/{id}/comments", post(api_post_comment))
+        .route("/api/tracks/{id}/related", get(api_track_related))
+        .route("/api/playlists/{id}", get(api_playlist_details))
+        // Frontend Static Assets
+        .fallback(static_handler)
+        .layer(CorsLayer::permissive())
+        .with_state(state);
+
+    let addr = SocketAddr::from(([127, 0, 0, 1], 4545));
+    let listener = match tokio::net::TcpListener::bind(addr).await {
+        Ok(l) => l,
+        Err(_) => {
+            let fallback_addr = SocketAddr::from(([127, 0, 0, 1], 0));
+            tokio::net::TcpListener::bind(fallback_addr).await.expect("Failed to bind to local port")
+        }
+    };
+
+    let local_addr = listener.local_addr().unwrap();
+    let app_url = format!("http://{}", local_addr);
+
+    println!("🌐 App server listening at: {}", app_url);
+
+    let no_window = std::env::args().any(|a| a == "--server-only" || a == "--no-window");
+
+    let mut desktop_process = if !no_window {
+        launcher::launch_desktop_window(&app_url)
+    } else {
+        println!("ℹ️ Running in server-only mode (--no-window).");
+        None
+    };
+
+    let shutdown_signal = async move {
+        tokio::select! {
+            _ = tokio::signal::ctrl_c() => {
+                println!("\n🛑 Received shutdown signal (Ctrl+C). Exiting...");
+            }
+            _ = async {
+                if let Some(ref mut proc) = desktop_process {
+                    let _ = proc.wait();
+                    println!("🚪 Desktop window was closed by user.");
+                } else {
+                    std::future::pending::<()>().await;
+                }
+            } => {}
+        }
+    };
+
+    axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal)
+        .await
+        .unwrap();
+
+    println!("👋 SoundCloud Ultimate shut down cleanly.");
+}
+
+// --- API Handlers ---
+
+async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
+    let id = state.sc.get_client_id().await;
+    let auth = state.sc.get_auth_status().await;
+    Json(serde_json::json!({
+        "status": "ok",
+        "client_id": id,
+        "version": "1.2.0",
+        "engine": "Rust + Bento AMOLED Glass",
+        "auth": auth
+    }))
+}
+
+async fn api_auth_status(State(state): State<AppState>) -> impl IntoResponse {
+    let auth = state.sc.get_auth_status().await;
+    Json(auth)
+}
+
+async fn api_auth_import_browser(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.auto_import_from_browser().await {
+        Ok(profile) => (
+            StatusCode::OK,
+            Json(serde_json::json!({
+                "authenticated": true,
+                "user": profile
+            })),
+        )
+            .into_response(),
+        Err(e) => (
+            StatusCode::NOT_FOUND,
+            Json(serde_json::json!({
+                "authenticated": false,
+                "error": e
+            })),
+        )
+            .into_response(),
+    }
+}
+
+async fn api_auth_login(
+    State(state): State<AppState>,
+    Json(payload): Json<LoginPayload>,
+) -> impl IntoResponse {
+    let token = payload.token.trim().to_string();
+    state.sc.set_oauth_token(Some(token)).await;
+
+    match state.sc.get_me().await {
+        Ok(profile) => (
+            StatusCode::OK,
+            Json(serde_json::json!({
+                "authenticated": true,
+                "user": profile
+            })),
+        )
+            .into_response(),
+        Err(e) => {
+            state.sc.set_oauth_token(None).await;
+            (
+                StatusCode::UNAUTHORIZED,
+                Json(serde_json::json!({
+                    "authenticated": false,
+                    "error": format!("Sign-in failed: {}", e)
+                })),
+            )
+                .into_response()
+        }
+    }
+}
+
+async fn api_auth_logout(State(state): State<AppState>) -> impl IntoResponse {
+    state.sc.set_oauth_token(None).await;
+    Json(serde_json::json!({ "authenticated": false, "message": "Logged out" }))
+}
+
+async fn api_me_likes(
+    State(state): State<AppState>,
+    Query(params): Query<LikesParams>,
+) -> impl IntoResponse {
+    let limit = params.limit.unwrap_or(50);
+    let offset = params.offset.unwrap_or(0);
+
+    match state.sc.get_my_likes(limit, offset).await {
+        Ok(tracks) => (StatusCode::OK, Json(serde_json::json!({ "tracks": tracks }))).into_response(),
+        Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_me_playlists(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_my_playlists(50).await {
+        Ok(playlists) => (StatusCode::OK, Json(serde_json::json!({ "playlists": playlists }))).into_response(),
+        Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_me_stream(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_my_stream(50).await {
+        Ok(tracks) => (StatusCode::OK, Json(serde_json::json!({ "tracks": tracks }))).into_response(),
+        Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_me_history(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_my_history(30).await {
+        Ok(tracks) => (StatusCode::OK, Json(serde_json::json!({ "tracks": tracks }))).into_response(),
+        Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_track_like(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.toggle_like(id, true).await {
+        Ok(ok) => (StatusCode::OK, Json(serde_json::json!({ "liked": ok }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_track_unlike(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.toggle_like(id, false).await {
+        Ok(ok) => (StatusCode::OK, Json(serde_json::json!({ "liked": !ok }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_artist_profile(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.get_artist_profile(id).await {
+        Ok(profile) => (StatusCode::OK, Json(profile)).into_response(),
+        Err(e) => (StatusCode::NOT_FOUND, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_artist_follow(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.toggle_follow(id, true).await {
+        Ok(ok) => (StatusCode::OK, Json(serde_json::json!({ "following": ok }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_artist_unfollow(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.toggle_follow(id, false).await {
+        Ok(ok) => (StatusCode::OK, Json(serde_json::json!({ "following": !ok }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_track_comments(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.get_track_comments(id, 40).await {
+        Ok(comments) => (StatusCode::OK, Json(serde_json::json!({ "comments": comments }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_post_comment(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+    Json(payload): Json<PostCommentPayload>,
+) -> impl IntoResponse {
+    match state.sc.post_comment(id, payload).await {
+        Ok(comment) => (StatusCode::OK, Json(comment)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_track_related(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.get_related_tracks(id, 24).await {
+        Ok(tracks) => (StatusCode::OK, Json(serde_json::json!({ "tracks": tracks }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_playlist_details(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.get_playlist(id).await {
+        Ok(playlist) => (StatusCode::OK, Json(playlist)).into_response(),
+        Err(e) => (StatusCode::NOT_FOUND, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_search(
+    State(state): State<AppState>,
+    Query(params): Query<SearchParams>,
+) -> impl IntoResponse {
+    let q = params.q.unwrap_or_else(|| "popular".to_string());
+    let limit = params.limit.unwrap_or(24);
+    let offset = params.offset.unwrap_or(0);
+
+    match state.sc.search(&q, limit, offset).await {
+        Ok(res) => (StatusCode::OK, Json(serde_json::json!(res))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_trending(
+    State(state): State<AppState>,
+    Query(params): Query<TrendingParams>,
+) -> impl IntoResponse {
+    let genre = params.genre.as_deref();
+    let limit = params.limit.unwrap_or(24);
+
+    match state.sc.get_trending(genre, limit).await {
+        Ok(tracks) => (StatusCode::OK, Json(serde_json::json!({ "tracks": tracks }))).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_stream(
+    State(state): State<AppState>,
+    Query(params): Query<StreamParams>,
+) -> impl IntoResponse {
+    match state.sc.resolve_track_stream(params.id).await {
+        Ok(stream) => (StatusCode::OK, Json(serde_json::json!(stream))).into_response(),
+        Err(e) => (StatusCode::NOT_FOUND, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_download(
+    State(state): State<AppState>,
+    Query(params): Query<StreamParams>,
+) -> Response {
+    match state.sc.download_track_bytes(params.id).await {
+        Ok((filename, bytes)) => {
+            let mut headers = HeaderMap::new();
+            headers.insert(
+                header::CONTENT_DISPOSITION,
+                HeaderValue::from_str(&format!("attachment; filename=\"{}\"", filename))
+                    .unwrap_or_else(|_| HeaderValue::from_static("attachment; filename=\"track.mp3\"")),
+            );
+            headers.insert(header::CONTENT_TYPE, HeaderValue::from_static("audio/mpeg"));
+            (StatusCode::OK, headers, Body::from(bytes)).into_response()
+        }
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_track(
+    State(state): State<AppState>,
+    Path(id): Path<u64>,
+) -> impl IntoResponse {
+    match state.sc.get_track_by_id(id).await {
+        Ok(track) => (StatusCode::OK, Json(serde_json::json!(track))).into_response(),
+        Err(e) => (StatusCode::NOT_FOUND, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn static_handler(uri: axum::http::Uri) -> Response {
+    let mut path = uri.path().trim_start_matches('/').to_string();
+    if path.is_empty() {
+        path = "index.html".to_string();
+    }
+
+    match Assets::get(&path) {
+        Some(content) => {
+            let mime = from_path(&path).first_or_octet_stream();
+            let mut headers = HeaderMap::new();
+            headers.insert(header::CONTENT_TYPE, mime.as_ref().parse().unwrap());
+            headers.insert(header::CACHE_CONTROL, "no-cache".parse().unwrap());
+            (StatusCode::OK, headers, content.data).into_response()
+        }
+        None => match Assets::get("index.html") {
+            Some(content) => {
+                let mut headers = HeaderMap::new();
+                headers.insert(header::CONTENT_TYPE, "text/html; charset=utf-8".parse().unwrap());
+                (StatusCode::OK, headers, content.data).into_response()
+            }
+            None => (StatusCode::NOT_FOUND, "404 Not Found").into_response(),
+        },
+    }
+}

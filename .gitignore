@@ -1,0 +1,25 @@
+# Rust
+target/
+**/*.rs.bk
+
+# Node & Build artifacts
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# User credentials & session tokens
+auth.json
+*.session.json
+*.cookie*
+*.sqlite*
+cookies*.txt
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+.vscode/
+.idea/

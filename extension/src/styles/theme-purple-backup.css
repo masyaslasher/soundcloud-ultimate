@@ -1,0 +1,348 @@
+/* =========================================================================
+   SoundCloud Ultimate — Pure AMOLED Black & Deep Purple Glassmorphism
+   Architecture: 100% Pure CSS (No JavaScript, No network hooks, No observers)
+   ========================================================================= */
+
+:root {
+  /* Strict Palette specification */
+  --sc-ult-bg-primary: #000000;
+  --sc-ult-bg-surface: #0D0A12;
+  --sc-ult-glass-surface: rgba(24, 16, 34, 0.75);
+  --sc-ult-primary: #A855F7;
+  --sc-ult-secondary: #EC4899;
+  --sc-ult-text-primary: #F5F0FA;
+  --sc-ult-text-secondary: #96909F;
+  --sc-ult-border: rgba(168, 85, 247, 0.28);
+  --sc-ult-border-hover: rgba(236, 72, 153, 0.45);
+  --sc-ult-glow: 0 0 16px rgba(168, 85, 247, 0.3);
+  --sc-ult-radius-sm: 8px;
+  --sc-ult-radius-md: 12px;
+  --sc-ult-radius-lg: 16px;
+  --sc-ult-gradient: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+}
+
+/* =========================================================================
+   1. GLOBAL PAGE BACKGROUND & BASE COMPOSITION
+   ========================================================================= */
+html,
+body,
+#app,
+.sc-classic,
+.l-fixedHeader,
+.l-container,
+.l-main {
+  background-color: var(--sc-ult-bg-primary) !important;
+  color: var(--sc-ult-text-primary) !important;
+}
+
+/* Subtle non-intrusive ambient glow under header */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 380px;
+  background: radial-gradient(ellipse at 50% -10%, rgba(168, 85, 247, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Base typography */
+a,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+div {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================================
+   2. TOP NAVIGATION HEADER
+   ========================================================================= */
+.header {
+  background: var(--sc-ult-glass-surface) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--sc-ult-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(168, 85, 247, 0.1) !important;
+}
+
+/* Nav links */
+.header__navMenu a,
+.header__navMenu button,
+.header__link {
+  color: var(--sc-ult-text-secondary) !important;
+  transition: color 0.18s ease, text-shadow 0.18s ease !important;
+}
+
+.header__navMenu a:hover,
+.header__navMenu a.selected,
+.header__link:hover {
+  color: var(--sc-ult-text-primary) !important;
+  text-shadow: 0 0 10px var(--sc-ult-primary) !important;
+}
+
+/* Search bar */
+.headerSearch__input {
+  background: rgba(13, 10, 18, 0.85) !important;
+  border: 1px solid var(--sc-ult-border) !important;
+  border-radius: var(--sc-ult-radius-md) !important;
+  color: var(--sc-ult-text-primary) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.headerSearch__input:focus {
+  border-color: var(--sc-ult-primary) !important;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.35) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================================
+   3. CARDS, PLAYLISTS, TRACK ITEMS & GRIDS
+   ========================================================================= */
+/* Playable tiles (Discover / Home grids) */
+.playableTile {
+  background: var(--sc-ult-glass-surface) !important;
+  border: 1px solid var(--sc-ult-border) !important;
+  border-radius: var(--sc-ult-radius-md) !important;
+  padding: 12px !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.playableTile:hover {
+  border-color: var(--sc-ult-border-hover) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(236, 72, 153, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Sound list items & Track lists */
+.soundList__item,
+.trackItem,
+.visualSound,
+.chartTrack,
+.searchList__item {
+  background: var(--sc-ult-glass-surface) !important;
+  border: 1px solid var(--sc-ult-border) !important;
+  border-radius: var(--sc-ult-radius-md) !important;
+  padding: 12px 16px !important;
+  margin-bottom: 10px !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.soundList__item:hover,
+.trackItem:hover {
+  border-color: var(--sc-ult-border-hover) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(168, 85, 247, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Artwork Covers */
+.playableTile__artwork,
+.sound__coverArt,
+.image__full,
+.image__lightOutline {
+  border-radius: var(--sc-ult-radius-sm) !important;
+  overflow: hidden !important;
+}
+
+.playableTile__artwork img,
+.sound__coverArt img {
+  border-radius: var(--sc-ult-radius-sm) !important;
+  transition: transform 0.25s ease !important;
+}
+
+.playableTile:hover .playableTile__artwork img,
+.soundList__item:hover .sound__coverArt img {
+  transform: scale(1.03) !important;
+}
+
+/* Titles and typography within cards */
+.soundTitle__title,
+.sc-link-dark,
+.playableTile__mainHeading {
+  color: var(--sc-ult-text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.soundTitle__username,
+.sc-link-light,
+.sc-type-light,
+.playableTile__description {
+  color: var(--sc-ult-text-secondary) !important;
+}
+
+/* Waveforms */
+.waveformCommentsNode {
+  filter: hue-rotate(275deg) contrast(1.1) brightness(1.2);
+  opacity: 0.95;
+}
+
+/* =========================================================================
+   4. BOTTOM MUSIC PLAYER (The Core Focal Element)
+   ========================================================================= */
+/* Stable dock maintaining original positioning with deep glass aesthetics */
+.playControls {
+  background: rgba(13, 10, 18, 0.94) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-top: 1px solid var(--sc-ult-border) !important;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.85), 0 0 20px rgba(168, 85, 247, 0.12) !important;
+}
+
+/* Inner elements container */
+.playControls__elements {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+}
+
+/* Player Track Cover */
+.playbackSoundBadge__avatar {
+  border-radius: var(--sc-ult-radius-sm) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--sc-ult-border) !important;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.3) !important;
+}
+
+.playbackSoundBadge__titleContextContainer .playbackSoundBadge__titleLink {
+  color: var(--sc-ult-text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.playbackSoundBadge__lightLink {
+  color: var(--sc-ult-text-secondary) !important;
+}
+
+/* Timeline scrubber track */
+.playbackTimeline__progressWrapper {
+  height: 5px !important;
+  border-radius: 3px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Elapsed progress (Neon Purple-to-Pink Gradient) */
+.playbackTimeline__passed {
+  background: var(--sc-ult-gradient) !important;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.6) !important;
+}
+
+/* Progress scrubber handle */
+.playbackTimeline__progressHandle {
+  background: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 0 10px #ffffff, 0 0 16px var(--sc-ult-primary) !important;
+  width: 12px !important;
+  height: 12px !important;
+  top: -3px !important;
+}
+
+/* Timeline time readouts */
+.playbackTimeline__timePassed,
+.playbackTimeline__duration {
+  color: var(--sc-ult-text-secondary) !important;
+  font-size: 11px !important;
+}
+
+/* Play / Skip / Repeat Control Buttons */
+.playControl,
+.skipControl,
+.playbackSoundBadge__like,
+.volume__button {
+  color: var(--sc-ult-text-primary) !important;
+  transition: transform 0.18s ease, color 0.18s ease, filter 0.18s ease !important;
+}
+
+.playControl:hover,
+.skipControl:hover,
+.playbackSoundBadge__like:hover,
+.volume__button:hover {
+  color: var(--sc-ult-primary) !important;
+  transform: scale(1.1) !important;
+  filter: drop-shadow(0 0 8px var(--sc-ult-primary)) !important;
+}
+
+.sc-button-selected {
+  color: var(--sc-ult-secondary) !important;
+}
+
+/* Volume Slider */
+.volume__sliderBackground {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.volume__sliderProgress {
+  background: var(--sc-ult-gradient) !important;
+}
+
+.volume__sliderHandle {
+  background: #ffffff !important;
+  box-shadow: 0 0 8px var(--sc-ult-primary) !important;
+}
+
+/* =========================================================================
+   5. BUTTONS & INTERACTIVE CONTROLS
+   ========================================================================= */
+.sc-button {
+  border-radius: var(--sc-ult-radius-sm) !important;
+  border-color: var(--sc-ult-border) !important;
+  color: var(--sc-ult-text-primary) !important;
+  background: rgba(24, 16, 34, 0.6) !important;
+  transition: all 0.2s ease !important;
+}
+
+.sc-button:hover {
+  border-color: var(--sc-ult-border-hover) !important;
+  color: #ffffff !important;
+}
+
+.sc-button-cta,
+.sc-button-orange {
+  background: var(--sc-ult-gradient) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.4) !important;
+}
+
+.sc-button-cta:hover,
+.sc-button-orange:hover {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.65) !important;
+  transform: scale(1.02) !important;
+}
+
+/* =========================================================================
+   6. SCROLLBAR
+   ========================================================================= */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sc-ult-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sc-ult-primary);
+  box-shadow: 0 0 8px var(--sc-ult-primary);
+}
+
+/* =========================================================================
+   7. ACCESSIBILITY / LOW-MOTION
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+}
