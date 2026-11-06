@@ -1,6 +1,6 @@
 # ☁️ SoundCloud Ultimate — Suite
 
-[![Release](https://img.shields.io/github/v/release/aluynon681-cpu/soundcloud-ultimate?color=ff5500&logo=github)](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest)
+[![Release](https://img.shields.io/github/v/release/masyaslasher/soundcloud-ultimate?color=ff5500&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange.svg?logo=rust)](https://www.rust-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Chrome-brightgreen.svg)]()
@@ -13,15 +13,15 @@
 
 ## 📦 Быстрая загрузка / Downloads (v1.0.0)
 
-Готовые скомпилированные релизы доступны во вкладке [**GitHub Releases**](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest):
+Готовые скомпилированные релизы доступны во вкладке [**GitHub Releases**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest):
 
 | Платформа | Файл | Инструкция по запуску |
 | :--- | :--- | :--- |
-| 🪟 **Windows Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (не требует прав администратора) |
-| 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить двойным кликом или в терминале |
-| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.0.0_amd64.deb`**](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.0.0_amd64.deb` |
-| 🐧 **Linux Standalone** | [**`soundcloud-ultimate-linux-x86_64.tar.gz`**](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest) | Распаковать: `tar -xvf soundcloud-ultimate-linux-x86_64.tar.gz && ./run.sh` |
-| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.0.0.zip`**](https://github.com/aluynon681-cpu/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
+| 🪟 **Windows Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (не требует прав администратора) |
+| 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить двойным кликом или в терминале |
+| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.0.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.0.0_amd64.deb` |
+| 🐧 **Linux Standalone** | [**`soundcloud-ultimate-linux-x86_64.tar.gz`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать: `tar -xvf soundcloud-ultimate-linux-x86_64.tar.gz && ./run.sh` |
+| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.0.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
 
 ---
 
@@ -112,7 +112,7 @@
 
 ```bash
 # Клонировать репозиторий
-git clone https://github.com/aluynon681-cpu/soundcloud-ultimate.git
+git clone https://github.com/masyaslasher/soundcloud-ultimate.git
 cd soundcloud-ultimate/desktop
 
 # Запуск в режиме разработки

@@ -5,7 +5,7 @@ cd "$DIR"
 
 if [ -n "$1" ]; then
     echo "Pushing with provided GitHub token..."
-    git push "https://${1}@github.com/aluynon681-cpu/soundcloud-ultimate.git" main
+    git push "https://${1}@github.com/masyaslasher/soundcloud-ultimate.git" main
 else
     echo "Pushing to origin main..."
     git push -u origin main
