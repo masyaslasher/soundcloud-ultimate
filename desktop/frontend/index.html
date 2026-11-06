@@ -7,6 +7,30 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Custom Frameless Window Titlebar (Bento Glass CSD) -->
+  <div class="custom-titlebar" id="custom-titlebar">
+    <div class="titlebar-drag-region" id="titlebar-drag-region">
+      <div class="titlebar-brand">
+        <svg viewBox="0 0 24 24" class="titlebar-logo">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+        </svg>
+        <span class="titlebar-title">SoundCloud Ultimate</span>
+        <span class="titlebar-badge">Desktop</span>
+      </div>
+    </div>
+    <div class="titlebar-controls">
+      <button class="titlebar-btn btn-min" id="titlebar-btn-min" title="Minimize">
+        <svg viewBox="0 0 12 12"><rect y="5" width="12" height="1.5" fill="currentColor"/></svg>
+      </button>
+      <button class="titlebar-btn btn-max" id="titlebar-btn-max" title="Maximize">
+        <svg id="titlebar-icon-max" viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </button>
+      <button class="titlebar-btn btn-close" id="titlebar-btn-close" title="Close">
+        <svg viewBox="0 0 12 12"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
   <!-- Ambient Smoke & Mist Background -->
   <canvas id="smoke-canvas"></canvas>
 
@@ -58,36 +82,92 @@
           Rust Engine
         </span>
 
-        <!-- Auth Button (when logged out) -->
-        <button class="auth-btn" id="btn-login-trigger">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-          <span id="txt-login-btn">Sign In</span>
-        </button>
-
-        <!-- User Profile Badge (when logged in) -->
-        <div class="user-badge" id="user-badge" style="display: none;">
+        <!-- User Profile Badge & Dropdown with Account + All 8 Languages -->
+        <div class="user-badge" id="user-badge" title="Account & Language Settings">
           <img class="user-avatar" id="user-avatar" src="" alt="Avatar">
-          <span class="user-name" id="user-name">User</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <span class="user-name" id="user-name">Guest</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
             <path d="M7 10l5 5 5-5z"/>
           </svg>
 
           <!-- Dropdown -->
           <div class="user-dropdown" id="user-dropdown">
-            <div class="dropdown-item" id="btn-view-my-profile">
+            <div class="dropdown-item" id="btn-view-my-profile" style="display: none;">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
               <span id="txt-my-profile">My Profile</span>
             </div>
-            <div class="dropdown-item" id="btn-dropdown-lang">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-              <span id="txt-dropdown-lang">Language: English (EN)</span>
+            <div class="dropdown-item" id="btn-dropdown-login">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span id="txt-dropdown-login">⚡ Sign In / Войти</span>
             </div>
-            <div class="dropdown-item" id="btn-logout" style="color: #FF5555;">
+            <div class="dropdown-item" id="btn-logout" style="display: none; color: #FF5555;">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
               <span id="txt-logout">Sign Out</span>
             </div>
+
+            <!-- Divider -->
+            <div class="dropdown-divider"></div>
+
+            <!-- Language Header -->
+            <div class="dropdown-header">
+              <span id="txt-drop-lang-header">🌐 Language / Язык</span>
+            </div>
+
+            <!-- 8 Languages List -->
+            <div class="dropdown-lang-list" id="dropdown-lang-list">
+              <div class="dropdown-lang-item" data-lang="en">
+                <span class="lang-flag">🇺🇸</span>
+                <span class="lang-title">English</span>
+                <span class="lang-code">EN</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="ru">
+                <span class="lang-flag">🇷🇺</span>
+                <span class="lang-title">Русский</span>
+                <span class="lang-code">RU</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="de">
+                <span class="lang-flag">🇩🇪</span>
+                <span class="lang-title">Deutsch</span>
+                <span class="lang-code">DE</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="fr">
+                <span class="lang-flag">🇫🇷</span>
+                <span class="lang-title">Français</span>
+                <span class="lang-code">FR</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="ja">
+                <span class="lang-flag">🇯🇵</span>
+                <span class="lang-title">日本語</span>
+                <span class="lang-code">JA</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="uk">
+                <span class="lang-flag">🇺🇦</span>
+                <span class="lang-title">Українська</span>
+                <span class="lang-code">UK</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="pl">
+                <span class="lang-flag">🇵🇱</span>
+                <span class="lang-title">Polski</span>
+                <span class="lang-code">PL</span>
+                <span class="lang-check">✓</span>
+              </div>
+              <div class="dropdown-lang-item" data-lang="hy">
+                <span class="lang-flag">🇦🇲</span>
+                <span class="lang-title">Հայերեն</span>
+                <span class="lang-code">HY</span>
+                <span class="lang-check">✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
           </div>
         </div>
       </div>
@@ -672,7 +752,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-          <span id="txt-ext-modal-title">Built-in Extensions Hub (7 Modules)</span>
+          <span id="txt-ext-modal-title">Built-in Extensions Hub (6 Modules)</span>
         </div>
         <button class="modal-close-btn" id="btn-close-extensions-modal">✕</button>
       </div>
@@ -763,104 +843,10 @@
               <span class="slider-switch"></span>
             </label>
           </div>
-
-          <!-- Ext 7: Language & Localization (8 Languages) -->
-          <div class="ext-card">
-            <div class="ext-icon-box" style="background: rgba(0, 229, 255, 0.15); color: #00E5FF; font-size: 20px;">🌐</div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-lang-name">Language & Localization</span>
-                <span class="ext-badge pro">8 Languages</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-lang-desc">Switch between 8 supported interface languages (EN, RU, DE, FR, JA, UK, PL, HY).</div>
-              <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;" id="current-lang-indicator">Active: English (US)</div>
-            </div>
-            <button class="ext-action-btn" id="ext-btn-open-lang">Change Language</button>
-          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- 8.5. Language Selection Modal -->
-  <div class="modal-overlay" id="lang-modal-overlay">
-    <div class="modal-box lang-modal">
-      <div class="modal-header">
-        <h2 id="txt-lang-modal-title">🌐 Select Language / Выберите язык</h2>
-        <button class="modal-close-btn" id="btn-close-lang-modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="lang-grid" id="lang-grid">
-          <!-- 8 Language Bento Cards -->
-          <div class="lang-card active" data-lang="en">
-            <div class="lang-flag">🇺🇸</div>
-            <div class="lang-info">
-              <div class="lang-name">English</div>
-              <div class="lang-sub">English (US / UK)</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="ru">
-            <div class="lang-flag">🇷🇺</div>
-            <div class="lang-info">
-              <div class="lang-name">Русский</div>
-              <div class="lang-sub">Russian</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="de">
-            <div class="lang-flag">🇩🇪</div>
-            <div class="lang-info">
-              <div class="lang-name">Deutsch</div>
-              <div class="lang-sub">German</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="fr">
-            <div class="lang-flag">🇫🇷</div>
-            <div class="lang-info">
-              <div class="lang-name">Français</div>
-              <div class="lang-sub">French</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="ja">
-            <div class="lang-flag">🇯🇵</div>
-            <div class="lang-info">
-              <div class="lang-name">日本語</div>
-              <div class="lang-sub">Japanese</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="uk">
-            <div class="lang-flag">🇺🇦</div>
-            <div class="lang-info">
-              <div class="lang-name">Українська</div>
-              <div class="lang-sub">Ukrainian</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="pl">
-            <div class="lang-flag">🇵🇱</div>
-            <div class="lang-info">
-              <div class="lang-name">Polski</div>
-              <div class="lang-sub">Polish</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-          <div class="lang-card" data-lang="hy">
-            <div class="lang-flag">🇦🇲</div>
-            <div class="lang-info">
-              <div class="lang-name">Հայերեն</div>
-              <div class="lang-sub">Armenian</div>
-            </div>
-            <div class="lang-check">✓</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <!-- 9. Fullscreen Synced Lyrics & Karaoke Overlay -->
   <div class="lyrics-overlay" id="lyrics-overlay">

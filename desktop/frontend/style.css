@@ -46,6 +46,110 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   user-select: none;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 85, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Frameless Window Titlebar (Bento Glass CSD) */
+.custom-titlebar {
+  height: 34px;
+  background: rgba(14, 13, 18, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 0 14px;
+  user-select: none;
+  -webkit-app-region: drag;
+  z-index: 1000;
+  flex-shrink: 0;
+}
+
+.titlebar-drag-region {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: default;
+}
+
+.titlebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.titlebar-logo {
+  width: 15px;
+  height: 15px;
+  fill: var(--orange-neon);
+}
+
+.titlebar-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.3px;
+}
+
+.titlebar-badge {
+  font-size: 8.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--orange-neon);
+  background: rgba(255, 85, 0, 0.12);
+  border: 1px solid rgba(255, 85, 0, 0.3);
+  padding: 1px 6px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.titlebar-controls {
+  display: flex;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-btn {
+  width: 44px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.titlebar-btn svg {
+  width: 11px;
+  height: 11px;
+}
+
+.titlebar-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.titlebar-btn.btn-close:hover {
+  background: #E81123 !important;
+  color: #FFFFFF !important;
+}
+
+@media (max-width: 768px) {
+  .custom-titlebar {
+    display: none !important;
+  }
+  body {
+    border: none;
+    box-shadow: none;
+  }
 }
 
 /* 1. Ambient Smoke Canvas */
@@ -1067,17 +1171,23 @@ body {
   position: absolute;
   top: 48px;
   right: 0;
-  width: 190px;
-  background: rgba(20, 19, 26, 0.98);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  width: 220px;
+  background: rgba(18, 17, 24, 0.98);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 85, 0, 0.18);
   display: none;
   flex-direction: column;
-  padding: 6px;
-  z-index: 200;
+  padding: 8px 6px;
+  z-index: 250;
+  animation: dropdownPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownPop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .user-dropdown.open {
@@ -1088,7 +1198,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
+  padding: 9px 12px;
   color: var(--text-muted);
   font-size: 13px;
   font-weight: 600;
@@ -1096,11 +1206,94 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
+  user-select: none;
 }
 
 .dropdown-item:hover {
   background: rgba(255, 85, 0, 0.15);
   color: #FFFFFF;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 6px 4px;
+}
+
+.dropdown-header {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 10px 4px;
+  user-select: none;
+}
+
+.dropdown-lang-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 250px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dropdown-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.dropdown-lang-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.dropdown-lang-item.active {
+  background: rgba(255, 85, 0, 0.16);
+  color: var(--orange-neon);
+  font-weight: 700;
+}
+
+.dropdown-lang-item .lang-flag {
+  font-size: 14px;
+}
+
+.dropdown-lang-item .lang-title {
+  flex: 1;
+  font-size: 12px;
+}
+
+.dropdown-lang-item .lang-code {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.dropdown-lang-item.active .lang-code {
+  color: var(--orange-neon);
+  background: rgba(255, 85, 0, 0.2);
+}
+
+.dropdown-lang-item .lang-check {
+  font-size: 11px;
+  color: var(--orange-neon);
+  opacity: 0;
+  margin-left: 2px;
+}
+
+.dropdown-lang-item.active .lang-check {
+  opacity: 1;
 }
 
 /* Generic Bento Modal Overlay */

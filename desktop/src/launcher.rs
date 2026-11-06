@@ -2,7 +2,7 @@ use std::process::{Child, Command};
 use tao::{
     dpi::LogicalSize,
     event::{Event, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
+    event_loop::{ControlFlow, EventLoop, EventLoopBuilder},
     window::{Icon, WindowBuilder},
 };
 use wry::WebViewBuilder;
@@ -12,6 +12,14 @@ use tao::platform::unix::WindowExtUnix;
 #[cfg(target_os = "linux")]
 use wry::WebViewBuilderExtUnix;
 
+#[derive(Debug, Clone, Copy)]
+pub enum WindowAction {
+    Minimize,
+    Maximize,
+    Close,
+    Drag,
+}
+
 fn load_icon() -> Option<Icon> {
     let bytes = include_bytes!("../assets/icon.png");
     let img = image::load_from_memory(bytes).ok()?.to_rgba8();
@@ -20,11 +28,14 @@ fn load_icon() -> Option<Icon> {
 }
 
 pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
-    println!("🖥️  Creating native standalone window (Tao + Wry)...");
-    let event_loop = EventLoop::new();
+    println!("🖥️  Creating native standalone window (Tao + Wry, Frameless Custom CSD)...");
+    let event_loop: EventLoop<WindowAction> = EventLoopBuilder::<WindowAction>::with_user_event().build();
+    let proxy = event_loop.create_proxy();
 
     let mut builder = WindowBuilder::new()
         .with_title("SoundCloud Ultimate")
+        .with_decorations(false)
+        .with_resizable(true)
         .with_inner_size(LogicalSize::new(1340.0, 880.0))
         .with_min_inner_size(LogicalSize::new(960.0, 640.0));
 
@@ -34,9 +45,28 @@ pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
 
     let window = builder.build(&event_loop)?;
 
+    let proxy_ipc = proxy.clone();
     let webview_builder = WebViewBuilder::new()
         .with_url(url)
-        .with_devtools(true);
+        .with_devtools(true)
+        .with_ipc_handler(move |request| {
+            let msg = request.body();
+            match msg.as_str() {
+                "window:minimize" => {
+                    let _ = proxy_ipc.send_event(WindowAction::Minimize);
+                }
+                "window:maximize" => {
+                    let _ = proxy_ipc.send_event(WindowAction::Maximize);
+                }
+                "window:close" => {
+                    let _ = proxy_ipc.send_event(WindowAction::Close);
+                }
+                "window:drag" => {
+                    let _ = proxy_ipc.send_event(WindowAction::Drag);
+                }
+                _ => {}
+            }
+        });
 
     #[cfg(target_os = "linux")]
     let _webview = if let Some(vbox) = window.default_vbox() {
@@ -48,21 +78,37 @@ pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
     #[cfg(not(target_os = "linux"))]
     let _webview = webview_builder.build(&window)?;
 
-    println!("✨ Standalone native desktop window created successfully.");
+    println!("✨ Standalone frameless native desktop window created successfully.");
 
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;
 
-        if let Event::WindowEvent {
-            event: WindowEvent::CloseRequested,
-            ..
-        } = event
-        {
-            println!("🚪 Window closed by user. Exiting application...");
-            *control_flow = ControlFlow::Exit;
+        match event {
+            Event::UserEvent(action) => match action {
+                WindowAction::Minimize => {
+                    window.set_minimized(true);
+                }
+                WindowAction::Maximize => {
+                    window.set_maximized(!window.is_maximized());
+                }
+                WindowAction::Close => {
+                    println!("🚪 Window closed by user. Exiting application...");
+                    *control_flow = ControlFlow::Exit;
+                }
+                WindowAction::Drag => {
+                    let _ = window.drag_window();
+                }
+            },
+            Event::WindowEvent {
+                event: WindowEvent::CloseRequested,
+                ..
+            } => {
+                println!("🚪 Window closed by user. Exiting application...");
+                *control_flow = ControlFlow::Exit;
+            }
+            _ => {}
         }
     });
-
 }
 
 pub fn launch_desktop_window(url: &str) -> Option<Child> {

@@ -62,6 +62,7 @@ fn create_router(state: AppState) -> Router {
     Router::new()
         // Core API
         .route("/api/status", get(api_status))
+        .route("/api/window/close", post(api_window_close))
         .route("/api/search", get(api_search))
         .route("/api/trending", get(api_trending))
         .route("/api/stream", get(api_stream))
@@ -247,6 +248,14 @@ async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
         "antidpi": "active (Zapret TLS Split + Cloudflare DoH)",
         "auth": auth
     }))
+}
+
+async fn api_window_close() -> StatusCode {
+    std::thread::spawn(|| {
+        std::thread::sleep(std::time::Duration::from_millis(150));
+        std::process::exit(0);
+    });
+    StatusCode::OK
 }
 
 async fn api_auth_status(State(state): State<AppState>) -> impl IntoResponse {

@@ -39,7 +39,7 @@
   "en": {
     "search_placeholder": "Search tracks, artists, albums...",
     "themes_btn": "Themes (10)",
-    "extensions_btn": "Extensions (7)",
+    "extensions_btn": "Extensions (6)",
     "login_btn": "Sign In",
     "my_profile": "My Profile",
     "logout": "Sign Out",
@@ -60,7 +60,7 @@
     "auth_divider": "or enter session token manually",
     "btn_submit_token": "Connect Account",
     "theme_title": "Themes (10 AMOLED Palettes)",
-    "ext_title": "Built-in Extensions Hub (7 Modules)",
+    "ext_title": "Built-in Extensions Hub (6 Modules)",
     "ext_discord_name": "Discord Rich Presence (Linux & Windows)",
     "ext_discord_desc": "Broadcasts current track, artist, album art, animated progress bar, and 'Listen on SoundCloud' button to your Discord profile on Linux & Windows.",
     "ext_lang_name": "Language & Localization",
@@ -144,12 +144,16 @@
     "ext_looper_name": "A-B Precision Looper",
     "ext_looper_desc": "Instantly set loop points [A] and [B] on the timeline for infinite seamless repetition of drops and beats.",
     "ext_card_name": "Social Track Card Generator",
-    "ext_card_desc": "Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata."
+    "ext_card_desc": "Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata.",
+    "guest_user": "Guest",
+    "drop_lang_header": "Language / Язык",
+    "dropdown_login": "⚡ Sign In / Войти",
+    "toast_lang_switched": "🇺🇸 Language switched to English"
   },
   "ru": {
     "search_placeholder": "Поиск треков, исполнителей, альбомов...",
     "themes_btn": "Темы (10)",
-    "extensions_btn": "Расширения (7)",
+    "extensions_btn": "Расширения (6)",
     "login_btn": "Войти в аккаунт",
     "my_profile": "Мой профиль",
     "logout": "Выйти",
@@ -170,7 +174,7 @@
     "auth_divider": "или введите токен сессии",
     "btn_submit_token": "Подключить аккаунт",
     "theme_title": "Темы оформления (10 AMOLED палитр)",
-    "ext_title": "Центр встроенных расширений (7 модулей)",
+    "ext_title": "Центр встроенных расширений (6 модулей)",
     "ext_discord_name": "Discord Rich Presence (Linux и Windows)",
     "ext_discord_desc": "Синхронизация трека, исполнителя, таймлайна и кликабельной ссылки в профиле Discord без сторонних утилит.",
     "ext_lang_name": "Локализация и языки",
@@ -254,12 +258,16 @@
     "ext_looper_name": "A-B Прецизионный лупер",
     "ext_looper_desc": "Мгновенная установка меток [A] и [B] для бесконечного бесшовного зацикливания любимых дропов и битов.",
     "ext_card_name": "Генератор Bento-карточек трека",
-    "ext_card_desc": "Создание стильных AMOLED-карточек трека с аудиоволной и обложкой для соцсетей."
+    "ext_card_desc": "Создание стильных AMOLED-карточек трека с аудиоволной и обложкой для соцсетей.",
+    "guest_user": "Гость",
+    "drop_lang_header": "Язык интерфейса",
+    "dropdown_login": "⚡ Войти в аккаунт",
+    "toast_lang_switched": "🇷🇺 Язык интерфейса изменен на Русский"
   },
   "de": {
     "search_placeholder": "Titel, Künstler, Alben suchen...",
     "themes_btn": "Designs (10)",
-    "extensions_btn": "Erweiterungen (7)",
+    "extensions_btn": "Erweiterungen (6)",
     "login_btn": "Anmelden",
     "my_profile": "Mein Profil",
     "logout": "Abmelden",
@@ -280,7 +288,7 @@
     "auth_divider": "oder Sitzungstoken manuell eingeben",
     "btn_submit_token": "Konto verbinden",
     "theme_title": "Designs (10 AMOLED-Farbpaletten)",
-    "ext_title": "Integrierter Erweiterungs-Hub (7 Module)",
+    "ext_title": "Integrierter Erweiterungs-Hub (6 Module)",
     "ext_discord_name": "Discord Rich Presence (Linux & Windows)",
     "ext_discord_desc": "Überträgt aktuellen Titel, Künstler, Albumcover und Fortschrittsbalken direkt auf Ihr Discord-Profil.",
     "ext_lang_name": "Sprache & Lokalisierung",
@@ -364,12 +372,16 @@
     "ext_looper_name": "A-B Präzisions-Looper",
     "ext_looper_desc": "Setzen Sie Punkte [A] und [B] für nahtlose Endlosschleifen von Soli und Beats.",
     "ext_card_name": "Social-Bento-Trackcard-Generator",
-    "ext_card_desc": "Erstellen Sie hochauflösende AMOLED-Karten für den aktuellen Titel zum Teilen."
+    "ext_card_desc": "Erstellen Sie hochauflösende AMOLED-Karten für den aktuellen Titel zum Teilen.",
+    "guest_user": "Gast",
+    "drop_lang_header": "Oberflächensprache",
+    "dropdown_login": "⚡ Bei SoundCloud anmelden",
+    "toast_lang_switched": "🇩🇪 Sprache auf Deutsch geändert"
   },
   "fr": {
     "search_placeholder": "Rechercher titres, artistes, albums...",
     "themes_btn": "Thèmes (10)",
-    "extensions_btn": "Extensions (7)",
+    "extensions_btn": "Extensions (6)",
     "login_btn": "Se connecter",
     "my_profile": "Mon profil",
     "logout": "Déconnexion",
@@ -390,7 +402,7 @@
     "auth_divider": "ou entrer le jeton de session manuellement",
     "btn_submit_token": "Connecter le compte",
     "theme_title": "Thèmes (10 palettes AMOLED)",
-    "ext_title": "Centre d'extensions intégrées (7 modules)",
+    "ext_title": "Centre d'extensions intégrées (6 modules)",
     "ext_discord_name": "Discord Rich Presence (Linux et Windows)",
     "ext_discord_desc": "Diffuse le titre en cours, l'artiste, la pochette et la barre de progression sur votre profil Discord.",
     "ext_lang_name": "Langue et localisation",
@@ -474,12 +486,16 @@
     "ext_looper_name": "Looper de précision A-B",
     "ext_looper_desc": "Définissez les points [A] et [B] pour répéter vos passages préférés en boucle infinie.",
     "ext_card_name": "Générateur de carte Bento",
-    "ext_card_desc": "Générez des cartes AMOLED haute résolution du morceau actuel à partager."
+    "ext_card_desc": "Générez des cartes AMOLED haute résolution du morceau actuel à partager.",
+    "guest_user": "Invité",
+    "drop_lang_header": "Langue de l'interface",
+    "dropdown_login": "⚡ Se connecter à SoundCloud",
+    "toast_lang_switched": "🇫🇷 Langue changée en Français"
   },
   "ja": {
     "search_placeholder": "曲、アーティスト、アルバムを検索...",
     "themes_btn": "テーマ (10)",
-    "extensions_btn": "拡張機能 (7)",
+    "extensions_btn": "拡張機能 (6)",
     "login_btn": "ログイン",
     "my_profile": "マイプロフィール",
     "logout": "ログアウト",
@@ -500,7 +516,7 @@
     "auth_divider": "またはセッショントークンを手動で入力",
     "btn_submit_token": "アカウントを接続",
     "theme_title": "テーマ (10種類のAMOLEDパレット)",
-    "ext_title": "内蔵拡張機能ハブ (7モジュール)",
+    "ext_title": "内蔵拡張機能ハブ (6モジュール)",
     "ext_discord_name": "Discord Rich Presence (Linux & Windows)",
     "ext_discord_desc": "再生中の曲、アーティスト、ジャケット写真、プログレスバーをDiscordプロフィールに自動表示します。",
     "ext_lang_name": "言語と地域設定",
@@ -584,12 +600,16 @@
     "ext_looper_name": "A-Bプレシジョンルーパー",
     "ext_looper_desc": "区間[A]-[B]を指定してギターソロやビートをシームレスに無限ループ再生。",
     "ext_card_name": "Bentoトラックカードジェネレーター",
-    "ext_card_desc": "SNS共有用の美しいAMOLEDトラックカードをワンクリックで生成。"
+    "ext_card_desc": "SNS共有用の美しいAMOLEDトラックカードをワンクリックで生成。",
+    "guest_user": "ゲスト",
+    "drop_lang_header": "表示言語",
+    "dropdown_login": "⚡ SoundCloudにログイン",
+    "toast_lang_switched": "🇯🇵 表示言語を日本語に変更しました"
   },
   "uk": {
     "search_placeholder": "Пошук треків, виконавців, альбомів...",
     "themes_btn": "Теми (10)",
-    "extensions_btn": "Розширення (7)",
+    "extensions_btn": "Розширення (6)",
     "login_btn": "Увійти в акаунт",
     "my_profile": "Мій профіль",
     "logout": "Вийти",
@@ -610,7 +630,7 @@
     "auth_divider": "або введіть токен сесії вручну",
     "btn_submit_token": "Підключити акаунт",
     "theme_title": "Теми оформлення (10 AMOLED палітр)",
-    "ext_title": "Центр вбудованих розширень (7 модулів)",
+    "ext_title": "Центр вбудованих розширень (6 модулів)",
     "ext_discord_name": "Discord Rich Presence (Linux і Windows)",
     "ext_discord_desc": "Синхронізація треку, виконавця, обкладинки та шкали прогресу у профілі Discord без сторонніх утиліт.",
     "ext_lang_name": "Мова та локалізація",
@@ -694,12 +714,16 @@
     "ext_looper_name": "A-B Прецизійний лупер",
     "ext_looper_desc": "Миттєве встановлення міток [A] та [B] для безперервного зациклення улюблених фрагментів.",
     "ext_card_name": "Генератор Bento-карток треку",
-    "ext_card_desc": "Створення стильних AMOLED-карток треку для публікації в соцмережах."
+    "ext_card_desc": "Створення стильних AMOLED-карток треку для публікації в соцмережах.",
+    "guest_user": "Гість",
+    "drop_lang_header": "Мова інтерфейсу",
+    "dropdown_login": "⚡ Увійти до SoundCloud",
+    "toast_lang_switched": "🇺🇦 Мову інтерфейсу змінено на Українську"
   },
   "pl": {
     "search_placeholder": "Szukaj utworów, wykonawców, albumów...",
     "themes_btn": "Motywy (10)",
-    "extensions_btn": "Rozszerzenia (7)",
+    "extensions_btn": "Rozszerzenia (6)",
     "login_btn": "Zaloguj się",
     "my_profile": "Mój profil",
     "logout": "Wyloguj się",
@@ -720,7 +744,7 @@
     "auth_divider": "lub wprowadź token sesji ręcznie",
     "btn_submit_token": "Połącz konto",
     "theme_title": "Motywy (10 palet AMOLED)",
-    "ext_title": "Centrum wbudowanych rozszerzeń (7 modułów)",
+    "ext_title": "Centrum wbudowanych rozszerzeń (6 модуłów)",
     "ext_discord_name": "Discord Rich Presence (Linux i Windows)",
     "ext_discord_desc": "Przesyła aktualny utwór, wykonawcę, okładkę albumu i pasek postępu do Twojego profilu Discord.",
     "ext_lang_name": "Język i lokalizacja",
@@ -804,12 +828,16 @@
     "ext_looper_name": "Precyzyjny pętlik A-B",
     "ext_looper_desc": "Ustaw punkty [A] i [B], aby bezszwowo zapętlać ulubione partie utworów.",
     "ext_card_name": "Generator kart utworów Bento",
-    "ext_card_desc": "Generuj estetyczne karty AMOLED z metadanymi i falami dźwiękowymi do mediów społecznościowych."
+    "ext_card_desc": "Generuj estetyczne karty AMOLED z metadanymi i falami dźwiękowymi do mediów społecznościowych.",
+    "guest_user": "Gość",
+    "drop_lang_header": "Język interfejsu",
+    "dropdown_login": "⚡ Zaloguj się do SoundCloud",
+    "toast_lang_switched": "🇵🇱 Język zmieniony na Polski"
   },
   "hy": {
     "search_placeholder": "Որոնել երգեր, կատարողներ, ալբոմներ...",
     "themes_btn": "Թեմաներ (10)",
-    "extensions_btn": "Ընդլայնումներ (7)",
+    "extensions_btn": "Ընդլայնումներ (6)",
     "login_btn": "Մուտք գործել",
     "my_profile": "Իմ պրոֆիլը",
     "logout": "Ելք",
@@ -830,7 +858,7 @@
     "auth_divider": "կամ մուտքագրեք սեսիայի թոքենը ձեռքով",
     "btn_submit_token": "Միացնել հաշիվը",
     "theme_title": "Ձևավորման թեմաներ (10 AMOLED գունապնակ)",
-    "ext_title": "Ներկառուցված ընդլայնումների կենտրոն (7 մոդուլ)",
+    "ext_title": "Ներկառուցված ընդլայնումների կենտրոն (6 մոդուլ)",
     "ext_discord_name": "Discord Rich Presence (Linux և Windows)",
     "ext_discord_desc": "Ցուցադրում է ընթացիկ երգը, կատարողին, նկարը և ժամանակացույցը ձեր Discord պրոֆիլում:",
     "ext_lang_name": "Լեզու և տեղայնացում",
@@ -914,7 +942,11 @@
     "ext_looper_name": "A-B Ճշգրիտ Լուպեր",
     "ext_looper_desc": "Տեղադրեք [A] և [B] կետերը սիրված սոլոները կամ բիթերն անվերջ կրկնելու համար:",
     "ext_card_name": "Երգի Bento-քարտ սոցցանցերի համար",
-    "ext_card_desc": "Ստեղծեք ընթացիկ երգի բարձր որակի AMOLED քարտ՝ սոցիալական ցանցերում կիսվելու համար:"
+    "ext_card_desc": "Ստեղծեք ընթացիկ երգի բարձր որակի AMOLED քարտ՝ սոցիալական ցանցերում կիսվելու համար:",
+    "guest_user": "Հյուր",
+    "drop_lang_header": "Ինտերֆեյսի լեզու",
+    "dropdown_login": "⚡ Մուտք գործել SoundCloud",
+    "toast_lang_switched": "🇦🇲 Ինտերֆեյսի լեզուն փոխվել է Հայերեն"
   }
 };
 
@@ -2200,31 +2232,58 @@
   }
 
   async function checkAuthStatus() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    const btnDropLogin = document.getElementById('btn-dropdown-login');
+
     try {
       const res = await fetch('/api/auth/status');
       const data = await res.json();
       if (data.authenticated && data.user) {
         currentUser = data.user;
-        btnLoginTrigger.style.display = 'none';
+        if (btnLoginTrigger) btnLoginTrigger.style.display = 'none';
         userBadge.style.display = 'flex';
         userName.textContent = currentUser.username;
         userAvatar.src = currentUser.avatar_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="%23FF5500"%3E%3Ccircle cx="16" cy="16" r="16"/%3E%3C/svg%3E';
+        if (btnViewMyProfile) btnViewMyProfile.style.display = 'flex';
+        if (btnLogout) btnLogout.style.display = 'flex';
+        if (btnDropLogin) btnDropLogin.style.display = 'none';
       } else {
         currentUser = null;
-        btnLoginTrigger.style.display = 'flex';
-        userBadge.style.display = 'none';
+        if (btnLoginTrigger) btnLoginTrigger.style.display = 'none';
+        userBadge.style.display = 'flex';
+        userName.textContent = t.guest_user || 'Guest';
+        userAvatar.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23888"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/%3E%3C/svg%3E';
+        if (btnViewMyProfile) btnViewMyProfile.style.display = 'none';
+        if (btnLogout) btnLogout.style.display = 'none';
+        if (btnDropLogin) btnDropLogin.style.display = 'flex';
       }
     } catch (e) {
       console.warn('Auth status check failed:', e);
       currentUser = null;
-      btnLoginTrigger.style.display = 'flex';
-      userBadge.style.display = 'none';
+      if (btnLoginTrigger) btnLoginTrigger.style.display = 'none';
+      userBadge.style.display = 'flex';
+      userName.textContent = t.guest_user || 'Guest';
+      userAvatar.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23888"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/%3E%3C/svg%3E';
+      if (btnViewMyProfile) btnViewMyProfile.style.display = 'none';
+      if (btnLogout) btnLogout.style.display = 'none';
+      if (btnDropLogin) btnDropLogin.style.display = 'flex';
     }
   }
 
-  btnLoginTrigger.addEventListener('click', () => {
-    authModalOverlay.classList.add('open');
-  });
+  if (btnLoginTrigger) {
+    btnLoginTrigger.addEventListener('click', () => {
+      authModalOverlay.classList.add('open');
+    });
+  }
+
+  const btnDropdownLogin = document.getElementById('btn-dropdown-login');
+  if (btnDropdownLogin) {
+    btnDropdownLogin.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdown.classList.remove('open');
+      authModalOverlay.classList.add('open');
+    });
+  }
 
   btnCloseAuthModal.addEventListener('click', () => {
     authModalOverlay.classList.remove('open');
@@ -2881,6 +2940,71 @@
     const rgb = THEME_COLORS[themeId] || [255, 85, 0];
     if (window.setSmokeThemeColor) {
       window.setSmokeThemeColor(rgb[0], rgb[1], rgb[2]);
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // CUSTOM FRAMELESS WINDOW TITLEBAR (Bento Glass CSD)
+  // ═══════════════════════════════════════════════════════════════════════
+  function initCustomTitlebar() {
+    const btnMin = document.getElementById('titlebar-btn-min');
+    const btnMax = document.getElementById('titlebar-btn-max');
+    const btnClose = document.getElementById('titlebar-btn-close');
+    const dragRegion = document.getElementById('titlebar-drag-region');
+    const iconMax = document.getElementById('titlebar-icon-max');
+    let isMaximized = false;
+
+    function postIpc(action) {
+      if (window.ipc && typeof window.ipc.postMessage === 'function') {
+        window.ipc.postMessage(action);
+        return true;
+      }
+      return false;
+    }
+
+    if (btnMin) {
+      btnMin.addEventListener('click', () => {
+        postIpc('window:minimize');
+      });
+    }
+
+    function toggleMaximize() {
+      postIpc('window:maximize');
+      isMaximized = !isMaximized;
+      if (iconMax) {
+        if (isMaximized) {
+          // Restore (double-window icon)
+          iconMax.innerHTML = '<path d="M3.5 1.5h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.5 3.5h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.1"/>';
+        } else {
+          // Maximize (single-square icon)
+          iconMax.innerHTML = '<rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/>';
+        }
+      }
+    }
+
+    if (btnMax) {
+      btnMax.addEventListener('click', toggleMaximize);
+    }
+
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        const sent = postIpc('window:close');
+        if (!sent) {
+          fetch('/api/window/close', { method: 'POST' }).catch(() => {});
+          window.close();
+        }
+      });
+    }
+
+    if (dragRegion) {
+      dragRegion.addEventListener('mousedown', (e) => {
+        if (e.buttons === 1 && e.detail === 1) {
+          postIpc('window:drag');
+        }
+      });
+      dragRegion.addEventListener('dblclick', () => {
+        toggleMaximize();
+      });
     }
   }
 
@@ -3822,31 +3946,18 @@
   };
 
   // Init
+  initCustomTitlebar();
   initThemes();
   initLanguageSwitcher();
 
   // ═══════════════════════════════════════════════════════════════════════
   // MULTI-LANGUAGE SYSTEM (EN, RU, DE, FR, JA, UK, PL, HY)
+  // Integrated directly into User Avatar Dropdown
   // ═══════════════════════════════════════════════════════════════════════
-  
 
   function initLanguageSwitcher() {
     currentLang = localStorage.getItem("lang") || "en";
     if (!TRANSLATIONS[currentLang]) currentLang = "en";
-
-    const langModal = document.getElementById("lang-modal-overlay");
-    const btnCloseLang = document.getElementById("btn-close-lang-modal");
-    const btnOpenFromExt = document.getElementById("ext-btn-open-lang");
-    const btnDropdownLang = document.getElementById("btn-dropdown-lang");
-
-    function openLanguageModal() {
-      closeAllModals();
-      if (langModal) langModal.classList.add("open");
-    }
-
-    function closeLanguageModal() {
-      if (langModal) langModal.classList.remove("open");
-    }
 
     function applyLanguage(lang) {
       if (!TRANSLATIONS[lang]) lang = "en";
@@ -3854,27 +3965,33 @@
       localStorage.setItem("lang", lang);
       const t = TRANSLATIONS[lang];
 
-      // Update dropdown item
-      const txtDropLang = document.getElementById("txt-dropdown-lang");
-      if (txtDropLang) txtDropLang.textContent = t.dropdown_lang;
+      // Update dropdown items
+      const txtDropLangHeader = document.getElementById("txt-drop-lang-header");
+      if (txtDropLangHeader) txtDropLangHeader.textContent = "🌐 " + (t.drop_lang_header || "Language / Язык");
 
-      // Update active indicator in Extensions Hub
-      const ind = document.getElementById("current-lang-indicator");
-      if (ind) ind.textContent = (t.active_lang_prefix || "Active: ") + (t.lang_native_name || lang.toUpperCase());
+      const txtDropLogin = document.getElementById("txt-dropdown-login");
+      if (txtDropLogin) txtDropLogin.textContent = t.dropdown_login || "⚡ Sign In / Войти";
 
-      // Update active state in Language Modal cards
-      document.querySelectorAll("#lang-grid .lang-card").forEach(card => {
-        const code = card.getAttribute("data-lang");
-        card.classList.toggle("active", code === lang);
+      const txtMyProf = document.getElementById("txt-my-profile");
+      if (txtMyProf) txtMyProf.textContent = t.my_profile;
+
+      const txtLogout = document.getElementById("txt-logout");
+      if (txtLogout) txtLogout.textContent = t.logout;
+
+      if (!currentUser && userName) {
+        userName.textContent = t.guest_user || "Guest";
+      }
+
+      // Update active highlight on dropdown language list
+      document.querySelectorAll("#dropdown-lang-list .dropdown-lang-item").forEach(item => {
+        const code = item.getAttribute("data-lang");
+        item.classList.toggle("active", code === lang);
       });
 
       // Update Header & Nav
       const searchInp = document.getElementById("search-input");
       const txtThemes = document.getElementById("txt-themes-btn");
       const txtExt = document.getElementById("txt-extensions-btn");
-      const txtLogin = document.getElementById("txt-login-btn");
-      const txtMyProf = document.getElementById("txt-my-profile");
-      const txtLogout = document.getElementById("txt-logout");
       const chipTrend = document.getElementById("chip-trending");
       const chipLk = document.getElementById("chip-likes");
       const chipPl = document.getElementById("chip-playlists");
@@ -3887,9 +4004,6 @@
       if (searchInp) searchInp.placeholder = t.search_placeholder;
       if (txtThemes) txtThemes.textContent = t.themes_btn;
       if (txtExt) txtExt.textContent = t.extensions_btn;
-      if (txtLogin) txtLogin.textContent = t.login_btn;
-      if (txtMyProf) txtMyProf.textContent = t.my_profile;
-      if (txtLogout) txtLogout.textContent = t.logout;
       if (chipTrend) chipTrend.textContent = t.chip_trending;
       if (chipLk) chipLk.textContent = t.chip_likes;
       if (chipPl) chipPl.textContent = t.chip_playlists;
@@ -3935,9 +4049,6 @@
       const txtExtTitle = document.getElementById("txt-ext-modal-title");
       const txtExtDiscordName = document.getElementById("txt-ext-discord-name");
       const txtExtDiscordDesc = document.getElementById("txt-ext-discord-desc");
-      const txtExtLangName = document.getElementById("txt-ext-lang-name");
-      const txtExtLangDesc = document.getElementById("txt-ext-lang-desc");
-      const extBtnChangeLang = document.getElementById("ext-btn-open-lang");
 
       const txtExtLyricsName = document.getElementById("txt-ext-lyrics-name");
       const txtExtLyricsDesc = document.getElementById("txt-ext-lyrics-desc");
@@ -3971,7 +4082,6 @@
       const txtCardTitle = document.getElementById("txt-card-modal-title");
       const txtBtnCopyCard = document.getElementById("txt-btn-copy-card");
       const txtBtnDownloadCard = document.getElementById("txt-btn-download-card");
-      const txtLangModalTitle = document.getElementById("txt-lang-modal-title");
 
       const statTracks = document.getElementById("txt-stat-tracks");
       const statFollowers = document.getElementById("txt-stat-followers");
@@ -3991,9 +4101,6 @@
       if (txtExtTitle) txtExtTitle.textContent = t.ext_title;
       if (txtExtDiscordName) txtExtDiscordName.textContent = t.ext_discord_name;
       if (txtExtDiscordDesc) txtExtDiscordDesc.textContent = t.ext_discord_desc;
-      if (txtExtLangName) txtExtLangName.textContent = t.ext_lang_name;
-      if (txtExtLangDesc) txtExtLangDesc.textContent = t.ext_lang_desc;
-      if (extBtnChangeLang) extBtnChangeLang.textContent = t.ext_btn_change_lang;
 
       if (txtExtLyricsName) txtExtLyricsName.textContent = t.ext_lyrics_name;
       if (txtExtLyricsDesc) txtExtLyricsDesc.textContent = t.ext_lyrics_desc;
@@ -4027,7 +4134,6 @@
       if (txtCardTitle) txtCardTitle.textContent = t.card_title;
       if (txtBtnCopyCard) txtBtnCopyCard.textContent = t.btn_copy_card;
       if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = t.btn_download_card;
-      if (txtLangModalTitle) txtLangModalTitle.textContent = t.lang_modal_title;
 
       if (statTracks) statTracks.textContent = t.txt_stat_tracks;
       if (statFollowers) statFollowers.textContent = t.txt_stat_followers;
@@ -4037,52 +4143,30 @@
       if (playPlaylist) playPlaylist.textContent = t.txt_play_playlist;
     }
 
-    // Modal listeners
-    if (btnCloseLang) {
-      btnCloseLang.addEventListener("click", closeLanguageModal);
-    }
-    if (langModal) {
-      langModal.addEventListener("click", (e) => {
-        if (e.target === langModal) closeLanguageModal();
-      });
-    }
-    if (btnOpenFromExt) {
-      btnOpenFromExt.addEventListener("click", () => {
-        document.getElementById("extensions-modal-overlay")?.classList.remove("open");
-        openLanguageModal();
-      });
-    }
-    if (btnDropdownLang) {
-      btnDropdownLang.addEventListener("click", () => {
-        if (userDropdown) userDropdown.classList.remove("open");
-        openLanguageModal();
-      });
-    }
-
-    // Grid cards
-    document.querySelectorAll("#lang-grid .lang-card").forEach(card => {
-      card.addEventListener("click", () => {
-        const code = card.getAttribute("data-lang");
+    // Dropdown language list click handlers
+    document.querySelectorAll("#dropdown-lang-list .dropdown-lang-item").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const code = item.getAttribute("data-lang");
         if (code && TRANSLATIONS[code]) {
           applyLanguage(code);
-          closeLanguageModal();
-          showToast(TRANSLATIONS[code].toast_lang);
+          if (userDropdown) userDropdown.classList.remove("open");
+          showToast(TRANSLATIONS[code].toast_lang_switched || TRANSLATIONS[code].toast_lang || ("Language: " + code.toUpperCase()));
         }
       });
     });
 
-    // Subtle Hotkey: Alt + Shift + L opens Language Selection Modal
+    // Alt + Shift + L shortcut toggles avatar dropdown for quick keyboard navigation
     window.addEventListener("keydown", (e) => {
       if (e.altKey && e.shiftKey && (e.key === "L" || e.key === "l" || e.key === "д" || e.key === "Д")) {
-        openLanguageModal();
+        if (userDropdown) userDropdown.classList.toggle("open");
       }
     });
 
     applyLanguage(currentLang);
   }
 
-
-  initExtensionsHub();
+    initExtensionsHub();
   initLyricsEngine();
   initSleepTimer();
   initAudioFxStudio();
