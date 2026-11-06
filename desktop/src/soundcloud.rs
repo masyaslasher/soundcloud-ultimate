@@ -800,6 +800,8 @@ impl SoundCloudClient {
     }
 }
 
+const EMBEDDED_EXTRACT_SCRIPT: &str = include_str!("../extract_browser_token.py");
+
 fn auto_import_browser_token_sync() -> Option<String> {
     let mut candidate_paths = vec![PathBuf::from("extract_browser_token.py")];
     if let Ok(exe) = std::env::current_exe()
@@ -807,15 +809,21 @@ fn auto_import_browser_token_sync() -> Option<String> {
     {
         candidate_paths.push(parent.join("extract_browser_token.py"));
     }
-    if let Ok(home) = std::env::var("HOME") {
-        candidate_paths.push(PathBuf::from(&home).join(".gemini/antigravity/scratch/soundcloud-desktop/extract_browser_token.py"));
-        candidate_paths.push(PathBuf::from(&home).join(".gemini/antigravity/scratch/SoundCloud-Ultimate/desktop/extract_browser_token.py"));
-    }
 
-    let script_path = candidate_paths.into_iter().find(|p| p.exists())?;
+    let script_path = if let Some(existing) = candidate_paths.into_iter().find(|p| p.exists()) {
+        existing
+    } else {
+        let temp_script = std::env::temp_dir().join("sc_extract_browser_token.py");
+        if fs::write(&temp_script, EMBEDDED_EXTRACT_SCRIPT).is_ok() {
+            temp_script
+        } else {
+            return None;
+        }
+    };
+
     let python_cmd = if cfg!(windows) { "python" } else { "python3" };
 
-    let output = Command::new(python_cmd).arg(script_path).output().ok()?;
+    let output = Command::new(python_cmd).arg(&script_path).output().ok()?;
     if !output.status.success() {
         return None;
     }
@@ -827,6 +835,7 @@ fn auto_import_browser_token_sync() -> Option<String> {
         None
     }
 }
+
 
 fn parse_track_collection(val: &Value) -> Vec<TrackItem> {
     let mut tracks = Vec::new();

@@ -2,7 +2,6 @@ package com.soundcloud.ultimate;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -21,37 +20,63 @@ public class DoHClient {
         }
 
         OkHttpClient bootstrapClient = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(8, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
                 .build();
 
-        DnsOverHttps dnsOverHttps = null;
+        DnsOverHttps cloudflareDoH = null;
         try {
-            dnsOverHttps = new DnsOverHttps.Builder()
+            cloudflareDoH = new DnsOverHttps.Builder()
                     .client(bootstrapClient)
                     .url(HttpUrl.get("https://1.1.1.1/dns-query"))
                     .bootstrapDnsHosts(
-                            InetAddress.getByName("1.1.1.1"),
-                            InetAddress.getByName("1.0.0.1"),
-                            InetAddress.getByName("8.8.8.8")
+                            InetAddress.getByAddress("1.1.1.1", new byte[]{1, 1, 1, 1}),
+                            InetAddress.getByAddress("1.0.0.1", new byte[]{1, 0, 0, 1})
                     )
                     .includeIPv6(false)
                     .build();
-        } catch (UnknownHostException e) {
-            // Fallback to standard DNS if bootstrap host resolution fails
-            dnsOverHttps = null;
-        }
+        } catch (UnknownHostException ignored) {}
 
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+        DnsOverHttps googleDoH = null;
+        try {
+            googleDoH = new DnsOverHttps.Builder()
+                    .client(bootstrapClient)
+                    .url(HttpUrl.get("https://dns.google/dns-query"))
+                    .bootstrapDnsHosts(
+                            InetAddress.getByAddress("dns.google", new byte[]{8, 8, 8, 8}),
+                            InetAddress.getByAddress("dns.google", new byte[]{8, 8, 4, 4})
+                    )
+                    .includeIPv6(false)
+                    .build();
+        } catch (UnknownHostException ignored) {}
+
+        final DnsOverHttps primaryDns = cloudflareDoH;
+        final DnsOverHttps secondaryDns = googleDoH;
+
+        Dns resilientDns = hostname -> {
+            if (primaryDns != null) {
+                try {
+                    List<InetAddress> result = primaryDns.lookup(hostname);
+                    if (!result.isEmpty()) return result;
+                } catch (Exception ignored) {}
+            }
+            if (secondaryDns != null) {
+                try {
+                    List<InetAddress> result = secondaryDns.lookup(hostname);
+                    if (!result.isEmpty()) return result;
+                } catch (Exception ignored) {}
+            }
+            return Dns.SYSTEM.lookup(hostname);
+        };
+
+        client = new OkHttpClient.Builder()
+                .dns(resilientDns)
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
-                .followRedirects(true);
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .build();
 
-        if (dnsOverHttps != null) {
-            builder.dns(dnsOverHttps);
-        }
-
-        client = builder.build();
         return client;
     }
 }

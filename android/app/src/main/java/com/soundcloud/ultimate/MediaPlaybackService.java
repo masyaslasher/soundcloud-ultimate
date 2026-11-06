@@ -19,8 +19,8 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import java.io.InputStream;
-import java.net.URL;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MediaPlaybackService extends Service {
     public static final String ACTION_UPDATE = "com.soundcloud.ultimate.ACTION_UPDATE";
@@ -149,12 +149,15 @@ public class MediaPlaybackService extends Service {
         new Thread(() -> {
             try {
                 if (urlStr != null && urlStr.startsWith("http")) {
-                    InputStream in = new URL(urlStr).openStream();
-                    artworkBitmap = BitmapFactory.decodeStream(in);
-                    updateMediaSession();
-                    NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    if (nm != null) {
-                        nm.notify(NOTIFICATION_ID, buildNotification());
+                    Request req = new Request.Builder().url(urlStr).build();
+                    Response resp = DoHClient.getClient().newCall(req).execute();
+                    if (resp.isSuccessful() && resp.body() != null) {
+                        artworkBitmap = BitmapFactory.decodeStream(resp.body().byteStream());
+                        updateMediaSession();
+                        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        if (nm != null) {
+                            nm.notify(NOTIFICATION_ID, buildNotification());
+                        }
                     }
                 }
             } catch (Exception ignored) {}
@@ -233,10 +236,15 @@ public class MediaPlaybackService extends Service {
     }
 
     private void sendActionToActivity(String action) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setAction(action);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+        boolean handled = MainActivity.handlePlaybackAction(action);
+        if (!handled) {
+            try {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setAction(action);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            } catch (Exception ignored) {}
+        }
     }
 
     @Override
