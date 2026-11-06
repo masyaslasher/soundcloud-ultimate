@@ -276,16 +276,19 @@ public class MainActivity extends AppCompatActivity {
 
             if ("/api/search".equals(path)) {
                 String q = uri.getQueryParameter("q");
-                if (q == null) q = "";
-                String scUrl = "https://api-v2.soundcloud.com/search?q=" + Uri.encode(q)
-                        + "&client_id=" + activeClientId + "&limit=24";
+                if (q == null || q.trim().isEmpty()) q = "top";
+                String limit = uri.getQueryParameter("limit");
+                if (limit == null) limit = "24";
+
+                String scUrl = "https://api-v2.soundcloud.com/search/tracks?q=" + Uri.encode(q)
+                        + "&client_id=" + activeClientId + "&limit=" + limit;
 
                 Request scReq = new Request.Builder().url(scUrl).build();
                 Response scResp = client.newCall(scReq).execute();
+                JSONArray tracks = new JSONArray();
                 if (scResp.isSuccessful() && scResp.body() != null) {
                     JSONObject raw = new JSONObject(scResp.body().string());
                     JSONArray col = raw.optJSONArray("collection");
-                    JSONArray tracks = new JSONArray();
                     if (col != null) {
                         for (int i = 0; i < col.length(); i++) {
                             JSONObject tr = col.optJSONObject(i);
@@ -294,12 +297,41 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    JSONObject out = new JSONObject();
-                    out.put("tracks", tracks);
-                    out.put("playlists", new JSONArray());
-                    out.put("users", new JSONArray());
-                    return createJsonResponse(out.toString());
                 }
+
+                // Also query playlists for rich guest & discovery browsing
+                JSONArray playlists = new JSONArray();
+                try {
+                    String plUrl = "https://api-v2.soundcloud.com/search/playlists?q=" + Uri.encode(q)
+                            + "&client_id=" + activeClientId + "&limit=16";
+                    Request plReq = new Request.Builder().url(plUrl).build();
+                    Response plResp = client.newCall(plReq).execute();
+                    if (plResp.isSuccessful() && plResp.body() != null) {
+                        JSONObject rawPl = new JSONObject(plResp.body().string());
+                        JSONArray colPl = rawPl.optJSONArray("collection");
+                        if (colPl != null) {
+                            for (int i = 0; i < colPl.length(); i++) {
+                                JSONObject pl = colPl.optJSONObject(i);
+                                if (pl != null && pl.has("title")) {
+                                    JSONObject pObj = new JSONObject();
+                                    pObj.put("id", pl.optLong("id"));
+                                    pObj.put("title", pl.optString("title", "Untitled Playlist"));
+                                    JSONObject u = pl.optJSONObject("user");
+                                    pObj.put("artist", u != null ? u.optString("username", "Various Artists") : "SoundCloud");
+                                    pObj.put("artwork_url", pl.optString("artwork_url", ""));
+                                    pObj.put("track_count", pl.optInt("track_count", 0));
+                                    playlists.put(pObj);
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {}
+
+                JSONObject out = new JSONObject();
+                out.put("tracks", tracks);
+                out.put("playlists", playlists);
+                out.put("users", new JSONArray());
+                return createJsonResponse(out.toString());
             }
 
             if ("/api/stream".equals(path)) {

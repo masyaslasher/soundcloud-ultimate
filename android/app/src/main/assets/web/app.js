@@ -33,6 +33,555 @@
     }[m]));
   }
 
+  // Global Language & Translations (8 Languages)
+  let currentLang = localStorage.getItem('lang') || 'en';
+  const TRANSLATIONS = {
+  "en": {
+    "search_placeholder": "Search tracks, artists, albums...",
+    "themes_btn": "Themes (10)",
+    "extensions_btn": "Extensions (7)",
+    "login_btn": "Sign In",
+    "my_profile": "My Profile",
+    "logout": "Sign Out",
+    "chip_trending": "🔥 Trending",
+    "chip_likes": "❤️ Liked",
+    "chip_playlists": "📂 Playlists",
+    "chip_stream": "📡 Stream",
+    "chip_history": "🕒 History",
+    "hero_tag": "🔥 Top of the Week",
+    "listen_now": "Listen Now",
+    "queue_title": "Play Queue",
+    "select_track": "Select a track to play",
+    "auth_title": "Sign In to SoundCloud",
+    "btn_import": "⚡ 1-Click Sign In (from Chromium)",
+    "auth_help_head": "Sign in without manual tokens:",
+    "auth_help_body": "If you are already logged in to soundcloud.com in Chromium / Chrome, click the button above to connect automatically!",
+    "btn_open_sc": "🌐 Open SoundCloud Login Page in Browser",
+    "auth_divider": "or enter session token manually",
+    "btn_submit_token": "Connect Account",
+    "theme_title": "Themes (10 AMOLED Palettes)",
+    "ext_title": "Built-in Extensions Hub (7 Modules)",
+    "ext_discord_name": "Discord Rich Presence (Linux & Windows)",
+    "ext_discord_desc": "Broadcasts current track, artist, album art, animated progress bar, and 'Listen on SoundCloud' button to your Discord profile on Linux & Windows.",
+    "ext_lang_name": "Language & Localization",
+    "ext_lang_desc": "Switch between 8 supported interface languages (EN, RU, DE, FR, JA, UK, PL, HY).",
+    "ext_btn_change_lang": "Change Language",
+    "eq_title": "Studio Equalizer & Bass",
+    "comments_title": "Track Comments",
+    "comment_placeholder": "Write a comment at current timestamp...",
+    "btn_send": "Send",
+    "sleep_title": "Smart Sleep Timer",
+    "sleep_desc": "Music will gently fade out over 30 seconds before stopping, preserving your sleep.",
+    "sleep_chip_track": "End of track",
+    "btn_cancel_sleep": "Cancel Active Timer",
+    "fx_title": "Audio FX Studio",
+    "radar_hint": "Headphones recommended for 3D orbital binaural effect",
+    "fx_speed_title": "⚡ Speed & Pitch",
+    "speed_norm": "Normal",
+    "looper_title": "A-B Precision Looper",
+    "looper_desc": "Seamlessly loop any segment of the track (guitar solo, beat drop, chorus).",
+    "loop_start": "Start:",
+    "loop_end": "End:",
+    "btn_loop_active": "Enable Loop",
+    "btn_loop_clear": "Reset",
+    "card_title": "Social Bento Track Card Generator",
+    "btn_copy_card": "Copy to Clipboard",
+    "btn_download_card": "Download PNG",
+    "dropdown_lang": "Language: English",
+    "lang_modal_title": "🌐 Select Language",
+    "toast_lang": "🇺🇸 Language set to English",
+    "toast_liked": "Added to SoundCloud Likes",
+    "toast_unliked": "Removed from SoundCloud Likes",
+    "toast_liked_guest": "Added to Local Favorites • Sign in to sync",
+    "toast_unliked_guest": "Removed from Local Favorites",
+    "toast_guest_follow": "Sign in to SoundCloud to follow artists",
+    "toast_guest_comment": "Sign in to SoundCloud to post comments",
+    "no_likes_guest_title": "Your Local Favorites is empty",
+    "no_likes_guest_desc": "Tap ❤️ on any track to save it here, or sign in to sync with SoundCloud.",
+    "no_history_title": "No playback history yet",
+    "no_history_desc": "Tracks you play will automatically appear here for quick access.",
+    "stream_guest_title": "Personal Stream requires an account",
+    "stream_guest_desc": "Stream shows updates from artists you follow on SoundCloud. You can listen freely to Trending, Liked Tracks, Playlists, and Search without an account, or sign in whenever you wish!",
+    "featured_playlists": "Featured & Top Playlists"
+  },
+  "ru": {
+    "search_placeholder": "Поиск треков, исполнителей, альбомов...",
+    "themes_btn": "Темы (10)",
+    "extensions_btn": "Расширения (7)",
+    "login_btn": "Войти в аккаунт",
+    "my_profile": "Мой профиль",
+    "logout": "Выйти",
+    "chip_trending": "🔥 В тренде",
+    "chip_likes": "❤️ Мои Лайки",
+    "chip_playlists": "📂 Мои Плейлисты",
+    "chip_stream": "📡 Моя Лента",
+    "chip_history": "🕒 История",
+    "hero_tag": "🔥 Топ недели",
+    "listen_now": "Слушать сейчас",
+    "queue_title": "Очередь воспроизведения",
+    "select_track": "Выберите трек для воспроизведения",
+    "auth_title": "Вход в аккаунт SoundCloud",
+    "btn_import": "⚡ Авторизоваться в 1 клик (из Chromium)",
+    "auth_help_head": "Вход без ручного ввода токенов:",
+    "auth_help_body": "Если вы уже вошли на soundcloud.com в Chromium, нажмите кнопку выше — приложение автоматически подключит ваш аккаунт!",
+    "btn_open_sc": "🌐 Открыть страницу входа SoundCloud в браузере",
+    "auth_divider": "или введите токен сессии",
+    "btn_submit_token": "Подключить аккаунт",
+    "theme_title": "Темы оформления (10 AMOLED палитр)",
+    "ext_title": "Центр встроенных расширений (7 модулей)",
+    "ext_discord_name": "Discord Rich Presence (Linux и Windows)",
+    "ext_discord_desc": "Синхронизация трека, исполнителя, таймлайна и кликабельной ссылки в профиле Discord без сторонних утилит.",
+    "ext_lang_name": "Локализация и языки",
+    "ext_lang_desc": "Переключение между 8 поддерживаемыми языками (EN, RU, DE, FR, JA, UK, PL, HY).",
+    "ext_btn_change_lang": "Сменить язык",
+    "eq_title": "Студийный Эквалайзер & Бас",
+    "comments_title": "Комментарии к треку",
+    "comment_placeholder": "Написать комментарий на текущей секунде...",
+    "btn_send": "Отправить",
+    "sleep_title": "Умный таймер сна",
+    "sleep_desc": "Музыка плавно затихнет за 30 секунд до истечения времени, оберегая ваш сон.",
+    "sleep_chip_track": "Конец трека",
+    "btn_cancel_sleep": "Отключить активный таймер",
+    "fx_title": "Студия звуковых эффектов FX",
+    "radar_hint": "Рекомендуется слушать в наушниках для эффекта 3D-орбиты",
+    "fx_speed_title": "⚡ Скорость & Тональность",
+    "speed_norm": "Обычная",
+    "looper_title": "A-B Looper (Зацикливание фрагмента)",
+    "looper_desc": "Позволяет бесконечно воспроизводить выбранный фрагмент трека (соло, дроп, бит).",
+    "loop_start": "Метка начала:",
+    "loop_end": "Метка конца:",
+    "btn_loop_active": "Включить цикл",
+    "btn_loop_clear": "Сбросить",
+    "card_title": "Bento-карточка трека для соцсетей",
+    "btn_copy_card": "Скопировать картинку",
+    "btn_download_card": "Скачать PNG",
+    "dropdown_lang": "Язык: Русский",
+    "lang_modal_title": "🌐 Выберите язык",
+    "toast_lang": "🇷🇺 Язык интерфейса: Русский",
+    "toast_liked": "Добавлено в лайки SoundCloud",
+    "toast_unliked": "Удалено из лайков SoundCloud",
+    "toast_liked_guest": "Добавлено в локальные лайки • Войдите для синхронизации",
+    "toast_unliked_guest": "Удалено из локальных лайков",
+    "toast_guest_follow": "Войдите в SoundCloud, чтобы подписаться на исполнителя",
+    "toast_guest_comment": "Войдите в SoundCloud, чтобы оставлять комментарии",
+    "no_likes_guest_title": "Ваши локальные лайки пусты",
+    "no_likes_guest_desc": "Нажмите ❤️ на любом треке, чтобы сохранить его, или войдите в аккаунт.",
+    "no_history_title": "История прослушиваний пуста",
+    "no_history_desc": "Прослушанные треки автоматически появятся здесь.",
+    "stream_guest_title": "Личная лента доступна после входа",
+    "stream_guest_desc": "Лента показывает обновления от авторов, на которых вы подписаны. Слушать тренды, лайки и плейлисты можно свободно без аккаунта!",
+    "featured_playlists": "Популярные плейлисты"
+  },
+  "de": {
+    "search_placeholder": "Titel, Künstler, Alben suchen...",
+    "themes_btn": "Designs (10)",
+    "extensions_btn": "Erweiterungen (7)",
+    "login_btn": "Anmelden",
+    "my_profile": "Mein Profil",
+    "logout": "Abmelden",
+    "chip_trending": "🔥 Angesagt",
+    "chip_likes": "❤️ Favoriten",
+    "chip_playlists": "📂 Playlists",
+    "chip_stream": "📡 Feed",
+    "chip_history": "🕒 Verlauf",
+    "hero_tag": "🔥 Hit der Woche",
+    "listen_now": "Jetzt anhören",
+    "queue_title": "Wiedergabeliste",
+    "select_track": "Titel zum Abspielen auswählen",
+    "auth_title": "Bei SoundCloud anmelden",
+    "btn_import": "⚡ 1-Klick-Anmeldung (aus Chromium)",
+    "auth_help_head": "Anmelden ohne manuelle Token:",
+    "auth_help_body": "Wenn Sie bereits bei soundcloud.com in Chromium / Chrome angemeldet sind, klicken Sie oben für die automatische Verbindung!",
+    "btn_open_sc": "🌐 SoundCloud-Anmeldeseite im Browser öffnen",
+    "auth_divider": "oder Sitzungstoken manuell eingeben",
+    "btn_submit_token": "Konto verbinden",
+    "theme_title": "Designs (10 AMOLED-Farbpaletten)",
+    "ext_title": "Integrierter Erweiterungs-Hub (7 Module)",
+    "ext_discord_name": "Discord Rich Presence (Linux & Windows)",
+    "ext_discord_desc": "Überträgt aktuellen Titel, Künstler, Albumcover und Fortschrittsbalken direkt auf Ihr Discord-Profil.",
+    "ext_lang_name": "Sprache & Lokalisierung",
+    "ext_lang_desc": "Umschalten zwischen 8 unterstützten Oberflächensprachen (EN, RU, DE, FR, JA, UK, PL, HY).",
+    "ext_btn_change_lang": "Sprache ändern",
+    "eq_title": "Studio-Equalizer & Bass",
+    "comments_title": "Titelkommentare",
+    "comment_placeholder": "Kommentar an der aktuellen Position schreiben...",
+    "btn_send": "Senden",
+    "sleep_title": "Smarter Sleep-Timer",
+    "sleep_desc": "Die Musik blendet 30 Sekunden vor dem Stoppen sanft aus, um Ihren Schlaf zu schonen.",
+    "sleep_chip_track": "Ende des Titels",
+    "btn_cancel_sleep": "Aktiven Timer abbrechen",
+    "fx_title": "Audio-FX-Studio",
+    "radar_hint": "Kopfhörer für 3D-Binaural-Orbital-Effekt empfohlen",
+    "fx_speed_title": "⚡ Geschwindigkeit & Tonhöhe",
+    "speed_norm": "Normal",
+    "looper_title": "A-B Präzisions-Looper",
+    "looper_desc": "Wiederholen Sie nahtlos jeden beliebigen Teil des Titels (Gitarrensolo, Beat-Drop, Refrain).",
+    "loop_start": "Startpunkt:",
+    "loop_end": "Endpunkt:",
+    "btn_loop_active": "Schleife aktivieren",
+    "btn_loop_clear": "Zurücksetzen",
+    "card_title": "Social-Bento-Trackcard-Generator",
+    "btn_copy_card": "In Zwischenablage kopieren",
+    "btn_download_card": "PNG herunterladen",
+    "dropdown_lang": "Sprache: Deutsch",
+    "lang_modal_title": "🌐 Sprache auswählen",
+    "toast_lang": "🇩🇪 Sprache auf Deutsch eingestellt",
+    "toast_liked": "Zu SoundCloud-Favoriten hinzugefügt",
+    "toast_unliked": "Aus SoundCloud-Favoriten entfernt",
+    "toast_liked_guest": "Zu lokalen Favoriten hinzugefügt • Zum Synchronisieren anmelden",
+    "toast_unliked_guest": "Aus lokalen Favoriten entfernt",
+    "toast_guest_follow": "Bei SoundCloud anmelden, um Künstlern zu folgen",
+    "toast_guest_comment": "Bei SoundCloud anmelden, um Kommentare zu posten",
+    "no_likes_guest_title": "Ihre lokalen Favoriten sind leer",
+    "no_likes_guest_desc": "Tippen Sie auf ❤️ bei einem beliebigen Titel, um ihn zu speichern, oder melden Sie sich an.",
+    "no_history_title": "Noch kein Wiedergabeverlauf",
+    "no_history_desc": "Gespielte Titel werden automatisch hier angezeigt.",
+    "stream_guest_title": "Persönlicher Stream erfordert ein Konto",
+    "stream_guest_desc": "Der Stream zeigt Updates von Künstlern, denen Sie folgen. Trends, Favoriten und Playlists können ohne Konto gehört werden!",
+    "featured_playlists": "Beliebte Playlists"
+  },
+  "fr": {
+    "search_placeholder": "Rechercher titres, artistes, albums...",
+    "themes_btn": "Thèmes (10)",
+    "extensions_btn": "Extensions (7)",
+    "login_btn": "Se connecter",
+    "my_profile": "Mon profil",
+    "logout": "Déconnexion",
+    "chip_trending": "🔥 Tendances",
+    "chip_likes": "❤️ J'aime",
+    "chip_playlists": "📂 Playlists",
+    "chip_stream": "📡 Flux",
+    "chip_history": "🕒 Historique",
+    "hero_tag": "🔥 Top de la semaine",
+    "listen_now": "Écouter",
+    "queue_title": "File d'attente",
+    "select_track": "Sélectionnez un titre à lire",
+    "auth_title": "Connexion à SoundCloud",
+    "btn_import": "⚡ Connexion en 1 clic (depuis Chromium)",
+    "auth_help_head": "Connexion sans jetons manuels :",
+    "auth_help_body": "Si vous êtes déjà connecté à soundcloud.com dans Chromium / Chrome, cliquez ci-dessus pour vous connecter automatiquement !",
+    "btn_open_sc": "🌐 Ouvrir la page de connexion SoundCloud dans le navigateur",
+    "auth_divider": "ou entrer le jeton de session manuellement",
+    "btn_submit_token": "Connecter le compte",
+    "theme_title": "Thèmes (10 palettes AMOLED)",
+    "ext_title": "Centre d'extensions intégrées (7 modules)",
+    "ext_discord_name": "Discord Rich Presence (Linux et Windows)",
+    "ext_discord_desc": "Diffuse le titre en cours, l'artiste, la pochette et la barre de progression sur votre profil Discord.",
+    "ext_lang_name": "Langue et localisation",
+    "ext_lang_desc": "Basculer entre les 8 langues d'interface prises en charge (EN, RU, DE, FR, JA, UK, PL, HY).",
+    "ext_btn_change_lang": "Changer de langue",
+    "eq_title": "Égaliseur de studio & basses",
+    "comments_title": "Commentaires du titre",
+    "comment_placeholder": "Écrire un commentaire à cet instant...",
+    "btn_send": "Envoyer",
+    "sleep_title": "Minuteur de sommeil intelligent",
+    "sleep_desc": "La musique s'estompe doucement 30 secondes avant de s'arrêter pour préserver votre sommeil.",
+    "sleep_chip_track": "Fin du titre",
+    "btn_cancel_sleep": "Désactiver le minuteur",
+    "fx_title": "Studio d'effets audio FX",
+    "radar_hint": "Casque recommandé pour l'effet binaural 3D en orbite",
+    "fx_speed_title": "⚡ Vitesse & Tonalité",
+    "speed_norm": "Normale",
+    "looper_title": "Looper de précision A-B",
+    "looper_desc": "Répétez en boucle n'importe quel segment du morceau (solo de guitare, drop, refrain).",
+    "loop_start": "Début :",
+    "loop_end": "Fin :",
+    "btn_loop_active": "Activer la boucle",
+    "btn_loop_clear": "Réinitialiser",
+    "card_title": "Générateur de carte Bento pour réseaux sociaux",
+    "btn_copy_card": "Copier l'image",
+    "btn_download_card": "Télécharger PNG",
+    "dropdown_lang": "Langue : Français",
+    "lang_modal_title": "🌐 Choisir la langue",
+    "toast_lang": "🇫🇷 Langue définie sur Français",
+    "toast_liked": "Ajouté aux favoris SoundCloud",
+    "toast_unliked": "Retiré des favoris SoundCloud",
+    "toast_liked_guest": "Ajouté aux favoris locaux • Connectez-vous pour synchroniser",
+    "toast_unliked_guest": "Retiré des favoris locaux",
+    "toast_guest_follow": "Connectez-vous à SoundCloud pour suivre les artistes",
+    "toast_guest_comment": "Connectez-vous à SoundCloud pour publier des commentaires",
+    "no_likes_guest_title": "Vos favoris locaux sont vides",
+    "no_likes_guest_desc": "Appuyez sur ❤️ sur n'importe quel titre pour l'enregistrer, ou connectez-vous.",
+    "no_history_title": "Aucun historique d'écoute",
+    "no_history_desc": "Les morceaux écoutés apparaîtront automatiquement ici.",
+    "stream_guest_title": "Le flux personnel nécessite un compte",
+    "stream_guest_desc": "Le flux affiche les mises à jour des créateurs que vous suivez. Vous pouvez écouter les tendances et les playlists sans compte !",
+    "featured_playlists": "Playlists populaires"
+  },
+  "ja": {
+    "search_placeholder": "曲、アーティスト、アルバムを検索...",
+    "themes_btn": "テーマ (10)",
+    "extensions_btn": "拡張機能 (7)",
+    "login_btn": "ログイン",
+    "my_profile": "マイプロフィール",
+    "logout": "ログアウト",
+    "chip_trending": "🔥 トレンド",
+    "chip_likes": "❤️ いいね",
+    "chip_playlists": "📂 プレイリスト",
+    "chip_stream": "📡 フィード",
+    "chip_history": "🕒 履歴",
+    "hero_tag": "🔥 今週のトップ",
+    "listen_now": "今すぐ聴く",
+    "queue_title": "再生キュー",
+    "select_track": "再生するトラックを選択してください",
+    "auth_title": "SoundCloudにログイン",
+    "btn_import": "⚡ 1クリックログイン (Chromiumから)",
+    "auth_help_head": "手動トークン不要のログイン:",
+    "auth_help_body": "ChromiumまたはChromeで既にsoundcloud.comにログインしている場合は、上のボタンをクリックして自動接続できます！",
+    "btn_open_sc": "🌐 ブラウザでSoundCloudのログインページを開く",
+    "auth_divider": "またはセッショントークンを手動で入力",
+    "btn_submit_token": "アカウントを接続",
+    "theme_title": "テーマ (10種類のAMOLEDパレット)",
+    "ext_title": "内蔵拡張機能ハブ (7モジュール)",
+    "ext_discord_name": "Discord Rich Presence (Linux & Windows)",
+    "ext_discord_desc": "再生中の曲、アーティスト、ジャケット写真、プログレスバーをDiscordプロフィールに自動表示します。",
+    "ext_lang_name": "言語と地域設定",
+    "ext_lang_desc": "対応している8つのインターフェース言語を切り替えます (EN, RU, DE, FR, JA, UK, PL, HY)。",
+    "ext_btn_change_lang": "言語を変更",
+    "eq_title": "スタジオイコライザー＆低音",
+    "comments_title": "トラックのコメント",
+    "comment_placeholder": "現在の再生位置にコメントを書く...",
+    "btn_send": "送信",
+    "sleep_title": "スマートスリープタイマー",
+    "sleep_desc": "停止の30秒前から音楽が徐々にフェードアウトし、快適な睡眠を守ります。",
+    "sleep_chip_track": "曲の終わり",
+    "btn_cancel_sleep": "タイマーを解除",
+    "fx_title": "オーディオFXスタジオ",
+    "radar_hint": "3D立体音響効果を楽しむにはヘッドフォンの使用を推奨します",
+    "fx_speed_title": "⚡ 速度とピッチ",
+    "speed_norm": "標準",
+    "looper_title": "A-Bプレシジョンルーパー",
+    "looper_desc": "曲の特定の部分（ギターソロ、ドロップ、サビ）をシームレスに無限ループ再生します。",
+    "loop_start": "開始点:",
+    "loop_end": "終了点:",
+    "btn_loop_active": "ループを有効化",
+    "btn_loop_clear": "リセット",
+    "card_title": "SNS用Bentoトラックカードジェネレーター",
+    "btn_copy_card": "クリップボードにコピー",
+    "btn_download_card": "PNGを保存",
+    "dropdown_lang": "言語: 日本語",
+    "lang_modal_title": "🌐 言語を選択",
+    "toast_lang": "🇯🇵 言語を日本語に設定しました",
+    "toast_liked": "SoundCloudのお気に入りに追加されました",
+    "toast_unliked": "SoundCloudのお気に入りから削除されました",
+    "toast_liked_guest": "ローカルのお気に入りに追加されました • 同期するにはログインしてください",
+    "toast_unliked_guest": "ローカルのお気に入りから削除されました",
+    "toast_guest_follow": "アーティストをフォローするにはSoundCloudにログインしてください",
+    "toast_guest_comment": "コメントを投稿するにはSoundCloudにログインしてください",
+    "no_likes_guest_title": "ローカルのお気に入りは空です",
+    "no_likes_guest_desc": "任意のトラックの❤️をタップして保存するか、ログインしてください。",
+    "no_history_title": "再生履歴はまだありません",
+    "no_history_desc": "再生したトラックがここに自動的に表示されます。",
+    "stream_guest_title": "ストリームにはアカウントが必要です",
+    "stream_guest_desc": "ストリームにはフォロー中のアーティストの更新が表示されます。アカウントなしでトレンドやプレイリストを自由に聴くことができます！",
+    "featured_playlists": "注目のプレイリスト"
+  },
+  "uk": {
+    "search_placeholder": "Пошук треків, виконавців, альбомів...",
+    "themes_btn": "Теми (10)",
+    "extensions_btn": "Розширення (7)",
+    "login_btn": "Увійти в акаунт",
+    "my_profile": "Мій профіль",
+    "logout": "Вийти",
+    "chip_trending": "🔥 У тренді",
+    "chip_likes": "❤️ Мої Лайки",
+    "chip_playlists": "📂 Мої Плейлисти",
+    "chip_stream": "📡 Моя Стрічка",
+    "chip_history": "🕒 Історія",
+    "hero_tag": "🔥 Топ тижня",
+    "listen_now": "Слухати зараз",
+    "queue_title": "Черга відтворення",
+    "select_track": "Оберіть трек для відтворення",
+    "auth_title": "Вхід в акаунт SoundCloud",
+    "btn_import": "⚡ Авторизація в 1 клік (з Chromium)",
+    "auth_help_head": "Вхід без ручного введення токенів:",
+    "auth_help_body": "Якщо ви вже увійшли на soundcloud.com у Chromium, натисніть кнопку вище — застосунок автоматично підключить ваш акаунт!",
+    "btn_open_sc": "🌐 Відкрити сторінку входу SoundCloud у браузері",
+    "auth_divider": "або введіть токен сесії вручну",
+    "btn_submit_token": "Підключити акаунт",
+    "theme_title": "Теми оформлення (10 AMOLED палітр)",
+    "ext_title": "Центр вбудованих розширень (7 модулів)",
+    "ext_discord_name": "Discord Rich Presence (Linux і Windows)",
+    "ext_discord_desc": "Синхронізація треку, виконавця, обкладинки та шкали прогресу у профілі Discord без сторонніх утиліт.",
+    "ext_lang_name": "Мова та локалізація",
+    "ext_lang_desc": "Перемикання між 8 підтримуваними мовами (EN, RU, DE, FR, JA, UK, PL, HY).",
+    "ext_btn_change_lang": "Змінити мову",
+    "eq_title": "Студійний Еквалайзер & Бас",
+    "comments_title": "Коментарі до треку",
+    "comment_placeholder": "Написати коментар на поточній секунді...",
+    "btn_send": "Надіслати",
+    "sleep_title": "Розумний таймер сну",
+    "sleep_desc": "Музика плавно затихає за 30 секунд до завершення, оберігаючи ваш сон.",
+    "sleep_chip_track": "Кінець треку",
+    "btn_cancel_sleep": "Вимкнути активний таймер",
+    "fx_title": "Студія звукових ефектів FX",
+    "radar_hint": "Рекомендується слухати в навушниках для ефекту 3D-орбіти",
+    "fx_speed_title": "⚡ Швидкість і Тональність",
+    "speed_norm": "Звичайна",
+    "looper_title": "A-B Looper (Зациклення фрагмента)",
+    "looper_desc": "Дозволяє безперервно відтворювати обраний фрагмент треку (соло, дроп, приспів).",
+    "loop_start": "Мітка початку:",
+    "loop_end": "Мітка кінця:",
+    "btn_loop_active": "Увімкнути цикл",
+    "btn_loop_clear": "Скинути",
+    "card_title": "Bento-картка треку для соцмереж",
+    "btn_copy_card": "Скопіювати зображення",
+    "btn_download_card": "Завантажити PNG",
+    "dropdown_lang": "Мова: Українська",
+    "lang_modal_title": "🌐 Оберіть мову",
+    "toast_lang": "🇺🇦 Мову інтерфейсу змінено на українську",
+    "toast_liked": "Додано до вподобань SoundCloud",
+    "toast_unliked": "Вилучено з вподобань SoundCloud",
+    "toast_liked_guest": "Додано до локальних вподобань • Увійдіть для синхронізації",
+    "toast_unliked_guest": "Вилучено з локальних вподобань",
+    "toast_guest_follow": "Увійдіть у SoundCloud, щоб підписатися",
+    "toast_guest_comment": "Увійдіть у SoundCloud, щоб залишати коментарі",
+    "no_likes_guest_title": "Ваші локальні вподобання порожні",
+    "no_likes_guest_desc": "Натисніть ❤️ на будь-якому треку, щоб зберегти його, або увійдіть в акаунт.",
+    "no_history_title": "Історія прослуховувань порожня",
+    "no_history_desc": "Прослухані треки автоматично з'являтимуться тут.",
+    "stream_guest_title": "Особиста стрічка доступна після входу",
+    "stream_guest_desc": "Стрічка показує оновлення від виконавців, за якими ви стежите. Слухати тренди, лайки та плейлісти можна вільно без акаунта!",
+    "featured_playlists": "Популярні плейлісти"
+  },
+  "pl": {
+    "search_placeholder": "Szukaj utworów, wykonawców, albumów...",
+    "themes_btn": "Motywy (10)",
+    "extensions_btn": "Rozszerzenia (7)",
+    "login_btn": "Zaloguj się",
+    "my_profile": "Mój profil",
+    "logout": "Wyloguj się",
+    "chip_trending": "🔥 Na czasie",
+    "chip_likes": "❤️ Polubione",
+    "chip_playlists": "📂 Playlisty",
+    "chip_stream": "📡 Ostatnie",
+    "chip_history": "🕒 Historia",
+    "hero_tag": "🔥 Hit tygodnia",
+    "listen_now": "Słuchaj teraz",
+    "queue_title": "Kolejka odtwarzania",
+    "select_track": "Wybierz utwór do odtworzenia",
+    "auth_title": "Zaloguj się do SoundCloud",
+    "btn_import": "⚡ Logowanie jednym kliknięciem (z Chromium)",
+    "auth_help_head": "Logowanie bez ręcznego wprowadzania tokenów:",
+    "auth_help_body": "Jeśli jesteś już zalogowany na soundcloud.com w Chromium / Chrome, kliknij powyższy przycisk, aby połączyć się automatycznie!",
+    "btn_open_sc": "🌐 Otwórz stronę logowania SoundCloud w przeglądarce",
+    "auth_divider": "lub wprowadź token sesji ręcznie",
+    "btn_submit_token": "Połącz konto",
+    "theme_title": "Motywy (10 palet AMOLED)",
+    "ext_title": "Centrum wbudowanych rozszerzeń (7 modułów)",
+    "ext_discord_name": "Discord Rich Presence (Linux i Windows)",
+    "ext_discord_desc": "Przesyła aktualny utwór, wykonawcę, okładkę albumu i pasek postępu do Twojego profilu Discord.",
+    "ext_lang_name": "Język i lokalizacja",
+    "ext_lang_desc": "Przełączaj pomiędzy 8 obsługiwanymi językami interfejsu (EN, RU, DE, FR, JA, UK, PL, HY).",
+    "ext_btn_change_lang": "Zmień język",
+    "eq_title": "Korektor studyjny i bas",
+    "comments_title": "Komentarze do utworu",
+    "comment_placeholder": "Napisz komentarz w bieżącej sekundzie...",
+    "btn_send": "Wyślij",
+    "sleep_title": "Inteligentny wyłącznik czasowy",
+    "sleep_desc": "Muzyka płynnie wycisza się na 30 sekund przed wyłączeniem, dbając o Twój spokojny sen.",
+    "sleep_chip_track": "Koniec utworu",
+    "btn_cancel_sleep": "Anuluj aktywny timer",
+    "fx_title": "Studio efektów audio FX",
+    "radar_hint": "Zalecane słuchawki dla efektu 3D dźwięku binauralnego",
+    "fx_speed_title": "⚡ Prędkość i tonacja",
+    "speed_norm": "Normalna",
+    "looper_title": "Precyzyjny pętlik A-B",
+    "looper_desc": "Odtwarzaj w nieskończonej pętli dowolny fragment utworu (solówkę, drop, refren).",
+    "loop_start": "Początek:",
+    "loop_end": "Koniec:",
+    "btn_loop_active": "Włącz pętlę",
+    "btn_loop_clear": "Resetuj",
+    "card_title": "Generator kart utworów Bento do mediów społecznościowych",
+    "btn_copy_card": "Kopiuj do schowka",
+    "btn_download_card": "Pobierz PNG",
+    "dropdown_lang": "Język: Polski",
+    "lang_modal_title": "🌐 Wybierz język",
+    "toast_lang": "🇵🇱 Język interfejsu: Polski",
+    "toast_liked": "Dodano do polubionych SoundCloud",
+    "toast_unliked": "Usunięto z polubionych SoundCloud",
+    "toast_liked_guest": "Dodano do lokalnych ulubionych • Zaloguj się, aby zsynchronizować",
+    "toast_unliked_guest": "Usunięto z lokalnych ulubionych",
+    "toast_guest_follow": "Zaloguj się do SoundCloud, aby obserwować twórców",
+    "toast_guest_comment": "Zaloguj się do SoundCloud, aby komentować",
+    "no_likes_guest_title": "Twoje lokalne ulubione są puste",
+    "no_likes_guest_desc": "Dotknij ❤️ na dowolnym utworze, aby go zapisać, lub zaloguj się.",
+    "no_history_title": "Brak historii odtwarzania",
+    "no_history_desc": "Odtwarzane utwory pojawią się tutaj automatycznie.",
+    "stream_guest_title": "Twój strumień wymaga konta",
+    "stream_guest_desc": "Strumień pokazuje utwory obserwowanych wykonawców. Możesz swobodnie słuchać trendów i playlist bez konta!",
+    "featured_playlists": "Polecane playlisty"
+  },
+  "hy": {
+    "search_placeholder": "Որոնել երգեր, կատարողներ, ալբոմներ...",
+    "themes_btn": "Թեմաներ (10)",
+    "extensions_btn": "Ընդլայնումներ (7)",
+    "login_btn": "Մուտք գործել",
+    "my_profile": "Իմ պրոֆիլը",
+    "logout": "Ելք",
+    "chip_trending": "🔥 Թրենդային",
+    "chip_likes": "❤️ Հավանածներ",
+    "chip_playlists": "📂 Երգացանկեր",
+    "chip_stream": "📡 Լրահոս",
+    "chip_history": "🕒 Պատմություն",
+    "hero_tag": "🔥 Շաբաթվա լավագույնը",
+    "listen_now": "Լսել հիմա",
+    "queue_title": "Նվագարկման հերթ",
+    "select_track": "Ընտրեք երգ նվագարկելու համար",
+    "auth_title": "Մուտք SoundCloud-ի հաշիվ",
+    "btn_import": "⚡ Մուտք 1 սեղմումով (Chromium-ից)",
+    "auth_help_head": "Մուտք առանց ձեռքով թոքեն մուտքագրելու.",
+    "auth_help_body": "Եթե արդեն մուտք եք գործել soundcloud.com Chromium-ում, սեղմեք վերևի կոճակը՝ ավտոմատ միանալու համար:",
+    "btn_open_sc": "🌐 Բացել SoundCloud-ի մուտքի էջը բրաուզերում",
+    "auth_divider": "կամ մուտքագրեք սեսիայի թոքենը ձեռքով",
+    "btn_submit_token": "Միացնել հաշիվը",
+    "theme_title": "Ձևավորման թեմաներ (10 AMOLED գունապնակ)",
+    "ext_title": "Ներկառուցված ընդլայնումների կենտրոն (7 մոդուլ)",
+    "ext_discord_name": "Discord Rich Presence (Linux և Windows)",
+    "ext_discord_desc": "Ցուցադրում է ընթացիկ երգը, կատարողին, նկարը և ժամանակացույցը ձեր Discord պրոֆիլում:",
+    "ext_lang_name": "Լեզու և տեղայնացում",
+    "ext_lang_desc": "Փոխարկեք համակարգի 8 աջակցվող լեզուների միջև (EN, RU, DE, FR, JA, UK, PL, HY):",
+    "ext_btn_change_lang": "Փոխել լեզուն",
+    "eq_title": "Ստուդիական Էկվալայզեր և Բաս",
+    "comments_title": "Երգի մեկնաբանություններ",
+    "comment_placeholder": "Գրել մեկնաբանություն ընթացիկ վայրկյանին...",
+    "btn_send": "Ուղարկել",
+    "sleep_title": "Խելացի քնի ժամաչափ",
+    "sleep_desc": "Երաժշտությունը սահուն կմարի անջատվելուց 30 վայրկյան առաջ՝ պահպանելով ձեր քունը:",
+    "sleep_chip_track": "Երգի ավարտ",
+    "btn_cancel_sleep": "Անջատել ժամաչափը",
+    "fx_title": "Աուդիո FX Ստուդիա",
+    "radar_hint": "3D ուղեծրային էֆեկտի համար խորհուրդ է տրվում լսել ականջակալներով",
+    "fx_speed_title": "⚡ Արագություն և Տոնայնություն",
+    "speed_norm": "Սովորական",
+    "looper_title": "A-B Ճշգրիտ Լուպեր",
+    "looper_desc": "Անվերջ կրկնեք երգի ցանկացած հատված (սոլո, դրոփ, կրկներգ):",
+    "loop_start": "Սկիզբ:",
+    "loop_end": "Ավարտ:",
+    "btn_loop_active": "Միացնել կրկնությունը",
+    "btn_loop_clear": "Մաքրել",
+    "card_title": "Երգի Bento-քարտ սոցցանցերի համար",
+    "btn_copy_card": "Պատճենել նկարը",
+    "btn_download_card": "Ներբեռնել PNG",
+    "dropdown_lang": "Լեզու՝ Հայերեն",
+    "lang_modal_title": "🌐 Ընտրեք լեզուն",
+    "toast_lang": "🇦🇲 Ինտերֆեյսի լեզուն փոխվեց հայերենի",
+    "toast_liked": "Ավելացվել է SoundCloud-ի հավանածներում",
+    "toast_unliked": "Հեռացվել է SoundCloud-ի հավանածներից",
+    "toast_liked_guest": "Ավելացվել է տեղական ընտրյալներում • Մուտք գործեք համաժամեցման համար",
+    "toast_unliked_guest": "Հեռացվել է տեղական ընտրյալներից",
+    "toast_guest_follow": "Մուտք գործեք SoundCloud՝ կատարողներին հետևելու համար",
+    "toast_guest_comment": "Մուտք գործեք SoundCloud՝ մեկնաբանություններ թողնելու համար",
+    "no_likes_guest_title": "Ձեր տեղական ընտրյալները դատարկ են",
+    "no_likes_guest_desc": "Սեղմեք ❤️ ցանկացած թրեքի վրա՝ պահպանելու համար, կամ մուտք գործեք:",
+    "no_history_title": "Նվագարկման պատմությունը դատարկ է",
+    "no_history_desc": "Ձեր լսած թրեքներն ինքնաբերաբար կհայտնվեն այստեղ:",
+    "stream_guest_title": "Անձնական հոսքի համար անհրաժեշտ է մուտք գործել",
+    "stream_guest_desc": "Հոսքը ցույց է տալիս ձեր հետևած կատարողների նորությունները: Թրենդները և երգացանկերը հասանելի են առանց գրանցման!",
+    "featured_playlists": "Հանրաճանաչ երգացանկեր"
+  }
+};
+
   // DOM Elements
   const audio = document.getElementById('audio-engine');
   const tracksGrid = document.getElementById('tracks-grid');
@@ -264,9 +813,60 @@
     });
   });
 
+  // ═══════════════════════════════════════════════════════════════════════
+  // LOCAL GUEST STORAGE (Favorites, History, Guest Mode Support)
+  // ═══════════════════════════════════════════════════════════════════════
+  function getLocalLikes() {
+    try {
+      return JSON.parse(localStorage.getItem('sc_guest_likes') || '[]');
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function saveLocalLikes(likes) {
+    try {
+      localStorage.setItem('sc_guest_likes', JSON.stringify(likes));
+    } catch (_) {}
+  }
+
+  function getLocalHistory() {
+    try {
+      return JSON.parse(localStorage.getItem('sc_guest_history') || '[]');
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function saveLocalHistory(history) {
+    try {
+      localStorage.setItem('sc_guest_history', JSON.stringify(history));
+    } catch (_) {}
+  }
+
+  function addTrackToLocalHistory(track) {
+    if (!track || !track.id) return;
+    try {
+      let history = getLocalHistory();
+      history = history.filter(t => t.id !== track.id);
+      history.unshift(track);
+      if (history.length > 50) history = history.slice(0, 50);
+      saveLocalHistory(history);
+    } catch (_) {}
+  }
+
+  function isTrackLiked(trackId, apiLiked = false) {
+    if (currentUser) {
+      return !!apiLiked;
+    }
+    const localLikes = getLocalLikes();
+    return localLikes.some(t => t.id === trackId);
+  }
+
   // 2. Audio Engine & Playback
   async function playTrack(track, index = -1) {
     if (!track) return;
+    addTrackToLocalHistory(track);
     initEqualizer();
     if (audioCtx && audioCtx.state === 'suspended') {
       audioCtx.resume();
@@ -296,7 +896,7 @@
     visArtist.textContent = track.artist;
     document.title = `🎵 ${track.title} • ${track.artist} | SoundCloud`;
 
-    dockLikeBtn.classList.toggle('liked', !!track.liked);
+    dockLikeBtn.classList.toggle('liked', isTrackLiked(track.id, track.liked));
 
     try {
       playerTitle.textContent = `Loading: ${track.title}...`;
@@ -649,9 +1249,31 @@
   // 3. Like & Download Actions
   async function toggleTrackLike(track, btnEl = null) {
     if (!currentUser) {
-      authModalOverlay.classList.add('open');
+      // Full guest support: Save to local favorites without requiring login!
+      let localLikes = getLocalLikes();
+      const existingIdx = localLikes.findIndex(t => t.id === track.id);
+      const willLike = existingIdx === -1;
+      track.liked = willLike;
+
+      if (willLike) {
+        localLikes.unshift(track);
+        showToast('❤️ ' + (TRANSLATIONS[currentLang]?.toast_liked_guest || 'Added to Local Favorites • Sign in to sync'));
+      } else {
+        localLikes = localLikes.filter(t => t.id !== track.id);
+        showToast('🤍 ' + (TRANSLATIONS[currentLang]?.toast_unliked_guest || 'Removed from Local Favorites'));
+      }
+      saveLocalLikes(localLikes);
+
+      if (btnEl) btnEl.classList.toggle('liked', willLike);
+      if (currentIndex >= 0 && queue[currentIndex] && queue[currentIndex].id === track.id) {
+        dockLikeBtn.classList.toggle('liked', willLike);
+      }
+      document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
+        btn.classList.toggle('liked', willLike);
+      });
       return;
     }
+
     const willLike = !track.liked;
     track.liked = willLike;
 
@@ -659,10 +1281,14 @@
     if (currentIndex >= 0 && queue[currentIndex] && queue[currentIndex].id === track.id) {
       dockLikeBtn.classList.toggle('liked', willLike);
     }
+    document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
+      btn.classList.toggle('liked', willLike);
+    });
 
     try {
       const method = willLike ? 'POST' : 'DELETE';
       await fetch(`/api/tracks/${track.id}/like`, { method });
+      showToast(willLike ? '❤️ ' + (TRANSLATIONS[currentLang]?.toast_liked || 'Added to SoundCloud Likes') : '🤍 ' + (TRANSLATIONS[currentLang]?.toast_unliked || 'Removed from SoundCloud Likes'));
     } catch (e) {
       console.warn('Like toggle failed:', e);
     }
@@ -821,7 +1447,7 @@
 
   profFollowBtn.addEventListener('click', async () => {
     if (!currentUser) {
-      authModalOverlay.classList.add('open');
+      showToast('ℹ️ ' + (TRANSLATIONS[currentLang]?.toast_guest_follow || 'Sign in to SoundCloud to follow artists'));
       return;
     }
     if (!currentViewingArtist) return;
@@ -988,7 +1614,7 @@
 
   async function postNewComment() {
     if (!currentUser) {
-      authModalOverlay.classList.add('open');
+      showToast('ℹ️ ' + (TRANSLATIONS[currentLang]?.toast_guest_comment || 'Sign in to SoundCloud to post comments'));
       return;
     }
     if (!currentViewingTrackForComments) return;
@@ -1110,23 +1736,16 @@
         userBadge.style.display = 'flex';
         userName.textContent = currentUser.username;
         userAvatar.src = currentUser.avatar_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="%23FF5500"%3E%3Ccircle cx="16" cy="16" r="16"/%3E%3C/svg%3E';
-
-        // Reveal library tabs
-        chipLikes.style.display = 'block';
-        chipPlaylists.style.display = 'block';
-        chipStream.style.display = 'block';
-        chipHistory.style.display = 'block';
       } else {
         currentUser = null;
         btnLoginTrigger.style.display = 'flex';
         userBadge.style.display = 'none';
-        chipLikes.style.display = 'none';
-        chipPlaylists.style.display = 'none';
-        chipStream.style.display = 'none';
-        chipHistory.style.display = 'none';
       }
     } catch (e) {
       console.warn('Auth status check failed:', e);
+      currentUser = null;
+      btnLoginTrigger.style.display = 'flex';
+      userBadge.style.display = 'none';
     }
   }
 
@@ -1234,7 +1853,9 @@
     tracks.forEach((track, idx) => {
       const card = document.createElement('div');
       card.className = 'track-card';
+      card.setAttribute('data-id', track.id);
       const art = track.artwork_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="%23222"%3E%3Crect width="200" height="200"/%3E%3C/svg%3E';
+      const isLiked = isTrackLiked(track.id, track.liked);
 
       card.innerHTML = `
         <div class="artwork-wrapper">
@@ -1249,7 +1870,7 @@
         <div class="track-artist" title="${track.artist}" style="cursor: pointer;">${track.artist}</div>
         <div class="track-meta">
           <span>⏱ ${formatDurationMs(track.duration_ms)}</span>
-          <button class="like-btn ${track.liked ? 'liked' : ''}" title="Like">
+          <button class="like-btn ${isLiked ? 'liked' : ''}" title="Like">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
         </div>
@@ -1309,20 +1930,58 @@
 
   // 11. Library Navigation Calls
   async function loadMyLikes() {
-    gridTitle.innerHTML = '❤️ Liked Tracks <span>•</span> Library';
+    gridTitle.innerHTML = '❤️ ' + (TRANSLATIONS[currentLang]?.chip_likes || 'Liked Tracks') + ' <span>•</span> ' + (currentUser ? 'SoundCloud' : 'Local Library');
     heroSection.style.display = 'none';
+
+    if (!currentUser) {
+      const localLikes = getLocalLikes();
+      if (localLikes.length === 0) {
+        tracksGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
+            <div style="font-size: 48px; margin-bottom: 12px;">❤️</div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
+              ${TRANSLATIONS[currentLang]?.no_likes_guest_title || 'Your Local Favorites is empty'}
+            </div>
+            <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
+              ${TRANSLATIONS[currentLang]?.no_likes_guest_desc || 'Tap the ❤️ icon on any track to save it here, or sign in to sync with your SoundCloud account.'}
+            </div>
+            <button class="action-btn" onclick="document.getElementById('auth-modal-overlay').classList.add('open')" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
+              ⚡ ${TRANSLATIONS[currentLang]?.login_btn || 'Sign In to SoundCloud'}
+            </button>
+          </div>
+        `;
+        return;
+      }
+      renderTracks(localLikes.map(t => ({ ...t, liked: true })));
+      return;
+    }
+
     try {
       const res = await fetch('/api/me/likes?limit=50');
       const data = await res.json();
-      renderTracks(data.tracks || []);
+      renderTracks((data.tracks || []).map(t => ({ ...t, liked: true })));
     } catch (e) {
       console.error('Failed to load likes:', e);
+      renderTracks(getLocalLikes().map(t => ({ ...t, liked: true })));
     }
   }
 
   async function loadMyPlaylists() {
-    gridTitle.innerHTML = '📂 Playlists <span>•</span> Library';
     heroSection.style.display = 'none';
+
+    if (!currentUser) {
+      gridTitle.innerHTML = '📂 ' + (TRANSLATIONS[currentLang]?.chip_playlists || 'Playlists') + ' <span>•</span> ' + (TRANSLATIONS[currentLang]?.featured_playlists || 'Featured & Top Playlists');
+      try {
+        const res = await fetch('/api/search?q=top+hits+lofi+electronic&limit=30');
+        const data = await res.json();
+        renderPlaylists(data.playlists || []);
+      } catch (e) {
+        console.error('Failed to load featured playlists:', e);
+      }
+      return;
+    }
+
+    gridTitle.innerHTML = '📂 ' + (TRANSLATIONS[currentLang]?.chip_playlists || 'Playlists') + ' <span>•</span> SoundCloud Library';
     try {
       const res = await fetch('/api/me/playlists');
       const data = await res.json();
@@ -1333,8 +1992,28 @@
   }
 
   async function loadMyStream() {
-    gridTitle.innerHTML = '📡 Personal Stream <span>•</span> Following';
     heroSection.style.display = 'none';
+
+    if (!currentUser) {
+      gridTitle.innerHTML = '📡 ' + (TRANSLATIONS[currentLang]?.chip_stream || 'Stream') + ' <span>•</span> Following';
+      tracksGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
+          <div style="font-size: 48px; margin-bottom: 12px;">📡</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
+            ${TRANSLATIONS[currentLang]?.stream_guest_title || 'Personal Stream requires an account'}
+          </div>
+          <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
+            ${TRANSLATIONS[currentLang]?.stream_guest_desc || 'Stream shows updates from artists you follow on SoundCloud. You can listen freely to Trending, Liked Tracks, Playlists, and Search without an account, or sign in whenever you wish!'}
+          </div>
+          <button class="action-btn" onclick="document.getElementById('auth-modal-overlay').classList.add('open')" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
+            ⚡ ${TRANSLATIONS[currentLang]?.login_btn || 'Sign In to SoundCloud'}
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    gridTitle.innerHTML = '📡 ' + (TRANSLATIONS[currentLang]?.chip_stream || 'Stream') + ' <span>•</span> Following';
     try {
       const res = await fetch('/api/me/stream');
       const data = await res.json();
@@ -1345,14 +2024,39 @@
   }
 
   async function loadMyHistory() {
-    gridTitle.innerHTML = '🕒 Listening History <span>•</span> History';
+    gridTitle.innerHTML = '🕒 ' + (TRANSLATIONS[currentLang]?.chip_history || 'History') + ' <span>•</span> ' + (currentUser ? 'SoundCloud' : 'Local History');
     heroSection.style.display = 'none';
+
+    if (!currentUser) {
+      const localHistory = getLocalHistory();
+      if (localHistory.length === 0) {
+        tracksGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
+            <div style="font-size: 48px; margin-bottom: 12px;">🕒</div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
+              ${TRANSLATIONS[currentLang]?.no_history_title || 'No playback history yet'}
+            </div>
+            <div style="font-size: 13px; max-width: 400px; margin: 0 auto; line-height: 1.5;">
+              ${TRANSLATIONS[currentLang]?.no_history_desc || 'Tracks you play will automatically appear here for quick access.'}
+            </div>
+          </div>
+        `;
+        return;
+      }
+      renderTracks(localHistory);
+      return;
+    }
+
     try {
       const res = await fetch('/api/me/history');
       const data = await res.json();
-      renderTracks(data.tracks || []);
+      if (data.tracks && data.tracks.length > 0) {
+        renderTracks(data.tracks);
+      } else {
+        renderTracks(getLocalHistory());
+      }
     } catch (e) {
-      console.error('Failed to load history:', e);
+      renderTracks(getLocalHistory());
     }
   }
 
@@ -1471,8 +2175,10 @@
     document.getElementById('fx-modal-overlay')?.classList.remove('open');
     document.getElementById('looper-modal-overlay')?.classList.remove('open');
     document.getElementById('card-modal-overlay')?.classList.remove('open');
+    document.getElementById('lang-modal-overlay')?.classList.remove('open');
     if (userDropdown) userDropdown.classList.remove('open');
   }
+
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -2576,28 +3282,47 @@
   initLanguageSwitcher();
 
   // ═══════════════════════════════════════════════════════════════════════
-  // SUBTLE & UNOBTRUSIVE LANGUAGE SWITCHER (EN / RU)
+  // MULTI-LANGUAGE SYSTEM (EN, RU, DE, FR, JA, UK, PL, HY)
   // ═══════════════════════════════════════════════════════════════════════
+  
+
   function initLanguageSwitcher() {
-    const btnLang = document.getElementById("btn-lang-toggle");
+    currentLang = localStorage.getItem("lang") || "en";
+    if (!TRANSLATIONS[currentLang]) currentLang = "en";
+
+    const langModal = document.getElementById("lang-modal-overlay");
+    const btnCloseLang = document.getElementById("btn-close-lang-modal");
+    const btnOpenFromExt = document.getElementById("ext-btn-open-lang");
     const btnDropdownLang = document.getElementById("btn-dropdown-lang");
-    const optEn = document.getElementById("lang-opt-en");
-    const optRu = document.getElementById("lang-opt-ru");
-    let currentLang = localStorage.getItem("lang") || "en";
+
+    function openLanguageModal() {
+      closeAllModals();
+      if (langModal) langModal.classList.add("open");
+    }
+
+    function closeLanguageModal() {
+      if (langModal) langModal.classList.remove("open");
+    }
 
     function applyLanguage(lang) {
+      if (!TRANSLATIONS[lang]) lang = "en";
       currentLang = lang;
       localStorage.setItem("lang", lang);
-
-      // Update subtle header pill
-      if (optEn) optEn.classList.toggle("active", lang === "en");
-      if (optRu) optRu.classList.toggle("active", lang === "ru");
+      const t = TRANSLATIONS[lang];
 
       // Update dropdown item
       const txtDropLang = document.getElementById("txt-dropdown-lang");
-      if (txtDropLang) {
-        txtDropLang.textContent = lang === "ru" ? "Язык: Русский (RU)" : "Language: English (EN)";
-      }
+      if (txtDropLang) txtDropLang.textContent = t.dropdown_lang;
+
+      // Update active indicator in Extensions Hub
+      const ind = document.getElementById("current-lang-indicator");
+      if (ind) ind.textContent = "Active: " + t.dropdown_lang.replace("Language: ", "").replace("Язык: ", "");
+
+      // Update active state in Language Modal cards
+      document.querySelectorAll("#lang-grid .lang-card").forEach(card => {
+        const code = card.getAttribute("data-lang");
+        card.classList.toggle("active", code === lang);
+      });
 
       // DOM Elements
       const searchInp = document.getElementById("search-input");
@@ -2615,6 +3340,22 @@
       const txtListenNow = document.getElementById("txt-listen-now");
       const txtQueueTitle = document.getElementById("txt-queue-title");
 
+      if (searchInp) searchInp.placeholder = t.search_placeholder;
+      if (txtThemes) txtThemes.textContent = t.themes_btn;
+      if (txtExt) txtExt.textContent = t.extensions_btn;
+      if (txtLogin) txtLogin.textContent = t.login_btn;
+      if (txtMyProf) txtMyProf.textContent = t.my_profile;
+      if (txtLogout) txtLogout.textContent = t.logout;
+      if (chipTrend) chipTrend.textContent = t.chip_trending;
+      if (chipLk) chipLk.textContent = t.chip_likes;
+      if (chipPl) chipPl.textContent = t.chip_playlists;
+      if (chipSt) chipSt.textContent = t.chip_stream;
+      if (chipHs) chipHs.textContent = t.chip_history;
+      if (heroTag) heroTag.textContent = t.hero_tag;
+      if (txtListenNow) txtListenNow.textContent = t.listen_now;
+      if (txtQueueTitle) txtQueueTitle.textContent = t.queue_title;
+      if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = t.select_track;
+
       // Modal elements
       const txtAuthTitle = document.getElementById("txt-auth-modal-title");
       const btn1Click = document.getElementById("btn-import-browser");
@@ -2625,6 +3366,11 @@
       const btnSubmitToken = document.getElementById("btn-submit-token");
       const txtThemeTitle = document.getElementById("txt-theme-modal-title");
       const txtExtTitle = document.getElementById("txt-ext-modal-title");
+      const txtExtDiscordName = document.getElementById("txt-ext-discord-name");
+      const txtExtDiscordDesc = document.getElementById("txt-ext-discord-desc");
+      const txtExtLangName = document.getElementById("txt-ext-lang-name");
+      const txtExtLangDesc = document.getElementById("txt-ext-lang-desc");
+      const extBtnChangeLang = document.getElementById("ext-btn-open-lang");
       const txtEqTitle = document.getElementById("txt-eq-title");
       const txtCommentsTitle = document.getElementById("txt-comments-title");
       const commentInput = document.getElementById("new-comment-input");
@@ -2646,139 +3392,90 @@
       const txtCardTitle = document.getElementById("txt-card-modal-title");
       const txtBtnCopyCard = document.getElementById("txt-btn-copy-card");
       const txtBtnDownloadCard = document.getElementById("txt-btn-download-card");
+      const txtLangModalTitle = document.getElementById("txt-lang-modal-title");
 
-      if (lang === "ru") {
-        if (searchInp) searchInp.placeholder = "Поиск треков, исполнителей, альбомов...";
-        if (txtThemes) txtThemes.textContent = "Темы (10)";
-        if (txtExt) txtExt.textContent = "Расширения";
-        if (txtLogin) txtLogin.textContent = "Войти в аккаунт";
-        if (txtMyProf) txtMyProf.textContent = "Мой профиль";
-        if (txtLogout) txtLogout.textContent = "Выйти";
-        if (chipTrend) chipTrend.textContent = "🔥 В тренде";
-        if (chipLk) chipLk.textContent = "❤️ Мои Лайки";
-        if (chipPl) chipPl.textContent = "📂 Мои Плейлисты";
-        if (chipSt) chipSt.textContent = "📡 Моя Лента";
-        if (chipHs) chipHs.textContent = "🕒 История";
-        if (heroTag) heroTag.textContent = "🔥 Топ недели";
-        if (txtListenNow) txtListenNow.textContent = "Слушать сейчас";
-        if (txtQueueTitle) txtQueueTitle.textContent = "Очередь воспроизведения";
-        if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = "Выберите трек для воспроизведения";
-
-        // Modals RU
-        if (txtAuthTitle) txtAuthTitle.textContent = "Вход в аккаунт SoundCloud";
-        if (btn1Click) btn1Click.textContent = "⚡ Авторизоваться в 1 клик (из Chromium)";
-        if (txtAuthHelpHead) txtAuthHelpHead.textContent = "Вход без ручного ввода токенов:";
-        if (txtAuthHelpBody) txtAuthHelpBody.textContent = "Если вы уже вошли на soundcloud.com в Chromium, нажмите кнопку выше — приложение автоматически подключит ваш аккаунт!";
-        if (btnOpenSc) btnOpenSc.textContent = "🌐 Открыть страницу входа SoundCloud в браузере";
-        if (txtAuthDivider) txtAuthDivider.textContent = "или введите токен сессии";
-        if (btnSubmitToken) btnSubmitToken.textContent = "Подключить аккаунт";
-        if (txtThemeTitle) txtThemeTitle.textContent = "Темы оформления (10 AMOLED палитр)";
-        if (txtExtTitle) txtExtTitle.textContent = "Центр встроенных расширений (6 модулей)";
-        const txtExtDiscordName = document.getElementById("txt-ext-discord-name");
-        const txtExtDiscordDesc = document.getElementById("txt-ext-discord-desc");
-        if (txtExtDiscordName) txtExtDiscordName.textContent = "Discord Rich Presence (Linux и Windows)";
-        if (txtExtDiscordDesc) txtExtDiscordDesc.textContent = "Синхронизация трека, исполнителя, таймлайна и кликабельной ссылки в профиле Discord без сторонних утилит.";
-        if (txtEqTitle) txtEqTitle.textContent = "Студийный Эквалайзер & Бас";
-        if (txtCommentsTitle) txtCommentsTitle.textContent = "Комментарии к треку";
-        if (commentInput) commentInput.placeholder = "Написать комментарий на текущей секунде...";
-        if (btnSendComment) btnSendComment.textContent = "Отправить";
-        if (txtSleepTitle) txtSleepTitle.textContent = "Умный таймер сна";
-        if (txtSleepDesc) txtSleepDesc.textContent = "Музыка плавно затихнет за 30 секунд до истечения времени, оберегая ваш сон.";
-        if (sleepChipTrack) sleepChipTrack.textContent = "Конец трека";
-        if (btnCancelSleep) btnCancelSleep.textContent = "Отключить активный таймер";
-        if (txtFxTitle) txtFxTitle.textContent = "Студия звуковых эффектов FX";
-        if (txtRadarHint) txtRadarHint.textContent = "Рекомендуется слушать в наушниках для эффекта 3D-орбиты";
-        if (txtFxSpeedTitle) txtFxSpeedTitle.textContent = "⚡ Скорость & Тональность";
-        if (speedChipNorm) speedChipNorm.textContent = "Обычная";
-        if (txtLooperTitle) txtLooperTitle.textContent = "A-B Looper (Зацикливание фрагмента)";
-        if (txtLooperDesc) txtLooperDesc.textContent = "Позволяет бесконечно воспроизводить выбранный фрагмент трека (соло, дроп, бит).";
-        if (txtLoopStart) txtLoopStart.textContent = "Метка начала:";
-        if (txtLoopEnd) txtLoopEnd.textContent = "Метка конца:";
-        if (txtBtnLoopActive) txtBtnLoopActive.textContent = "Включить цикл";
-        if (txtBtnLoopClear) txtBtnLoopClear.textContent = "Сбросить";
-        if (txtCardTitle) txtCardTitle.textContent = "Bento-карточка трека для соцсетей";
-        if (txtBtnCopyCard) txtBtnCopyCard.textContent = "Скопировать картинку";
-        if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = "Скачать PNG";
-      } else {
-        if (searchInp) searchInp.placeholder = "Search tracks, artists, albums...";
-        if (txtThemes) txtThemes.textContent = "Themes (10)";
-        if (txtExt) txtExt.textContent = "Extensions";
-        if (txtLogin) txtLogin.textContent = "Sign In";
-        if (txtMyProf) txtMyProf.textContent = "My Profile";
-        if (txtLogout) txtLogout.textContent = "Sign Out";
-        if (chipTrend) chipTrend.textContent = "🔥 Trending";
-        if (chipLk) chipLk.textContent = "❤️ Liked";
-        if (chipPl) chipPl.textContent = "📂 Playlists";
-        if (chipSt) chipSt.textContent = "📡 Stream";
-        if (chipHs) chipHs.textContent = "🕒 History";
-        if (heroTag) heroTag.textContent = "🔥 Top of the Week";
-        if (txtListenNow) txtListenNow.textContent = "Listen Now";
-        if (txtQueueTitle) txtQueueTitle.textContent = "Play Queue";
-        if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = "Select a track to play";
-
-        // Modals EN
-        if (txtAuthTitle) txtAuthTitle.textContent = "Sign In to SoundCloud";
-        if (btn1Click) btn1Click.textContent = "⚡ 1-Click Sign In (from Chromium)";
-        if (txtAuthHelpHead) txtAuthHelpHead.textContent = "Sign in without manual tokens:";
-        if (txtAuthHelpBody) txtAuthHelpBody.textContent = "If you are already logged in to soundcloud.com in Chromium / Chrome, click the button above to connect automatically!";
-        if (btnOpenSc) btnOpenSc.textContent = "🌐 Open SoundCloud Login Page in Browser";
-        if (txtAuthDivider) txtAuthDivider.textContent = "or enter session token manually";
-        if (btnSubmitToken) btnSubmitToken.textContent = "Connect Account";
-        if (txtThemeTitle) txtThemeTitle.textContent = "Themes (10 AMOLED Palettes)";
-        if (txtExtTitle) txtExtTitle.textContent = "Built-in Extensions Hub (6 Modules)";
-        const txtExtDiscordName = document.getElementById("txt-ext-discord-name");
-        const txtExtDiscordDesc = document.getElementById("txt-ext-discord-desc");
-        if (txtExtDiscordName) txtExtDiscordName.textContent = "Discord Rich Presence (Linux & Windows)";
-        if (txtExtDiscordDesc) txtExtDiscordDesc.textContent = "Broadcasts current track, artist, album art, animated progress bar, and 'Listen on SoundCloud' button to your Discord profile on Linux & Windows.";
-        if (txtEqTitle) txtEqTitle.textContent = "Studio Equalizer & Bass";
-        if (txtCommentsTitle) txtCommentsTitle.textContent = "Track Comments";
-        if (commentInput) commentInput.placeholder = "Write a comment at current timestamp...";
-        if (btnSendComment) btnSendComment.textContent = "Send";
-        if (txtSleepTitle) txtSleepTitle.textContent = "Smart Sleep Timer";
-        if (txtSleepDesc) txtSleepDesc.textContent = "Music will gently fade out over 30 seconds before stopping, preserving your sleep.";
-        if (sleepChipTrack) sleepChipTrack.textContent = "End of track";
-        if (btnCancelSleep) btnCancelSleep.textContent = "Cancel Active Timer";
-        if (txtFxTitle) txtFxTitle.textContent = "Audio FX Studio";
-        if (txtRadarHint) txtRadarHint.textContent = "Headphones recommended for 3D orbital binaural effect";
-        if (txtFxSpeedTitle) txtFxSpeedTitle.textContent = "⚡ Speed & Pitch";
-        if (speedChipNorm) speedChipNorm.textContent = "Normal";
-        if (txtLooperTitle) txtLooperTitle.textContent = "A-B Precision Looper";
-        if (txtLooperDesc) txtLooperDesc.textContent = "Seamlessly loop any segment of the track (guitar solo, beat drop, chorus).";
-        if (txtLoopStart) txtLoopStart.textContent = "Start:";
-        if (txtLoopEnd) txtLoopEnd.textContent = "End:";
-        if (txtBtnLoopActive) txtBtnLoopActive.textContent = "Enable Loop";
-        if (txtBtnLoopClear) txtBtnLoopClear.textContent = "Reset";
-        if (txtCardTitle) txtCardTitle.textContent = "Social Bento Track Card Generator";
-        if (txtBtnCopyCard) txtBtnCopyCard.textContent = "Copy to Clipboard";
-        if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = "Download PNG";
-      }
+      if (txtAuthTitle) txtAuthTitle.textContent = t.auth_title;
+      if (btn1Click) btn1Click.textContent = t.btn_import;
+      if (txtAuthHelpHead) txtAuthHelpHead.textContent = t.auth_help_head;
+      if (txtAuthHelpBody) txtAuthHelpBody.textContent = t.auth_help_body;
+      if (btnOpenSc) btnOpenSc.textContent = t.btn_open_sc;
+      if (txtAuthDivider) txtAuthDivider.textContent = t.auth_divider;
+      if (btnSubmitToken) btnSubmitToken.textContent = t.btn_submit_token;
+      if (txtThemeTitle) txtThemeTitle.textContent = t.theme_title;
+      if (txtExtTitle) txtExtTitle.textContent = t.ext_title;
+      if (txtExtDiscordName) txtExtDiscordName.textContent = t.ext_discord_name;
+      if (txtExtDiscordDesc) txtExtDiscordDesc.textContent = t.ext_discord_desc;
+      if (txtExtLangName) txtExtLangName.textContent = t.ext_lang_name;
+      if (txtExtLangDesc) txtExtLangDesc.textContent = t.ext_lang_desc;
+      if (extBtnChangeLang) extBtnChangeLang.textContent = t.ext_btn_change_lang;
+      if (txtEqTitle) txtEqTitle.textContent = t.eq_title;
+      if (txtCommentsTitle) txtCommentsTitle.textContent = t.comments_title;
+      if (commentInput) commentInput.placeholder = t.comment_placeholder;
+      if (btnSendComment) btnSendComment.textContent = t.btn_send;
+      if (txtSleepTitle) txtSleepTitle.textContent = t.sleep_title;
+      if (txtSleepDesc) txtSleepDesc.textContent = t.sleep_desc;
+      if (sleepChipTrack) sleepChipTrack.textContent = t.sleep_chip_track;
+      if (btnCancelSleep) btnCancelSleep.textContent = t.btn_cancel_sleep;
+      if (txtFxTitle) txtFxTitle.textContent = t.fx_title;
+      if (txtRadarHint) txtRadarHint.textContent = t.radar_hint;
+      if (txtFxSpeedTitle) txtFxSpeedTitle.textContent = t.fx_speed_title;
+      if (speedChipNorm) speedChipNorm.textContent = t.speed_norm;
+      if (txtLooperTitle) txtLooperTitle.textContent = t.looper_title;
+      if (txtLooperDesc) txtLooperDesc.textContent = t.looper_desc;
+      if (txtLoopStart) txtLoopStart.textContent = t.loop_start;
+      if (txtLoopEnd) txtLoopEnd.textContent = t.loop_end;
+      if (txtBtnLoopActive) txtBtnLoopActive.textContent = t.btn_loop_active;
+      if (txtBtnLoopClear) txtBtnLoopClear.textContent = t.btn_loop_clear;
+      if (txtCardTitle) txtCardTitle.textContent = t.card_title;
+      if (txtBtnCopyCard) txtBtnCopyCard.textContent = t.btn_copy_card;
+      if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = t.btn_download_card;
+      if (txtLangModalTitle) txtLangModalTitle.textContent = t.lang_modal_title;
     }
 
-    function toggleLanguage() {
-      const nextLang = currentLang === "en" ? "ru" : "en";
-      applyLanguage(nextLang);
-      showToast(nextLang === "ru" ? "🇷🇺 Язык интерфейса: Русский" : "🇬🇧 Interface Language: English");
+    // Modal listeners
+    if (btnCloseLang) {
+      btnCloseLang.addEventListener("click", closeLanguageModal);
     }
-
-    if (btnLang) {
-      btnLang.addEventListener("click", toggleLanguage);
+    if (langModal) {
+      langModal.addEventListener("click", (e) => {
+        if (e.target === langModal) closeLanguageModal();
+      });
+    }
+    if (btnOpenFromExt) {
+      btnOpenFromExt.addEventListener("click", () => {
+        document.getElementById("extensions-modal-overlay")?.classList.remove("open");
+        openLanguageModal();
+      });
     }
     if (btnDropdownLang) {
       btnDropdownLang.addEventListener("click", () => {
-        toggleLanguage();
         if (userDropdown) userDropdown.classList.remove("open");
+        openLanguageModal();
       });
     }
 
-    // Subtle Hotkey: Alt + Shift + L
+    // Grid cards
+    document.querySelectorAll("#lang-grid .lang-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const code = card.getAttribute("data-lang");
+        if (code && TRANSLATIONS[code]) {
+          applyLanguage(code);
+          closeLanguageModal();
+          showToast(TRANSLATIONS[code].toast_lang);
+        }
+      });
+    });
+
+    // Subtle Hotkey: Alt + Shift + L opens Language Selection Modal
     window.addEventListener("keydown", (e) => {
       if (e.altKey && e.shiftKey && (e.key === "L" || e.key === "l" || e.key === "д" || e.key === "Д")) {
-        toggleLanguage();
+        openLanguageModal();
       }
     });
 
     applyLanguage(currentLang);
   }
+
 
   initExtensionsHub();
   initLyricsEngine();

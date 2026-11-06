@@ -108,7 +108,7 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
 
 ---
 
-## 🧩 6 Built-in Power Extensions
+## 🧩 7 Built-in Power Extensions
 
 1. **🎤 Karaoke & Synchronized Lyrics (`K`):**
    - Automatic synced lyrics search powered by LRCLIB API based on artist and track metadata.
@@ -141,6 +141,11 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
      - **Artwork:** Full-resolution album cover and SoundCloud badge.
      - **Interactive Button:** "Listen on SoundCloud" button linking directly to the track.
      - **In-App Control:** Live status indicator in Extensions Hub (`Active • Connected as @user`), auto-reconnect worker, and on/off toggle.
+7. **🌐 8-Language Localization Hub (`Alt+Shift+L`):**
+   - Seamless native localization across 8 languages: English (🇺🇸), Russian (🇷🇺), German (🇩🇪), French (🇫🇷), Japanese (🇯🇵), Ukrainian (🇺🇦), Polish (🇵🇱), and Armenian (🇦🇲).
+   - Dedicated AMOLED Bento modal dialog with native language titles, country flags, and real-time active indicators.
+   - Accessible via the Built-in Extensions Hub, User Profile Dropdown, or keyboard shortcut `Alt + Shift + L`.
+   - The main header and playback screens remain clean and distraction-free.
 
 ---
 
@@ -153,8 +158,12 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
   - Complete bypass of Russian ISP/RKN blocking without needing a VPN or external proxy.
   - Zero CPU overhead, fully driverless (runs entirely in user-space, no administrator rights needed).
 - **100% In-App Ecosystem:** No external browser tabs. Artist profiles, albums, playlists, track comments, and related radio stations render inside the app.
-- **SoundCloud Account Integration:**
-  - ⚡ **1-Click Sign In:** Auto-imports existing session cookies from Chromium/Chrome without manual token extraction.
+- **100% Guest Mode & Optional Sign-In:**
+  - Zero forced authentication: listen to Trending, search tracks, enjoy 8D audio, synced lyrics, equalizer, and looper instantly without an account.
+  - Persistent Local Favorites (`❤️ Liked`) & Local History (`🕒 History`) saved on your device in Guest Mode.
+  - Connect your SoundCloud account anytime via 1-Click browser import or manual token only when desired.
+- **SoundCloud Account Integration (Optional):**
+  - ⚡ **1-Click Sign In:** Auto-imports existing session cookies from Chromium/Chrome on demand without manual token extraction.
   - ❤️ **Liked Tracks:** Instant access to your entire saved music library.
   - 📂 **Playlists:** Browse, manage, and play your private and public playlists.
   - 📡 **Personal Stream:** Keep up with latest releases from artists you follow.

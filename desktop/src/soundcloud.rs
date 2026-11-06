@@ -41,7 +41,7 @@ impl SoundCloudClient {
         };
         let config_path = base_dir.join("soundcloud-desktop").join("auth.json");
 
-        let mut saved_token = if config_path.exists() {
+        let saved_token = if config_path.exists() {
             fs::read_to_string(&config_path)
                 .ok()
                 .and_then(|txt| serde_json::from_str::<Value>(&txt).ok())
@@ -49,15 +49,6 @@ impl SoundCloudClient {
         } else {
             None
         };
-
-        if saved_token.is_none()
-            && let Some(imported) = auto_import_browser_token_sync() {
-                println!("✨ Auto-imported active SoundCloud session from browser!");
-                let data = serde_json::json!({ "oauth_token": &imported });
-                let _ = fs::create_dir_all(config_path.parent().unwrap());
-                let _ = fs::write(&config_path, data.to_string());
-                saved_token = Some(imported);
-            }
 
         Self {
             client,

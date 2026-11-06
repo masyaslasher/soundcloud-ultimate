@@ -58,13 +58,6 @@
           Rust Engine
         </span>
 
-        <!-- Subtle Unobtrusive Language Switcher -->
-        <div id="btn-lang-toggle" class="subtle-lang-toggle" title="Switch Language / Сменить язык (EN • RU)">
-          <span class="lang-opt active" id="lang-opt-en">EN</span>
-          <span class="lang-sep">/</span>
-          <span class="lang-opt" id="lang-opt-ru">RU</span>
-        </div>
-
         <!-- Auth Button (when logged out) -->
         <button class="auth-btn" id="btn-login-trigger">
           <svg viewBox="0 0 24 24">
@@ -103,10 +96,10 @@
     <!-- Genre & Library Chips Bar -->
     <div class="chips-bar" id="chips-bar">
       <div class="chip active" data-type="genre" data-val="all-music" id="chip-trending">🔥 Trending</div>
-      <div class="chip" data-type="lib" data-val="likes" id="chip-likes" style="display: none;">❤️ Liked</div>
-      <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists" style="display: none;">📂 Playlists</div>
-      <div class="chip" data-type="lib" data-val="stream" id="chip-stream" style="display: none;">📡 Stream</div>
-      <div class="chip" data-type="lib" data-val="history" id="chip-history" style="display: none;">🕒 History</div>
+      <div class="chip" data-type="lib" data-val="likes" id="chip-likes">❤️ Liked</div>
+      <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists">📂 Playlists</div>
+      <div class="chip" data-type="lib" data-val="stream" id="chip-stream">📡 Stream</div>
+      <div class="chip" data-type="lib" data-val="history" id="chip-history">🕒 History</div>
       <div class="chip" data-type="genre" data-val="phonk">Phonk</div>
       <div class="chip" data-type="genre" data-val="electronic">Electronic</div>
       <div class="chip" data-type="genre" data-val="hiphoprap">Hip-Hop</div>
@@ -769,10 +762,104 @@
               <span class="slider-switch"></span>
             </label>
           </div>
+
+          <!-- Ext 7: Language & Localization (8 Languages) -->
+          <div class="ext-card">
+            <div class="ext-icon-box" style="background: rgba(0, 229, 255, 0.15); color: #00E5FF; font-size: 20px;">🌐</div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name" id="txt-ext-lang-name">Language & Localization</span>
+                <span class="ext-badge pro">8 Languages</span>
+              </div>
+              <div class="ext-desc" id="txt-ext-lang-desc">Switch between 8 supported interface languages (EN, RU, DE, FR, JA, UK, PL, HY).</div>
+              <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;" id="current-lang-indicator">Active: English (US)</div>
+            </div>
+            <button class="ext-action-btn" id="ext-btn-open-lang">Change Language</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- 8.5. Language Selection Modal -->
+  <div class="modal-overlay" id="lang-modal-overlay">
+    <div class="modal-box lang-modal">
+      <div class="modal-header">
+        <h2 id="txt-lang-modal-title">🌐 Select Language / Выберите язык</h2>
+        <button class="modal-close-btn" id="btn-close-lang-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="lang-grid" id="lang-grid">
+          <!-- 8 Language Bento Cards -->
+          <div class="lang-card active" data-lang="en">
+            <div class="lang-flag">🇺🇸</div>
+            <div class="lang-info">
+              <div class="lang-name">English</div>
+              <div class="lang-sub">English (US / UK)</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="ru">
+            <div class="lang-flag">🇷🇺</div>
+            <div class="lang-info">
+              <div class="lang-name">Русский</div>
+              <div class="lang-sub">Russian</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="de">
+            <div class="lang-flag">🇩🇪</div>
+            <div class="lang-info">
+              <div class="lang-name">Deutsch</div>
+              <div class="lang-sub">German</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="fr">
+            <div class="lang-flag">🇫🇷</div>
+            <div class="lang-info">
+              <div class="lang-name">Français</div>
+              <div class="lang-sub">French</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="ja">
+            <div class="lang-flag">🇯🇵</div>
+            <div class="lang-info">
+              <div class="lang-name">日本語</div>
+              <div class="lang-sub">Japanese</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="uk">
+            <div class="lang-flag">🇺🇦</div>
+            <div class="lang-info">
+              <div class="lang-name">Українська</div>
+              <div class="lang-sub">Ukrainian</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="pl">
+            <div class="lang-flag">🇵🇱</div>
+            <div class="lang-info">
+              <div class="lang-name">Polski</div>
+              <div class="lang-sub">Polish</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+          <div class="lang-card" data-lang="hy">
+            <div class="lang-flag">🇦🇲</div>
+            <div class="lang-info">
+              <div class="lang-name">Հայերեն</div>
+              <div class="lang-sub">Armenian</div>
+            </div>
+            <div class="lang-check">✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- 9. Fullscreen Synced Lyrics & Karaoke Overlay -->
   <div class="lyrics-overlay" id="lyrics-overlay">
