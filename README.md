@@ -2,26 +2,37 @@
 
 [![Release](https://img.shields.io/github/v/release/masyaslasher/soundcloud-ultimate?color=ff5500&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange.svg?logo=rust)](https://www.rust-lang.org/)
+[![Zapret Anti--DPI](https://img.shields.io/badge/Zapret%20Anti--DPI-Built--in%20%28No%20VPN%29-00E5FF.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Chrome-brightgreen.svg)]()
 [![Design](https://img.shields.io/badge/Design-AMOLED%20Bento%20Glass-ff5500.svg)]()
 
 > **SoundCloud Ultimate** — ультимативный клиент нового поколения для прослушивания SoundCloud.
-> Сочетает премиальный дизайн **AMOLED Bento Glass** (`#0A090E`, неоновые оранжевые лазерные акценты `#FF5500`), нативную скорость движка на Rust, встроенный 5-полосный студийный эквалайзер и 100% In-App социальную среду.
+> Сочетает премиальный дизайн **AMOLED Bento Glass** (`#0A090E`, неоновые оранжевые лазерные акценты `#FF5500`), нативную скорость движка на Rust, встроенный 5-полосный студийный эквалайзер, 100% In-App социальную среду и **встроенный Zapret Anti-DPI обход блокировок для РФ без необходимости в стороннем VPN**.
 
 ---
 
-## 📦 Быстрая загрузка / Downloads (v1.0.0)
+## ⚡ Встроенный Zapret Anti-DPI (Работает в РФ без VPN!)
+
+Приложение содержит полностью автономный встроенный Anti-DPI движок на чистом Rust (без установки драйверов WinDivert, ByeDPI или внешних утилит):
+- 🛡️ **TLS ClientHello Record Splitting:** Разбивает начальный TLS-пакет на позиции `split-pos=2` со сбросом TCP-окна (`TCP_NODELAY` + 5ms push), в результате чего ТСПУ РКН не может обнаружить SNI заблокированных доменов (`*.sndcdn.com`, `api-v2.soundcloud.com`, `*.soundcloud.cloud`).
+- 🌐 **Cloudflare & Google DoH (DNS-over-HTTPS):** Встроенный защищенный резолвер DNS через HTTPS, полностью предотвращающий DNS-спуфинг и подмену IP-адресов интернет-провайдерами.
+- 🎵 **Прозрачный стриминг аудио и HLS:** Все плейлисты `.m3u8` и аудио-сегменты (`.m4s`, `.aac`, `.mp3`) проксируются локальным сокетом. Звук играет мгновенно, без задержек и заиканий.
+
+---
+
+## 📦 Быстрая загрузка / Downloads (v1.1.0)
 
 Готовые скомпилированные релизы доступны во вкладке [**GitHub Releases**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest):
 
 | Платформа | Файл | Инструкция по запуску |
 | :--- | :--- | :--- |
 | 🪟 **Windows Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (не требует прав администратора) |
+| 🪟 **Windows .EXE** | [**`SoundCloud-Ultimate-Portable.exe`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Автономный исполняемый файл для Windows |
 | 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить двойным кликом или в терминале |
-| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.0.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.0.0_amd64.deb` |
+| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.1.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.1.0_amd64.deb` |
 | 🐧 **Linux Standalone** | [**`soundcloud-ultimate-linux-x86_64.tar.gz`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать: `tar -xvf soundcloud-ultimate-linux-x86_64.tar.gz && ./run.sh` |
-| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.0.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
+| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.1.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
 
 ---
 
@@ -58,6 +69,10 @@
 ## ✨ Ключевые возможности / Core Features
 
 ### 🦀 Standalone Desktop Application (Rust Native Engine)
+- **⚡ Встроенный Zapret Anti-DPI движок:**
+  - Нативная реализация Record Splitting (разбиение TLS ClientHello на 2 байта + Cloudflare/Google DoH).
+  - Полный обход блокировок ТСПУ РКН: треки, поиск, обложки и API работают в РФ без VPN.
+  - Нулевая нагрузка на процессор и полное отсутствие необходимости в правах администратора или сторонних драйверах.
 - **100% In-App Экосистема:** Никаких перенаправлений на soundcloud.com. Профили артистов, альбомы, плейлисты, комментарии и похожие радиостанции открываются прямо внутри единого окна.
 - **Интеграция с аккаунтом SoundCloud:**
   - ⚡ **Вход в 1 клик:** Автоматический импорт сохранённой веб-сессии Chromium/Chrome без ручного извлечения токенов.

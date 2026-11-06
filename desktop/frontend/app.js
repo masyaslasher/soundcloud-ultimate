@@ -1047,6 +1047,19 @@
   });
 
   // 9. Authentication & User Profile
+  async function checkSystemStatus() {
+    try {
+      const res = await fetch('/api/status');
+      const data = await res.json();
+      const badge = document.getElementById('antidpi-badge');
+      if (badge && data.antidpi) {
+        badge.title = `⚡ Zapret: ${data.antidpi}\nОбход блокировок ТСПУ активен. Музыка и API работают без стороннего VPN.`;
+      }
+    } catch (e) {
+      console.warn('System status check failed:', e);
+    }
+  }
+
   async function checkAuthStatus() {
     try {
       const res = await fetch('/api/auth/status');
@@ -1486,6 +1499,7 @@
 
   // Init
   setVolume(currentVolume, false);
+  checkSystemStatus();
   checkAuthStatus();
   loadTrending('all-music');
 })();

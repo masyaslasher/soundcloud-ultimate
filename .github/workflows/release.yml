@@ -50,21 +50,23 @@ jobs:
           Categories=AudioVideo;Audio;Player;
           StartupWMClass=soundcloud-desktop
           EOF
-          cat << 'EOF' > deb_build/control/control
+          TAG_VER="${GITHUB_REF_NAME#v}"
+          [ -z "$TAG_VER" ] && TAG_VER="1.1.0"
+          cat << EOF > deb_build/control/control
           Package: soundcloud-ultimate
-          Version: 1.0.0
+          Version: ${TAG_VER}
           Architecture: amd64
           Maintainer: soundcloud-ultimate
           Installed-Size: 15000
           Section: sound
           Priority: optional
           Homepage: https://github.com/${{ github.repository }}
-          Description: Ultimate SoundCloud Desktop Client with AMOLED Bento Glass UI
+          Description: Ultimate SoundCloud Desktop Client with AMOLED Bento Glass UI and Zapret Anti-DPI
           EOF
           echo "2.0" > deb_build/debian-binary
           cd deb_build/control && tar --numeric-owner --owner=0 --group=0 -czvf ../control.tar.gz ./control && cd ../..
           cd deb_build/data && tar --numeric-owner --owner=0 --group=0 -czvf ../data.tar.gz . && cd ../..
-          cd deb_build && ar rcs ../dist_linux/soundcloud-ultimate_1.0.0_amd64.deb debian-binary control.tar.gz data.tar.gz && cd ..
+          cd deb_build && ar rcs ../dist_linux/soundcloud-ultimate_${TAG_VER}_amd64.deb debian-binary control.tar.gz data.tar.gz && cd ..
 
           # 3. Linux AppImage
           curl -fsSL https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -o /tmp/appimagetool
@@ -140,12 +142,14 @@ jobs:
 
       - name: Build & Package Extension
         run: |
+          TAG_VER="${GITHUB_REF_NAME#v}"
+          [ -z "$TAG_VER" ] && TAG_VER="1.1.0"
           mkdir -p dist_ext
           cd extension
           npm install
           npm run build
           cd dist
-          zip -r ../../dist_ext/soundcloud-ultimate-chrome-extension-v1.0.0.zip ./*
+          zip -r "../../dist_ext/soundcloud-ultimate-chrome-extension-v${TAG_VER}.zip" ./*
           cd ../..
 
       - name: Upload Extension Artifact

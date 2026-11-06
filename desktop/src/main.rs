@@ -1,3 +1,4 @@
+mod antidpi;
 mod launcher;
 mod models;
 mod soundcloud;
@@ -61,7 +62,17 @@ async fn main() {
     println!("     SOUNDCLOUD ULTIMATE — RUST STANDALONE DESKTOP        ");
     println!("═══════════════════════════════════════════════════════════");
 
-    let sc_client = Arc::new(SoundCloudClient::new());
+    // Initialize built-in Anti-DPI (Zapret-style TLS Record Splitting + DoH)
+    let antidpi_engine = match antidpi::AntiDpiEngine::start().await {
+        Ok(engine) => Some(engine),
+        Err(e) => {
+            eprintln!("⚠️ Anti-DPI engine could not start: {}", e);
+            None
+        }
+    };
+
+    let proxy_url = antidpi_engine.as_ref().map(|e| e.proxy_url());
+    let sc_client = Arc::new(SoundCloudClient::new(proxy_url));
 
     // Proactively refresh client_id in background
     let sc_clone = sc_client.clone();
@@ -83,6 +94,10 @@ async fn main() {
         .route("/api/stream", get(api_stream))
         .route("/api/track/{id}", get(api_track))
         .route("/api/download", get(api_download))
+        // Media Proxy API (Bypasses Russian TSPU blocks for HLS and progressive audio)
+        .route("/api/media/stream", get(api_media_stream))
+        .route("/api/media/chunk", get(api_media_chunk))
+        .route("/api/media/image", get(api_media_image))
         // Auth API
         .route("/api/auth/status", get(api_auth_status))
         .route("/api/auth/login", post(api_auth_login))
@@ -164,8 +179,9 @@ async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
     Json(serde_json::json!({
         "status": "ok",
         "client_id": id,
-        "version": "1.2.0",
+        "version": "1.1.0",
         "engine": "Rust + Bento AMOLED Glass",
+        "antidpi": "active (Zapret TLS Split + Cloudflare DoH)",
         "auth": auth
     }))
 }
@@ -388,9 +404,236 @@ async fn api_stream(
     Query(params): Query<StreamParams>,
 ) -> impl IntoResponse {
     match state.sc.resolve_track_stream(params.id).await {
-        Ok(stream) => (StatusCode::OK, Json(serde_json::json!(stream))).into_response(),
+        Ok(stream) => {
+            let enc = hex_encode(&stream.stream_url);
+            let proxied_url = format!("/api/media/stream?u={}&protocol={}", enc, stream.protocol);
+            (
+                StatusCode::OK,
+                Json(serde_json::json!({
+                    "stream_url": proxied_url,
+                    "original_url": stream.stream_url,
+                    "protocol": stream.protocol,
+                    "mime_type": stream.mime_type
+                })),
+            )
+                .into_response()
+        }
         Err(e) => (StatusCode::NOT_FOUND, Json(serde_json::json!({ "error": e }))).into_response(),
     }
+}
+
+#[derive(serde::Deserialize)]
+struct MediaStreamQuery {
+    u: String,
+    protocol: Option<String>,
+}
+
+async fn api_media_stream(
+    State(state): State<AppState>,
+    Query(params): Query<MediaStreamQuery>,
+) -> Response {
+    let url_bytes = match hex_decode(&params.u) {
+        Some(b) => b,
+        None => return (StatusCode::BAD_REQUEST, "Invalid URL encoding").into_response(),
+    };
+    let url = match String::from_utf8(url_bytes) {
+        Ok(s) => s,
+        Err(_) => return (StatusCode::BAD_REQUEST, "Invalid UTF-8 URL").into_response(),
+    };
+
+    let client = state.sc.raw_client();
+    let resp = match client.get(&url).send().await {
+        Ok(r) => r,
+        Err(e) => return (StatusCode::BAD_GATEWAY, format!("Stream fetch failed: {}", e)).into_response(),
+    };
+
+    let content_type = resp
+        .headers()
+        .get(header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("")
+        .to_string();
+
+    let is_hls = params.protocol.as_deref() == Some("hls")
+        || url.contains(".m3u8")
+        || content_type.contains("mpegurl");
+
+    if is_hls {
+        let text = match resp.text().await {
+            Ok(t) => t,
+            Err(e) => return (StatusCode::BAD_GATEWAY, format!("Read m3u8 failed: {}", e)).into_response(),
+        };
+
+        let base_url = match reqwest::Url::parse(&url) {
+            Ok(u) => u,
+            Err(_) => return (StatusCode::BAD_REQUEST, "Invalid target URL").into_response(),
+        };
+
+        let mut rewritten_lines = Vec::new();
+        for line in text.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                rewritten_lines.push(line.to_string());
+                continue;
+            }
+            if trimmed.starts_with('#') {
+                if trimmed.contains("URI=\"") {
+                    let mut new_line = trimmed.to_string();
+                    if let Some(start_idx) = new_line.find("URI=\"") {
+                        let after_quote = &new_line[start_idx + 5..];
+                        if let Some(end_idx) = after_quote.find('"') {
+                            let uri_str = &after_quote[..end_idx];
+                            let full_url = if uri_str.starts_with("http://") || uri_str.starts_with("https://") {
+                                uri_str.to_string()
+                            } else if let Ok(joined) = base_url.join(uri_str) {
+                                joined.to_string()
+                            } else {
+                                uri_str.to_string()
+                            };
+                            let enc = hex_encode(&full_url);
+                            let proxied = format!("/api/media/chunk?u={}", enc);
+                            new_line = format!("{}URI=\"{}\"{}", &new_line[..start_idx], proxied, &after_quote[end_idx + 1..]);
+                        }
+                    }
+                    rewritten_lines.push(new_line);
+                } else {
+                    rewritten_lines.push(line.to_string());
+                }
+            } else {
+                let full_url = if trimmed.starts_with("http://") || trimmed.starts_with("https://") {
+                    trimmed.to_string()
+                } else if let Ok(joined) = base_url.join(trimmed) {
+                    joined.to_string()
+                } else {
+                    trimmed.to_string()
+                };
+
+                let enc = hex_encode(&full_url);
+                rewritten_lines.push(format!("/api/media/chunk?u={}", enc));
+            }
+        }
+
+        let body = rewritten_lines.join("\n");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            header::CONTENT_TYPE,
+            HeaderValue::from_static("application/vnd.apple.mpegurl"),
+        );
+        headers.insert(header::CACHE_CONTROL, HeaderValue::from_static("no-cache"));
+        return (StatusCode::OK, headers, body).into_response();
+    }
+
+    let bytes = match resp.bytes().await {
+        Ok(b) => b,
+        Err(e) => return (StatusCode::BAD_GATEWAY, format!("Stream read failed: {}", e)).into_response(),
+    };
+
+    let mut headers = HeaderMap::new();
+    headers.insert(header::CONTENT_TYPE, HeaderValue::from_static("audio/mpeg"));
+    headers.insert(header::ACCEPT_RANGES, HeaderValue::from_static("bytes"));
+    headers.insert(
+        header::CONTENT_LENGTH,
+        HeaderValue::from_str(&bytes.len().to_string()).unwrap(),
+    );
+    (StatusCode::OK, headers, Body::from(bytes)).into_response()
+}
+
+async fn api_media_chunk(
+    State(state): State<AppState>,
+    Query(params): Query<MediaStreamQuery>,
+) -> Response {
+    let url_bytes = match hex_decode(&params.u) {
+        Some(b) => b,
+        None => return (StatusCode::BAD_REQUEST, "Invalid URL encoding").into_response(),
+    };
+    let url = match String::from_utf8(url_bytes) {
+        Ok(s) => s,
+        Err(_) => return (StatusCode::BAD_REQUEST, "Invalid UTF-8 URL").into_response(),
+    };
+
+    let client = state.sc.raw_client();
+    let resp = match client.get(&url).send().await {
+        Ok(r) => r,
+        Err(e) => return (StatusCode::BAD_GATEWAY, format!("Chunk fetch failed: {}", e)).into_response(),
+    };
+
+    let content_type = resp
+        .headers()
+        .get(header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .map(|s| s.to_string())
+        .unwrap_or_else(|| "video/MP2T".to_string());
+
+    let bytes = match resp.bytes().await {
+        Ok(b) => b,
+        Err(e) => return (StatusCode::BAD_GATEWAY, format!("Chunk bytes failed: {}", e)).into_response(),
+    };
+
+    let mut headers = HeaderMap::new();
+    if let Ok(hv) = HeaderValue::from_str(&content_type) {
+        headers.insert(header::CONTENT_TYPE, hv);
+    }
+    headers.insert(
+        header::CACHE_CONTROL,
+        HeaderValue::from_static("public, max-age=86400"),
+    );
+    (StatusCode::OK, headers, Body::from(bytes)).into_response()
+}
+
+async fn api_media_image(
+    State(state): State<AppState>,
+    Query(params): Query<MediaStreamQuery>,
+) -> Response {
+    let url_bytes = match hex_decode(&params.u) {
+        Some(b) => b,
+        None => return (StatusCode::BAD_REQUEST, "Invalid URL encoding").into_response(),
+    };
+    let url = match String::from_utf8(url_bytes) {
+        Ok(s) => s,
+        Err(_) => return (StatusCode::BAD_REQUEST, "Invalid UTF-8 URL").into_response(),
+    };
+
+    let client = state.sc.raw_client();
+    let resp = match client.get(&url).send().await {
+        Ok(r) => r,
+        Err(e) => return (StatusCode::BAD_GATEWAY, format!("Image fetch failed: {}", e)).into_response(),
+    };
+
+    let content_type = resp
+        .headers()
+        .get(header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("image/jpeg")
+        .to_string();
+
+    let bytes = match resp.bytes().await {
+        Ok(b) => b,
+        Err(e) => return (StatusCode::BAD_GATEWAY, format!("Image bytes failed: {}", e)).into_response(),
+    };
+
+    let mut headers = HeaderMap::new();
+    if let Ok(hv) = HeaderValue::from_str(&content_type) {
+        headers.insert(header::CONTENT_TYPE, hv);
+    }
+    headers.insert(
+        header::CACHE_CONTROL,
+        HeaderValue::from_static("public, max-age=604800"),
+    );
+    (StatusCode::OK, headers, Body::from(bytes)).into_response()
+}
+
+fn hex_encode(s: &str) -> String {
+    s.as_bytes().iter().map(|b| format!("{:02x}", b)).collect()
+}
+
+fn hex_decode(s: &str) -> Option<Vec<u8>> {
+    if s.len() % 2 != 0 {
+        return None;
+    }
+    (0..s.len())
+        .step_by(2)
+        .map(|i| u8::from_str_radix(&s[i..i + 2], 16).ok())
+        .collect()
 }
 
 async fn api_download(

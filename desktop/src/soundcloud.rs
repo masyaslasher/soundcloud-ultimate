@@ -19,11 +19,17 @@ pub struct SoundCloudClient {
 }
 
 impl SoundCloudClient {
-    pub fn new() -> Self {
-        let client = reqwest::Client::builder()
-            .user_agent(USER_AGENT)
-            .build()
-            .unwrap_or_default();
+    pub fn new(proxy_url: Option<String>) -> Self {
+        let mut builder = reqwest::Client::builder()
+            .user_agent(USER_AGENT);
+
+        if let Some(ref p) = proxy_url {
+            if let Ok(proxy) = reqwest::Proxy::all(p) {
+                builder = builder.proxy(proxy);
+            }
+        }
+
+        let client = builder.build().unwrap_or_default();
 
         let base_dir = if cfg!(windows) {
             std::env::var("APPDATA")
@@ -61,6 +67,10 @@ impl SoundCloudClient {
             oauth_token: Arc::new(RwLock::new(saved_token)),
             config_path,
         }
+    }
+
+    pub fn raw_client(&self) -> &reqwest::Client {
+        &self.client
     }
 
     pub async fn refresh_client_id(&self) -> Result<String, String> {
