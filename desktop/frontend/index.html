@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,27 +27,34 @@
 
       <!-- Search Input -->
       <div class="search-wrapper">
-        <input type="text" id="search-input" class="search-input" placeholder="Поиск треков, исполнителей, альбомов..." autocomplete="off">
+        <input type="text" id="search-input" class="search-input" placeholder="Search tracks, artists, albums..." autocomplete="off">
         <svg class="search-icon" viewBox="0 0 24 24">
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
         </svg>
       </div>
 
-      <!-- Right Header: Status, Themes, Extensions & User Auth -->
-      <div style="display: flex; align-items: center; gap: 12px;">
+      <!-- Right Header: Status, Themes, Extensions, Language & User Auth -->
+      <div style="display: flex; align-items: center; gap: 10px;">
         <!-- Theme Selector Trigger -->
-        <button class="header-action-btn" id="btn-theme-modal" title="Выбрать тему оформления (10 AMOLED палитр)">
+        <button class="header-action-btn" id="btn-theme-modal" title="Choose theme (10 AMOLED palettes)">
           <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.57 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>Темы (10)</span>
+          <span id="txt-themes-btn">Themes (10)</span>
         </button>
 
         <!-- Extensions Hub Trigger -->
-        <button class="header-action-btn" id="btn-extensions-modal" title="Центр расширений (Караоке, 8D FX, Looper, Таймер сна, Карточки)">
+        <button class="header-action-btn" id="btn-extensions-modal" title="Extensions Hub (Karaoke, 8D FX, Looper, Sleep Timer, Cards)">
           <svg viewBox="0 0 24 24" width="15" height="15"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-          <span>Расширения</span>
+          <span id="txt-extensions-btn">Extensions</span>
         </button>
 
-        <div id="antidpi-badge" title="Встроенный Zapret Anti-DPI (TLS Record Splitting + Cloudflare DoH). Полный обход блокировок РКН/ТСПУ без стороннего VPN" style="font-size: 11px; color: #00E5FF; display: flex; align-items: center; gap: 6px; background: rgba(0, 229, 255, 0.08); padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(0, 229, 255, 0.25); cursor: help; user-select: none; transition: background 0.2s, border-color 0.2s;">
+        <!-- Language Switcher Toggle -->
+        <button class="header-action-btn" id="btn-lang-toggle" title="Switch Language / Сменить язык" style="font-weight: 700; padding: 6px 12px;">
+          <span style="font-size: 13px;">🌐</span>
+          <span id="lang-label">EN</span>
+        </button>
+
+        <!-- Zapret Anti-DPI Badge -->
+        <div id="antidpi-badge" title="Built-in Zapret Anti-DPI (TLS Record Splitting + Cloudflare DoH). Full ISP/DPI bypass without external VPN" style="font-size: 11px; color: #00E5FF; display: flex; align-items: center; gap: 6px; background: rgba(0, 229, 255, 0.08); padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(0, 229, 255, 0.25); cursor: help; user-select: none; transition: background 0.2s, border-color 0.2s;">
           <span style="font-size: 11px; filter: drop-shadow(0 0 4px #00E5FF);">⚡</span>
           <span style="font-weight: 600; letter-spacing: 0.3px;">Zapret Active</span>
         </div>
@@ -62,7 +69,7 @@
           <svg viewBox="0 0 24 24">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
           </svg>
-          Войти в аккаунт
+          <span id="txt-login-btn">Sign In</span>
         </button>
 
         <!-- User Profile Badge (when logged in) -->
@@ -77,11 +84,11 @@
           <div class="user-dropdown" id="user-dropdown">
             <div class="dropdown-item" id="btn-view-my-profile">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-              Мой профиль
+              <span id="txt-my-profile">My Profile</span>
             </div>
             <div class="dropdown-item" id="btn-logout" style="color: #FF5555;">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-              Выйти
+              <span id="txt-logout">Sign Out</span>
             </div>
           </div>
         </div>
@@ -90,11 +97,11 @@
 
     <!-- Genre & Library Chips Bar -->
     <div class="chips-bar" id="chips-bar">
-      <div class="chip active" data-type="genre" data-val="all-music">🔥 В тренде</div>
-      <div class="chip" data-type="lib" data-val="likes" id="chip-likes" style="display: none;">❤️ Мои Лайки</div>
-      <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists" style="display: none;">📂 Мои Плейлисты</div>
-      <div class="chip" data-type="lib" data-val="stream" id="chip-stream" style="display: none;">📡 Моя Лента</div>
-      <div class="chip" data-type="lib" data-val="history" id="chip-history" style="display: none;">🕒 История</div>
+      <div class="chip active" data-type="genre" data-val="all-music" id="chip-trending">🔥 Trending</div>
+      <div class="chip" data-type="lib" data-val="likes" id="chip-likes" style="display: none;">❤️ Liked</div>
+      <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists" style="display: none;">📂 Playlists</div>
+      <div class="chip" data-type="lib" data-val="stream" id="chip-stream" style="display: none;">📡 Stream</div>
+      <div class="chip" data-type="lib" data-val="history" id="chip-history" style="display: none;">🕒 History</div>
       <div class="chip" data-type="genre" data-val="phonk">Phonk</div>
       <div class="chip" data-type="genre" data-val="electronic">Electronic</div>
       <div class="chip" data-type="genre" data-val="hiphoprap">Hip-Hop</div>
@@ -111,20 +118,20 @@
       <section class="hero-bento" id="hero-section" style="display: none;">
         <div class="bento-card-large" id="hero-card">
           <img class="hero-bg-art" id="hero-bg-art" src="" alt="">
-          <div class="hero-tag">🔥 Топ недели</div>
-          <h2 class="hero-title" id="hero-title">Загрузка...</h2>
+          <div class="hero-tag" id="hero-tag">🔥 Top of the Week</div>
+          <h2 class="hero-title" id="hero-title">Loading...</h2>
           <div class="hero-artist" id="hero-artist">SoundCloud Ultimate</div>
           <button class="hero-play-btn" id="hero-play-btn">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
               <path d="M8 5v14l11-7z"/>
             </svg>
-            Слушать сейчас
+            <span id="txt-listen-now">Listen Now</span>
           </button>
         </div>
       </section>
 
       <!-- Section Title -->
-      <h2 class="section-title" id="grid-title">Популярные треки <span>•</span> Discover</h2>
+      <h2 class="section-title" id="grid-title">Trending Tracks <span>•</span> Discover</h2>
 
       <!-- Tracks Bento Grid -->
       <div class="tracks-grid" id="tracks-grid">
@@ -135,32 +142,32 @@
     <!-- Floating Bottom Player Dock -->
     <div class="player-dock-wrapper">
       <div class="player-dock">
-        <!-- Left: Current Track Info + Like + Download + Radio -->
+        <!-- Left: Current Track Info + Like + Comments + Radio + Download + Card -->
         <div class="dock-left">
           <img class="dock-art" id="player-art" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' fill='%23222'%3E%3Crect width='48' height='48'/%3E%3C/svg%3E' alt="Artwork">
           <div class="dock-info">
-            <div class="dock-title" id="player-title">Выберите трек для воспроизведения</div>
+            <div class="dock-title" id="player-title">Select a track to play</div>
             <div class="dock-artist" id="player-artist" style="cursor: pointer;">SoundCloud Ultimate</div>
           </div>
           <div class="dock-left-actions">
             <!-- Real Like Button in Player -->
-            <button class="like-btn" id="dock-like-btn" title="Добавить в любимые (L)">
+            <button class="like-btn" id="dock-like-btn" title="Add to Favorites (L)">
               <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </button>
             <!-- Comments Button in Player -->
-            <button class="action-icon-btn" id="dock-comments-btn" title="Комментарии трека (C)">
+            <button class="action-icon-btn" id="dock-comments-btn" title="Track Comments (C)">
               <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
             </button>
             <!-- Related Radio Button in Player -->
-            <button class="action-icon-btn" id="dock-radio-btn" title="Радио трека (Станция)">
+            <button class="action-icon-btn" id="dock-radio-btn" title="Track Station (Radio)">
               <svg viewBox="0 0 24 24"><path d="M3.24 6.15C2.51 7.43 2 8.94 2 10.55c0 4.41 3.59 8 8 8 2.08 0 3.97-.79 5.4-2.1l-1.43-1.43C12.83 15.68 11.48 16.2 10 16.2c-3.12 0-5.65-2.53-5.65-5.65 0-1.19.38-2.3 1.03-3.21L3.24 6.15zM20.76 6.15l-2.14 1.19c.65.91 1.03 2.02 1.03 3.21 0 3.12-2.53 5.65-5.65 5.65-1.48 0-2.83-.52-3.97-1.18l-1.43 1.43C10.03 17.76 11.92 18.55 14 18.55c4.41 0 8-3.59 8-8 0-1.61-.51-3.12-1.24-4.4zM12 2C7.58 2 4 5.58 4 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
             </button>
             <!-- Download Button in Player -->
-            <button class="download-btn" id="dock-download-btn" title="Скачать трек в MP3 (D)">
+            <button class="download-btn" id="dock-download-btn" title="Download MP3 (D)">
               <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
             </button>
             <!-- Social Bento Card Button in Player -->
-            <button class="action-icon-btn" id="dock-card-btn" title="Создать карточку трека для соцсетей">
+            <button class="action-icon-btn" id="dock-card-btn" title="Generate Social Bento Card">
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             </button>
           </div>
@@ -170,25 +177,25 @@
         <div class="dock-center">
           <div class="dock-controls">
             <!-- Shuffle -->
-            <button class="control-btn" id="btn-shuffle" title="Перемешать (S)">
+            <button class="control-btn" id="btn-shuffle" title="Shuffle (S)">
               <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
             </button>
             <!-- Prev -->
-            <button class="control-btn" id="btn-prev" title="Предыдущий (Alt+Left)">
+            <button class="control-btn" id="btn-prev" title="Previous (Alt+Left)">
               <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
             </button>
-            <!-- Play/Pause 44x44 -->
-            <button class="play-btn" id="btn-play" title="Воспроизведение (Space)">
+            <!-- Play/Pause -->
+            <button class="play-btn" id="btn-play" title="Play / Pause (Space)">
               <svg class="play-triangle" id="play-icon-svg" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
               </svg>
             </button>
             <!-- Next -->
-            <button class="control-btn" id="btn-next" title="Следующий (Alt+Right)">
+            <button class="control-btn" id="btn-next" title="Next (Alt+Right)">
               <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
             </button>
             <!-- Repeat -->
-            <button class="control-btn" id="btn-repeat" title="Повтор (R)">
+            <button class="control-btn" id="btn-repeat" title="Repeat (R)">
               <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
             </button>
           </div>
@@ -210,45 +217,45 @@
         <!-- Right: Extra Features (Lyrics, FX, Looper, Sleep, Equalizer, Visualizer, Volume, Queue) -->
         <div class="dock-right">
           <!-- Lyrics & Karaoke Button -->
-          <button class="control-btn" id="btn-lyrics-toggle" title="Текст песни & Караоке (K)">
+          <button class="control-btn" id="btn-lyrics-toggle" title="Lyrics & Karaoke (K)">
             <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
           </button>
 
           <!-- Audio FX Studio Button -->
-          <button class="control-btn" id="btn-fx-toggle" title="Студия эффектов: 8D Audio & Скорость (F)">
+          <button class="control-btn" id="btn-fx-toggle" title="Audio FX Studio: 8D Audio & Speed (F)">
             <svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
           </button>
 
           <!-- A-B Looper Button -->
-          <button class="control-btn" id="btn-looper-toggle" title="A-B Looper (Зацикливание фрагмента)">
+          <button class="control-btn" id="btn-looper-toggle" title="A-B Precision Looper">
             <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
           </button>
 
           <!-- Sleep Timer Button -->
-          <button class="control-btn" id="btn-sleep-toggle" title="Таймер сна">
+          <button class="control-btn" id="btn-sleep-toggle" title="Smart Sleep Timer">
             <svg viewBox="0 0 24 24"><path d="M9.27 4.49c-.27.9-.42 1.85-.42 2.84 0 4.6 3.73 8.33 8.33 8.33 1 0 1.95-.15 2.85-.43C18.66 18.73 15.11 21 11 21 5.48 21 1 16.52 1 11c0-4.11 2.27-7.66 5.77-9.03-.49.77-.85 1.62-1.05 2.52h3.55zM17 2l1.25 2.75L21 6l-2.75 1.25L17 10l-1.25-2.75L13 6l2.75-1.25L17 2z"/></svg>
             <span id="sleep-badge" class="sleep-timer-badge" style="display: none;">30m</span>
           </button>
 
           <!-- Equalizer Button -->
-          <button class="control-btn" id="btn-eq-toggle" title="Эквалайзер & Бас (E)">
+          <button class="control-btn" id="btn-eq-toggle" title="Studio Equalizer & Bass (E)">
             <svg viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
           </button>
 
           <!-- Visualizer Button -->
-          <button class="control-btn" id="btn-vis-toggle" title="Полноэкранный плеер (V)">
+          <button class="control-btn" id="btn-vis-toggle" title="Fullscreen Player (V)">
             <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
           </button>
 
-          <!-- Volume Container with Popup Slider -->
+          <!-- Volume Container with Laser Popup Slider -->
           <div class="volume-control-wrapper" id="volume-wrapper">
-            <button class="volume-btn" id="btn-volume" title="Громкость / Без звука (M)">
+            <button class="volume-btn" id="btn-volume" title="Volume / Mute (M)">
               <svg id="volume-icon-svg" viewBox="0 0 24 24">
                 <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
               </svg>
             </button>
 
-            <!-- Laser Centered Popup Slider Card -->
+            <!-- Centered Popup Slider Card -->
             <div class="volume-popup" id="volume-popup">
               <div class="volume-slider-track" id="volume-track">
                 <div class="volume-slider-fill" id="volume-fill"></div>
@@ -258,7 +265,7 @@
           </div>
 
           <!-- Queue Toggle -->
-          <button class="queue-toggle-btn" id="btn-queue-toggle" title="Очередь воспроизведения (Q)">
+          <button class="queue-toggle-btn" id="btn-queue-toggle" title="Play Queue (Q)">
             <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
           </button>
         </div>
@@ -268,8 +275,8 @@
     <!-- Queue Drawer -->
     <div class="queue-drawer" id="queue-drawer">
       <div class="queue-header">
-        <div class="queue-title">Очередь воспроизведения</div>
-        <button class="queue-clear-btn" id="btn-queue-clear">Очистить</button>
+        <div class="queue-title" id="txt-queue-title">Play Queue</div>
+        <button class="queue-clear-btn" id="btn-queue-clear">Clear</button>
       </div>
       <div class="queue-list" id="queue-list">
         <!-- Rendered dynamically -->
@@ -287,37 +294,37 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          Вход в аккаунт SoundCloud
+          <span id="txt-auth-modal-title">Sign In to SoundCloud</span>
         </div>
         <button class="modal-close-btn" id="btn-close-auth-modal">✕</button>
       </div>
       <div class="modal-body">
         <button class="auth-submit-btn" id="btn-import-browser" style="background: var(--gradient-orange); font-size: 15px; padding: 16px;">
-          ⚡ Авторизоваться в 1 клик (из Chromium)
+          ⚡ 1-Click Sign In (from Chromium)
         </button>
 
         <div class="auth-help-box">
-          <strong>Вход без ручного ввода токенов:</strong><br>
-          Если вы уже вошли на soundcloud.com в Chromium, нажмите кнопку выше — приложение автоматически подключит ваш аккаунт!
+          <strong id="txt-auth-help-head">Sign in without manual tokens:</strong><br>
+          <span id="txt-auth-help-body">If you are already logged in to soundcloud.com in Chromium / Chrome, click the button above to connect automatically!</span>
         </div>
 
         <button class="auth-submit-btn" id="btn-open-sc-signin" style="background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle); box-shadow: none;">
-          🌐 Открыть страницу входа SoundCloud в браузере
+          🌐 Open SoundCloud Login Page in Browser
         </button>
 
         <div style="display: flex; align-items: center; gap: 12px; margin: 4px 0;">
           <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
-          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">или введите токен сессии</span>
+          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;" id="txt-auth-divider">or enter session token manually</span>
           <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
         </div>
 
         <div class="auth-input-group">
           <label class="auth-label">OAuth Token (oauth_token)</label>
-          <input type="password" id="auth-token-input" class="auth-text-input" placeholder="например: 2-293847-1928374-xxxxxx">
+          <input type="password" id="auth-token-input" class="auth-text-input" placeholder="e.g. 2-293847-1928374-xxxxxx">
         </div>
 
         <button class="auth-submit-btn" id="btn-submit-token">
-          Подключить аккаунт
+          Connect Account
         </button>
       </div>
     </div>
@@ -334,21 +341,21 @@
           <div class="profile-hero-loc" id="prof-loc">Location</div>
           <div class="profile-hero-desc" id="prof-desc"></div>
           <div class="profile-stats-row">
-            <span class="profile-stat"><strong id="prof-stat-tracks">0</strong> треков</span>
-            <span class="profile-stat"><strong id="prof-stat-followers">0</strong> подписчиков</span>
-            <span class="profile-stat"><strong id="prof-stat-likes">0</strong> лайков</span>
+            <span class="profile-stat"><strong id="prof-stat-tracks">0</strong> <span id="txt-stat-tracks">tracks</span></span>
+            <span class="profile-stat"><strong id="prof-stat-followers">0</strong> <span id="txt-stat-followers">followers</span></span>
+            <span class="profile-stat"><strong id="prof-stat-likes">0</strong> <span id="txt-stat-likes">likes</span></span>
           </div>
         </div>
-        <button class="profile-follow-btn" id="prof-follow-btn">+ Подписаться</button>
+        <button class="profile-follow-btn" id="prof-follow-btn">+ Follow</button>
       </div>
 
       <div class="profile-content">
-        <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Треки исполнителя</h3>
+        <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF;" id="txt-prof-tracks-title">Artist Tracks</h3>
         <div class="tracks-grid" id="prof-tracks-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
           <!-- Tracks rendered here -->
         </div>
 
-        <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-top: 14px;">Плейлисты и Альбомы</h3>
+        <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-top: 14px;" id="txt-prof-pl-title">Playlists & Albums</h3>
         <div class="playlists-grid" id="prof-playlists-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
           <!-- Playlists rendered here -->
         </div>
@@ -365,10 +372,10 @@
         <div class="playlist-header-info">
           <div class="playlist-header-title" id="pl-modal-title">Playlist Title</div>
           <div class="playlist-header-artist" id="pl-modal-artist">Artist</div>
-          <div class="playlist-header-meta" id="pl-modal-meta">0 треков • 0 минут</div>
+          <div class="playlist-header-meta" id="pl-modal-meta">0 tracks • 0 minutes</div>
           <button class="playlist-play-all-btn" id="pl-modal-play-all">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Слушать плейлист
+            <span id="txt-play-playlist">Play Playlist</span>
           </button>
         </div>
       </div>
@@ -384,7 +391,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
-          Комментарии к треку
+          <span id="txt-comments-title">Track Comments</span>
         </div>
         <button class="modal-close-btn" id="btn-close-comments-modal">✕</button>
       </div>
@@ -394,8 +401,8 @@
       </div>
 
       <div class="comment-post-box">
-        <input type="text" class="comment-input" id="new-comment-input" placeholder="Написать комментарий на текущей секунде...">
-        <button class="comment-send-btn" id="btn-send-comment">Отправить</button>
+        <input type="text" class="comment-input" id="new-comment-input" placeholder="Write a comment at current timestamp...">
+        <button class="comment-send-btn" id="btn-send-comment">Send</button>
       </div>
     </div>
   </div>
@@ -406,7 +413,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
-          Студийный Эквалайзер & Бас
+          <span id="txt-eq-title">Studio Equalizer & Bass</span>
         </div>
         <button class="modal-close-btn" id="btn-close-eq-modal">✕</button>
       </div>
@@ -452,11 +459,11 @@
 
   <!-- 6. Fullscreen Vinyl Visualizer Overlay -->
   <div class="visualizer-overlay" id="visualizer-overlay">
-    <button class="vis-close-btn" id="btn-close-vis" title="Закрыть (Esc / V)">✕</button>
+    <button class="vis-close-btn" id="btn-close-vis" title="Close (Esc / V)">✕</button>
     <div class="vinyl-record" id="vinyl-record">
       <img class="vinyl-center-art" id="vis-art" src="" alt="Vinyl Art">
     </div>
-    <div class="vis-title" id="vis-title">Трек не выбран</div>
+    <div class="vis-title" id="vis-title">No track playing</div>
     <div class="vis-artist" id="vis-artist">SoundCloud Ultimate</div>
   </div>
 
@@ -466,7 +473,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.57 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
-          Темы оформления (10 AMOLED палитр)
+          <span id="txt-theme-modal-title">Themes (10 AMOLED Palettes)</span>
         </div>
         <button class="modal-close-btn" id="btn-close-theme-modal">✕</button>
       </div>
@@ -484,9 +491,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Onyx Orange</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Классический AMOLED Bento & неоновый оранж</div>
+              <div class="theme-desc">Classic AMOLED Bento & neon orange</div>
             </div>
           </div>
 
@@ -502,9 +509,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Cyberpunk 2077</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Электрический желтый, кибер-голубой и Night City</div>
+              <div class="theme-desc">Electric yellow, cyber cyan and Night City dark slate</div>
             </div>
           </div>
 
@@ -520,9 +527,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Midnight Synthwave</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Неоновая маджента, ультрафиолет и ретровейв 80-х</div>
+              <div class="theme-desc">Neon magenta, ultraviolet and 80s retrowave vibe</div>
             </div>
           </div>
 
@@ -538,9 +545,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Matrix Emerald</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Хакерский CRT-терминал и радиоактивный фосфор</div>
+              <div class="theme-desc">Hacker CRT terminal and radioactive phosphor green</div>
             </div>
           </div>
 
@@ -556,9 +563,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Nordic Frost</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Арктический лед, кристальный сапфир и океан</div>
+              <div class="theme-desc">Arctic ice cyan, crystal sapphire and ocean navy</div>
             </div>
           </div>
 
@@ -574,9 +581,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Crimson Blood</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Кровавый рубин, готический обсидиан и вампирский вайб</div>
+              <div class="theme-desc">Ruby blood, gothic obsidian and vampire dark carmine</div>
             </div>
           </div>
 
@@ -592,9 +599,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Sakura Blossom</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Цветущая сакура, токийская ночь и пастельный неон</div>
+              <div class="theme-desc">Cherry blossom, Tokyo night and pastel neon pink</div>
             </div>
           </div>
 
@@ -610,9 +617,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Solar Amber</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Жидкое янтарь-золото и теплый закатный горизонт</div>
+              <div class="theme-desc">Liquid amber gold and warm sunset horizon glow</div>
             </div>
           </div>
 
@@ -628,9 +635,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Hyperpop Acid</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Кислотный лайм, глубокий аметист и гиперпоп</div>
+              <div class="theme-desc">Acid lime, deep amethyst purple and hyperpop styling</div>
             </div>
           </div>
 
@@ -646,9 +653,9 @@
             <div class="theme-info">
               <div class="theme-title">
                 <span>Monochrome Titanium</span>
-                <span class="theme-check-badge">Активно</span>
+                <span class="theme-check-badge">Active</span>
               </div>
-              <div class="theme-desc">Чистый черный оникс, платина и люксовый титан</div>
+              <div class="theme-desc">Pure black onyx, platinum white and luxury titanium</div>
             </div>
           </div>
         </div>
@@ -662,7 +669,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-          Центр встроенных расширений (5 модулей)
+          <span id="txt-ext-modal-title">Built-in Extensions Hub (5 Modules)</span>
         </div>
         <button class="modal-close-btn" id="btn-close-extensions-modal">✕</button>
       </div>
@@ -673,12 +680,12 @@
             <div class="ext-icon-box">🎤</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Караоке и Синхронный Текст Песни</span>
-                <span class="ext-badge pro">Встроен</span>
+                <span class="ext-name">Karaoke & Synced Lyrics</span>
+                <span class="ext-badge pro">Built-in</span>
               </div>
-              <div class="ext-desc">Автоматический поиск и авто-прокрутка текста трека строка за строкой с подсветкой и возможностью перемотки по клику на любую строчку.</div>
+              <div class="ext-desc">Automatic synchronized lyrics lookup from LRCLIB with line-by-line real-time scrolling, active line highlight, and jump-to-time on click.</div>
             </div>
-            <button class="ext-action-btn" id="ext-btn-open-lyrics">Открыть караоке (K)</button>
+            <button class="ext-action-btn" id="ext-btn-open-lyrics">Open Karaoke (K)</button>
           </div>
 
           <!-- Ext 2: Sleep Timer -->
@@ -686,12 +693,12 @@
             <div class="ext-icon-box">🌙</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Умный Таймер Сна</span>
-                <span class="ext-badge">Активен</span>
+                <span class="ext-name">Smart Sleep Timer</span>
+                <span class="ext-badge">Active</span>
               </div>
-              <div class="ext-desc">Остановка музыки через заданное время или в конце текущего трека с мягким 30-секундным затуханием звука, чтобы вы комфортно уснули.</div>
+              <div class="ext-desc">Stop music after a set duration or at the end of the track, featuring a gentle 30-second volume fade-out to preserve your sleep.</div>
             </div>
-            <button class="ext-action-btn" id="ext-btn-open-sleep">Настроить таймер</button>
+            <button class="ext-action-btn" id="ext-btn-open-sleep">Configure Timer</button>
           </div>
 
           <!-- Ext 3: Audio FX Studio -->
@@ -699,12 +706,12 @@
             <div class="ext-icon-box">🎛️</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Студия Эффектов: 8D Audio & Скорость</span>
+                <span class="ext-name">Audio FX Studio: 8D Audio & Speed</span>
                 <span class="ext-badge pro">WebAudio DSP</span>
               </div>
-              <div class="ext-desc">360° пространственное бинауральное вращение звука вокруг головы в наушниках, Nightcore (+25% скорости и высоты), Slowed + Reverb и плавный питч.</div>
+              <div class="ext-desc">360° binaural spatial audio rotation for headphones with radar, Nightcore (+25% speed/pitch), Slowed + Reverb, and smooth pitch slider.</div>
             </div>
-            <button class="ext-action-btn" id="ext-btn-open-fx">Студия FX (F)</button>
+            <button class="ext-action-btn" id="ext-btn-open-fx">FX Studio (F)</button>
           </div>
 
           <!-- Ext 4: A-B Looper -->
@@ -712,10 +719,10 @@
             <div class="ext-icon-box">🔁</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">A-B Looper Повторитель</span>
-                <span class="ext-badge">Практика</span>
+                <span class="ext-name">A-B Precision Looper</span>
+                <span class="ext-badge">Practice</span>
               </div>
-              <div class="ext-desc">Мгновенная установка меток [A] и [B] на таймлайне для бесконечного бесшовного зацикливания дропов, битов или соло.</div>
+              <div class="ext-desc">Instantly set loop points [A] and [B] on the timeline for infinite seamless repetition of drops, solos, and beats.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-looper">A-B Looper</button>
           </div>
@@ -725,12 +732,12 @@
             <div class="ext-icon-box">🪪</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Генератор Карточек Трека & Discord RPC</span>
+                <span class="ext-name">Social Track Card Generator</span>
                 <span class="ext-badge pro">HD Canvas</span>
               </div>
-              <div class="ext-desc">Создание стильной неоновой AMOLED-карточки текущего трека с обложкой, волной и метаданными для публикации в Telegram, Discord или VK в 1 клик.</div>
+              <div class="ext-desc">Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata to share on Discord, Telegram, or Twitter/X.</div>
             </div>
-            <button class="ext-action-btn" id="ext-btn-open-card">Создать карточку</button>
+            <button class="ext-action-btn" id="ext-btn-open-card">Create Card</button>
           </div>
         </div>
       </div>
@@ -743,8 +750,8 @@
       <div class="lyrics-track-info">
         <img class="lyrics-track-art" id="lyrics-art" src="" alt="Cover">
         <div>
-          <div class="lyrics-meta-title" id="lyrics-title">Название трека</div>
-          <div class="lyrics-meta-artist" id="lyrics-artist">Исполнитель</div>
+          <div class="lyrics-meta-title" id="lyrics-title">Track Title</div>
+          <div class="lyrics-meta-artist" id="lyrics-artist">Artist</div>
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 12px;">
@@ -753,7 +760,7 @@
       </div>
     </div>
     <div class="lyrics-container" id="lyrics-container">
-      <div class="lyrics-empty">Загрузка синхронизированного текста...</div>
+      <div class="lyrics-empty" id="lyrics-empty-msg">Loading synchronized lyrics...</div>
     </div>
   </div>
 
@@ -763,23 +770,23 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M9.27 4.49c-.27.9-.42 1.85-.42 2.84 0 4.6 3.73 8.33 8.33 8.33 1 0 1.95-.15 2.85-.43C18.66 18.73 15.11 21 11 21 5.48 21 1 16.52 1 11c0-4.11 2.27-7.66 5.77-9.03-.49.77-.85 1.62-1.05 2.52h3.55zM17 2l1.25 2.75L21 6l-2.75 1.25L17 10l-1.25-2.75L13 6l2.75-1.25L17 2z"/></svg>
-          Умный таймер сна
+          <span id="txt-sleep-modal-title">Smart Sleep Timer</span>
         </div>
         <button class="modal-close-btn" id="btn-close-sleep-modal">✕</button>
       </div>
       <div class="modal-body">
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-          Музыка плавно затихнет за 30 секунд до истечения времени, оберегая ваш сон.
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;" id="txt-sleep-desc">
+          Music will gently fade out over 30 seconds before stopping, preserving your sleep.
         </p>
         <div class="sleep-grid">
-          <div class="sleep-chip" data-minutes="15">15 минут</div>
-          <div class="sleep-chip" data-minutes="30">30 минут</div>
-          <div class="sleep-chip" data-minutes="45">45 минут</div>
-          <div class="sleep-chip" data-minutes="60">1 час</div>
-          <div class="sleep-chip" data-minutes="90">1.5 часа</div>
-          <div class="sleep-chip" data-minutes="track">Конец трека</div>
+          <div class="sleep-chip" data-minutes="15">15 min</div>
+          <div class="sleep-chip" data-minutes="30">30 min</div>
+          <div class="sleep-chip" data-minutes="45">45 min</div>
+          <div class="sleep-chip" data-minutes="60">1 hour</div>
+          <div class="sleep-chip" data-minutes="90">1.5 hours</div>
+          <div class="sleep-chip" data-minutes="track" id="sleep-chip-track">End of track</div>
         </div>
-        <button class="sleep-cancel-btn" id="btn-cancel-sleep" style="display: none;">Отключить активный таймер</button>
+        <button class="sleep-cancel-btn" id="btn-cancel-sleep" style="display: none;">Cancel Active Timer</button>
       </div>
     </div>
   </div>
@@ -790,7 +797,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
-          Студия звуковых эффектов FX
+          <span id="txt-fx-modal-title">Audio FX Studio</span>
         </div>
         <button class="modal-close-btn" id="btn-close-fx-modal">✕</button>
       </div>
@@ -800,7 +807,7 @@
           <div class="fx-header-row">
             <span class="fx-title">
               <span>🎧 8D Audio Spatializer</span>
-              <span class="ext-badge pro">360° Вращение</span>
+              <span class="ext-badge pro">360° Rotation</span>
             </span>
             <label class="switch">
               <input type="checkbox" id="fx-8d-toggle">
@@ -813,18 +820,18 @@
               <div class="radar-orbit-dot" id="radar-orbit-dot"></div>
             </div>
           </div>
-          <div style="font-size: 11px; color: var(--text-dim); text-align: center;">Рекомендуется слушать в наушниках для эффекта 3D-орбиты</div>
+          <div style="font-size: 11px; color: var(--text-dim); text-align: center;" id="txt-radar-hint">Headphones recommended for 3D orbital binaural effect</div>
         </div>
 
         <!-- Speed & Nightcore Section -->
         <div class="fx-section">
           <div class="fx-header-row">
-            <span class="fx-title">⚡ Скорость & Тональность</span>
+            <span class="fx-title" id="txt-fx-speed-title">⚡ Speed & Pitch</span>
             <span id="fx-speed-label" style="font-size: 12px; font-weight: 700; color: var(--orange-neon);">1.00x</span>
           </div>
           <input type="range" id="fx-speed-slider" min="0.5" max="2.0" step="0.05" value="1.0" style="width: 100%; accent-color: var(--orange-neon);">
           <div class="speed-presets-row">
-            <div class="speed-chip active" data-speed="1.0">Обычная</div>
+            <div class="speed-chip active" data-speed="1.0" id="speed-chip-norm">Normal</div>
             <div class="speed-chip" data-speed="1.25">🔥 Nightcore (1.25x)</div>
             <div class="speed-chip" data-speed="0.85">🌊 Slowed (0.85x)</div>
             <div class="speed-chip" data-speed="0.75">🌴 Vaporwave (0.75x)</div>
@@ -840,28 +847,28 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-          A-B Looper (Зацикливание фрагмента)
+          <span id="txt-looper-modal-title">A-B Precision Looper</span>
         </div>
         <button class="modal-close-btn" id="btn-close-looper-modal">✕</button>
       </div>
       <div class="modal-body">
-        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-          Позволяет бесконечно воспроизводить выбранный фрагмент трека (соло, дроп, бит).
+        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;" id="txt-looper-desc">
+          Seamlessly loop any segment of the track (guitar solo, beat drop, chorus).
         </div>
         <div class="looper-controls-row" style="margin-bottom: 14px;">
           <button class="looper-btn" id="btn-set-loop-a">
-            <span style="color: #00FF66; font-weight: 700;">[A]</span> Метка начала: <span id="loop-time-a">--:--</span>
+            <span style="color: #00FF66; font-weight: 700;">[A]</span> <span id="txt-loop-start">Start:</span> <span id="loop-time-a">--:--</span>
           </button>
           <button class="looper-btn" id="btn-set-loop-b">
-            <span style="color: #FF5555; font-weight: 700;">[B]</span> Метка конца: <span id="loop-time-b">--:--</span>
+            <span style="color: #FF5555; font-weight: 700;">[B]</span> <span id="txt-loop-end">End:</span> <span id="loop-time-b">--:--</span>
           </button>
         </div>
         <div class="looper-controls-row">
           <button class="looper-btn" id="btn-toggle-loop-active" style="background: var(--surface-hover);">
-            🔁 Включить цикл
+            🔁 <span id="txt-btn-loop-active">Enable Loop</span>
           </button>
           <button class="looper-btn" id="btn-clear-loop" style="color: var(--text-dim);">
-            ✕ Сбросить
+            ✕ <span id="txt-btn-loop-clear">Reset</span>
           </button>
         </div>
       </div>
@@ -874,7 +881,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          Bento-карточка трека для соцсетей
+          <span id="txt-card-modal-title">Social Bento Track Card Generator</span>
         </div>
         <button class="modal-close-btn" id="btn-close-card-modal">✕</button>
       </div>
@@ -884,10 +891,10 @@
         </div>
         <div class="card-actions-grid">
           <button class="card-action-btn-main" id="btn-copy-card">
-            📋 Скопировать картинку
+            📋 <span id="txt-btn-copy-card">Copy to Clipboard</span>
           </button>
           <button class="card-action-btn-secondary" id="btn-download-card">
-            💾 Скачать PNG
+            💾 <span id="txt-btn-download-card">Download PNG</span>
           </button>
         </div>
       </div>

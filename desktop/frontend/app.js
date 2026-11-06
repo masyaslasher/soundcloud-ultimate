@@ -299,7 +299,7 @@
     dockLikeBtn.classList.toggle('liked', !!track.liked);
 
     try {
-      playerTitle.textContent = `Загрузка: ${track.title}...`;
+      playerTitle.textContent = `Loading: ${track.title}...`;
       const res = await fetch(`/api/stream?id=${track.id}`);
       if (!res.ok) throw new Error('Stream resolution failed');
       const data = await res.json();
@@ -338,7 +338,7 @@
       setupMediaSession(track);
     } catch (err) {
       console.error('Audio playback error:', err);
-      playerTitle.textContent = `Ошибка загрузки: ${track.title}`;
+      playerTitle.textContent = `Playback error: ${track.title}`;
     }
   }
 
@@ -421,7 +421,7 @@
       audio.pause();
       isPlaying = false;
       updatePlayButtonUI(false);
-      showToast('🌙 Таймер сна: трек завершился, музыка остановлена');
+      showToast('🌙 Sleep timer: track finished, music stopped');
       return;
     }
 
@@ -581,13 +581,13 @@
     repeatMode = (repeatMode + 1) % 3;
     btnRepeat.classList.toggle('active', repeatMode > 0);
     if (repeatMode === 2) {
-      btnRepeat.title = 'Повтор одного трека';
+      btnRepeat.title = 'Repeat one track';
       btnRepeat.style.color = '#FFAA00';
     } else if (repeatMode === 1) {
-      btnRepeat.title = 'Повтор всей очереди';
+      btnRepeat.title = 'Repeat entire queue';
       btnRepeat.style.color = 'var(--orange-neon)';
     } else {
-      btnRepeat.title = 'Повтор (R)';
+      btnRepeat.title = 'Repeat (R)';
       btnRepeat.style.color = '';
     }
   });
@@ -607,7 +607,7 @@
   function renderQueue() {
     queueList.innerHTML = '';
     if (queue.length === 0) {
-      queueList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 20px; font-size: 13px;">Очередь пуста</div>';
+      queueList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 20px; font-size: 13px;">Queue is empty</div>';
       return;
     }
 
@@ -685,13 +685,13 @@
     profileModalOverlay.classList.add('open');
 
     // Loading skeleton
-    profName.textContent = 'Загрузка профиля...';
+    profName.textContent = 'Loading profile...';
     profLoc.textContent = '';
     profDesc.textContent = '';
     profStatTracks.textContent = '...';
     profStatFollowers.textContent = '...';
     profStatLikes.textContent = '...';
-    profTracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 20px;">Загрузка треков...</div>';
+    profTracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 20px;">Loading tracks...</div>';
     profPlaylistsGrid.innerHTML = '';
     profFollowBtn.style.display = 'none';
 
@@ -704,8 +704,8 @@
       profName.textContent = data.username;
       profAvatar.src = data.avatar_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="%23FF5500"%3E%3Ccircle cx="50" cy="50" r="50"/%3E%3C/svg%3E';
       const locParts = [data.city, data.country].filter(Boolean);
-      profLoc.textContent = locParts.length > 0 ? `📍 ${locParts.join(', ')}` : '📍 Вселенная SoundCloud';
-      profDesc.textContent = data.description || 'Исполнитель пока не добавил описание профиля.';
+      profLoc.textContent = locParts.length > 0 ? `📍 ${locParts.join(', ')}` : '📍 SoundCloud Universe';
+      profDesc.textContent = data.description || 'Artist has not added a bio yet.';
 
       profStatTracks.textContent = formatCount(data.track_count);
       profStatFollowers.textContent = formatCount(data.followers_count);
@@ -722,7 +722,7 @@
       // Render Artist Tracks
       profTracksGrid.innerHTML = '';
       if (!data.tracks || data.tracks.length === 0) {
-        profTracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 20px;">У исполнителя нет загруженных треков</div>';
+        profTracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 20px;">No uploaded tracks</div>';
       } else {
         data.tracks.forEach((t, i) => {
           const card = document.createElement('div');
@@ -732,7 +732,7 @@
             <div class="artwork-wrapper">
               <img class="track-artwork" src="${art}" loading="lazy" alt="${t.title}">
               <div class="card-play-overlay">
-                <button class="overlay-play-btn" title="Слушать">
+                <button class="overlay-play-btn" title="Play">
                   <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 </button>
               </div>
@@ -741,7 +741,7 @@
             <div class="track-artist" title="${t.artist}">${t.artist}</div>
             <div class="track-meta">
               <span>⏱ ${formatDurationMs(t.duration_ms)}</span>
-              <button class="like-btn ${t.liked ? 'liked' : ''}" title="Лайк">
+              <button class="like-btn ${t.liked ? 'liked' : ''}" title="Like">
                 <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
               </button>
             </div>
@@ -762,7 +762,7 @@
       // Render Artist Playlists
       profPlaylistsGrid.innerHTML = '';
       if (!data.playlists || data.playlists.length === 0) {
-        profPlaylistsGrid.innerHTML = '<div style="color: var(--text-dim); padding: 10px; font-size: 13px;">Нет публичных альбомов</div>';
+        profPlaylistsGrid.innerHTML = '<div style="color: var(--text-dim); padding: 10px; font-size: 13px;">No public albums</div>';
       } else {
         data.playlists.forEach(pl => {
           const card = document.createElement('div');
@@ -771,7 +771,7 @@
           card.innerHTML = `
             <div class="artwork-wrapper" style="position: relative;">
               <img class="track-artwork" src="${art}" loading="lazy" alt="${pl.title}">
-              <div class="playlist-badge">📂 ${pl.track_count} треков</div>
+              <div class="playlist-badge">📂 ${pl.track_count} tracks</div>
             </div>
             <div class="track-title" title="${pl.title}">${pl.title}</div>
             <div class="track-artist" title="${pl.artist}">${pl.artist}</div>
@@ -785,17 +785,17 @@
 
     } catch (e) {
       console.error('Failed to load artist profile:', e);
-      profName.textContent = 'Ошибка загрузки профиля';
+      profName.textContent = 'Error loading profile';
       profDesc.textContent = e.toString();
     }
   }
 
   function updateFollowBtnUI(following) {
     if (following) {
-      profFollowBtn.textContent = '✓ Вы подписаны';
+      profFollowBtn.textContent = '✓ Following';
       profFollowBtn.classList.add('following');
     } else {
-      profFollowBtn.textContent = '+ Подписаться';
+      profFollowBtn.textContent = '+ Follow';
       profFollowBtn.classList.remove('following');
     }
   }
@@ -829,10 +829,10 @@
     playlistModalOverlay.classList.add('open');
 
     // Loading skeleton
-    plModalTitle.textContent = 'Загрузка плейлиста...';
+    plModalTitle.textContent = 'Loading playlist...';
     plModalArtist.textContent = '';
     plModalMeta.textContent = '...';
-    plModalTracksList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Загрузка треков...</div>';
+    plModalTracksList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Loading tracks...</div>';
 
     try {
       const res = await fetch(`/api/playlists/${playlistId}`);
@@ -844,7 +844,7 @@
       plModalArtist.textContent = data.artist;
       plModalArt.src = data.artwork_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="130" height="130" fill="%23222"%3E%3Crect width="130" height="130"/%3E%3C/svg%3E';
       const trackCount = data.tracks ? data.tracks.length : data.track_count;
-      plModalMeta.textContent = `${trackCount} треков • ${formatDurationMs(data.duration_ms)}`;
+      plModalMeta.textContent = `${trackCount} tracks • ${formatDurationMs(data.duration_ms)}`;
 
       // Click artist in playlist modal
       plModalArtist.onclick = () => {
@@ -865,7 +865,7 @@
       // Render Tracks List
       plModalTracksList.innerHTML = '';
       if (!data.tracks || data.tracks.length === 0) {
-        plModalTracksList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 20px;">В плейлисте нет доступных треков</div>';
+        plModalTracksList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 20px;">No available tracks in this playlist</div>';
         return;
       }
 
@@ -887,7 +887,7 @@
 
     } catch (e) {
       console.error('Failed to load playlist:', e);
-      plModalTitle.textContent = 'Ошибка загрузки плейлиста';
+      plModalTitle.textContent = 'Error loading playlist';
       plModalTracksList.innerHTML = `<div style="color: #FF5555; text-align: center; padding: 20px;">${e.toString()}</div>`;
     }
   }
@@ -902,13 +902,13 @@
       track = currentIndex >= 0 ? queue[currentIndex] : null;
     }
     if (!track) {
-      alert('Сначала включите трек для просмотра комментариев');
+      alert('Please play a track first to view comments');
       return;
     }
 
     currentViewingTrackForComments = track;
     commentsModalOverlay.classList.add('open');
-    commentsList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Загрузка комментариев...</div>';
+    commentsList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Loading comments...</div>';
 
     try {
       const res = await fetch(`/api/tracks/${track.id}/comments`);
@@ -917,14 +917,14 @@
       renderCommentsList(data.comments || []);
     } catch (e) {
       console.error('Failed to load comments:', e);
-      commentsList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Не удалось загрузить комментарии к этому треку</div>';
+      commentsList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Could not load comments for this track</div>';
     }
   }
 
   function renderCommentsList(comments) {
     commentsList.innerHTML = '';
     if (!comments || comments.length === 0) {
-      commentsList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">Пока нет комментариев к этому треку. Будьте первым!</div>';
+      commentsList.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 30px;">No comments yet on this track. Be the first!</div>';
       return;
     }
 
@@ -978,7 +978,7 @@
     if (!body) return;
 
     const timestamp_ms = Math.floor((audio.currentTime || 0) * 1000);
-    btnSendComment.textContent = 'Отправка...';
+    btnSendComment.textContent = 'Sending...';
     btnSendComment.disabled = true;
 
     try {
@@ -1007,9 +1007,9 @@
       `;
       commentsList.insertBefore(row, commentsList.firstChild);
     } catch (e) {
-      alert('Ошибка при отправке комментария: ' + e);
+      alert('Error sending comment: ' + e);
     } finally {
-      btnSendComment.textContent = 'Отправить';
+      btnSendComment.textContent = 'Send';
       btnSendComment.disabled = false;
     }
   }
@@ -1029,11 +1029,11 @@
   // 8. In-App Track Radio / Station (100% In-App)
   async function startTrackRadio() {
     if (currentIndex < 0 || !queue[currentIndex]) {
-      alert('Сначала включите трек для запуска радио-станции');
+      alert('Please play a track first to start a radio station');
       return;
     }
     const track = queue[currentIndex];
-    playerTitle.textContent = `Запуск радио: ${track.title}...`;
+    playerTitle.textContent = `Starting radio: ${track.title}...`;
 
     try {
       const res = await fetch(`/api/tracks/${track.id}/related`);
@@ -1044,12 +1044,12 @@
         queue = [track, ...data.tracks];
         currentIndex = 0;
         renderQueue();
-        gridTitle.innerHTML = `📻 Радио-станция трека: <span>"${track.title}"</span> (${data.tracks.length} треков)`;
+        gridTitle.innerHTML = `📻 Radio Station: <span>"${track.title}"</span> (${data.tracks.length} tracks)`;
         heroSection.style.display = 'none';
         renderTracks(queue);
         playerTitle.textContent = track.title;
       } else {
-        alert('Похожие треки не найдены');
+        alert('No similar tracks found');
         playerTitle.textContent = track.title;
       }
     } catch (e) {
@@ -1074,7 +1074,7 @@
       const data = await res.json();
       const badge = document.getElementById('antidpi-badge');
       if (badge && data.antidpi) {
-        badge.title = `⚡ Zapret: ${data.antidpi}\nОбход блокировок ТСПУ активен. Музыка и API работают без стороннего VPN.`;
+        badge.title = `⚡ Zapret: ${data.antidpi}\nISP/DPI bypass active. Music and API work without external VPN.`;
       }
     } catch (e) {
       console.warn('System status check failed:', e);
@@ -1121,7 +1121,7 @@
 
   if (btnImportBrowser) {
     btnImportBrowser.addEventListener('click', async () => {
-      btnImportBrowser.textContent = 'Поиск сессии в Chromium...';
+      btnImportBrowser.textContent = 'Scanning Chromium session...';
       try {
         const res = await fetch('/api/auth/import-browser', { method: 'POST' });
         const data = await res.json();
@@ -1130,12 +1130,12 @@
           await checkAuthStatus();
           loadMyLikes();
         } else {
-          alert('Сессия не найдена: ' + (data.error || 'войдите на soundcloud.com в Chromium'));
+          alert('Session not found: ' + (data.error || 'sign in to soundcloud.com in Chromium / Chrome'));
         }
       } catch(e) {
-        alert('Ошибка импорта: ' + e);
+        alert('Import error: ' + e);
       } finally {
-        btnImportBrowser.textContent = '⚡ Авторизоваться в 1 клик (из Chromium)';
+        btnImportBrowser.textContent = '⚡ 1-Click Sign In (from Chromium)';
       }
     });
   }
@@ -1148,7 +1148,7 @@
     const token = authTokenInput.value.trim();
     if (!token) return;
 
-    btnSubmitToken.textContent = 'Проверка...';
+    btnSubmitToken.textContent = 'Verifying...';
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -1161,12 +1161,12 @@
         await checkAuthStatus();
         loadMyLikes();
       } else {
-        alert(data.error || 'Неверный токен. Проверьте правильность.');
+        alert(data.error || 'Invalid token. Please check and try again.');
       }
     } catch (e) {
-      alert('Ошибка при подключении: ' + e);
+      alert('Connection error: ' + e);
     } finally {
-      btnSubmitToken.textContent = 'Подключить аккаунт';
+      btnSubmitToken.textContent = 'Connect Account';
     }
   });
 
@@ -1198,7 +1198,7 @@
   function renderTracks(tracks) {
     tracksGrid.innerHTML = '';
     if (!tracks || tracks.length === 0) {
-      tracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; font-size: 14px;">Ничего не найдено</div>';
+      tracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; font-size: 14px;">No tracks found</div>';
       return;
     }
 
@@ -1221,7 +1221,7 @@
         <div class="artwork-wrapper">
           <img class="track-artwork" src="${art}" loading="lazy" alt="${track.title}">
           <div class="card-play-overlay">
-            <button class="overlay-play-btn" title="Слушать">
+            <button class="overlay-play-btn" title="Play">
               <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </button>
           </div>
@@ -1230,7 +1230,7 @@
         <div class="track-artist" title="${track.artist}" style="cursor: pointer;">${track.artist}</div>
         <div class="track-meta">
           <span>⏱ ${formatDurationMs(track.duration_ms)}</span>
-          <button class="like-btn ${track.liked ? 'liked' : ''}" title="Лайк">
+          <button class="like-btn ${track.liked ? 'liked' : ''}" title="Like">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
         </div>
@@ -1262,7 +1262,7 @@
   function renderPlaylists(playlists) {
     tracksGrid.innerHTML = '';
     if (!playlists || playlists.length === 0) {
-      tracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; font-size: 14px;">Плейлисты не найдены</div>';
+      tracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; font-size: 14px;">No playlists found</div>';
       return;
     }
 
@@ -1274,7 +1274,7 @@
       card.innerHTML = `
         <div class="artwork-wrapper" style="position: relative;">
           <img class="track-artwork" src="${art}" loading="lazy" alt="${pl.title}">
-          <div class="playlist-badge">📂 ${pl.track_count} треков</div>
+          <div class="playlist-badge">📂 ${pl.track_count} tracks</div>
         </div>
         <div class="track-title" title="${pl.title}">${pl.title}</div>
         <div class="track-artist" title="${pl.artist}">${pl.artist}</div>
@@ -1290,7 +1290,7 @@
 
   // 11. Library Navigation Calls
   async function loadMyLikes() {
-    gridTitle.innerHTML = '❤️ Мои любимые треки <span>•</span> Liked';
+    gridTitle.innerHTML = '❤️ Liked Tracks <span>•</span> Library';
     heroSection.style.display = 'none';
     try {
       const res = await fetch('/api/me/likes?limit=50');
@@ -1302,7 +1302,7 @@
   }
 
   async function loadMyPlaylists() {
-    gridTitle.innerHTML = '📂 Мои плейлисты <span>•</span> Library';
+    gridTitle.innerHTML = '📂 Playlists <span>•</span> Library';
     heroSection.style.display = 'none';
     try {
       const res = await fetch('/api/me/playlists');
@@ -1314,7 +1314,7 @@
   }
 
   async function loadMyStream() {
-    gridTitle.innerHTML = '📡 Моя лента подписок <span>•</span> Stream';
+    gridTitle.innerHTML = '📡 Personal Stream <span>•</span> Following';
     heroSection.style.display = 'none';
     try {
       const res = await fetch('/api/me/stream');
@@ -1326,7 +1326,7 @@
   }
 
   async function loadMyHistory() {
-    gridTitle.innerHTML = '🕒 История прослушиваний <span>•</span> History';
+    gridTitle.innerHTML = '🕒 Listening History <span>•</span> History';
     heroSection.style.display = 'none';
     try {
       const res = await fetch('/api/me/history');
@@ -1338,7 +1338,7 @@
   }
 
   async function loadTrending(genre = 'all-music') {
-    gridTitle.innerHTML = `Тренды: <span>${genre.toUpperCase()}</span>`;
+    gridTitle.innerHTML = `Trending: <span>${genre.toUpperCase()}</span>`;
     heroSection.style.display = 'grid';
     try {
       const res = await fetch(`/api/trending?genre=${genre}&limit=32`);
@@ -1354,7 +1354,7 @@
       loadTrending();
       return;
     }
-    gridTitle.innerHTML = `Результаты поиска: <span>"${query}"</span>`;
+    gridTitle.innerHTML = `Search Results: <span>"${query}"</span>`;
     heroSection.style.display = 'none';
 
     try {
@@ -1619,7 +1619,7 @@
       card.addEventListener('click', () => {
         const id = card.dataset.themeId;
         applyTheme(id);
-        showToast(`🎨 Тема оформлення змінена: ${card.querySelector('.theme-title span')?.textContent || id}`);
+        showToast(`🎨 Color theme applied: ${card.querySelector('.theme-title span')?.textContent || id}`);
       });
     });
 
@@ -1700,7 +1700,7 @@
 
     const curTrack = currentIndex >= 0 ? queue[currentIndex] : null;
     if (!curTrack) {
-      document.getElementById('lyrics-container').innerHTML = '<div class="lyrics-empty">Запустите трек, чтобы увидеть слова и караоке</div>';
+      document.getElementById('lyrics-container').innerHTML = '<div class="lyrics-empty">Play a track to view lyrics and karaoke</div>';
       return;
     }
 
@@ -1719,7 +1719,7 @@
     activeLyricIndex = -1;
     const container = document.getElementById('lyrics-container');
     const badge = document.getElementById('lyrics-source-badge');
-    container.innerHTML = '<div class="lyrics-empty">⚡ Поиск текста в базе LRCLIB...</div>';
+    container.innerHTML = '<div class="lyrics-empty">⚡ Searching lyrics in LRCLIB database...</div>';
 
     try {
       const cleanTitle = track.title.replace(/\([^)]*\)|\[[^\]]*\]/g, '').trim();
@@ -1782,18 +1782,18 @@
   function generateFallbackLyrics(track) {
     const totalDuration = track.duration_ms ? track.duration_ms / 1000 : (audio.duration || 180);
     const phrases = [
-      `♪ [Вступление — ${track.artist}] ♪`,
-      `Погружение в частоты, кристальный звук`,
-      `Неоновые волны пробивают ночной город`,
-      `В ритме пульсирует чистый бас`,
-      `SoundCloud Ultimate • Lossless аудиопоток активен`,
-      `♪ [Главная тема & Дроп] ♪`,
-      `Звук на максимум, растворяемся в мелодии`,
-      `Студийный баланс, ни одной лишней гармоники`,
-      `♪ [Бридж & Развитие темы] ♪`,
-      `Эхо в тишине, частоты выравниваются в унисон`,
-      `Музыка говорит громче любых слов`,
-      `♪ [Завершение композиции] ♪`
+      `♪ [Intro — ${track.artist}] ♪`,
+      `Lost in the frequencies, crystalline sound`,
+      `Neon light waves cutting through the night city`,
+      `Pure sub-bass pulsing to the rhythm`,
+      `SoundCloud Ultimate • Lossless stream active`,
+      `♪ [Main Beat & Drop] ♪`,
+      `Turn the volume up, dissolving in the melody`,
+      `Studio-grade balance, pure harmonics`,
+      `♪ [Bridge & Harmonic Progression] ♪`,
+      `Echoes in the silence, frequencies align`,
+      `Music speaks louder than words`,
+      `♪ [Outro — Fade Out] ♪`
     ];
     const step = Math.max(8, totalDuration / (phrases.length + 1));
     lyricsLines = phrases.map((text, i) => ({
@@ -1805,7 +1805,7 @@
   function renderLyricsLines() {
     const container = document.getElementById('lyrics-container');
     if (lyricsLines.length === 0) {
-      container.innerHTML = '<div class="lyrics-empty">Текст песни не найден</div>';
+      container.innerHTML = '<div class="lyrics-empty">Lyrics not found for this track</div>';
       return;
     }
     container.innerHTML = lyricsLines.map((l, idx) => `
@@ -1879,7 +1879,7 @@
         badge.style.display = 'inline-flex';
       }
       if (cancelBtn) cancelBtn.style.display = 'block';
-      showToast('🌙 Музыка выключится после окончания текущего трека');
+      showToast('🌙 Music will stop after the current track finishes');
       return;
     }
 
@@ -1902,7 +1902,7 @@
         isPlaying = false;
         updatePlayButtonUI(false);
         setVolume(preFadeVolume || 0.8);
-        showToast('🌙 Таймер сна сработал: музыка остановлена');
+        showToast('🌙 Sleep timer triggered: music stopped');
       } else {
         const totalSec = Math.floor(remainingMs / 1000);
         const m = Math.floor(totalSec / 60);
@@ -1916,7 +1916,7 @@
       }
     }, 1000);
 
-    showToast(`🌙 Таймер сна установлен на ${mins} минут`);
+    showToast(`🌙 Sleep timer set for ${mins} minutes`);
   }
 
   function cancelSleepTimer() {
@@ -1961,7 +1961,7 @@
 
     document.getElementById('btn-cancel-sleep')?.addEventListener('click', () => {
       cancelSleepTimer();
-      showToast('🌙 Таймер сна отменен');
+      showToast('🌙 Sleep timer cancelled');
     });
   }
 
@@ -1999,12 +1999,12 @@
         orbitAnimId = requestAnimationFrame(animateOrbit);
       }
       orbitAnimId = requestAnimationFrame(animateOrbit);
-      showToast('🎧 8D Audio активировано (360° бинауральное вращение)');
+      showToast('🎧 8D Audio enabled (360° binaural spatial rotation)');
     } else {
       if (orbitAnimId) cancelAnimationFrame(orbitAnimId);
       if (stereoPanner && audioCtx) stereoPanner.pan.setValueAtTime(0, audioCtx.currentTime);
       if (dot) dot.style.transform = 'translate(-50%, -50%)';
-      showToast('🎧 8D Audio выключено');
+      showToast('🎧 8D Audio disabled');
     }
   }
 
@@ -2046,7 +2046,7 @@
         chip.classList.add('active');
         const spd = parseFloat(chip.dataset.speed);
         setPlaybackSpeed(spd);
-        showToast(`⚡ Скорость изменена: ${spd}x`);
+        showToast(`⚡ Speed changed: ${spd}x`);
       });
     });
   }
@@ -2062,19 +2062,19 @@
     loopPointA = audio.currentTime;
     document.getElementById('loop-time-a').textContent = formatTime(loopPointA);
     updateLoopMarkersUI();
-    showToast(`🔁 Метка [A] установлена: ${formatTime(loopPointA)}`);
+    showToast(`🔁 Loop point [A] set: ${formatTime(loopPointA)}`);
   }
 
   function setLoopB() {
     loopPointB = audio.currentTime;
     document.getElementById('loop-time-b').textContent = formatTime(loopPointB);
     updateLoopMarkersUI();
-    showToast(`🔁 Метка [B] установлена: ${formatTime(loopPointB)}`);
+    showToast(`🔁 Loop point [B] set: ${formatTime(loopPointB)}`);
   }
 
   function toggleLoopActive() {
     if (loopPointA === null || loopPointB === null) {
-      showToast('⚠️ Сначала установите обе метки [A] и [B]');
+      showToast('⚠️ Please set both loop points [A] and [B] first');
       return;
     }
     if (loopPointA >= loopPointB) {
@@ -2090,20 +2090,20 @@
     if (isLoopActive) {
       if (btn) {
         btn.classList.add('active');
-        btn.innerHTML = '🔁 Цикл активен';
+        btn.innerHTML = '🔁 Loop Active';
       }
       if (dockBtn) dockBtn.style.color = '#00FF66';
       if (audio.currentTime < loopPointA || audio.currentTime > loopPointB) {
         audio.currentTime = loopPointA;
       }
-      showToast('🔁 A-B Looper активен!');
+      showToast('🔁 A-B Looper active!');
     } else {
       if (btn) {
         btn.classList.remove('active');
-        btn.innerHTML = '🔁 Включить цикл';
+        btn.innerHTML = '🔁 Enable Loop';
       }
       if (dockBtn) dockBtn.style.color = '';
-      showToast('🔁 A-B Looper отключен');
+      showToast('🔁 A-B Looper disabled');
     }
     updateLoopMarkersUI();
   }
@@ -2117,12 +2117,12 @@
     const btn = document.getElementById('btn-toggle-loop-active');
     if (btn) {
       btn.classList.remove('active');
-      btn.innerHTML = '🔁 Включить цикл';
+      btn.innerHTML = '🔁 Enable Loop';
     }
     const dockBtn = document.getElementById('btn-looper-toggle');
     if (dockBtn) dockBtn.style.color = '';
     updateLoopMarkersUI();
-    showToast('🔁 Метки цикла сброшены');
+    showToast('🔁 Loop points cleared');
   }
 
   function updateLoopMarkersUI() {
@@ -2354,13 +2354,13 @@
           navigator.clipboard.write([
             new ClipboardItem({ 'image/png': blob })
           ]).then(() => {
-            showToast('📋 Карточка скопирована в буфер обмена!');
+            showToast('📋 Card copied to clipboard!');
           }).catch(e => {
             console.warn('Clipboard write failed:', e);
-            showToast('⚠️ Не удалось скопировать, используйте "Скачать PNG"');
+            showToast('⚠️ Could not copy, please use "Download PNG"');
           });
         } catch (e) {
-          showToast('⚠️ Скопируйте через "Скачать PNG"');
+          showToast('⚠️ Please save via "Download PNG"');
         }
       });
     });
@@ -2372,7 +2372,7 @@
       link.download = `SoundCloud-Card-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast('💾 Изображение карточки сохранено!');
+      showToast('💾 Card image saved!');
     });
   }
 
@@ -2396,6 +2396,82 @@
 
   // Init
   initThemes();
+  initLanguageSwitcher();
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // LANGUAGE SWITCHER (EN / RU)
+  // ═══════════════════════════════════════════════════════════════════════
+  function initLanguageSwitcher() {
+    const btnLang = document.getElementById("btn-lang-toggle");
+    const langLabel = document.getElementById("lang-label");
+    let currentLang = localStorage.getItem("lang") || "en";
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      if (langLabel) langLabel.textContent = lang.toUpperCase();
+
+      const searchInp = document.getElementById("search-input");
+      const txtThemes = document.getElementById("txt-themes-btn");
+      const txtExt = document.getElementById("txt-extensions-btn");
+      const txtLogin = document.getElementById("txt-login-btn");
+      const txtMyProf = document.getElementById("txt-my-profile");
+      const txtLogout = document.getElementById("txt-logout");
+      const chipTrend = document.getElementById("chip-trending");
+      const chipLk = document.getElementById("chip-likes");
+      const chipPl = document.getElementById("chip-playlists");
+      const chipSt = document.getElementById("chip-stream");
+      const chipHs = document.getElementById("chip-history");
+      const heroTag = document.getElementById("hero-tag");
+      const txtListenNow = document.getElementById("txt-listen-now");
+      const txtQueueTitle = document.getElementById("txt-queue-title");
+
+      if (lang === "ru") {
+        if (searchInp) searchInp.placeholder = "Поиск треков, исполнителей, альбомов...";
+        if (txtThemes) txtThemes.textContent = "Темы (10)";
+        if (txtExt) txtExt.textContent = "Расширения";
+        if (txtLogin) txtLogin.textContent = "Войти в аккаунт";
+        if (txtMyProf) txtMyProf.textContent = "Мой профиль";
+        if (txtLogout) txtLogout.textContent = "Выйти";
+        if (chipTrend) chipTrend.textContent = "🔥 В тренде";
+        if (chipLk) chipLk.textContent = "❤️ Мои Лайки";
+        if (chipPl) chipPl.textContent = "📂 Мои Плейлисты";
+        if (chipSt) chipSt.textContent = "📡 Моя Лента";
+        if (chipHs) chipHs.textContent = "🕒 История";
+        if (heroTag) heroTag.textContent = "🔥 Топ недели";
+        if (txtListenNow) txtListenNow.textContent = "Слушать сейчас";
+        if (txtQueueTitle) txtQueueTitle.textContent = "Очередь воспроизведения";
+        if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = "Выберите трек для воспроизведения";
+      } else {
+        if (searchInp) searchInp.placeholder = "Search tracks, artists, albums...";
+        if (txtThemes) txtThemes.textContent = "Themes (10)";
+        if (txtExt) txtExt.textContent = "Extensions";
+        if (txtLogin) txtLogin.textContent = "Sign In";
+        if (txtMyProf) txtMyProf.textContent = "My Profile";
+        if (txtLogout) txtLogout.textContent = "Sign Out";
+        if (chipTrend) chipTrend.textContent = "🔥 Trending";
+        if (chipLk) chipLk.textContent = "❤️ Liked";
+        if (chipPl) chipPl.textContent = "📂 Playlists";
+        if (chipSt) chipSt.textContent = "📡 Stream";
+        if (chipHs) chipHs.textContent = "🕒 History";
+        if (heroTag) heroTag.textContent = "🔥 Top of the Week";
+        if (txtListenNow) txtListenNow.textContent = "Listen Now";
+        if (txtQueueTitle) txtQueueTitle.textContent = "Play Queue";
+        if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = "Select a track to play";
+      }
+    }
+
+    if (btnLang) {
+      btnLang.addEventListener("click", () => {
+        const nextLang = currentLang === "en" ? "ru" : "en";
+        applyLanguage(nextLang);
+        showToast(nextLang === "ru" ? "🇷🇺 Язык интерфейса: Русский" : "🇬🇧 Interface Language: English");
+      });
+    }
+
+    applyLanguage(currentLang);
+  }
+
   initExtensionsHub();
   initLyricsEngine();
   initSleepTimer();
