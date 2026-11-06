@@ -64,15 +64,27 @@
           </button>
           <button class="nav-item" id="nav-item-liked" title="Liked Tracks">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            <span id="txt-nav-liked">Liked</span>
+            <span id="txt-nav-liked">Liked Tracks</span>
           </button>
           <button class="nav-item" id="nav-item-playlists" title="Playlists">
             <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
             <span id="txt-nav-playlists">Playlists</span>
           </button>
-          <button class="nav-item" id="nav-item-explore" title="Explore & Discovery">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-            <span id="txt-nav-explore">Explore</span>
+          <button class="nav-item" id="nav-item-albums" title="Albums">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/></svg>
+            <span id="txt-nav-albums">Albums</span>
+          </button>
+          <button class="nav-item" id="nav-item-artists" title="Artists">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span id="txt-nav-artists">Artists</span>
+          </button>
+          <button class="nav-item" id="nav-item-history" title="History">
+            <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+            <span id="txt-nav-history">History</span>
+          </button>
+          <button class="nav-item" id="nav-item-downloads" title="Downloads">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <span id="txt-nav-downloads">Downloads</span>
           </button>
         </nav>
 
@@ -90,6 +102,10 @@
           <button class="nav-item-sub" id="btn-plugin-studio" title="Plugin Studio & Extensions">
             <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <span>Plugins</span>
+          </button>
+          <button class="nav-item-sub" id="nav-item-queue" title="Full Queue Manager">
+            <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+            <span>Queue</span>
           </button>
         </div>
 
@@ -227,76 +243,488 @@
 
         <!-- Scrollable Body -->
         <div class="center-scrollable-body" id="center-scrollable-body">
-          <!-- Hero Banner: Discover new music -->
-          <div class="hero-discover-banner" id="hero-discover-banner">
-            <div class="hero-banner-content">
-              <h1 class="hero-banner-title">Discover<br>new music</h1>
-              <p class="hero-banner-subtitle">Explore tracks, artists and playlists from the SoundCloud community.</p>
-              <button class="hero-explore-btn" id="hero-explore-btn">
-                <span>Explore</span> <span class="arrow-right">→</span>
-              </button>
-              <div class="hero-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+
+          <!-- 1. HOME VIEW (Active by default) -->
+          <div class="app-page-view active" id="view-home">
+            <!-- Hero Banner: Discover new music -->
+            <div class="hero-discover-banner" id="hero-discover-banner">
+              <div class="hero-banner-content">
+                <h1 class="hero-banner-title">Discover<br>new music</h1>
+                <p class="hero-banner-subtitle">Explore tracks, artists and playlists from the SoundCloud community.</p>
+                <button class="hero-explore-btn" id="hero-explore-btn">
+                  <span>Explore</span> <span class="arrow-right">→</span>
+                </button>
+                <div class="hero-dots">
+                  <span class="dot active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+              <div class="hero-banner-backdrop"></div>
+            </div>
+
+            <!-- Recently Played Horizontal Row (Matching Reference) -->
+            <div class="content-section" id="section-recently-played">
+              <div class="section-header-row">
+                <h2 class="section-title">Recently played</h2>
+                <button class="section-link-btn" id="btn-see-all-recent">See all →</button>
+              </div>
+              <div class="recently-played-row" id="recently-played-row">
+                <!-- Rendered dynamically -->
               </div>
             </div>
-            <div class="hero-banner-backdrop"></div>
-          </div>
 
-          <!-- Recently Played Horizontal Row (Matching Reference) -->
-          <div class="content-section" id="section-recently-played">
-            <div class="section-header-row">
-              <h2 class="section-title">Recently played</h2>
-              <button class="section-link-btn" id="btn-see-all-recent">See all →</button>
+            <!-- Recommended for you Horizontal Row (Matching Reference) -->
+            <div class="content-section" id="section-recommended">
+              <div class="section-header-row">
+                <h2 class="section-title">Recommended for you</h2>
+                <button class="section-link-btn" id="btn-see-all-recommended">See all →</button>
+              </div>
+              <div class="recently-played-row" id="recommended-row">
+                <!-- Rendered dynamically -->
+              </div>
             </div>
-            <div class="recently-played-row" id="recently-played-row">
-              <!-- Rendered dynamically -->
+
+            <!-- Genre & Library Chips Bar -->
+            <div class="chips-bar" id="chips-bar">
+              <div class="chip active" data-type="genre" data-val="all-music" id="chip-trending">🔥 Trending</div>
+              <div class="chip" data-type="lib" data-val="likes" id="chip-likes">❤️ Liked</div>
+              <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists">📂 Playlists</div>
+              <div class="chip" data-type="lib" data-val="stream" id="chip-stream">📡 Stream</div>
+              <div class="chip" data-type="lib" data-val="history" id="chip-history">🕒 History</div>
+              <div class="chip" data-type="special" data-val="discovery" id="chip-discovery">✨ Discovery Engine</div>
+              <div class="chip" data-type="special" data-val="smart-playlists" id="chip-smart-playlists">⚡ Smart Playlists</div>
+              <div class="chip" data-type="genre" data-val="phonk" id="chip-genre-phonk">Phonk</div>
+              <div class="chip" data-type="genre" data-val="electronic" id="chip-genre-electronic">Electronic</div>
+              <div class="chip" data-type="genre" data-val="hiphoprap" id="chip-genre-hiphoprap">Hip-Hop</div>
+              <div class="chip" data-type="genre" data-val="ambient" id="chip-genre-ambient">Ambient</div>
+              <div class="chip" data-type="genre" data-val="rock" id="chip-genre-rock">Rock</div>
+              <div class="chip" data-type="genre" data-val="danceedm" id="chip-genre-danceedm">EDM</div>
+              <div class="chip" data-type="genre" data-val="rbsoul" id="chip-genre-rbsoul">R&B</div>
+              <div class="chip" data-type="genre" data-val="indie" id="chip-genre-indie">Indie</div>
+            </div>
+
+            <!-- Popular & Trending Tracks Section -->
+            <div class="content-section" id="section-tracks">
+              <div class="section-header-row">
+                <h2 class="section-title" id="grid-title">Popular & Trending</h2>
+              </div>
+              <div class="tracks-grid" id="tracks-grid"></div>
             </div>
           </div>
 
-          <!-- Genre & Library Chips Bar -->
-          <div class="chips-bar" id="chips-bar">
-            <div class="chip active" data-type="genre" data-val="all-music" id="chip-trending">🔥 Trending</div>
-            <div class="chip" data-type="lib" data-val="likes" id="chip-likes">❤️ Liked</div>
-            <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists">📂 Playlists</div>
-            <div class="chip" data-type="lib" data-val="stream" id="chip-stream">📡 Stream</div>
-            <div class="chip" data-type="lib" data-val="history" id="chip-history">🕒 History</div>
-            <div class="chip" data-type="special" data-val="discovery" id="chip-discovery">✨ Discovery Engine</div>
-            <div class="chip" data-type="special" data-val="smart-playlists" id="chip-smart-playlists">⚡ Smart Playlists</div>
-            <div class="chip" data-type="genre" data-val="phonk" id="chip-genre-phonk">Phonk</div>
-            <div class="chip" data-type="genre" data-val="electronic" id="chip-genre-electronic">Electronic</div>
-            <div class="chip" data-type="genre" data-val="hiphoprap" id="chip-genre-hiphoprap">Hip-Hop</div>
-            <div class="chip" data-type="genre" data-val="ambient" id="chip-genre-ambient">Ambient</div>
-            <div class="chip" data-type="genre" data-val="rock" id="chip-genre-rock">Rock</div>
-            <div class="chip" data-type="genre" data-val="danceedm" id="chip-genre-danceedm">EDM</div>
-            <div class="chip" data-type="genre" data-val="rbsoul" id="chip-genre-rbsoul">R&B</div>
-            <div class="chip" data-type="genre" data-val="indie" id="chip-genre-indie">Indie</div>
+          <!-- 2. SEARCH VIEW -->
+          <div class="app-page-view" id="view-search" style="display: none;">
+            <div class="page-header-row">
+              <h1 class="page-title">Search</h1>
+              <div class="search-cat-pills" id="search-cat-pills">
+                <button class="search-cat-pill active" data-cat="all">All</button>
+                <button class="search-cat-pill" data-cat="tracks">Tracks</button>
+                <button class="search-cat-pill" data-cat="artists">Artists</button>
+                <button class="search-cat-pill" data-cat="albums">Albums</button>
+                <button class="search-cat-pill" data-cat="playlists">Playlists</button>
+              </div>
+            </div>
+
+            <div class="search-pre-content" id="search-pre-content">
+              <!-- Recent Searches -->
+              <div class="content-section" id="search-history-section">
+                <div class="section-header-row">
+                  <h2 class="section-title">Recent searches</h2>
+                  <button class="section-link-btn" id="btn-clear-recent-searches">Clear all</button>
+                </div>
+                <div class="search-tags-row" id="recent-searches-row"></div>
+              </div>
+
+              <!-- Trending Searches -->
+              <div class="content-section">
+                <div class="section-header-row">
+                  <h2 class="section-title">Trending searches</h2>
+                </div>
+                <div class="search-tags-row" id="trending-searches-row">
+                  <span class="search-tag-chip" data-q="Phonk">🔥 Phonk</span>
+                  <span class="search-tag-chip" data-q="Witch House">👁️ Witch House</span>
+                  <span class="search-tag-chip" data-q="Ambient">🌌 Ambient</span>
+                  <span class="search-tag-chip" data-q="Lofi Hip Hop">☕ Lofi Hip Hop</span>
+                  <span class="search-tag-chip" data-q="Drift Phonk">🏎️ Drift Phonk</span>
+                  <span class="search-tag-chip" data-q="Synthwave">🌆 Synthwave</span>
+                  <span class="search-tag-chip" data-q="Chillstep">🎧 Chillstep</span>
+                  <span class="search-tag-chip" data-q="Anime Lofi">🌸 Anime Lofi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search Results Section -->
+            <div class="search-results-section" id="search-results-section" style="display: none;">
+              <div class="section-header-row">
+                <h2 class="section-title" id="search-results-title">Results for "<span id="search-query-display"></span>"</h2>
+                <span class="search-count-badge" id="search-count-badge">0 results</span>
+              </div>
+              <div class="search-results-content" id="search-results-content"></div>
+            </div>
           </div>
 
-          <!-- Legacy Hero Bento Section (Hidden by default, used if needed) -->
-          <section class="hero-bento" id="hero-section" style="display: none;">
-            <div class="bento-card-large" id="hero-card">
-              <img class="hero-bg-art" id="hero-bg-art" src="" alt="">
-              <div class="hero-tag" id="hero-tag">🔥 Top of the Week</div>
-              <h2 class="hero-title" id="hero-title">Loading...</h2>
-              <div class="hero-artist" id="hero-artist">SoundCloud Ultimate</div>
-              <button class="hero-play-btn" id="hero-play-btn">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                <span id="txt-listen-now">Listen Now</span>
+          <!-- 3. LIBRARY VIEW -->
+          <div class="app-page-view" id="view-library" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Your Library</h1>
+                <p class="page-subtitle">Playlists, albums, followed artists and saved tracks</p>
+              </div>
+              <div class="lib-toolbar">
+                <input type="text" id="lib-search-input" class="lib-search-input" placeholder="Search in library...">
+                <div class="view-mode-toggle">
+                  <button class="mode-btn active" id="btn-lib-mode-grid" title="Grid View">
+                    <svg viewBox="0 0 24 24"><path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z"/></svg>
+                  </button>
+                  <button class="mode-btn" id="btn-lib-mode-list" title="List View">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="lib-nav-tabs" id="lib-nav-tabs">
+              <button class="lib-tab active" data-tab="all">All</button>
+              <button class="lib-tab" data-tab="playlists">Playlists</button>
+              <button class="lib-tab" data-tab="albums">Albums</button>
+              <button class="lib-tab" data-tab="artists">Artists</button>
+              <button class="lib-tab" data-tab="tracks">Tracks</button>
+              <button class="lib-tab" data-tab="downloads">Downloads</button>
+            </div>
+
+            <div class="lib-content-area" id="lib-content-area"></div>
+          </div>
+
+          <!-- 4. LIKED TRACKS VIEW -->
+          <div class="app-page-view" id="view-liked" style="display: none;">
+            <div class="liked-hero-banner">
+              <div class="liked-hero-art">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <div class="liked-hero-meta">
+                <span class="liked-hero-tag">PLAYLIST</span>
+                <h1 class="liked-hero-title">Liked Tracks</h1>
+                <p class="liked-hero-desc">Your personal collection of favorite tracks, synced locally & with SoundCloud.</p>
+                <div class="liked-hero-stats">
+                  <span class="user-avatar-mini" id="liked-user-mini"></span>
+                  <span class="liked-owner-name" id="liked-owner-name">Guest</span>
+                  <span>•</span>
+                  <span id="liked-tracks-count">0 tracks</span>
+                  <span>•</span>
+                  <span id="liked-tracks-duration">0 min</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="liked-action-bar">
+              <button class="primary-pill-btn" id="btn-liked-play-all">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <span>Play all</span>
+              </button>
+              <button class="secondary-pill-btn" id="btn-liked-shuffle">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+                <span>Shuffle</span>
+              </button>
+              <div class="liked-filter-wrap">
+                <input type="text" id="liked-search-input" class="table-search-input" placeholder="Filter in Liked Tracks...">
+              </div>
+              <select id="liked-sort-select" class="dropdown-select">
+                <option value="recent">Recently Added</option>
+                <option value="title">Title (A-Z)</option>
+                <option value="artist">Artist (A-Z)</option>
+                <option value="duration">Duration</option>
+              </select>
+            </div>
+
+            <div class="tracklist-table-wrap">
+              <table class="tracklist-table" id="liked-tracks-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px; text-align: center;">#</th>
+                    <th>TITLE</th>
+                    <th>ARTIST</th>
+                    <th style="width: 80px; text-align: right;">TIME</th>
+                    <th style="width: 88px; text-align: center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="liked-tracks-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 5. PLAYLISTS VIEW -->
+          <div class="app-page-view" id="view-playlists" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Playlists</h1>
+                <p class="page-subtitle">Your custom playlists & curated SoundCloud compilations</p>
+              </div>
+              <button class="primary-pill-btn" id="btn-create-playlist-trigger">
+                <span>+ New Playlist</span>
               </button>
             </div>
-          </section>
-
-          <!-- Popular & Trending Tracks Section -->
-          <div class="content-section" id="section-tracks">
-            <div class="section-header-row">
-              <h2 class="section-title" id="grid-title">Popular & Trending</h2>
-            </div>
-            <!-- Tracks Grid / List -->
-            <div class="tracks-grid" id="tracks-grid"></div>
+            <div class="playlists-grid" id="playlists-grid"></div>
           </div>
+
+          <!-- Playlist Detail View -->
+          <div class="app-page-view" id="view-playlist-detail" style="display: none;">
+            <div class="detail-hero-banner">
+              <button class="back-link-btn" id="btn-back-to-playlists">← Back to Playlists</button>
+              <div class="detail-hero-content">
+                <img class="detail-hero-art" id="pl-detail-art" src="assets/default_artwork.png" alt="">
+                <div class="detail-hero-meta">
+                  <span class="detail-tag">PLAYLIST</span>
+                  <h1 class="detail-title" id="pl-detail-title">Playlist Title</h1>
+                  <p class="detail-desc" id="pl-detail-desc">Playlist description</p>
+                  <div class="detail-stats" id="pl-detail-stats">0 tracks • 0 min</div>
+                  <div class="detail-actions">
+                    <button class="primary-pill-btn" id="btn-pl-detail-play">▶ Play</button>
+                    <button class="secondary-pill-btn" id="btn-pl-detail-shuffle">🔀 Shuffle</button>
+                    <button class="secondary-pill-btn" id="btn-pl-detail-edit">✏️ Edit</button>
+                    <button class="secondary-pill-btn" id="btn-pl-detail-delete" style="color: #EF4444;">🗑️ Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tracklist-table-wrap">
+              <table class="tracklist-table" id="pl-tracks-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px; text-align: center;">#</th>
+                    <th>TITLE</th>
+                    <th>ARTIST</th>
+                    <th style="width: 80px; text-align: right;">TIME</th>
+                    <th style="width: 60px; text-align: center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="pl-tracks-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 6. ALBUMS VIEW -->
+          <div class="app-page-view" id="view-albums" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Albums & EPs</h1>
+                <p class="page-subtitle">Full-length albums, extended plays and curated releases</p>
+              </div>
+            </div>
+            <div class="albums-grid" id="albums-grid"></div>
+          </div>
+
+          <!-- Album Detail View -->
+          <div class="app-page-view" id="view-album-detail" style="display: none;">
+            <div class="detail-hero-banner">
+              <button class="back-link-btn" id="btn-back-to-albums">← Back to Albums</button>
+              <div class="detail-hero-content">
+                <img class="detail-hero-art" id="album-detail-art" src="assets/default_artwork.png" alt="">
+                <div class="detail-hero-meta">
+                  <span class="detail-tag">ALBUM</span>
+                  <h1 class="detail-title" id="album-detail-title">Album Title</h1>
+                  <p class="detail-desc" id="album-detail-artist" style="color: var(--accent-primary); cursor: pointer;">Artist Name</p>
+                  <div class="detail-stats" id="album-detail-stats">0 tracks • 0 min</div>
+                  <div class="detail-actions">
+                    <button class="primary-pill-btn" id="btn-album-play">▶ Play Album</button>
+                    <button class="secondary-pill-btn" id="btn-album-shuffle">🔀 Shuffle</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tracklist-table-wrap">
+              <table class="tracklist-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px; text-align: center;">#</th>
+                    <th>TITLE</th>
+                    <th>ARTIST</th>
+                    <th style="width: 80px; text-align: right;">TIME</th>
+                    <th style="width: 60px; text-align: center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="album-tracks-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 7. ARTISTS VIEW -->
+          <div class="app-page-view" id="view-artists" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Artists</h1>
+                <p class="page-subtitle">Followed musicians and recommended creators</p>
+              </div>
+            </div>
+            <div class="artists-grid" id="artists-grid"></div>
+          </div>
+
+          <!-- Artist Detail View -->
+          <div class="app-page-view" id="view-artist-detail" style="display: none;">
+            <div class="artist-hero-banner">
+              <button class="back-link-btn" id="btn-back-to-artists">← Back to Artists</button>
+              <div class="artist-hero-content">
+                <img class="artist-hero-avatar" id="artist-detail-avatar" src="assets/default_artwork.png" alt="">
+                <div class="artist-hero-meta">
+                  <div class="verified-row">
+                    <span class="verified-badge">✓ Verified Artist</span>
+                  </div>
+                  <h1 class="artist-hero-name" id="artist-detail-name">Artist Name</h1>
+                  <p class="artist-hero-stats" id="artist-detail-stats">0 followers • 0 tracks</p>
+                  <div class="artist-actions">
+                    <button class="primary-pill-btn" id="btn-artist-play">▶ Play Top Tracks</button>
+                    <button class="secondary-pill-btn" id="btn-artist-follow">Follow</button>
+                    <button class="secondary-pill-btn" id="btn-artist-radio">📻 Station</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-section">
+              <h2 class="section-title">Popular Tracks</h2>
+              <div class="tracklist-table-wrap">
+                <table class="tracklist-table">
+                  <tbody id="artist-top-tracks-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="content-section">
+              <h2 class="section-title">Releases & Discography</h2>
+              <div class="albums-grid" id="artist-releases-grid"></div>
+            </div>
+          </div>
+
+          <!-- 8. HISTORY VIEW -->
+          <div class="app-page-view" id="view-history" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Listening History</h1>
+                <p class="page-subtitle">Everything you've listened to across your sessions</p>
+              </div>
+              <div class="lib-toolbar">
+                <input type="text" id="history-search-input" class="table-search-input" placeholder="Search history...">
+                <button class="secondary-pill-btn" id="btn-clear-history-action" style="color: #EF4444;">🗑️ Clear</button>
+              </div>
+            </div>
+            <div class="history-grouped-list" id="history-grouped-list"></div>
+          </div>
+
+          <!-- 9. DOWNLOADS VIEW -->
+          <div class="app-page-view" id="view-downloads" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Downloads & Offline Audio</h1>
+                <p class="page-subtitle">Manage downloaded MP3s and storage</p>
+              </div>
+              <button class="secondary-pill-btn" id="btn-open-downloads-folder">📂 Open Folder</button>
+            </div>
+            <div class="downloads-storage-bar">
+              <div class="storage-info-row">
+                <span id="dl-storage-text">145 MB used / 10 GB allocated</span>
+                <span id="dl-count-text">12 downloaded tracks</span>
+              </div>
+              <div class="storage-progress-track">
+                <div class="storage-progress-fill" style="width: 14%;"></div>
+              </div>
+            </div>
+            <div class="tracklist-table-wrap">
+              <table class="tracklist-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px; text-align: center;">#</th>
+                    <th>TITLE</th>
+                    <th>ARTIST</th>
+                    <th>SIZE</th>
+                    <th>STATUS</th>
+                    <th style="width: 80px; text-align: center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="downloads-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 10. SMART MIXES VIEW -->
+          <div class="app-page-view" id="view-smart-mixes" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Smart Mixes</h1>
+                <p class="page-subtitle">Personalized algorithmic feeds and rule-based compilations</p>
+              </div>
+              <button class="primary-pill-btn" id="btn-smart-builder-trigger">+ Custom Rule Mix</button>
+            </div>
+            <div class="smart-mixes-content" id="smart-mixes-content"></div>
+          </div>
+
+          <!-- 11. ANALYTICS VIEW -->
+          <div class="app-page-view" id="view-analytics" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Listening Analytics</h1>
+                <p class="page-subtitle">Personal listening metrics, habits and statistics</p>
+              </div>
+              <div class="analytics-actions-row">
+                <div class="time-filter-pills" id="analytics-time-pills">
+                  <button class="time-pill active" data-range="7d">7 Days</button>
+                  <button class="time-pill" data-range="30d">30 Days</button>
+                  <button class="time-pill" data-range="90d">90 Days</button>
+                  <button class="time-pill" data-range="all">All Time</button>
+                </div>
+                <button class="secondary-pill-btn" id="btn-analytics-csv">📊 Export CSV</button>
+                <button class="secondary-pill-btn" id="btn-analytics-json">💾 Export JSON</button>
+              </div>
+            </div>
+            <div class="analytics-dashboard-body" id="analytics-dashboard-body"></div>
+          </div>
+
+          <!-- 12. PLUGINS VIEW -->
+          <div class="app-page-view" id="view-plugins" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Plugin Studio & Extensions</h1>
+                <p class="page-subtitle">Customize and extend your SoundCloud desktop client</p>
+              </div>
+            </div>
+            <div class="plugins-grid" id="plugins-view-grid"></div>
+          </div>
+
+          <!-- 13. SETTINGS VIEW -->
+          <div class="app-page-view" id="view-settings" style="display: none;">
+            <div class="settings-2col-layout">
+              <aside class="settings-nav-sidebar">
+                <h2 class="settings-nav-title">Settings</h2>
+                <button class="settings-nav-btn active" data-sec="general">General</button>
+                <button class="settings-nav-btn" data-sec="appearance">Appearance & Theme</button>
+                <button class="settings-nav-btn" data-sec="playback">Playback & Audio Engine</button>
+                <button class="settings-nav-btn" data-sec="soundcloud">SoundCloud API & Auth</button>
+                <button class="settings-nav-btn" data-sec="library">Library & History</button>
+                <button class="settings-nav-btn" data-sec="downloads">Downloads & Storage</button>
+                <button class="settings-nav-btn" data-sec="shortcuts">Keyboard Shortcuts</button>
+                <button class="settings-nav-btn" data-sec="privacy">Privacy & Telemetry</button>
+                <button class="settings-nav-btn" data-sec="advanced">Advanced & System Diagnostics</button>
+              </aside>
+              <main class="settings-content-pane" id="settings-content-pane"></main>
+            </div>
+          </div>
+
+          <!-- 14. QUEUE VIEW -->
+          <div class="app-page-view" id="view-queue" style="display: none;">
+            <div class="page-header-row">
+              <div>
+                <h1 class="page-title">Play Queue</h1>
+                <p class="page-subtitle">Manage upcoming playback order and queue history</p>
+              </div>
+              <div class="queue-actions-row">
+                <button class="secondary-pill-btn" id="btn-queue-view-clear">Clear Queue</button>
+                <button class="secondary-pill-btn" id="btn-queue-view-shuffle">🔀 Shuffle Queue</button>
+                <button class="primary-pill-btn" id="btn-queue-view-save">+ Save as Playlist</button>
+              </div>
+            </div>
+            <div class="queue-full-content" id="queue-full-content"></div>
+          </div>
+
         </div>
       </main>
 
@@ -1174,6 +1602,161 @@
   </div>
 
   <!-- Hidden Audio Engine -->
+  
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       EXPANDED NOW PLAYING VIEW (Immersive Quiet Dark Full Player)
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="expanded-player-overlay" id="expanded-player-overlay">
+    <div class="exp-top-bar">
+      <button class="exp-icon-btn" id="btn-exp-close" title="Minimize (Esc)">
+        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+      </button>
+      <div class="exp-title-meta">NOW PLAYING</div>
+      <button class="exp-icon-btn" id="btn-exp-fullscreen" title="Toggle Fullscreen">
+        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+      </button>
+    </div>
+
+    <div class="exp-body-layout">
+      <!-- Left: Artwork & Scrubber & Controls -->
+      <div class="exp-art-col">
+        <div class="exp-art-glow-wrap">
+          <img class="exp-art-img" id="exp-art-img" src="assets/default_artwork.png" alt="Artwork">
+        </div>
+        <div class="exp-meta-row">
+          <div class="exp-track-info">
+            <div class="exp-track-title" id="exp-track-title">Select a track</div>
+            <div class="exp-track-artist" id="exp-track-artist">SoundCloud Ultimate</div>
+          </div>
+          <button class="exp-icon-btn" id="exp-like-btn" title="Like (L)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+        </div>
+
+        <!-- Scrubber -->
+        <div class="exp-timeline-wrap">
+          <div class="exp-progress-track" id="exp-progress-track">
+            <div class="exp-progress-fill" id="exp-progress-fill"></div>
+          </div>
+          <div class="exp-time-row">
+            <span id="exp-time-cur">0:00</span>
+            <span id="exp-time-tot">0:00</span>
+          </div>
+        </div>
+
+        <!-- Playback Controls -->
+        <div class="exp-controls-row">
+          <button class="exp-ctrl-btn" id="exp-btn-shuffle" title="Shuffle"><svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg></button>
+          <button class="exp-ctrl-btn" id="exp-btn-prev" title="Previous"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+          <button class="exp-play-circle" id="exp-btn-play" title="Play / Pause"><svg viewBox="0 0 24 24" id="exp-play-svg"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="exp-ctrl-btn" id="exp-btn-next" title="Next"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+          <button class="exp-ctrl-btn" id="exp-btn-repeat" title="Repeat"><svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Right: Contextual Tabs (Lyrics, Comments, Audio Specs, Related Tracks) -->
+      <div class="exp-context-col">
+        <div class="exp-tabs-bar">
+          <button class="exp-tab active" data-tab="lyrics" id="tab-btn-lyrics">Lyrics</button>
+          <button class="exp-tab" data-tab="comments" id="tab-btn-comments">Comments</button>
+          <button class="exp-tab" data-tab="audio" id="tab-btn-audio">Audio Specs</button>
+          <button class="exp-tab" data-tab="related" id="tab-btn-related">Related Tracks</button>
+        </div>
+        <div class="exp-tab-content" id="exp-tab-content">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Track Context Menu -->
+  <div class="app-context-menu" id="app-context-menu" style="display: none;">
+    <div class="context-item" data-act="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play now</div>
+    <div class="context-item" data-act="play-next"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg> Play next</div>
+    <div class="context-item" data-act="add-queue"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add to queue</div>
+    <div class="context-divider"></div>
+    <div class="context-item" data-act="like"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Add to Liked Tracks</div>
+    <div class="context-item" data-act="add-pl"><svg viewBox="0 0 24 24"><path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/></svg> Add to playlist...</div>
+    <div class="context-item" data-act="download"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Download MP3</div>
+    <div class="context-divider"></div>
+    <div class="context-item" data-act="inspect"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Track Inspector & Diagnostics</div>
+    <div class="context-item" data-act="copy-url"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg> Copy SoundCloud URL</div>
+  </div>
+
+  <!-- Playlist Editor Modal -->
+  <div class="modal-overlay" id="modal-playlist-editor">
+    <div class="quiet-dark-modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="pl-editor-title">Create / Edit Playlist</h2>
+        <button class="modal-close-btn" id="btn-close-pl-editor">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Playlist Title</label>
+          <input type="text" id="input-pl-name" class="form-input" placeholder="e.g. Midnight Phonk Drive">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description (Optional)</label>
+          <textarea id="input-pl-desc" class="form-textarea" placeholder="Describe the vibe of this playlist..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cover Artwork URL (Optional)</label>
+          <input type="text" id="input-pl-art" class="form-input" placeholder="https://...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-pill-btn" id="btn-cancel-pl-editor">Cancel</button>
+        <button class="primary-pill-btn" id="btn-save-pl-editor">Save Playlist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Dialog Modal -->
+  <div class="modal-overlay" id="modal-confirm">
+    <div class="quiet-dark-modal-card confirm-modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="confirm-title">Confirm Action</h2>
+        <button class="modal-close-btn" id="btn-close-confirm">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message" style="color: var(--text-secondary); line-height: 1.5; font-size: 13.5px;"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-pill-btn" id="btn-cancel-confirm">Cancel</button>
+        <button class="primary-pill-btn" id="btn-ok-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Cheat Sheet Modal -->
+  <div class="modal-overlay" id="modal-shortcuts">
+    <div class="quiet-dark-modal-card shortcuts-modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">⌨️ Keyboard Shortcuts</h2>
+        <button class="modal-close-btn" id="btn-close-shortcuts">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-row"><span class="shortcut-desc">Play / Pause</span><span class="shortcut-key">Space</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Next Track</span><span class="shortcut-key">Alt + Right / N</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Previous Track</span><span class="shortcut-key">Alt + Left / P</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Search</span><span class="shortcut-key">Ctrl + K</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Toggle Like</span><span class="shortcut-key">L</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Shuffle Mode</span><span class="shortcut-key">S</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Repeat Mode</span><span class="shortcut-key">R</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Expanded Now Playing</span><span class="shortcut-key">F</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Lyrics / Karaoke</span><span class="shortcut-key">K</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Track Inspector</span><span class="shortcut-key">I</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Volume Up / Down</span><span class="shortcut-key">Up / Down</span></div>
+          <div class="shortcut-row"><span class="shortcut-desc">Seek Forward / Back</span><span class="shortcut-key">Left / Right</span></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="primary-pill-btn" id="btn-dismiss-shortcuts">Close</button>
+      </div>
+    </div>
+  </div>
+
   <audio id="audio-engine" preload="auto" crossorigin="anonymous"></audio>
 
   <!-- Scripts -->
