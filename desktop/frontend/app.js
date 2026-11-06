@@ -1166,6 +1166,9 @@
         node.connect(masterGainNode);
       }
       masterGainNode.connect(audioCtx.destination);
+      if (window.AudioVisualizer && typeof window.AudioVisualizer.attach === 'function') {
+        window.AudioVisualizer.attach(audioCtx, masterGainNode);
+      }
     } catch (e) {
       console.warn('WebAudio Equalizer not initialized:', e);
     }
@@ -1289,6 +1292,23 @@
     }
 
     renderQueue();
+
+    // Notify Expansion Subsystems
+    if (window.ListeningAnalytics && typeof window.ListeningAnalytics.recordEvent === 'function') {
+      window.ListeningAnalytics.recordEvent('play', track);
+    }
+    if (window.QueueManager && typeof window.QueueManager.pushHistory === 'function') {
+      window.QueueManager.pushHistory(track);
+    }
+    if (window.MiniPlayer && typeof window.MiniPlayer.syncTrack === 'function') {
+      window.MiniPlayer.syncTrack(track);
+    }
+    if (window.PluginSystem && typeof window.PluginSystem.notifyTrackChange === 'function') {
+      window.PluginSystem.notifyTrackChange(track);
+    }
+    if (window.AudioVisualizer && typeof window.AudioVisualizer.syncTrack === 'function') {
+      window.AudioVisualizer.syncTrack(track);
+    }
 
     // Update Dock
     playerTitle.textContent = track.title;
@@ -1415,6 +1435,10 @@
     timeCurrent.textContent = formatTime(current);
     timeTotal.textContent = formatTime(duration);
 
+    if (window.MiniPlayer && typeof window.MiniPlayer.syncProgress === 'function') {
+      window.MiniPlayer.syncProgress(current, duration);
+    }
+
     const percent = (current / duration) * 100;
     progressFill.style.width = `${percent}%`;
     progressHandle.style.left = `${percent}%`;
@@ -1427,6 +1451,9 @@
   });
 
   audio.addEventListener('ended', () => {
+    if (window.ListeningAnalytics && queue[currentIndex]) {
+      window.ListeningAnalytics.recordEvent('complete', queue[currentIndex]);
+    }
     if (sleepTargetType === 'track') {
       cancelSleepTimer();
       audio.pause();
@@ -1451,6 +1478,9 @@
   audio.addEventListener('play', () => {
     isPlaying = true;
     updatePlayButtonUI(true);
+    if (window.MiniPlayer && typeof window.MiniPlayer.syncState === 'function') {
+      window.MiniPlayer.syncState(true);
+    }
     if ('mediaSession' in navigator) {
       try {
         navigator.mediaSession.playbackState = 'playing';
@@ -1464,6 +1494,9 @@
   audio.addEventListener('pause', () => {
     isPlaying = false;
     updatePlayButtonUI(false);
+    if (window.MiniPlayer && typeof window.MiniPlayer.syncState === 'function') {
+      window.MiniPlayer.syncState(false);
+    }
     if ('mediaSession' in navigator) {
       try {
         navigator.mediaSession.playbackState = 'paused';
@@ -4250,6 +4283,76 @@
   window.playNext = playNext;
   window.playPrev = playPrev;
   window.setVolume = setVolume;
+  window.getAppQueue = () => queue;
+  window.setAppQueue = (newQ, newIdx) => {
+    queue = newQ;
+    if (typeof newIdx === 'number') currentIndex = newIdx;
+    renderQueue();
+  };
+  window.getCurrentTrack = () => queue[currentIndex];
+  window.playTrack = playTrack;
+  window.addToQueue = (t) => {
+    if (!t) return;
+    queue.push(t);
+    renderQueue();
+    if (window.showToast) window.showToast(`Added to queue: ${t.title || 'Track'}`);
+  };
+  window.toggleLikeCurrentTrack = () => {
+    const cur = queue[currentIndex];
+    if (cur) toggleLike(cur.id, cur);
+  };
+
+  // Wire studio hubs and expansion triggers
+  const btnSmartPl = document.getElementById('btn-smart-playlists');
+  const chipSmartPl = document.getElementById('chip-smart-playlists');
+  if (btnSmartPl) btnSmartPl.addEventListener('click', () => window.SmartPlaylists && window.SmartPlaylists.open());
+  if (chipSmartPl) chipSmartPl.addEventListener('click', () => window.SmartPlaylists && window.SmartPlaylists.open());
+
+  const btnDisc = document.getElementById('btn-discovery-engine');
+  const chipDisc = document.getElementById('chip-discovery');
+  if (btnDisc) btnDisc.addEventListener('click', () => window.DiscoveryEngine && window.DiscoveryEngine.open());
+  if (chipDisc) chipDisc.addEventListener('click', () => window.DiscoveryEngine && window.DiscoveryEngine.open());
+
+  const btnAnalytics = document.getElementById('btn-analytics-dashboard');
+  if (btnAnalytics) btnAnalytics.addEventListener('click', () => window.ListeningAnalytics && window.ListeningAnalytics.open());
+
+  const btnPluginStudio = document.getElementById('btn-plugin-studio');
+  if (btnPluginStudio) btnPluginStudio.addEventListener('click', () => window.PluginSystem && window.PluginSystem.open());
+
+  const btnPerfMonitor = document.getElementById('btn-perf-monitor');
+  if (btnPerfMonitor) btnPerfMonitor.addEventListener('click', () => window.PerformanceMonitor && window.PerformanceMonitor.open());
+
+  const dockInspectBtn = document.getElementById('dock-inspect-btn');
+  if (dockInspectBtn) dockInspectBtn.addEventListener('click', () => window.TrackInspector && window.TrackInspector.open(queue[currentIndex]));
+
+  const btnVisStudio = document.getElementById('btn-vis-studio-toggle');
+  if (btnVisStudio) btnVisStudio.addEventListener('click', () => window.AudioVisualizer && window.AudioVisualizer.open());
+
+  const btnMiniToggle = document.getElementById('btn-mini-toggle');
+  if (btnMiniToggle) btnMiniToggle.addEventListener('click', () => window.MiniPlayer && window.MiniPlayer.toggle());
+
+  // Override or link ThemeStudio
+  const btnThemeModalEl = document.getElementById('btn-theme-modal');
+  if (btnThemeModalEl) {
+    btnThemeModalEl.addEventListener('click', (e) => {
+      if (window.ThemeStudio) {
+        e.stopImmediatePropagation();
+        window.ThemeStudio.open();
+      }
+    }, true);
+  }
+
+  // Queue toggle link
+  const btnQueueToggleEl = document.getElementById('btn-queue-toggle');
+  if (btnQueueToggleEl) {
+    btnQueueToggleEl.addEventListener('click', (e) => {
+      if (window.QueueManager) {
+        e.stopImmediatePropagation();
+        window.QueueManager.open();
+      }
+    }, true);
+  }
+
   window.handleAndroidBack = function() {
     const openOverlay = document.querySelector('.modal-overlay.open, .bento-modal-overlay.open, #lyrics-overlay.open');
     if (openOverlay) {

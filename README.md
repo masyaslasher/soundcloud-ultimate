@@ -196,6 +196,80 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
 
 ---
 
+## 🚀 SoundCloud Ultimate Expansion Suite (v1.4.0)
+
+SoundCloud Ultimate has evolved into a professional-grade music workstation and personal analytics platform.
+
+### 🎨 1. Theme Studio & Centralized Design Tokens
+- **15 Curated Presets**: Minimal Graphite, AMOLED Pure Black, Minimal Dark, Clean Light, Purple Minimal, plus 10 classic AMOLED neon palettes.
+- **Full Appearance Customizer**: Pick custom colors for background, surface, dock, borders, text, and accent glow.
+- **Interface Density**: Choose between Compact (high information density), Comfortable (default), or Expanded modes.
+- **Typography & Geometry**: Adjust interface font family, border radius (square to pill), and layout proportions.
+- **Persistence & Portability**: Live instant previews, local storage persistence, and JSON theme import/export.
+
+### 📊 2. Personal Listening Analytics & Wrapped
+- **Local Event Tracking**: Efficiently logs playback events, tracks completed, skip rates, and listening sessions without external telemetry.
+- **Interactive Metrics**: Total listening time (hours), unique tracks, active listening streak counter, and most active listening hours.
+- **Visual Analytics**: Real-time SVG listening activity graph, artist leaderboard, top tracks ranking, and genre distribution.
+- **Annual Wrapped Report**: Generate a sharable yearly music review card highlighting your top artist, total minutes, and top tracks.
+- **Data Privacy**: Complete data export to CSV and JSON, with 1-click local analytics purge.
+
+### ⚡ 3. Smart Playlists Engine
+- **Rule-Based Automation**: Automatically generates dynamic playlists evaluated in real-time across your liked tracks, listening history, and local library.
+- **Built-in Smart Mixes**:
+  - *Dusty Gems*: Liked tracks not played in the last 30 days.
+  - *Heavy Rotation*: Your most frequently played tracks (> 5 plays).
+  - *Fresh Discoveries*: Newly discovered tracks added this week.
+  - *Short Bops*: Upbeat tracks under 3 minutes.
+  - *Long Journeys*: Extended mixes and DJ sets over 7 minutes.
+- **Custom Rule Builder**: Create custom playlists with field matching (Title, Artist, Genre, Duration, Play count) and operators (Equals, Contains, Greater/Less than).
+
+### 🧭 4. Music Discovery & Recommendation Engine
+- **Local Affinity Scoring**: Recommends underground gems and tracks based on your unique listening history and genre preferences without requiring external paid AI APIs.
+- **4 Discovery Channels**: Similar Tracks, Underground Discoveries (< 25k plays), Forgotten Favorites, and Random Genre Deep-Dive.
+- **Interactive Feedback System**: "More like this" (👍), "Less like this" (👎), and "Hide Recommendation" (👁️) to refine recommendations on the fly.
+
+### 📑 5. Advanced Playback Queue Manager
+- **Drag & Drop Reordering**: Rearrange upcoming tracks on the fly with smooth drag-and-drop handles.
+- **Smart Shuffle**: Intelligent shuffling algorithm that spreads tracks from the same artist evenly across the queue.
+- **Duplicate Detection**: Identifies and flags duplicate tracks in the queue with a 1-click deduplication tool.
+- **Session History & Presets**: Save your current queue into named snapshots, restore previous queues, and clear queue with confirmation.
+
+### 🎛️ 6. 6-Mode Audio Visualizer Studio
+- **Real WebAudio Engine**: Connected directly to the master playback pipeline via WebAudio `AnalyserNode` (2048 FFT, 48 kHz).
+- **6 Visualizer Modes**:
+  1. *Frequency Spectrum*: Classic hardware audio spectrum analyzer bars.
+  2. *Oscilloscope Waveform*: Smooth green CRT oscilloscope time-domain waveform.
+  3. *Circular Radial*: 360-degree radial frequency spikes.
+  4. *Bass Pulse*: Rhythmic low-frequency reactor with dynamic radial rings.
+  5. *Stereo Peak Meter*: Professional dB VU meters for Left & Right channels with peak hold.
+  6. *Minimalist Zen*: Ultra-clean subtle sound wave.
+- **Hardware Controls**: Sensitivity multiplier, FPS limiter (30 / 60 FPS) to conserve battery on laptops, and stream diagnostics.
+
+### 🔍 7. Deep Track Inspector & Stream Diagnostics
+- **Detailed Metadata**: Inspect track IDs, upload dates, play counts, like counts, repost counts, licenses, and direct SoundCloud permalinks.
+- **Audio Stream Pipeline**: View transcoding formats (HLS `m3u8` vs Progressive `mp3`), estimated bitrates (128 kbps MP3 vs 256 kbps AAC HQ), and Anti-DPI bypass proxy routing.
+- **Raw JSON Inspector**: View and copy formatted raw track payloads from the SoundCloud API.
+
+### ⚡ 8. Live Telemetry & Performance Monitor
+- **Real-Time System Metrics**: Native Axum `/api/system/metrics` endpoint reporting exact process RSS memory, uptime, and host specs.
+- **Client Telemetry**: Live rendering frame rate (FPS sparkline), JS Heap allocation, and audio buffer health (seconds buffered ahead).
+- **Cache Management**: 1-click buffer refresh and memory cache trimming.
+
+### 🧩 9. Extensibility & Plugin Studio SDK
+- **Sandboxed Plugin Runtime**: Extensible lifecycle hooks (`init`, `onTrackChange`, `onPlaybackState`, `destroy`).
+- **3 Built-in Studio Plugins**:
+  - *BPM Counter & Beat Tapper*: Interactive tap-tempo tool and genre tempo estimator.
+  - *Music Context & Trivia*: Smart trivia facts and historical music roots for currently playing artists.
+  - *Zen Focus Mode*: Calming distraction-free study mode that minimizes interface contrast.
+- **Custom Plugin Importer**: Easily import and run custom community JavaScript extensions.
+
+### 🪟 10. Mini Player HUD Mode
+- **Compact Floating Widget**: Minimalist floating player view showing artwork, track title, artist, live seek bar, and playback controls.
+- **Quick Keyboard Shortcut**: Toggle instantly by pressing `M` on any screen.
+
+---
+
 ## ⌨️ Keyboard Shortcuts
 
 | Shortcut | Action |
@@ -204,19 +278,20 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
 | `Alt + Left` | Previous Track |
 | `Alt + Right` | Next Track |
 | `L` | Like / Unlike Track |
+| `M` | Toggle Mini Player HUD (or Mute when focused) |
+| `I` | Open Track Inspector & Audio Diagnostics |
+| `Q` | Open / Close Queue Manager |
 | `K` | Toggle Synced Lyrics & Karaoke |
 | `F` | Toggle Audio FX Studio (8D & Speed) |
 | `[` | Set Looper Point [A] |
 | `]` | Set Looper Point [B] |
 | `\` | Toggle Looper Active |
 | `E` | Open Equalizer & Bass Boost |
-| `V` | Fullscreen Vinyl Visualizer |
+| `V` | Fullscreen Visualizer |
 | `C` | Open Track Comments |
 | `D` | Download Track |
 | `S` | Toggle Shuffle |
 | `R` | Cycle Repeat (Off / All / One) |
-| `M` | Mute / Unmute Volume |
-| `Q` | Open / Close Queue Drawer |
 | `Esc` | Close Active Modal / Overlay |
 
 ---

@@ -57,18 +57,48 @@
         </svg>
       </div>
 
-      <!-- Right Header: Status, Themes, Extensions, Language & User Auth -->
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <!-- Theme Selector Trigger -->
-        <button class="header-action-btn" id="btn-theme-modal" title="Choose theme (10 AMOLED palettes)">
+      <!-- Right Header: Status, Studio Hubs, Extensions, Language & User Auth -->
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <!-- Theme Studio Trigger -->
+        <button class="header-action-btn" id="btn-theme-modal" title="Theme Studio & Appearance Customizer">
           <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.57 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span id="txt-themes-btn">Themes (10)</span>
+          <span id="txt-themes-btn">Themes</span>
+        </button>
+
+        <!-- Discovery Engine Trigger -->
+        <button class="header-action-btn" id="btn-discovery-engine" title="Discovery & Music Recommendation Engine">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          <span>Discovery</span>
+        </button>
+
+        <!-- Smart Playlists Trigger -->
+        <button class="header-action-btn" id="btn-smart-playlists" title="Smart Rule-Based Playlists">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+          <span>Smart Playlists</span>
+        </button>
+
+        <!-- Listening Analytics Trigger -->
+        <button class="header-action-btn" id="btn-analytics-dashboard" title="Personal Listening Statistics & Wrapped">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          <span>Analytics</span>
         </button>
 
         <!-- Extensions Hub Trigger -->
         <button class="header-action-btn" id="btn-extensions-modal" title="Extensions Hub (Karaoke, 8D FX, Looper, Sleep Timer, Cards)">
           <svg viewBox="0 0 24 24" width="15" height="15"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
           <span id="txt-extensions-btn">Extensions</span>
+        </button>
+
+        <!-- Plugins Studio Trigger -->
+        <button class="header-action-btn" id="btn-plugin-studio" title="Plugin Studio & Community Extensions">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Plugins</span>
+        </button>
+
+        <!-- System Telemetry Trigger -->
+        <button class="header-action-btn" id="btn-perf-monitor" title="Live System Telemetry & Performance">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.88-11.71L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 1 0-1.42-1.41z"/></svg>
+          <span>⚡ Telemetry</span>
         </button>
 
         <!-- Zapret Anti-DPI Badge -->
@@ -168,10 +198,6 @@
         </div>
       </div>
     </header>
-          </div>
-        </div>
-      </div>
-    </header>
 
     <!-- Genre & Library Chips Bar -->
     <div class="chips-bar" id="chips-bar">
@@ -180,6 +206,8 @@
       <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists">📂 Playlists</div>
       <div class="chip" data-type="lib" data-val="stream" id="chip-stream">📡 Stream</div>
       <div class="chip" data-type="lib" data-val="history" id="chip-history">🕒 History</div>
+      <div class="chip" data-type="special" data-val="discovery" id="chip-discovery">✨ Discovery Engine</div>
+      <div class="chip" data-type="special" data-val="smart-playlists" id="chip-smart-playlists">⚡ Smart Playlists</div>
       <div class="chip" data-type="genre" data-val="phonk" id="chip-genre-phonk">Phonk</div>
       <div class="chip" data-type="genre" data-val="electronic" id="chip-genre-electronic">Electronic</div>
       <div class="chip" data-type="genre" data-val="hiphoprap" id="chip-genre-hiphoprap">Hip-Hop</div>
@@ -243,6 +271,10 @@
             <!-- Download Button in Player -->
             <button class="download-btn" id="dock-download-btn" title="Download MP3 (D)">
               <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </button>
+            <!-- Track Inspector Button -->
+            <button class="action-icon-btn" id="dock-inspect-btn" title="Track Inspector & Audio Diagnostics (I)">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
             </button>
             <!-- Social Bento Card Button in Player -->
             <button class="action-icon-btn" id="dock-card-btn" title="Generate Social Bento Card">
@@ -322,6 +354,16 @@
           <!-- Equalizer Button -->
           <button class="control-btn" id="btn-eq-toggle" title="Studio Equalizer & Bass (E)">
             <svg viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
+          </button>
+
+          <!-- Visualizer 6-Mode Studio Button -->
+          <button class="control-btn" id="btn-vis-studio-toggle" title="Audio Visualizer Studio">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          </button>
+
+          <!-- Mini Player HUD Toggle Button -->
+          <button class="control-btn" id="btn-mini-toggle" title="Mini Player Mode (M)">
+            <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
           </button>
 
           <!-- Visualizer Button -->
@@ -1011,6 +1053,16 @@
   <!-- Scripts -->
   <script src="hls.min.js"></script>
   <script src="smoke.js"></script>
+  <script src="theme_studio.js"></script>
+  <script src="analytics.js"></script>
+  <script src="smart_playlists.js"></script>
+  <script src="queue_manager.js"></script>
+  <script src="visualizer.js"></script>
+  <script src="discovery.js"></script>
+  <script src="track_inspector.js"></script>
+  <script src="performance_monitor.js"></script>
+  <script src="plugins.js"></script>
+  <script src="mini_player.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

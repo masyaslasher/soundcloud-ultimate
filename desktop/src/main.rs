@@ -27,6 +27,7 @@ struct Assets;
 struct AppState {
     sc: Arc<SoundCloudClient>,
     discord: Arc<discord_rpc::DiscordRpcManager>,
+    start_time: std::time::Instant,
 }
 
 #[derive(serde::Deserialize)]
@@ -62,6 +63,7 @@ fn create_router(state: AppState) -> Router {
     Router::new()
         // Core API
         .route("/api/status", get(api_status))
+        .route("/api/system/metrics", get(api_system_metrics))
         .route("/api/window/close", post(api_window_close))
         .route("/api/search", get(api_search))
         .route("/api/trending", get(api_trending))
@@ -148,6 +150,7 @@ fn main() {
         let state = AppState {
             sc: sc_client,
             discord: discord_manager,
+            start_time: std::time::Instant::now(),
         };
 
         let app = create_router(state);
@@ -247,6 +250,37 @@ async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
         "engine": "Rust + Bento AMOLED Glass",
         "antidpi": "active (Zapret TLS Split + Cloudflare DoH)",
         "auth": auth
+    }))
+}
+
+async fn api_system_metrics(State(state): State<AppState>) -> impl IntoResponse {
+    let uptime_secs = state.start_time.elapsed().as_secs();
+    let mut mem_rss_mb = 0.0;
+    #[cfg(target_os = "linux")]
+    {
+        if let Ok(content) = std::fs::read_to_string("/proc/self/statm") {
+            let parts: Vec<&str> = content.split_whitespace().collect();
+            if parts.len() >= 2 {
+                if let Ok(pages) = parts[1].parse::<u64>() {
+                    let page_size = 4096;
+                    mem_rss_mb = ((pages * page_size) as f64) / (1024.0 * 1024.0);
+                }
+            }
+        }
+    }
+    let client_id_cached = state.sc.get_client_id().await;
+    let auth_status = state.sc.get_auth_status().await;
+    let logged_in = auth_status.authenticated;
+
+    Json(serde_json::json!({
+        "status": "ok",
+        "uptime_secs": uptime_secs,
+        "rss_memory_mb": (mem_rss_mb * 10.0).round() / 10.0,
+        "os": std::env::consts::OS,
+        "arch": std::env::consts::ARCH,
+        "authenticated": logged_in,
+        "client_id_active": !client_id_cached.is_empty(),
+        "antidpi_status": "enabled"
     }))
 }
 
