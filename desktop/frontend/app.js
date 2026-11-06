@@ -2435,6 +2435,20 @@
       artwork_url: track.artwork_url || null
     };
 
+    // Android Native Bridge: Update MediaStyle Lock Screen Notification & Foreground Service
+    if (window.AndroidBridge && window.AndroidBridge.updatePlayback) {
+      try {
+        window.AndroidBridge.updatePlayback(
+          payload.title,
+          payload.artist,
+          payload.artwork_url || '',
+          !!playing,
+          Math.round(dur * 1000),
+          Math.round(curTime * 1000)
+        );
+      } catch (e) {}
+    }
+
     try {
       const res = await fetch('/api/discord/activity', {
         method: 'POST',

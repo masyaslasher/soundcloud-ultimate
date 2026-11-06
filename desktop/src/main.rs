@@ -58,43 +58,8 @@ struct LikesParams {
     offset: Option<usize>,
 }
 
-#[tokio::main]
-async fn main() {
-    println!("═══════════════════════════════════════════════════════════");
-    println!("     SOUNDCLOUD ULTIMATE — RUST STANDALONE DESKTOP        ");
-    println!("═══════════════════════════════════════════════════════════");
-
-    // Initialize built-in Anti-DPI (Zapret-style TLS Record Splitting + DoH)
-    let antidpi_engine = match antidpi::AntiDpiEngine::start().await {
-        Ok(engine) => Some(engine),
-        Err(e) => {
-            eprintln!("⚠️ Anti-DPI engine could not start: {}", e);
-            None
-        }
-    };
-
-    let proxy_url = antidpi_engine.as_ref().map(|e| e.proxy_url());
-    let sc_client = Arc::new(SoundCloudClient::new(proxy_url));
-
-    // Initialize cross-platform Discord Rich Presence (Linux & Windows)
-    let discord_manager = discord_rpc::DiscordRpcManager::new();
-
-    // Proactively refresh client_id in background
-    let sc_clone = sc_client.clone();
-    tokio::spawn(async move {
-        println!("🔍 Discovering active SoundCloud client_id...");
-        match sc_clone.refresh_client_id().await {
-            Ok(id) => println!("✨ Active SoundCloud client_id verified: {}", id),
-            Err(e) => eprintln!("⚠️ Could not auto-refresh client_id, using cached default: {}", e),
-        }
-    });
-
-    let state = AppState {
-        sc: sc_client,
-        discord: discord_manager,
-    };
-
-    let app = Router::new()
+fn create_router(state: AppState) -> Router {
+    Router::new()
         // Core API
         .route("/api/status", get(api_status))
         .route("/api/search", get(api_search))
@@ -135,51 +100,136 @@ async fn main() {
         // Frontend Static Assets
         .fallback(static_handler)
         .layer(CorsLayer::permissive())
-        .with_state(state);
+        .with_state(state)
+}
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 4545));
-    let listener = match tokio::net::TcpListener::bind(addr).await {
-        Ok(l) => l,
-        Err(_) => {
-            let fallback_addr = SocketAddr::from(([127, 0, 0, 1], 0));
-            tokio::net::TcpListener::bind(fallback_addr).await.expect("Failed to bind to local port")
-        }
-    };
-
-    let local_addr = listener.local_addr().unwrap();
-    let app_url = format!("http://{}", local_addr);
-
-    println!("🌐 App server listening at: {}", app_url);
+fn main() {
+    println!("═══════════════════════════════════════════════════════════");
+    println!("     SOUNDCLOUD ULTIMATE — NATIVE DESKTOP STANDALONE       ");
+    println!("═══════════════════════════════════════════════════════════");
 
     let no_window = std::env::args().any(|a| a == "--server-only" || a == "--no-window");
+    let force_browser = std::env::args().any(|a| a == "--browser");
 
-    let mut desktop_process = if !no_window {
-        launcher::launch_desktop_window(&app_url)
-    } else {
-        println!("ℹ️ Running in server-only mode (--no-window).");
-        None
-    };
+    let rt = tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .expect("Failed to initialize Tokio runtime");
 
-    let shutdown_signal = async move {
-        tokio::select! {
-            _ = tokio::signal::ctrl_c() => {
-                println!("\n🛑 Received shutdown signal (Ctrl+C). Exiting...");
+    let (shutdown_tx, shutdown_rx) = tokio::sync::oneshot::channel::<()>();
+
+    let (app_url, server_handle) = rt.block_on(async {
+        // Initialize built-in Anti-DPI (Zapret-style TLS Record Splitting + DoH)
+        let antidpi_engine = match antidpi::AntiDpiEngine::start().await {
+            Ok(engine) => Some(engine),
+            Err(e) => {
+                eprintln!("⚠️ Anti-DPI engine could not start: {}", e);
+                None
             }
-            _ = async {
-                if let Some(ref mut proc) = desktop_process {
-                    let _ = proc.wait();
-                    println!("🚪 Desktop window was closed by user.");
-                } else {
-                    std::future::pending::<()>().await;
-                }
-            } => {}
-        }
-    };
+        };
 
-    axum::serve(listener, app)
-        .with_graceful_shutdown(shutdown_signal)
-        .await
-        .unwrap();
+        let proxy_url = antidpi_engine.as_ref().map(|e| e.proxy_url());
+        let sc_client = Arc::new(SoundCloudClient::new(proxy_url));
+
+        // Initialize cross-platform Discord Rich Presence (Linux & Windows)
+        let discord_manager = discord_rpc::DiscordRpcManager::new();
+
+        // Proactively refresh client_id in background
+        let sc_clone = sc_client.clone();
+        tokio::spawn(async move {
+            println!("🔍 Discovering active SoundCloud client_id...");
+            match sc_clone.refresh_client_id().await {
+                Ok(id) => println!("✨ Active SoundCloud client_id verified: {}", id),
+                Err(e) => eprintln!("⚠️ Could not auto-refresh client_id, using cached default: {}", e),
+            }
+        });
+
+        let state = AppState {
+            sc: sc_client,
+            discord: discord_manager,
+        };
+
+        let app = create_router(state);
+
+        let addr = SocketAddr::from(([127, 0, 0, 1], 4545));
+        let listener = match tokio::net::TcpListener::bind(addr).await {
+            Ok(l) => l,
+            Err(_) => {
+                let fallback_addr = SocketAddr::from(([127, 0, 0, 1], 0));
+                tokio::net::TcpListener::bind(fallback_addr).await.expect("Failed to bind to local port")
+            }
+        };
+
+        let local_addr = listener.local_addr().unwrap();
+        let app_url = format!("http://{}", local_addr);
+
+        println!("🌐 App server listening at: {}", app_url);
+
+        let handle = tokio::spawn(async move {
+            let server = axum::serve(listener, app);
+            let graceful = server.with_graceful_shutdown(async move {
+                let _ = shutdown_rx.await;
+            });
+            let _ = graceful.await;
+        });
+
+        (app_url, handle)
+    });
+
+    if no_window {
+        println!("ℹ️ Running in headless server mode (--server-only / --no-window). Press Ctrl+C to stop.");
+        rt.block_on(async {
+            tokio::signal::ctrl_c().await.ok();
+            println!("\n🛑 Shutting down server...");
+            let _ = shutdown_tx.send(());
+            let _ = server_handle.await;
+        });
+    } else if force_browser {
+        println!("🌐 Running with external browser window (--browser).");
+        let mut child = launcher::launch_desktop_window(&app_url);
+        rt.block_on(async {
+            tokio::select! {
+                _ = tokio::signal::ctrl_c() => {
+                    println!("\n🛑 Received shutdown signal (Ctrl+C). Exiting...");
+                }
+                _ = async {
+                    if let Some(ref mut c) = child {
+                        let _ = c.wait();
+                        println!("🚪 Browser window was closed by user.");
+                    } else {
+                        std::future::pending::<()>().await;
+                    }
+                } => {}
+            }
+            let _ = shutdown_tx.send(());
+            let _ = server_handle.await;
+        });
+    } else {
+        match launcher::run_native_window(&app_url) {
+            Ok(()) => {
+                let _ = shutdown_tx.send(());
+                let _ = rt.block_on(server_handle);
+            }
+            Err(e) => {
+                eprintln!("⚠️ Failed to initialize native window ({}). Falling back to browser / background mode...", e);
+                let mut child = launcher::launch_desktop_window(&app_url);
+                rt.block_on(async {
+                    tokio::select! {
+                        _ = tokio::signal::ctrl_c() => {}
+                        _ = async {
+                            if let Some(ref mut c) = child {
+                                let _ = c.wait();
+                            } else {
+                                std::future::pending::<()>().await;
+                            }
+                        } => {}
+                    }
+                    let _ = shutdown_tx.send(());
+                    let _ = server_handle.await;
+                });
+            }
+        }
+    }
 
     println!("👋 SoundCloud Ultimate shut down cleanly.");
 }

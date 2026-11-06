@@ -2,9 +2,10 @@
 
 [![Release](https://img.shields.io/github/v/release/masyaslasher/soundcloud-ultimate?color=ff5500&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange.svg?logo=rust)](https://www.rust-lang.org/)
+[![Android](https://img.shields.io/badge/Android-APK%20(v1.3.0)-3DDC84.svg?logo=android&logoColor=white)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Zapret Anti--DPI](https://img.shields.io/badge/Zapret%20Anti--DPI-Built--in%20%28No%20VPN%29-00E5FF.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Chrome-brightgreen.svg)]()
+[![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Android%20%7C%20Chrome-brightgreen.svg)]()
 [![Design](https://img.shields.io/badge/Design-AMOLED%20Bento%20Glass-ff5500.svg)]()
 
 <p align="center">
@@ -13,8 +14,8 @@
   <a href="README_RU.md"><strong>Русский</strong></a>
 </p>
 
-> **SoundCloud Ultimate** — ультимативный клиент нового поколения для прослушивания SoundCloud.
-> Сочетает премиальный дизайн **AMOLED Bento Glass** (`#0A090E`, неоновые оранжевые лазерные акценты `#FF5500`), нативную скорость движка на Rust, встроенный 5-полосный студийный эквалайзер, 100% In-App социальную среду и **встроенный Zapret Anti-DPI обход блокировок для РФ без необходимости в стороннем VPN**.
+> **SoundCloud Ultimate** — ультимативный нативный клиент нового поколения для прослушивания SoundCloud на ПК и Android.
+> Сочетает премиальный дизайн **AMOLED Bento Glass** (`#0A090E`, неоновые оранжевые лазерные акценты `#FF5500`), нативную скорость движка на Rust, **полностью автономное нативное окно без браузера**, отдельное приложение для **Android с фоновым воспроизведением и виджетом на экране блокировки**, встроенный 5-полосный студийный эквалайзер, 100% In-App социальную среду и **встроенный Zapret Anti-DPI + DoH обход блокировок для РФ без необходимости в стороннем VPN**.
 
 ---
 
@@ -27,18 +28,20 @@
 
 ---
 
-## 📦 Быстрая загрузка / Downloads (v1.2.0)
+## 📦 Быстрая загрузка / Downloads (v1.3.0)
 
 Готовые скомпилированные релизы доступны во вкладке [**GitHub Releases**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest):
 
 | Платформа | Файл | Инструкция по запуску |
 | :--- | :--- | :--- |
-| 🪟 **Windows Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (не требует прав администратора) |
+| 📱 **Android APK** | [**`SoundCloud-Ultimate.apk`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Полноценное Android-приложение: фоновое воспроизведение, виджет на экране блокировки и обход блокировок без VPN |
+| 🪟 **Windows Native Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (нативное окно WebView2, без запуска браузера) |
 | 🪟 **Windows .EXE** | [**`SoundCloud-Ultimate-Portable.exe`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Автономный исполняемый файл для Windows |
-| 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить двойным кликом или в терминале |
-| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.2.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.2.0_amd64.deb` |
+| 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить (нативное окно WebKitGTK) |
+| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.3.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.3.0_amd64.deb` |
 | 🐧 **Linux Standalone** | [**`soundcloud-ultimate-linux-x86_64.tar.gz`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать: `tar -xvf soundcloud-ultimate-linux-x86_64.tar.gz && ./run.sh` |
-| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.2.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
+| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.3.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
+
 
 ---
 
@@ -150,7 +153,8 @@
 
 ## ✨ Ключевые возможности / Core Features
 
-### 🦀 Standalone Desktop Application (Rust Native Engine)
+### 🖥️ Полноценное нативное десктопное приложение (Rust + Tao + Wry)
+- **Полная автономность от сторонних браузеров:** В отличие от решений на Electron или веб-ярлыков, десктопный клиент SoundCloud Ultimate теперь работает в собственном нативном системном окне на базе системного веб-движка (`wry`/`tao` с WebKitGTK в Linux и WebView2 в Windows). В диспетчере задач приложение отображается как единый процесс `soundcloud-desktop`, не запуская Chromium или вкладки браузера.
 - **⚡ Встроенный Zapret Anti-DPI движок:**
   - Нативная реализация Record Splitting (разбиение TLS ClientHello на 2 байта + Cloudflare/Google DoH).
   - Полный обход блокировок ТСПУ РКН: треки, поиск, обложки и API работают в РФ без VPN.
@@ -181,6 +185,42 @@
 
 ---
 
+### 📱 Автономное мобильное приложение на Android (`SoundCloud-Ultimate.apk`)
+- **🎧 Фоновое воспроизведение (Background Playback):**
+  - Реализовано через Android `ForegroundService` и процессорный `PARTIAL_WAKE_LOCK`. Музыка непрерывно играет в фоне при выключенном или заблокированном экране, а также при работе с другими приложениями (Telegram, игры, браузер).
+- **📲 Плеер на экране блокировки и в шторке уведомлений:**
+  - Полноценная интеграция с AndroidX `MediaSessionCompat` и `NotificationCompat.MediaStyle`.
+  - Управление воспроизведением: кнопки «Пауза / Плей», «Предыдущий», «Следующий трек», отображение названия композиции, имени исполнителя, обложки альбома и интерактивная шкала перемотки (seekbar).
+- **🛡️ Встроенный DoH (Обход блокировок в РФ без VPN):**
+  - Прямая интеграция OkHttp с защищенными DNS-over-HTTPS серверами Cloudflare (`1.1.1.1`) и Google (`8.8.8.8`).
+  - Работает на всех мобильных операторах РФ (МТС, МегаФон, Билайн, Tele2) и домашних Wi-Fi сетях без необходимости включать VPN.
+- **🖤 Адаптивный Bento Glass AMOLED интерфейс:**
+  - Сенсорная адаптация жестов, чистый черный фон для экономии батареи на AMOLED/OLED матрицах, плавная анимация 60 FPS.
+- **📦 Ультра-легкий вес:**
+  - Готовый файл `SoundCloud-Ultimate.apk` весит всего **6.3 МБ**!
+
+---
+
+## 🛠️ Сборка из исходников / Build from Source
+
+### Сборка Десктопного приложения (Rust)
+```bash
+git clone https://github.com/masyaslasher/soundcloud-ultimate.git
+cd soundcloud-ultimate/desktop
+cargo build --release
+```
+Скомпилированный бинарник будет находиться по пути: `target/release/soundcloud-desktop`.
+
+### Сборка Android-приложения (APK)
+```bash
+cd soundcloud-ultimate/android
+./gradlew assembleDebug
+```
+Скомпилированный APK будет находиться по пути: `app/build/outputs/apk/debug/app-debug.apk`.
+
+
+---
+
 ## ⌨️ Горячие клавиши / Keyboard Shortcuts
 
 | Клавиша | Действие |
@@ -205,27 +245,8 @@
 
 ---
 
-## 🛠️ Сборка из исходников / Build from Source
-
-### Требования
-- [Rust 1.85+](https://www.rust-lang.org/tools/install)
-- Браузер Chromium, Chrome, Edge или Brave (используется для ультра-легкого рендеринга окна)
-
-```bash
-# Клонировать репозиторий
-git clone https://github.com/masyaslasher/soundcloud-ultimate.git
-cd soundcloud-ultimate/desktop
-
-# Запуск в режиме разработки
-cargo run
-
-# Сборка оптимизированного релизного бинарника
-cargo build --release
-```
-
----
-
 ## 📄 Лицензия / License
 
 Проект распространяется под открытой лицензией [MIT License](LICENSE).
 Разработано с душой для истинных ценителей музыки и эстетики. 🧡
+

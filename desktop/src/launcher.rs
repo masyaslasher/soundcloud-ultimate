@@ -1,4 +1,55 @@
 use std::process::{Child, Command};
+use tao::{
+    dpi::LogicalSize,
+    event::{Event, WindowEvent},
+    event_loop::{ControlFlow, EventLoop},
+    window::{Icon, WindowBuilder},
+};
+use wry::WebViewBuilder;
+
+fn load_icon() -> Option<Icon> {
+    let bytes = include_bytes!("../assets/icon.png");
+    let img = image::load_from_memory(bytes).ok()?.to_rgba8();
+    let (width, height) = img.dimensions();
+    Icon::from_rgba(img.into_raw(), width, height).ok()
+}
+
+pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
+    println!("🖥️  Creating native standalone window (Tao + Wry)...");
+    let event_loop = EventLoop::new();
+
+    let mut builder = WindowBuilder::new()
+        .with_title("SoundCloud Ultimate")
+        .with_inner_size(LogicalSize::new(1340.0, 880.0))
+        .with_min_inner_size(LogicalSize::new(960.0, 640.0));
+
+    if let Some(icon) = load_icon() {
+        builder = builder.with_window_icon(Some(icon));
+    }
+
+    let window = builder.build(&event_loop)?;
+
+    let _webview = WebViewBuilder::new()
+        .with_url(url)
+        .with_devtools(true)
+        .build(&window)?;
+
+    println!("✨ Standalone native desktop window created successfully.");
+
+    event_loop.run(move |event, _, control_flow| {
+        *control_flow = ControlFlow::Wait;
+
+        if let Event::WindowEvent {
+            event: WindowEvent::CloseRequested,
+            ..
+        } = event
+        {
+            println!("🚪 Window closed by user. Exiting application...");
+            *control_flow = ControlFlow::Exit;
+        }
+    });
+
+}
 
 pub fn launch_desktop_window(url: &str) -> Option<Child> {
     #[cfg(windows)]
