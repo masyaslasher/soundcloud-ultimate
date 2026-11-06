@@ -1,0 +1,182 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    name: Build Linux (AppImage, .deb, .tar.gz)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Desktop Release
+        working-directory: desktop
+        run: cargo build --release
+
+      - name: Package Linux Formats
+        run: |
+          mkdir -p dist_linux
+
+          # 1. Linux Standalone tar.gz
+          mkdir -p soundcloud-ultimate-linux
+          cp desktop/target/release/soundcloud-desktop soundcloud-ultimate-linux/
+          cp desktop/run.sh soundcloud-ultimate-linux/
+          cp desktop/assets/icon.png soundcloud-ultimate-linux/
+          tar -czvf dist_linux/soundcloud-ultimate-linux-x86_64.tar.gz soundcloud-ultimate-linux
+
+          # 2. Debian .deb package
+          mkdir -p deb_build/control deb_build/data/usr/bin deb_build/data/usr/share/applications deb_build/data/usr/share/icons/hicolor/512x512/apps
+          cp desktop/target/release/soundcloud-desktop deb_build/data/usr/bin/
+          cp desktop/assets/icon.png deb_build/data/usr/share/icons/hicolor/512x512/apps/soundcloud-ultimate.png
+          cat << 'EOF' > deb_build/data/usr/share/applications/soundcloud-ultimate.desktop
+          [Desktop Entry]
+          Name=SoundCloud Ultimate
+          Comment=Ultimate SoundCloud Desktop Client
+          Exec=soundcloud-desktop %U
+          Icon=soundcloud-ultimate
+          Terminal=false
+          Type=Application
+          Categories=AudioVideo;Audio;Player;
+          StartupWMClass=soundcloud-desktop
+          EOF
+          cat << 'EOF' > deb_build/control/control
+          Package: soundcloud-ultimate
+          Version: 1.0.0
+          Architecture: amd64
+          Maintainer: soundcloud-ultimate
+          Installed-Size: 15000
+          Section: sound
+          Priority: optional
+          Homepage: https://github.com/${{ github.repository }}
+          Description: Ultimate SoundCloud Desktop Client with AMOLED Bento Glass UI
+          EOF
+          echo "2.0" > deb_build/debian-binary
+          cd deb_build/control && tar --numeric-owner --owner=0 --group=0 -czvf ../control.tar.gz ./control && cd ../..
+          cd deb_build/data && tar --numeric-owner --owner=0 --group=0 -czvf ../data.tar.gz . && cd ../..
+          cd deb_build && ar rcs ../dist_linux/soundcloud-ultimate_1.0.0_amd64.deb debian-binary control.tar.gz data.tar.gz && cd ..
+
+          # 3. Linux AppImage
+          curl -fsSL https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -o /tmp/appimagetool
+          chmod +x /tmp/appimagetool
+          cd /tmp && /tmp/appimagetool --appimage-extract && cd -
+          mkdir -p AppDir/usr/bin AppDir/usr/share/icons/hicolor/512x512/apps
+          cp desktop/target/release/soundcloud-desktop AppDir/usr/bin/
+          cp desktop/assets/icon.png AppDir/usr/share/icons/hicolor/512x512/apps/soundcloud-ultimate.png
+          cp desktop/assets/icon.png AppDir/soundcloud-ultimate.png
+          cp desktop/assets/icon.png AppDir/.DirIcon
+          cp deb_build/data/usr/share/applications/soundcloud-ultimate.desktop AppDir/
+          cat << 'EOF' > AppDir/AppRun
+          #!/bin/bash
+          HERE="$(dirname "$(readlink -f "${0}")")"
+          export PATH="${HERE}/usr/bin:${PATH}"
+          exec "${HERE}/usr/bin/soundcloud-desktop" "$@"
+          EOF
+          chmod +x AppDir/AppRun
+          ARCH=x86_64 /tmp/squashfs-root/AppRun AppDir dist_linux/SoundCloud-Ultimate-x86_64.AppImage
+
+      - name: Upload Linux Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-artifacts
+          path: dist_linux/*
+
+  build-windows:
+    name: Build Windows Portable (.exe)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Desktop Release
+        working-directory: desktop
+        run: cargo build --release
+
+      - name: Package Windows Portable
+        shell: bash
+        run: |
+          mkdir -p dist_windows win_portable
+          cp desktop/target/release/soundcloud-desktop.exe dist_windows/SoundCloud-Ultimate-Portable.exe
+          cp desktop/target/release/soundcloud-desktop.exe win_portable/
+          cp desktop/assets/icon.png win_portable/
+          cat << 'EOF' > win_portable/README.txt
+          SoundCloud Ultimate — Windows Portable Edition
+          ==============================================
+          Just launch soundcloud-desktop.exe.
+          Enjoy AMOLED Bento Glass Soundcloud Ultimate!
+          EOF
+          7z a dist_windows/SoundCloud-Ultimate-Windows-x86_64-Portable.zip ./win_portable/*
+
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: dist_windows/*
+
+  package-extension:
+    name: Package Chrome Extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build & Package Extension
+        run: |
+          mkdir -p dist_ext
+          cd extension
+          npm install
+          npm run build
+          cd dist
+          zip -r ../../dist_ext/soundcloud-ultimate-chrome-extension-v1.0.0.zip ./*
+          cd ../..
+
+      - name: Upload Extension Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-artifact
+          path: dist_ext/*
+
+  publish-release:
+    name: Publish Official Release
+    needs: [build-linux, build-windows, package-extension]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all built artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all_artifacts
+
+      - name: Flatten release assets
+        run: |
+          mkdir -p release_files
+          find all_artifacts -type f -exec cp {} release_files/ \;
+          ls -la release_files/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release_files/*
+          name: "SoundCloud Ultimate ${{ github.ref_name }} — Official Release"
+          generate_release_notes: true
