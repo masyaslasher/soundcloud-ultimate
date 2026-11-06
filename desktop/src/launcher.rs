@@ -7,6 +7,11 @@ use tao::{
 };
 use wry::WebViewBuilder;
 
+#[cfg(target_os = "linux")]
+use tao::platform::unix::WindowExtUnix;
+#[cfg(target_os = "linux")]
+use wry::WebViewBuilderExtUnix;
+
 fn load_icon() -> Option<Icon> {
     let bytes = include_bytes!("../assets/icon.png");
     let img = image::load_from_memory(bytes).ok()?.to_rgba8();
@@ -29,10 +34,19 @@ pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
 
     let window = builder.build(&event_loop)?;
 
-    let _webview = WebViewBuilder::new()
+    let webview_builder = WebViewBuilder::new()
         .with_url(url)
-        .with_devtools(true)
-        .build(&window)?;
+        .with_devtools(true);
+
+    #[cfg(target_os = "linux")]
+    let _webview = if let Some(vbox) = window.default_vbox() {
+        webview_builder.build_gtk(vbox)?
+    } else {
+        webview_builder.build_gtk(window.gtk_window())?
+    };
+
+    #[cfg(not(target_os = "linux"))]
+    let _webview = webview_builder.build(&window)?;
 
     println!("✨ Standalone native desktop window created successfully.");
 
