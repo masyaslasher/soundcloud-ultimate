@@ -46,32 +46,39 @@
 ### 2. Центр встроенных расширений (Караоке, FX, Looper, Таймер сна, Карточки)
 ![Extensions Hub](screenshots/10_extensions_hub.png)
 
-### 3. Cyberpunk 2077 Тема & Midnight Synthwave Тема
+### 3. Синхронные тексты песен (Караоке LRCLIB) & A-B Looper в теме Nordic Frost
+<p align="center">
+  <img src="screenshots/15_lyrics_karaoke.png" width="48%" alt="Karaoke Synchronized Lyrics" />
+  &nbsp;&nbsp;
+  <img src="screenshots/16_nordic_frost_looper.png" width="48%" alt="Nordic Frost & A-B Looper" />
+</p>
+
+### 4. Cyberpunk 2077 Тема & Midnight Synthwave Тема
 <p align="center">
   <img src="screenshots/13_cyberpunk_neon_theme.png" width="48%" alt="Cyberpunk 2077 Theme" />
   &nbsp;&nbsp;
   <img src="screenshots/14_synthwave_theme.png" width="48%" alt="Synthwave Theme" />
 </p>
 
-### 4. Студия эффектов: 8D Audio (360° Вращение) & Скорость (Nightcore, Slowed)
+### 5. Студия эффектов: 8D Audio (360° Вращение) & Скорость (Nightcore, Slowed)
 ![Audio FX Studio](screenshots/11_audio_fx_8d_studio.png)
 
-### 5. Генератор неоновых Bento-карточек трека для Discord, Telegram и VK
+### 6. Генератор неоновых Bento-карточек трека для Discord, Telegram и VK
 ![Bento Social Track Card](screenshots/12_bento_social_track_card.png)
 
-### 6. Главный экран рекомендаций и чартов (Discover & Trending)
+### 7. Главный экран рекомендаций и чартов (Discover & Trending)
 ![Main Discover](screenshots/01_main_discover.png)
 
-### 7. Встроенный профиль артиста с треками и кнопкой подписки (In-App Artist Profile)
+### 8. Встроенный профиль артиста с треками и кнопкой подписки (In-App Artist Profile)
 ![Artist Profile](screenshots/02_in_app_artist_profile.png)
 
-### 8. Инспектор альбомов и плейлистов (Playlist Inspector)
+### 9. Инспектор альбомов и плейлистов (Playlist Inspector)
 ![Playlist Inspector](screenshots/03_in_app_playlist_inspector.png)
 
-### 9. Комментарии с таймкодами и публикацией в реальном времени (Track Comments)
+### 10. Комментарии с таймкодами и публикацией в реальном времени (Track Comments)
 ![Comments System](screenshots/04_in_app_comments_system.png)
 
-### 10. Лазерный Bento-ползунок громкости и Студийный эквалайзер
+### 11. Лазерный Bento-ползунок громкости и Студийный эквалайзер
 <p align="center">
   <img src="screenshots/06_bento_laser_volume.png" width="32%" alt="Volume Slider" />
   &nbsp;&nbsp;&nbsp;&nbsp;

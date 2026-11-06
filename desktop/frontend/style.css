@@ -458,9 +458,9 @@ body {
 
 .player-dock {
   pointer-events: auto;
-  width: calc(100% - 72px);
-  max-width: 1240px;
-  height: 72px;
+  width: calc(100% - 48px);
+  max-width: 1380px;
+  height: 76px;
   background: var(--surface-dock);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
@@ -470,7 +470,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 18px;
+  gap: 12px;
   transition: border-color 0.25s ease;
 }
 
@@ -482,27 +483,39 @@ body {
 .dock-left {
   display: flex;
   align-items: center;
-  gap: 14px;
-  width: 280px;
+  gap: 12px;
+  flex: 1;
+  max-width: 380px;
   min-width: 220px;
 }
 
 .dock-art {
   width: 48px;
   height: 48px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   object-fit: cover;
-  background: #181720;
+  background: var(--surface-dock);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
 }
 
 .dock-info {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  flex: 1;
+  min-width: 110px;
+}
+
+.dock-left-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .dock-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #FFFFFF;
   white-space: nowrap;
@@ -524,8 +537,9 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  flex: 1;
-  max-width: 620px;
+  flex: 1.4;
+  max-width: 540px;
+  min-width: 260px;
 }
 
 .dock-controls {
@@ -659,8 +673,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
-  width: 220px;
+  gap: 8px;
+  flex: 1;
+  max-width: 380px;
+  min-width: 240px;
+}
+
+.dock-right .control-btn {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.dock-right .control-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Volume Container with Laser Centered Bento Popup */

@@ -142,26 +142,28 @@
             <div class="dock-title" id="player-title">Выберите трек для воспроизведения</div>
             <div class="dock-artist" id="player-artist" style="cursor: pointer;">SoundCloud Ultimate</div>
           </div>
-          <!-- Real Like Button in Player -->
-          <button class="like-btn" id="dock-like-btn" title="Добавить в любимые (L)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <!-- Comments Button in Player -->
-          <button class="action-icon-btn" id="dock-comments-btn" title="Комментарии трека (C)">
-            <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-          </button>
-          <!-- Related Radio Button in Player -->
-          <button class="action-icon-btn" id="dock-radio-btn" title="Радио трека (Станция)">
-            <svg viewBox="0 0 24 24"><path d="M3.24 6.15C2.51 7.43 2 8.94 2 10.55c0 4.41 3.59 8 8 8 2.08 0 3.97-.79 5.4-2.1l-1.43-1.43C12.83 15.68 11.48 16.2 10 16.2c-3.12 0-5.65-2.53-5.65-5.65 0-1.19.38-2.3 1.03-3.21L3.24 6.15zM20.76 6.15l-2.14 1.19c.65.91 1.03 2.02 1.03 3.21 0 3.12-2.53 5.65-5.65 5.65-1.48 0-2.83-.52-3.97-1.18l-1.43 1.43C10.03 17.76 11.92 18.55 14 18.55c4.41 0 8-3.59 8-8 0-1.61-.51-3.12-1.24-4.4zM12 2C7.58 2 4 5.58 4 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
-          </button>
-          <!-- Download Button in Player -->
-          <button class="download-btn" id="dock-download-btn" title="Скачать трек в MP3 (D)">
-            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          </button>
-          <!-- Social Bento Card Button in Player -->
-          <button class="action-icon-btn" id="dock-card-btn" title="Создать карточку трека для соцсетей">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          </button>
+          <div class="dock-left-actions">
+            <!-- Real Like Button in Player -->
+            <button class="like-btn" id="dock-like-btn" title="Добавить в любимые (L)">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <!-- Comments Button in Player -->
+            <button class="action-icon-btn" id="dock-comments-btn" title="Комментарии трека (C)">
+              <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            </button>
+            <!-- Related Radio Button in Player -->
+            <button class="action-icon-btn" id="dock-radio-btn" title="Радио трека (Станция)">
+              <svg viewBox="0 0 24 24"><path d="M3.24 6.15C2.51 7.43 2 8.94 2 10.55c0 4.41 3.59 8 8 8 2.08 0 3.97-.79 5.4-2.1l-1.43-1.43C12.83 15.68 11.48 16.2 10 16.2c-3.12 0-5.65-2.53-5.65-5.65 0-1.19.38-2.3 1.03-3.21L3.24 6.15zM20.76 6.15l-2.14 1.19c.65.91 1.03 2.02 1.03 3.21 0 3.12-2.53 5.65-5.65 5.65-1.48 0-2.83-.52-3.97-1.18l-1.43 1.43C10.03 17.76 11.92 18.55 14 18.55c4.41 0 8-3.59 8-8 0-1.61-.51-3.12-1.24-4.4zM12 2C7.58 2 4 5.58 4 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            </button>
+            <!-- Download Button in Player -->
+            <button class="download-btn" id="dock-download-btn" title="Скачать трек в MP3 (D)">
+              <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </button>
+            <!-- Social Bento Card Button in Player -->
+            <button class="action-icon-btn" id="dock-card-btn" title="Создать карточку трека для соцсетей">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            </button>
+          </div>
         </div>
 
         <!-- Center: Controls & Scrubber -->
