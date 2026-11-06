@@ -97,13 +97,12 @@ pub fn launch_desktop_window(url: &str) -> Option<Child> {
 
 #[cfg(not(windows))]
 fn which(cmd: &str) -> Result<String, ()> {
-    if let Ok(output) = Command::new("which").arg(cmd).output() {
-        if output.status.success() {
+    if let Ok(output) = Command::new("which").arg(cmd).output()
+        && output.status.success() {
             let path = String::from_utf8_lossy(&output.stdout).trim().to_string();
             if !path.is_empty() {
                 return Ok(path);
             }
         }
-    }
     Err(())
 }

@@ -443,6 +443,7 @@ struct MediaStreamQuery {
 
 async fn api_media_stream(
     State(state): State<AppState>,
+    in_headers: HeaderMap,
     Query(params): Query<MediaStreamQuery>,
 ) -> Response {
     let url_bytes = match hex_decode(&params.u) {
@@ -541,12 +542,33 @@ async fn api_media_stream(
         Err(e) => return (StatusCode::BAD_GATEWAY, format!("Stream read failed: {}", e)).into_response(),
     };
 
+    if let Some(range_header) = in_headers.get(header::RANGE).and_then(|v| v.to_str().ok())
+        && let Some(spec) = range_header.strip_prefix("bytes=") {
+            let parts: Vec<&str> = spec.split('-').collect();
+            let total_len = bytes.len();
+            let start: usize = parts.first().and_then(|s| s.parse().ok()).unwrap_or(0);
+            let end: usize = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(total_len.saturating_sub(1));
+            let end = end.min(total_len.saturating_sub(1));
+
+            if start <= end && start < total_len {
+                let chunk = bytes.slice(start..=end);
+                let mut headers = HeaderMap::new();
+                headers.insert(header::CONTENT_TYPE, HeaderValue::from_static("audio/mpeg"));
+                headers.insert(header::ACCEPT_RANGES, HeaderValue::from_static("bytes"));
+                headers.insert(header::CONTENT_LENGTH, HeaderValue::from(chunk.len() as u64));
+                if let Ok(cr) = HeaderValue::from_str(&format!("bytes {}-{}/{}", start, end, total_len)) {
+                    headers.insert(header::CONTENT_RANGE, cr);
+                }
+                return (StatusCode::PARTIAL_CONTENT, headers, Body::from(chunk)).into_response();
+            }
+        }
+
     let mut headers = HeaderMap::new();
     headers.insert(header::CONTENT_TYPE, HeaderValue::from_static("audio/mpeg"));
     headers.insert(header::ACCEPT_RANGES, HeaderValue::from_static("bytes"));
     headers.insert(
         header::CONTENT_LENGTH,
-        HeaderValue::from_str(&bytes.len().to_string()).unwrap(),
+        HeaderValue::from(bytes.len() as u64),
     );
     (StatusCode::OK, headers, Body::from(bytes)).into_response()
 }
@@ -640,13 +662,30 @@ fn hex_encode(s: &str) -> String {
 }
 
 fn hex_decode(s: &str) -> Option<Vec<u8>> {
-    if s.len() % 2 != 0 {
+    if !s.len().is_multiple_of(2) {
         return None;
     }
     (0..s.len())
         .step_by(2)
         .map(|i| u8::from_str_radix(&s[i..i + 2], 16).ok())
         .collect()
+}
+
+fn sanitize_for_header(s: &str) -> String {
+    s.chars()
+        .map(|c| if c.is_ascii_alphanumeric() || c == '.' || c == '-' || c == '_' || c == ' ' { c } else { '_' })
+        .collect()
+}
+
+fn percent_encode_filename(s: &str) -> String {
+    let mut out = String::new();
+    for b in s.bytes() {
+        match b {
+            b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => out.push(b as char),
+            _ => out.push_str(&format!("%{:02X}", b)),
+        }
+    }
+    out
 }
 
 async fn api_download(
@@ -656,12 +695,19 @@ async fn api_download(
     match state.sc.download_track_bytes(params.id).await {
         Ok((filename, bytes)) => {
             let mut headers = HeaderMap::new();
+            let safe_ascii = sanitize_for_header(&filename);
+            let encoded_utf8 = percent_encode_filename(&filename);
+            let disp = format!(
+                "attachment; filename=\"{}\"; filename*=UTF-8''{}",
+                safe_ascii, encoded_utf8
+            );
             headers.insert(
                 header::CONTENT_DISPOSITION,
-                HeaderValue::from_str(&format!("attachment; filename=\"{}\"", filename))
+                HeaderValue::from_str(&disp)
                     .unwrap_or_else(|_| HeaderValue::from_static("attachment; filename=\"track.mp3\"")),
             );
             headers.insert(header::CONTENT_TYPE, HeaderValue::from_static("audio/mpeg"));
+            headers.insert(header::CONTENT_LENGTH, HeaderValue::from(bytes.len() as u64));
             (StatusCode::OK, headers, Body::from(bytes)).into_response()
         }
         Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),

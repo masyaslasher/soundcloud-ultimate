@@ -921,7 +921,7 @@
       track = currentIndex >= 0 ? queue[currentIndex] : null;
     }
     if (!track) {
-      alert('Please play a track first to view comments');
+      showToast('⚠️ Please play a track first to view comments');
       return;
     }
 
@@ -1026,7 +1026,7 @@
       `;
       commentsList.insertBefore(row, commentsList.firstChild);
     } catch (e) {
-      alert('Error sending comment: ' + e);
+      showToast('⚠️ Error sending comment: ' + e);
     } finally {
       btnSendComment.textContent = 'Send';
       btnSendComment.disabled = false;
@@ -1048,7 +1048,7 @@
   // 8. In-App Track Radio / Station (100% In-App)
   async function startTrackRadio() {
     if (currentIndex < 0 || !queue[currentIndex]) {
-      alert('Please play a track first to start a radio station');
+      showToast('⚠️ Please play a track first to start a radio station');
       return;
     }
     const track = queue[currentIndex];
@@ -1068,7 +1068,7 @@
         renderTracks(queue);
         playerTitle.textContent = track.title;
       } else {
-        alert('No similar tracks found');
+        showToast('ℹ️ No similar tracks found for radio station');
         playerTitle.textContent = track.title;
       }
     } catch (e) {
@@ -1149,10 +1149,10 @@
           await checkAuthStatus();
           loadMyLikes();
         } else {
-          alert('Session not found: ' + (data.error || 'sign in to soundcloud.com in Chromium / Chrome'));
+          showToast('⚠️ Session not found: ' + (data.error || 'sign in to soundcloud.com in Chromium / Chrome'));
         }
       } catch(e) {
-        alert('Import error: ' + e);
+        showToast('⚠️ Import error: ' + e);
       } finally {
         btnImportBrowser.textContent = '⚡ 1-Click Sign In (from Chromium)';
       }
@@ -1180,10 +1180,10 @@
         await checkAuthStatus();
         loadMyLikes();
       } else {
-        alert(data.error || 'Invalid token. Please check and try again.');
+        showToast('⚠️ ' + (data.error || 'Invalid token. Please check and try again.'));
       }
     } catch (e) {
-      alert('Connection error: ' + e);
+      showToast('⚠️ Connection error: ' + e);
     } finally {
       btnSubmitToken.textContent = 'Connect Account';
     }
@@ -1455,18 +1455,38 @@
     }
   }
 
-  // 13. Global Shortcuts
+  // 13. Global Shortcuts & Modal Management
+  function closeAllModals() {
+    if (searchInput) searchInput.blur();
+    if (authModalOverlay) authModalOverlay.classList.remove('open');
+    if (eqModalOverlay) eqModalOverlay.classList.remove('open');
+    if (visualizerOverlay) visualizerOverlay.classList.remove('open');
+    if (profileModalOverlay) profileModalOverlay.classList.remove('open');
+    if (playlistModalOverlay) playlistModalOverlay.classList.remove('open');
+    if (commentsModalOverlay) commentsModalOverlay.classList.remove('open');
+    document.getElementById('theme-modal-overlay')?.classList.remove('open');
+    document.getElementById('extensions-modal-overlay')?.classList.remove('open');
+    document.getElementById('lyrics-overlay')?.classList.remove('open');
+    document.getElementById('sleep-modal-overlay')?.classList.remove('open');
+    document.getElementById('fx-modal-overlay')?.classList.remove('open');
+    document.getElementById('looper-modal-overlay')?.classList.remove('open');
+    document.getElementById('card-modal-overlay')?.classList.remove('open');
+    if (userDropdown) userDropdown.classList.remove('open');
+  }
+
   window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAllModals();
+      return;
+    }
+
     const activeTag = document.activeElement ? document.activeElement.tagName : '';
     if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') {
-      if (e.key === 'Escape') {
-        searchInput.blur();
-        if (authModalOverlay) authModalOverlay.classList.remove('open');
-        if (eqModalOverlay) eqModalOverlay.classList.remove('open');
-        if (profileModalOverlay) profileModalOverlay.classList.remove('open');
-        if (playlistModalOverlay) playlistModalOverlay.classList.remove('open');
-        if (commentsModalOverlay) commentsModalOverlay.classList.remove('open');
-      }
+      return;
+    }
+
+    // Never intercept browser native shortcuts or combination hotkeys (e.g. Ctrl+R, Ctrl+F, Ctrl+C, Alt+Shift+L)
+    if (e.ctrlKey || e.altKey || e.metaKey) {
       return;
     }
 
@@ -1530,20 +1550,6 @@
     } else if (e.key === '/') {
       e.preventDefault();
       searchInput.focus();
-    } else if (e.key === 'Escape') {
-      if (authModalOverlay) authModalOverlay.classList.remove('open');
-      if (eqModalOverlay) eqModalOverlay.classList.remove('open');
-      if (visualizerOverlay) visualizerOverlay.classList.remove('open');
-      if (profileModalOverlay) profileModalOverlay.classList.remove('open');
-      if (playlistModalOverlay) playlistModalOverlay.classList.remove('open');
-      if (commentsModalOverlay) commentsModalOverlay.classList.remove('open');
-      document.getElementById('theme-modal-overlay')?.classList.remove('open');
-      document.getElementById('extensions-modal-overlay')?.classList.remove('open');
-      document.getElementById('lyrics-overlay')?.classList.remove('open');
-      document.getElementById('sleep-modal-overlay')?.classList.remove('open');
-      document.getElementById('fx-modal-overlay')?.classList.remove('open');
-      document.getElementById('looper-modal-overlay')?.classList.remove('open');
-      document.getElementById('card-modal-overlay')?.classList.remove('open');
     }
   });
 

@@ -23,11 +23,10 @@ impl SoundCloudClient {
         let mut builder = reqwest::Client::builder()
             .user_agent(USER_AGENT);
 
-        if let Some(ref p) = proxy_url {
-            if let Ok(proxy) = reqwest::Proxy::all(p) {
+        if let Some(ref p) = proxy_url
+            && let Ok(proxy) = reqwest::Proxy::all(p) {
                 builder = builder.proxy(proxy);
             }
-        }
 
         let client = builder.build().unwrap_or_default();
 
@@ -51,15 +50,14 @@ impl SoundCloudClient {
             None
         };
 
-        if saved_token.is_none() {
-            if let Some(imported) = auto_import_browser_token_sync() {
+        if saved_token.is_none()
+            && let Some(imported) = auto_import_browser_token_sync() {
                 println!("✨ Auto-imported active SoundCloud session from browser!");
                 let data = serde_json::json!({ "oauth_token": &imported });
                 let _ = fs::create_dir_all(config_path.parent().unwrap());
                 let _ = fs::write(&config_path, data.to_string());
                 saved_token = Some(imported);
             }
-        }
 
         Self {
             client,
@@ -95,18 +93,15 @@ impl SoundCloudClient {
         script_urls.reverse();
 
         for url in script_urls.iter().take(10) {
-            if let Ok(resp) = self.client.get(url).send().await {
-                if let Ok(js) = resp.text().await {
-                    if let Some(cap) = client_id_re.captures(&js) {
-                        if let Some(id_match) = cap.get(1) {
+            if let Ok(resp) = self.client.get(url).send().await
+                && let Ok(js) = resp.text().await
+                    && let Some(cap) = client_id_re.captures(&js)
+                        && let Some(id_match) = cap.get(1) {
                             let new_id = id_match.as_str().to_string();
                             let mut write_guard = self.client_id.write().await;
                             *write_guard = new_id.clone();
                             return Ok(new_id);
                         }
-                    }
-                }
-            }
         }
 
         let id = self.client_id.read().await.clone();
@@ -412,20 +407,18 @@ impl SoundCloudClient {
             let ids_str = batch.join("%2C");
             let tracks_url = format!("https://api-v2.soundcloud.com/tracks?ids={}&client_id={}", ids_str, client_id);
             let req = self.apply_auth(self.client.get(&tracks_url), token.as_deref());
-            if let Ok(resp) = req.send().await {
-                if let Ok(full_tracks_val) = resp.json::<Value>().await {
+            if let Ok(resp) = req.send().await
+                && let Ok(full_tracks_val) = resp.json::<Value>().await {
                     let full_tracks = parse_track_collection(&full_tracks_val);
                     let mut track_map: std::collections::HashMap<u64, TrackItem> = full_tracks.into_iter().map(|t| (t.id, t)).collect();
 
                     for t in playlist.tracks.iter_mut() {
-                        if t.title == "Unknown Title" {
-                            if let Some(resolved) = track_map.remove(&t.id) {
+                        if t.title == "Unknown Title"
+                            && let Some(resolved) = track_map.remove(&t.id) {
                                 *t = resolved;
                             }
-                        }
                     }
                 }
-            }
         }
 
         playlist.tracks.retain(|t| t.title != "Unknown Title");
@@ -591,17 +584,15 @@ impl SoundCloudClient {
             client_id
         );
         let mut playlists = Vec::new();
-        if let Ok(pl_resp) = self.client.get(&pl_url).send().await {
-            if let Ok(pl_val) = pl_resp.json::<Value>().await {
-                if let Some(col) = pl_val.get("collection").and_then(|c| c.as_array()) {
+        if let Ok(pl_resp) = self.client.get(&pl_url).send().await
+            && let Ok(pl_val) = pl_resp.json::<Value>().await
+                && let Some(col) = pl_val.get("collection").and_then(|c| c.as_array()) {
                     for item in col {
                         if let Some(p) = parse_single_playlist(item) {
                             playlists.push(p);
                         }
                     }
                 }
-            }
-        }
 
         // Users / Artists
         let u_url = format!(
@@ -610,25 +601,24 @@ impl SoundCloudClient {
             client_id
         );
         let mut users = Vec::new();
-        if let Ok(u_resp) = self.client.get(&u_url).send().await {
-            if let Ok(u_val) = u_resp.json::<Value>().await {
-                if let Some(col) = u_val.get("collection").and_then(|c| c.as_array()) {
-                    for item in col {
-                        if let (Some(id), Some(username)) = (item.get("id").and_then(|v| v.as_u64()), item.get("username").and_then(|u| u.as_str())) {
-                            users.push(UserProfile {
-                                id,
-                                username: username.to_string(),
-                                avatar_url: item.get("avatar_url").and_then(|a| a.as_str()).map(|s| s.replace("-large.jpg", "-t500x500.jpg")),
-                                permalink_url: item.get("permalink_url").and_then(|p| p.as_str()).map(|s| s.to_string()),
-                                followers_count: item.get("followers_count").and_then(|f| f.as_u64()),
-                                followings_count: item.get("followings_count").and_then(|f| f.as_u64()),
-                                likes_count: item.get("likes_count").and_then(|l| l.as_u64()),
-                                playlist_count: item.get("playlist_count").and_then(|p| p.as_u64()),
-                                description: item.get("description").and_then(|d| d.as_str()).map(|s| s.to_string()),
-                                city: item.get("city").and_then(|c| c.as_str()).map(|s| s.to_string()),
-                            });
-                        }
-                    }
+        if let Ok(u_resp) = self.client.get(&u_url).send().await
+            && let Ok(u_val) = u_resp.json::<Value>().await
+            && let Some(col) = u_val.get("collection").and_then(|c| c.as_array())
+        {
+            for item in col {
+                if let (Some(id), Some(username)) = (item.get("id").and_then(|v| v.as_u64()), item.get("username").and_then(|u| u.as_str())) {
+                    users.push(UserProfile {
+                        id,
+                        username: username.to_string(),
+                        avatar_url: item.get("avatar_url").and_then(|a| a.as_str()).map(|s| s.replace("-large.jpg", "-t500x500.jpg")),
+                        permalink_url: item.get("permalink_url").and_then(|p| p.as_str()).map(|s| s.to_string()),
+                        followers_count: item.get("followers_count").and_then(|f| f.as_u64()),
+                        followings_count: item.get("followings_count").and_then(|f| f.as_u64()),
+                        likes_count: item.get("likes_count").and_then(|l| l.as_u64()),
+                        playlist_count: item.get("playlist_count").and_then(|p| p.as_u64()),
+                        description: item.get("description").and_then(|d| d.as_str()).map(|s| s.to_string()),
+                        city: item.get("city").and_then(|c| c.as_str()).map(|s| s.to_string()),
+                    });
                 }
             }
         }
@@ -658,10 +648,10 @@ impl SoundCloudClient {
         let mut tracks = Vec::new();
         if let Some(collection) = val.get("collection").and_then(|c| c.as_array()) {
             for item in collection {
-                if let Some(track_val) = item.get("track") {
-                    if let Some(t) = parse_single_track(track_val) {
-                        tracks.push(t);
-                    }
+                if let Some(track_val) = item.get("track")
+                    && let Some(t) = parse_single_track(track_val)
+                {
+                    tracks.push(t);
                 }
             }
         }
@@ -734,16 +724,15 @@ impl SoundCloudClient {
             let mut req = self.client.get(&full_info_url);
             req = self.apply_auth(req, token.as_deref());
 
-            if let Ok(info_resp) = req.send().await {
-                if let Ok(stream_val) = info_resp.json::<Value>().await {
-                    if let Some(stream_url) = stream_val.get("url").and_then(|u| u.as_str()) {
-                        return Ok(StreamResponse {
-                            stream_url: stream_url.to_string(),
-                            protocol,
-                            mime_type: mime,
-                        });
-                    }
-                }
+            if let Ok(info_resp) = req.send().await
+                && let Ok(stream_val) = info_resp.json::<Value>().await
+                && let Some(stream_url) = stream_val.get("url").and_then(|u| u.as_str())
+            {
+                return Ok(StreamResponse {
+                    stream_url: stream_url.to_string(),
+                    protocol,
+                    mime_type: mime,
+                });
             }
         }
 
@@ -763,19 +752,60 @@ impl SoundCloudClient {
             return Ok((filename, bytes.to_vec()));
         }
 
+        // HLS audio download: fetch playlist, download and concatenate audio segments
         let resp = self.client.get(&stream.stream_url).send().await.map_err(|e| e.to_string())?;
-        let bytes = resp.bytes().await.map_err(|e| e.to_string())?;
-        let filename = format!("{} - {}.aac", track.artist, track.title);
-        Ok((filename, bytes.to_vec()))
+        let playlist_text = resp.text().await.map_err(|e| e.to_string())?;
+
+        let base_url = reqwest::Url::parse(&stream.stream_url).ok();
+        let mut segment_urls = Vec::new();
+
+        for line in playlist_text.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() || trimmed.starts_with('#') {
+                continue;
+            }
+            let full_url = if trimmed.starts_with("http://") || trimmed.starts_with("https://") {
+                trimmed.to_string()
+            } else if let Some(ref base) = base_url {
+                if let Ok(joined) = base.join(trimmed) {
+                    joined.to_string()
+                } else {
+                    trimmed.to_string()
+                }
+            } else {
+                trimmed.to_string()
+            };
+            segment_urls.push(full_url);
+        }
+
+        if segment_urls.is_empty() {
+            return Err("No audio segments found in HLS stream".to_string());
+        }
+
+        let mut full_audio_bytes = Vec::new();
+        for seg_url in segment_urls {
+            if let Ok(seg_resp) = self.client.get(&seg_url).send().await
+                && let Ok(chunk_bytes) = seg_resp.bytes().await
+            {
+                full_audio_bytes.extend_from_slice(&chunk_bytes);
+            }
+        }
+
+        if full_audio_bytes.is_empty() {
+            return Err("Failed to download any audio segments".to_string());
+        }
+
+        let filename = format!("{} - {}.mp3", track.artist, track.title);
+        Ok((filename, full_audio_bytes))
     }
 }
 
 fn auto_import_browser_token_sync() -> Option<String> {
     let mut candidate_paths = vec![PathBuf::from("extract_browser_token.py")];
-    if let Ok(exe) = std::env::current_exe() {
-        if let Some(parent) = exe.parent() {
-            candidate_paths.push(parent.join("extract_browser_token.py"));
-        }
+    if let Ok(exe) = std::env::current_exe()
+        && let Some(parent) = exe.parent()
+    {
+        candidate_paths.push(parent.join("extract_browser_token.py"));
     }
     if let Ok(home) = std::env::var("HOME") {
         candidate_paths.push(PathBuf::from(&home).join(".gemini/antigravity/scratch/soundcloud-desktop/extract_browser_token.py"));

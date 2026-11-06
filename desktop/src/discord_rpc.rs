@@ -171,10 +171,10 @@ async fn connect_discord_ipc() -> std::io::Result<IpcStream> {
         }
 
         for path in candidates {
-            if path.exists() {
-                if let Ok(stream) = tokio::net::UnixStream::connect(&path).await {
-                    return Ok(IpcStream::Unix(stream));
-                }
+            if path.exists()
+                && let Ok(stream) = tokio::net::UnixStream::connect(&path).await
+            {
+                return Ok(IpcStream::Unix(stream));
             }
         }
 
@@ -223,16 +223,17 @@ async fn discord_rpc_worker(
                         });
                         let handshake_bytes = handshake.to_string().into_bytes();
 
-                        if stream.write_packet(0, &handshake_bytes).await.is_ok() {
-                            if let Ok((_op, resp_bytes)) = stream.read_packet().await {
-                                let mut username = None;
-                                if let Ok(val) = serde_json::from_slice::<serde_json::Value>(&resp_bytes) {
-                                    if let Some(user) = val.get("data").and_then(|d| d.get("user")).and_then(|u| u.get("username")) {
-                                        username = user.as_str().map(|s| s.to_string());
-                                    }
-                                }
+                        if stream.write_packet(0, &handshake_bytes).await.is_ok()
+                            && let Ok((_op, resp_bytes)) = stream.read_packet().await
+                        {
+                            let mut username = None;
+                            if let Ok(val) = serde_json::from_slice::<serde_json::Value>(&resp_bytes)
+                                && let Some(user) = val.get("data").and_then(|d| d.get("user")).and_then(|u| u.get("username"))
+                            {
+                                username = user.as_str().map(|s| s.to_string());
+                            }
 
-                                println!("✨ Discord Rich Presence connected: {}", username.as_deref().unwrap_or("Discord Client"));
+                            println!("✨ Discord Rich Presence connected: {}", username.as_deref().unwrap_or("Discord Client"));
 
                                 {
                                     let mut s = status.write().await;
@@ -248,7 +249,6 @@ async fn discord_rpc_worker(
                                     send_activity_packet(ipc_stream.as_mut().unwrap(), act, nonce).await;
                                 }
                             }
-                        }
                     }
                     Err(_) => {
                         // Discord not running, try again next tick
@@ -278,8 +278,8 @@ async fn discord_rpc_worker(
                         status.write().await.current_track = Some(format!("{} - {}", activity.artist, activity.title));
                         last_activity = Some(activity.clone());
 
-                        if enabled {
-                            if let Some(ref mut stream) = ipc_stream {
+                        if enabled
+                            && let Some(ref mut stream) = ipc_stream {
                                 nonce += 1;
                                 if !send_activity_packet(stream, &activity, nonce).await {
                                     // Connection dropped
@@ -288,7 +288,6 @@ async fn discord_rpc_worker(
                                     s.connected = false;
                                 }
                             }
-                        }
                     }
                     Some(DiscordCommand::ClearActivity) => {
                         last_activity = None;
@@ -354,14 +353,13 @@ async fn send_activity_packet(stream: &mut IpcStream, act: &DiscordActivityPaylo
     };
 
     let mut buttons = Vec::new();
-    if let Some(ref url) = act.permalink_url {
-        if url.starts_with("http") {
+    if let Some(ref url) = act.permalink_url
+        && url.starts_with("http") {
             buttons.push(serde_json::json!({
                 "label": "Listen on SoundCloud",
                 "url": url
             }));
         }
-    }
 
     let activity_json = serde_json::json!({
         "type": 2, // 2 = Listening to

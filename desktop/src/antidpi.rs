@@ -1,10 +1,19 @@
 use std::collections::HashMap;
 use std::net::SocketAddr;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 use std::time::Duration;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::RwLock;
+
+static DOH_HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(|| {
+    reqwest::Client::builder()
+        .timeout(Duration::from_secs(3))
+        .pool_idle_timeout(Some(Duration::from_secs(90)))
+        .tcp_nodelay(true)
+        .build()
+        .unwrap_or_default()
+});
 
 /// Built-in Anti-DPI engine for bypassing TSPU (ТСПУ) censorship in Russia.
 /// Implements Zapret-style TLS ClientHello record splitting (split-pos=2)
@@ -149,30 +158,23 @@ async fn resolve_doh_cached(
         format!("https://1.0.0.1/dns-query?name={}&type=A", domain),
     ];
 
-    let http_client = reqwest::Client::builder()
-        .timeout(Duration::from_secs(3))
-        .build()
-        .ok()?;
-
     for endpoint in doh_endpoints {
-        if let Ok(resp) = http_client
+        if let Ok(resp) = DOH_HTTP_CLIENT
             .get(&endpoint)
             .header("accept", "application/dns-json")
             .send()
             .await
+            && let Ok(val) = resp.json::<serde_json::Value>().await
+            && let Some(answers) = val.get("Answer").and_then(|a| a.as_array())
         {
-            if let Ok(val) = resp.json::<serde_json::Value>().await {
-                if let Some(answers) = val.get("Answer").and_then(|a| a.as_array()) {
-                    for ans in answers {
-                        if ans.get("type").and_then(|t| t.as_u64()) == Some(1) {
-                            if let Some(ip_str) = ans.get("data").and_then(|d| d.as_str()) {
-                                let ip = ip_str.to_string();
-                                let mut w = cache.write().await;
-                                w.insert(domain.to_string(), ip.clone());
-                                return Some(ip);
-                            }
-                        }
-                    }
+            for ans in answers {
+                if ans.get("type").and_then(|t| t.as_u64()) == Some(1)
+                    && let Some(ip_str) = ans.get("data").and_then(|d| d.as_str())
+                {
+                    let ip = ip_str.to_string();
+                    let mut w = cache.write().await;
+                    w.insert(domain.to_string(), ip.clone());
+                    return Some(ip);
                 }
             }
         }
