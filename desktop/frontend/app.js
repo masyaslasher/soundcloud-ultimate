@@ -1265,9 +1265,7 @@
   }
 
   function isTrackLiked(trackId, apiLiked = false) {
-    if (currentUser) {
-      return !!apiLiked;
-    }
+    if (apiLiked) return true;
     const localLikes = getLocalLikes();
     return localLikes.some(t => t.id === trackId);
   }
@@ -1830,13 +1828,24 @@
     const willLike = !track.liked;
     track.liked = willLike;
 
+    // Keep localLikes and memory cache instantly in sync
+    let localLikes = getLocalLikes();
+    if (willLike) {
+      if (!localLikes.some(t => t.id === track.id)) {
+        localLikes.unshift(track);
+      }
+    } else {
+      localLikes = localLikes.filter(t => t.id !== track.id);
+    }
+    saveLocalLikes(localLikes);
+
     if (btnEl) btnEl.classList.toggle('liked', willLike);
     if (currentIndex >= 0 && queue[currentIndex] && queue[currentIndex].id === track.id) {
       dockLikeBtn.classList.toggle('liked', willLike);
       const rpLikeBtn = document.getElementById('rp-like-btn');
       if (rpLikeBtn) rpLikeBtn.classList.toggle('liked', willLike);
     }
-    document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
+    document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn, tr.track-row[data-id="${track.id}"] [data-act="like"]`).forEach(btn => {
       btn.classList.toggle('liked', willLike);
     });
     if (currentTab.type === 'lib' && currentTab.val === 'likes' && !willLike) {
@@ -2290,25 +2299,48 @@
   async function checkAuthStatus() {
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const btnDropLogin = document.getElementById('btn-dropdown-login');
+    const userRoleLabel = document.getElementById('user-role-label');
 
     try {
       const res = await fetch('/api/auth/status');
       const data = await res.json();
       if (data.authenticated && data.user) {
         currentUser = data.user;
-        if (btnLoginTrigger) btnLoginTrigger.style.display = 'none';
+        if (btnLoginTrigger) {
+          btnLoginTrigger.style.display = 'inline-flex';
+          btnLoginTrigger.classList.add('logged-in');
+          btnLoginTrigger.title = `Signed in as ${currentUser.username}`;
+          const avatarUrl = currentUser.avatar_url || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23A1A1AA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E";
+          btnLoginTrigger.innerHTML = `
+            <img src="${avatarUrl}" style="width:16px;height:16px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+            <span id="txt-header-login">${escapeHtml(currentUser.username)}</span>
+          `;
+        }
         userBadge.style.display = 'flex';
         userName.textContent = currentUser.username;
-        userAvatar.src = currentUser.avatar_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="%23FF5500"%3E%3Ccircle cx="16" cy="16" r="16"/%3E%3C/svg%3E';
+        if (userRoleLabel) userRoleLabel.textContent = currentUser.city || 'SoundCloud Listener';
+        if (currentUser.avatar_url) userAvatar.src = currentUser.avatar_url;
         if (btnViewMyProfile) btnViewMyProfile.style.display = 'flex';
         if (btnLogout) btnLogout.style.display = 'flex';
         if (btnDropLogin) btnDropLogin.style.display = 'none';
+
+        // Auto-synchronize real user likes and playlists
+        syncUserData();
       } else {
         currentUser = null;
-        if (btnLoginTrigger) btnLoginTrigger.style.display = 'none';
+        if (btnLoginTrigger) {
+          btnLoginTrigger.style.display = 'inline-flex';
+          btnLoginTrigger.classList.remove('logged-in');
+          btnLoginTrigger.title = 'Sign In to SoundCloud';
+          btnLoginTrigger.innerHTML = `
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span id="txt-header-login">${t.sign_in || 'Sign In'}</span>
+          `;
+        }
         userBadge.style.display = 'flex';
         userName.textContent = t.guest_user || 'Guest';
-        userAvatar.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23888"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/%3E%3C/svg%3E';
+        if (userRoleLabel) userRoleLabel.textContent = 'Free Listener';
+        userAvatar.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23A1A1AA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E";
         if (btnViewMyProfile) btnViewMyProfile.style.display = 'none';
         if (btnLogout) btnLogout.style.display = 'none';
         if (btnDropLogin) btnDropLogin.style.display = 'flex';
@@ -2316,19 +2348,76 @@
     } catch (e) {
       console.warn('Auth status check failed:', e);
       currentUser = null;
-      if (btnLoginTrigger) btnLoginTrigger.style.display = 'none';
+      if (btnLoginTrigger) {
+        btnLoginTrigger.style.display = 'inline-flex';
+        btnLoginTrigger.classList.remove('logged-in');
+        btnLoginTrigger.title = 'Sign In to SoundCloud';
+        btnLoginTrigger.innerHTML = `
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span id="txt-header-login">${t.sign_in || 'Sign In'}</span>
+        `;
+      }
       userBadge.style.display = 'flex';
       userName.textContent = t.guest_user || 'Guest';
-      userAvatar.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23888"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/%3E%3C/svg%3E';
+      if (userRoleLabel) userRoleLabel.textContent = 'Free Listener';
+      userAvatar.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23A1A1AA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E";
       if (btnViewMyProfile) btnViewMyProfile.style.display = 'none';
       if (btnLogout) btnLogout.style.display = 'none';
       if (btnDropLogin) btnDropLogin.style.display = 'flex';
     }
   }
 
+  async function syncUserData() {
+    if (!currentUser) return;
+    try {
+      const res = await fetch('/api/me/likes?limit=50');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.tracks && Array.isArray(data.tracks)) {
+          window.scUserLikes = data.tracks;
+          const currentLocal = getLocalLikes();
+          const merged = [...data.tracks];
+          currentLocal.forEach(loc => {
+            if (!merged.some(m => m.id === loc.id)) {
+              merged.push(loc);
+            }
+          });
+          saveLocalLikes(merged);
+        }
+      }
+    } catch (err) {
+      console.warn('Sync likes error:', err);
+    }
+
+    try {
+      const res = await fetch('/api/me/playlists');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.playlists && Array.isArray(data.playlists)) {
+          window.scUserPlaylists = data.playlists;
+        }
+      }
+    } catch (err) {
+      console.warn('Sync playlists error:', err);
+    }
+
+    if (currentActiveViewId === 'view-liked') {
+      renderLikedView();
+    } else if (currentActiveViewId === 'view-playlists') {
+      renderPlaylistsView();
+    } else if (currentActiveViewId === 'view-library') {
+      renderLibraryView(activeLibraryTab, 'recent', libraryViewMode);
+    }
+  }
+
   if (btnLoginTrigger) {
-    btnLoginTrigger.addEventListener('click', () => {
-      authModalOverlay.classList.add('open');
+    btnLoginTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentUser) {
+        userDropdown.classList.toggle('open');
+      } else {
+        authModalOverlay.classList.add('open');
+      }
     });
   }
 
@@ -2354,7 +2443,8 @@
         if (data.authenticated) {
           authModalOverlay.classList.remove('open');
           await checkAuthStatus();
-          loadMyLikes();
+          await syncUserData();
+          showToast('✨ Signed in from Chromium!');
         } else {
           showToast('⚠️ Session not found: ' + (data.error || 'sign in to soundcloud.com in Chromium / Chrome'));
         }
@@ -2385,7 +2475,8 @@
       if (data.authenticated) {
         authModalOverlay.classList.remove('open');
         await checkAuthStatus();
-        loadMyLikes();
+        await syncUserData();
+        showToast('✨ Signed in successfully!');
       } else {
         showToast('⚠️ ' + (data.error || 'Invalid token. Please check and try again.'));
       }
@@ -2603,65 +2694,15 @@
   }
 
   async function loadMyLikes() {
-    currentTab = { type: 'lib', val: 'likes' };
-    renderActiveTabTitle();
-    if (heroSection) heroSection.style.display = 'none';
-
-    if (!currentUser) {
-      const localLikes = getLocalLikes();
-      if (localLikes.length === 0) {
-        renderEmptyLikesState();
-        return;
-      }
-      renderTracks(localLikes.map(tr => ({ ...tr, liked: true })));
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/me/likes?limit=50');
-      const data = await res.json();
-      const tracks = data.tracks || [];
-      if (tracks.length === 0) {
-        renderEmptyLikesState();
-      } else {
-        renderTracks(tracks.map(tr => ({ ...tr, liked: true })));
-      }
-    } catch (e) {
-      console.error('Failed to load likes:', e);
-      const localLikes = getLocalLikes();
-      if (localLikes.length > 0) {
-        renderTracks(localLikes.map(tr => ({ ...tr, liked: true })));
-      } else {
-        renderEmptyLikesState();
-      }
-    }
+    navigateTo('view-liked');
   }
 
   async function loadMyPlaylists() {
-    currentTab = { type: 'lib', val: 'playlists' };
-    renderActiveTabTitle();
-    if (heroSection) heroSection.style.display = 'none';
+    navigateTo('view-playlists');
+  }
 
-    if (!currentUser) {
-      try {
-        const res = await fetch('/api/search?q=top%20hits&limit=24');
-        const data = await res.json();
-        renderPlaylists(data.playlists || []);
-      } catch (e) {
-        console.error('Failed to load featured playlists:', e);
-        renderPlaylists([]);
-      }
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/me/playlists');
-      const data = await res.json();
-      renderPlaylists(data.playlists || []);
-    } catch (e) {
-      console.error('Failed to load playlists:', e);
-      renderPlaylists([]);
-    }
+  async function loadMyHistory() {
+    navigateTo('view-history');
   }
 
   async function loadMyStream() {
@@ -2739,18 +2780,10 @@
       navigateTo('view-home');
       return;
     }
-    currentSearchQuery = query;
-    currentTab = { type: 'search', val: query };
-    renderActiveTabTitle();
-    if (heroSection) heroSection.style.display = 'none';
-
-    try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=32`);
-      const data = await res.json();
-      renderTracks(data.tracks || []);
-    } catch (e) {
-      console.error('Failed to search tracks:', e);
-    }
+    const q = query.trim();
+    currentSearchQuery = q;
+    if (searchInput) searchInput.value = q;
+    navigateTo('view-search', { query: q });
   }
 
   searchInput.addEventListener('input', (e) => {
@@ -3873,20 +3906,6 @@
       artwork_url: track.artwork_url || null
     };
 
-    // Android Native Bridge: Update MediaStyle Lock Screen Notification & Foreground Service
-    if (window.AndroidBridge && window.AndroidBridge.updatePlayback) {
-      try {
-        window.AndroidBridge.updatePlayback(
-          payload.title,
-          payload.artist,
-          payload.artwork_url || '',
-          !!playing,
-          Math.round(dur * 1000),
-          Math.round(curTime * 1000)
-        );
-      } catch (e) {}
-    }
-
     try {
       const res = await fetch('/api/discord/activity', {
         method: 'POST',
@@ -3902,11 +3921,6 @@
   }
 
   async function clearDiscordRPC() {
-    if (window.AndroidBridge && window.AndroidBridge.updatePlayback) {
-      try {
-        window.AndroidBridge.updatePlayback('', '', '', false, 0, 0);
-      } catch (_) {}
-    }
     if ('mediaSession' in navigator) {
       try {
         navigator.mediaSession.playbackState = 'none';
@@ -4347,7 +4361,7 @@
     }, true);
   }
 
-  window.handleAndroidBack = function() {
+  window.handleAppBack = function() {
     const openOverlay = document.querySelector('.modal-overlay.open, .bento-modal-overlay.open, #lyrics-overlay.open');
     if (openOverlay) {
       closeAllModals();
@@ -4474,11 +4488,26 @@
           <div class="recent-card-title">${c.title}</div>
           <div class="recent-card-meta">${c.subtitle}</div>
         `;
+        const playBtn = card.querySelector('.recent-card-play-btn');
+        if (playBtn) {
+          playBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            try {
+              const res = await fetch(`/api/search?q=${encodeURIComponent(c.query)}&limit=25`);
+              const data = await res.json();
+              if (data.tracks && data.tracks.length > 0) {
+                queue = data.tracks;
+                currentIndex = 0;
+                playTrack(queue[0], 0);
+              }
+            } catch (err) {
+              console.warn('Playback error:', err);
+            }
+          });
+        }
         card.addEventListener('click', () => {
-          if (searchInput) {
-            searchInput.value = c.query;
-            performSearch(c.query);
-          }
+          if (searchInput) searchInput.value = c.query;
+          navigateTo('view-search', { query: c.query });
         });
         row.appendChild(card);
       });
@@ -4499,6 +4528,13 @@
         <div class="recent-card-title">${escapeHtml(t.title)}</div>
         <div class="recent-card-meta">${escapeHtml(t.artist || 'Track')}</div>
       `;
+      const playBtn = card.querySelector('.recent-card-play-btn');
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          playTrack(t);
+        });
+      }
       card.addEventListener('click', () => {
         playTrack(t);
       });
@@ -4615,24 +4651,25 @@
     }
   });
 
-  // Hero Discover Banner & See all Recent
+  // Hero Discover Banner & See all Links
   const heroExploreBtn = document.getElementById('hero-explore-btn');
   if (heroExploreBtn) {
     heroExploreBtn.addEventListener('click', () => {
-      if (window.DiscoveryEngine && typeof window.DiscoveryEngine.open === 'function') {
-        window.DiscoveryEngine.open();
-      } else {
-        const chipDisc = document.getElementById('chip-discovery');
-        if (chipDisc) chipDisc.click();
-      }
+      navigateTo('view-search', { query: 'trending' });
     });
   }
 
   const btnSeeAllRecent = document.getElementById('btn-see-all-recent');
   if (btnSeeAllRecent) {
     btnSeeAllRecent.addEventListener('click', () => {
-      const chipHist = document.getElementById('chip-history');
-      if (chipHist) chipHist.click();
+      navigateTo('view-history');
+    });
+  }
+
+  const btnSeeAllRecommended = document.getElementById('btn-see-all-recommended');
+  if (btnSeeAllRecommended) {
+    btnSeeAllRecommended.addEventListener('click', () => {
+      navigateTo('view-search', { query: 'trending' });
     });
   }
 
@@ -4810,8 +4847,25 @@
         <div class="recent-card-title">${c.title}</div>
         <div class="recent-card-meta">${c.subtitle}</div>
       `;
+      const playBtn = card.querySelector('.recent-card-play-btn');
+      if (playBtn) {
+        playBtn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          try {
+            const res = await fetch(`/api/search?q=${encodeURIComponent(c.query)}&limit=25`);
+            const data = await res.json();
+            if (data.tracks && data.tracks.length > 0) {
+              queue = data.tracks;
+              currentIndex = 0;
+              playTrack(queue[0], 0);
+            }
+          } catch (err) {
+            console.warn('Playback error:', err);
+          }
+        });
+      }
       card.addEventListener('click', () => {
-        searchInput.value = c.query;
+        if (searchInput) searchInput.value = c.query;
         navigateTo('view-search', { query: c.query });
       });
       row.appendChild(card);
@@ -4894,7 +4948,9 @@
     fetch(`/api/search?q=${encodeURIComponent(trimmed)}&limit=30`)
       .then(res => res.json())
       .then(data => {
-        const tracks = data.collection || (Array.isArray(data) ? data : []);
+        const tracks = data.tracks || data.collection || (Array.isArray(data) ? data : []);
+        const playlists = data.playlists || [];
+        const users = data.users || [];
         if (countBadge) countBadge.textContent = `${tracks.length} tracks found`;
 
         if (tracks.length === 0) {
@@ -5088,19 +5144,75 @@
   }
 
   // 4. Liked Tracks View Engine
-  function renderLikedView() {
-    const likes = getLocalLikes();
+  async function renderLikedView() {
+    let likes = getLocalLikes();
     const countEl = document.getElementById('liked-tracks-count');
     const durEl = document.getElementById('liked-tracks-duration');
     const ownerEl = document.getElementById('liked-owner-name');
     const tbody = document.getElementById('liked-tracks-tbody');
 
     if (ownerEl) ownerEl.textContent = currentUser ? currentUser.username : 'Guest';
+
+    // Auto-fetch from SoundCloud if user logged in and local list is empty
+    if (currentUser && likes.length === 0) {
+      try {
+        const res = await fetch('/api/me/likes?limit=50');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.tracks && Array.isArray(data.tracks) && data.tracks.length > 0) {
+            likes = data.tracks;
+            saveLocalLikes(likes);
+          }
+        }
+      } catch (_) {}
+    }
+
     if (countEl) countEl.textContent = `${likes.length} tracks`;
 
     const totalMs = likes.reduce((acc, t) => acc + (t.duration_ms || 180000), 0);
     const totalMin = Math.round(totalMs / 60000);
     if (durEl) durEl.textContent = `${totalMin} min`;
+
+    // Wire Action Bar buttons
+    const btnLikedPlayAll = document.getElementById('btn-liked-play-all');
+    if (btnLikedPlayAll) {
+      btnLikedPlayAll.onclick = () => {
+        const curLikes = getLocalLikes();
+        if (curLikes.length > 0) {
+          queue = [...curLikes];
+          currentIndex = 0;
+          playTrack(queue[0], 0);
+        } else {
+          showToast('No liked tracks to play');
+        }
+      };
+    }
+
+    const btnLikedShuffle = document.getElementById('btn-liked-shuffle');
+    if (btnLikedShuffle) {
+      btnLikedShuffle.onclick = () => {
+        const curLikes = getLocalLikes();
+        if (curLikes.length > 0) {
+          const shuffled = [...curLikes].sort(() => Math.random() - 0.5);
+          queue = shuffled;
+          currentIndex = 0;
+          playTrack(queue[0], 0);
+        }
+      };
+    }
+
+    const likedSearchInput = document.getElementById('liked-search-input');
+    if (likedSearchInput) {
+      likedSearchInput.oninput = (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        const rows = tbody ? tbody.querySelectorAll('tr.track-row') : [];
+        rows.forEach(r => {
+          const title = r.querySelector('.table-track-title')?.textContent.toLowerCase() || '';
+          const artist = r.querySelector('.table-track-artist')?.textContent.toLowerCase() || '';
+          r.style.display = (!q || title.includes(q) || artist.includes(q)) ? '' : 'none';
+        });
+      };
+    }
 
     if (!tbody) return;
     tbody.innerHTML = '';
@@ -5122,6 +5234,7 @@
     likes.forEach((t, idx) => {
       const tr = document.createElement('tr');
       tr.className = 'track-row';
+      tr.setAttribute('data-id', t.id);
       const art = t.artwork_url || 'assets/default_artwork.png';
       tr.innerHTML = `
         <td class="table-idx-col">${idx + 1}</td>
@@ -5185,7 +5298,14 @@
 
     const likes = getLocalLikes();
     const history = getLocalHistory();
-    const playlists = getCustomPlaylists();
+    const localPlaylists = getCustomPlaylists();
+    const scPlaylists = window.scUserPlaylists || [];
+    const playlists = [...localPlaylists];
+    scPlaylists.forEach(sp => {
+      if (!playlists.some(p => p.id === sp.id || (p.title === sp.title && p.tracks?.length === sp.tracks?.length))) {
+        playlists.push(sp);
+      }
+    });
 
     if (tab === 'playlists') {
       renderPlaylistsView(container);
@@ -5271,10 +5391,33 @@
     } catch (_) { return []; }
   }
 
-  function renderPlaylistsView(targetEl = null) {
+  async function renderPlaylistsView(targetEl = null) {
     const grid = targetEl || document.getElementById('playlists-grid');
     if (!grid) return;
-    const playlists = getCustomPlaylists();
+
+    let localPlaylists = getCustomPlaylists();
+    let scPlaylists = window.scUserPlaylists || [];
+
+    // If authenticated and no scPlaylists cached, fetch from backend
+    if (currentUser && scPlaylists.length === 0) {
+      try {
+        const res = await fetch('/api/me/playlists');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.playlists && Array.isArray(data.playlists)) {
+            scPlaylists = data.playlists;
+            window.scUserPlaylists = scPlaylists;
+          }
+        }
+      } catch (_) {}
+    }
+
+    const playlists = [...localPlaylists];
+    scPlaylists.forEach(sp => {
+      if (!playlists.some(p => p.id === sp.id || (p.title === sp.title && p.tracks?.length === sp.tracks?.length))) {
+        playlists.push(sp);
+      }
+    });
 
     let html = `
       <div class="media-card" id="btn-create-pl-card" style="border: 2px dashed var(--border-subtle); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; text-align: center;">
@@ -5285,14 +5428,15 @@
     `;
 
     playlists.forEach((p, idx) => {
+      const trackCount = Array.isArray(p.tracks) ? p.tracks.length : (typeof p.tracks_count === 'number' ? p.tracks_count : 0);
       html += `
         <div class="media-card" data-idx="${idx}">
           <div class="media-card-art-wrap">
             <img class="media-card-art" src="${p.artwork_url || 'assets/default_artwork.png'}" alt="" onerror="this.src='assets/default_artwork.png'">
-            <button class="media-card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+            <button class="media-card-play-btn" title="Play ${escapeHtml(p.title)}"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
           </div>
           <div class="media-card-title">${escapeHtml(p.title)}</div>
-          <div class="media-card-subtitle">${(p.tracks || []).length} tracks • By ${escapeHtml(p.creator || 'You')}</div>
+          <div class="media-card-subtitle">${trackCount} tracks • By ${escapeHtml(p.creator || 'You')}</div>
         </div>
       `;
     });
@@ -5302,7 +5446,31 @@
 
     grid.querySelectorAll('.media-card[data-idx]').forEach(card => {
       const idx = parseInt(card.getAttribute('data-idx'), 10);
-      card.addEventListener('click', () => renderPlaylistDetail(playlists[idx]));
+      const p = playlists[idx];
+      const playBtn = card.querySelector('.media-card-play-btn');
+      if (playBtn) {
+        playBtn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          let tracks = Array.isArray(p.tracks) ? p.tracks : [];
+          if (tracks.length === 0 && p.id) {
+            try {
+              const res = await fetch(`/api/playlists/${p.id}`);
+              if (res.ok) {
+                const data = await res.json();
+                if (data.tracks) tracks = data.tracks;
+              }
+            } catch (_) {}
+          }
+          if (tracks.length > 0) {
+            queue = tracks;
+            currentIndex = 0;
+            playTrack(queue[0], 0);
+          } else {
+            showToast('Playlist is empty');
+          }
+        });
+      }
+      card.addEventListener('click', () => renderPlaylistDetail(p));
     });
   }
 

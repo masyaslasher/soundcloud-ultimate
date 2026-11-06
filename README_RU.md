@@ -2,9 +2,8 @@
 
 [![Release](https://img.shields.io/github/v/release/masyaslasher/soundcloud-ultimate?color=ff5500&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange.svg?logo=rust)](https://www.rust-lang.org/)
-[![Android](https://img.shields.io/badge/Android-APK%20(v1.3.0)-3DDC84.svg?logo=android&logoColor=white)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Android%20%7C%20Chrome-brightgreen.svg)]()
+[![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Chrome-brightgreen.svg)]()
 [![Design](https://img.shields.io/badge/Design-AMOLED%20Minimal%20Audio-a855f7.svg)]()
 
 <p align="center">
@@ -13,8 +12,8 @@
   <a href="README_RU.md"><strong>Русский</strong></a>
 </p>
 
-> **SoundCloud Ultimate** — ультимативный нативный клиент нового поколения для прослушивания SoundCloud на ПК и Android.
-> Сочетает премиальный дизайн **AMOLED Minimal Audio** (`#09090B`, фиолетовые акценты `#A855F7`), нативную скорость движка на Rust, **полностью автономное нативное окно без браузера**, отдельное приложение для **Android с фоновым воспроизведением и виджетом на экране блокировки**, встроенный студийный эквалайзер и 100% In-App социальную среду.
+> **SoundCloud Ultimate** — ультимативный нативный десктопный клиент нового поколения для прослушивания SoundCloud на ПК.
+> Сочетает премиальный дизайн **AMOLED Minimal Audio** (`#09090B`, фиолетовые акценты `#A855F7`), нативную скорость движка на Rust, **полностью автономное нативное окно без браузера**, встроенный студийный эквалайзер и 100% In-App социальную среду.
 
 ---
 
@@ -24,7 +23,6 @@
 
 | Платформа | Файл | Инструкция по запуску |
 | :--- | :--- | :--- |
-| 📱 **Android APK** | [**`SoundCloud-Ultimate.apk`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Полноценное Android-приложение: фоновое воспроизведение, виджет на экране блокировки и обход блокировок без VPN |
 | 🪟 **Windows Native Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (нативное окно WebView2, без запуска браузера) |
 | 🪟 **Windows .EXE** | [**`SoundCloud-Ultimate-Portable.exe`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Автономный исполняемый файл для Windows |
 | 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить (нативное окно WebKitGTK) |
@@ -181,22 +179,6 @@
 
 ---
 
-### 📱 Автономное мобильное приложение на Android (`SoundCloud-Ultimate.apk`)
-- **🎧 Фоновое воспроизведение (Background Playback):**
-  - Реализовано через Android `ForegroundService` и процессорный `PARTIAL_WAKE_LOCK`. Музыка непрерывно играет в фоне при выключенном или заблокированном экране, а также при работе с другими приложениями (Telegram, игры, браузер).
-- **📲 Плеер на экране блокировки и в шторке уведомлений:**
-  - Полноценная интеграция с AndroidX `MediaSessionCompat` и `NotificationCompat.MediaStyle`.
-  - Управление воспроизведением: кнопки «Пауза / Плей», «Предыдущий», «Следующий трек», отображение названия композиции, имени исполнителя, обложки альбома и интерактивная шкала перемотки (seekbar).
-- **🛡️ Встроенный DoH (Обход блокировок в РФ без VPN):**
-  - Прямая интеграция OkHttp с защищенными DNS-over-HTTPS серверами Cloudflare (`1.1.1.1`) и Google (`8.8.8.8`).
-  - Работает на всех мобильных операторах РФ (МТС, МегаФон, Билайн, Tele2) и домашних Wi-Fi сетях без необходимости включать VPN.
-- **🖤 Адаптивный Bento Glass AMOLED интерфейс:**
-  - Сенсорная адаптация жестов, чистый черный фон для экономии батареи на AMOLED/OLED матрицах, плавная анимация 60 FPS.
-- **📦 Ультра-легкий вес:**
-  - Готовый файл `SoundCloud-Ultimate.apk` весит всего **6.3 МБ**!
-
----
-
 ## 🛠️ Сборка из исходников / Build from Source
 
 ### Сборка Десктопного приложения (Rust)
@@ -206,14 +188,6 @@ cd soundcloud-ultimate/desktop
 cargo build --release
 ```
 Скомпилированный бинарник будет находиться по пути: `target/release/soundcloud-desktop`.
-
-### Сборка Android-приложения (APK)
-```bash
-cd soundcloud-ultimate/android
-./gradlew assembleDebug
-```
-Скомпилированный APK будет находиться по пути: `app/build/outputs/apk/debug/app-debug.apk`.
-
 
 ---
 

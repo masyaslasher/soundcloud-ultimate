@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">SoundCloud Ultimate</string>
-    <string name="channel_name">SoundCloud Playback</string>
-    <string name="channel_desc">Active background audio playback controls</string>
-    <string name="action_play">Play</string>
-    <string name="action_pause">Pause</string>
-    <string name="action_next">Next</string>
-    <string name="action_prev">Previous</string>
-</resources>

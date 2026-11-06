@@ -25,11 +25,5 @@ Thumbs.db
 .idea/
 dist_releases/
 
-# Android
-**/.gradle/
-**/build/
-*.iml
-local.properties
-.cxx/
 
 

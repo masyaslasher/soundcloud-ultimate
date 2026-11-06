@@ -4,8 +4,7 @@
 
 [![Release](https://img.shields.io/github/v/release/masyaslasher/soundcloud-ultimate?style=for-the-badge&color=FF5500)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Rust](https://img.shields.io/badge/Rust-1.80+-orange?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
-[![Android](https://img.shields.io/badge/Android-APK%20(v1.3.0)-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Android%20%7C%20Chrome-blue?style=for-the-badge)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Chrome-blue?style=for-the-badge)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 <p align="center">
@@ -15,8 +14,8 @@
 </p>
 
 <p align="center">
-  <b>Next-generation standalone native desktop & Android client for SoundCloud.</b><br>
-  Built with <b>Rust</b>, <b>Tao + Wry</b>, native <b>Android (Java/Gradle)</b>, and modern <b>AMOLED Minimal Audio</b> aesthetics. Includes <b>10 custom AMOLED themes</b>, <b>synchronized lyrics & karaoke</b>, <b>360° 8D Audio studio</b>, <b>background playback & lockscreen media controls</b> on Android, and a <b>100% in-app ecosystem</b>.
+  <b>Next-generation standalone native desktop client for SoundCloud.</b><br>
+  Built with <b>Rust</b>, <b>Tao + Wry</b>, and modern <b>AMOLED Minimal Audio</b> aesthetics. Includes <b>10 custom AMOLED themes</b>, <b>synchronized lyrics & karaoke</b>, <b>360° 8D Audio studio</b>, and a <b>100% in-app ecosystem</b>.
 </p>
 
 </div>
@@ -27,7 +26,6 @@
 
 | Platform | File | Instructions |
 | :--- | :--- | :--- |
-| 📱 **Android APK** | [**`SoundCloud-Ultimate.apk`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Standalone Android App. Background playback, lock screen widget, and zero-VPN DoH bypass |
 | 🪟 **Windows Native Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Extract and launch `soundcloud-desktop.exe` (native standalone window via WebView2, zero browser launch) |
 | 🪟 **Windows .EXE** | [**`SoundCloud-Ultimate-Portable.exe`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Standalone single executable for Windows |
 | 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` and run (native WebKitGTK window) |
@@ -176,23 +174,6 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
 
 ---
 
-### 📱 Standalone Android Application (`SoundCloud-Ultimate.apk`)
-- **🎧 Background Audio Playback:**
-  - Full `ForegroundService` with `PARTIAL_WAKE_LOCK`. Music streams seamlessly with screen locked, device sleeping, or while using other apps.
-- **📲 Lock Screen & Notification Center Media Widget:**
-  - AndroidX `MediaSessionCompat` and `NotificationCompat.MediaStyle`.
-  - Control playback directly from the lock screen: Play/Pause, Previous, Next, track title, artist name, and seekbar.
-- **🛡️ Built-in DoH (Bypasses Russian Blocking without VPN):**
-  - Native OkHttp DNS-over-HTTPS client querying Cloudflare (`1.1.1.1`) and Google (`8.8.8.8`).
-  - Seamlessly bypasses TSPU/RKN DNS poisoning on mobile cellular networks (MTS, MegaFon, Beeline, Tele2) and Wi-Fi.
-- **🖤 AMOLED Bento Glass Responsive UI:**
-  - Optimized for mobile touch gestures, edge-to-edge AMOLED display, and ultra-low battery consumption.
-- **📦 Ultra-Lightweight:**
-  - Entire standalone APK is only **6.3 MB**!
-
-
----
-
 ## 🚀 SoundCloud Ultimate Expansion Suite (v1.4.0)
 
 SoundCloud Ultimate has evolved into a professional-grade music workstation and personal analytics platform.
@@ -306,13 +287,6 @@ cd soundcloud-ultimate/desktop
 cargo build --release
 ```
 The compiled binary will be located at `target/release/soundcloud-desktop`.
-
-### Build Android APK
-```bash
-cd soundcloud-ultimate/android
-./gradlew assembleDebug
-```
-The compiled APK will be located at `app/build/outputs/apk/debug/app-debug.apk`.
 
 ### Build Chrome Extension
 

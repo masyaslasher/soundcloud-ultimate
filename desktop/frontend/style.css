@@ -4632,6 +4632,37 @@ body.sc-mini-player-active .sc-mini-hud {
   gap: 12px;
 }
 
+.top-auth-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.top-auth-btn:hover {
+  border-color: var(--accent-primary);
+  background: var(--surface-secondary);
+  color: #FFFFFF;
+}
+
+.top-auth-btn.logged-in {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.4);
+  color: var(--accent-hover);
+}
+
+.top-auth-btn.logged-in:hover {
+  background: rgba(168, 85, 247, 0.22);
+}
+
 .center-top-actions .action-icon-pill {
   width: 32px;
   height: 32px;
