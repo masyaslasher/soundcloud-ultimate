@@ -179,7 +179,7 @@ async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
     Json(serde_json::json!({
         "status": "ok",
         "client_id": id,
-        "version": "1.1.0",
+        "version": "1.2.0",
         "engine": "Rust + Bento AMOLED Glass",
         "antidpi": "active (Zapret TLS Split + Cloudflare DoH)",
         "auth": auth

@@ -206,7 +206,13 @@
         node.connect(filter);
         node = filter;
       }
-      node.connect(audioCtx.destination);
+      if (audioCtx.createStereoPanner) {
+        stereoPanner = audioCtx.createStereoPanner();
+        node.connect(stereoPanner);
+        stereoPanner.connect(audioCtx.destination);
+      } else {
+        node.connect(audioCtx.destination);
+      }
     } catch (e) {
       console.warn('WebAudio Equalizer not initialized:', e);
     }
@@ -401,9 +407,24 @@
     const percent = (current / duration) * 100;
     progressFill.style.width = `${percent}%`;
     progressHandle.style.left = `${percent}%`;
+
+    // Hook: A-B Looper
+    checkLooper(current);
+
+    // Hook: Synced Lyrics Karaoke
+    updateLyricsSync(current);
   });
 
   audio.addEventListener('ended', () => {
+    if (sleepTargetType === 'track') {
+      cancelSleepTimer();
+      audio.pause();
+      isPlaying = false;
+      updatePlayButtonUI(false);
+      showToast('🌙 Таймер сна: трек завершился, музыка остановлена');
+      return;
+    }
+
     if (repeatMode === 2) {
       audio.currentTime = 0;
       audio.play();
@@ -1472,6 +1493,21 @@
     } else if (e.key === 'q' || e.key === 'Q' || e.key === 'й' || e.key === 'Й') {
       e.preventDefault();
       btnQueueToggle.click();
+    } else if (e.key === 'k' || e.key === 'K' || e.key === 'л' || e.key === 'Л') {
+      e.preventDefault();
+      document.getElementById('btn-lyrics-toggle')?.click();
+    } else if (e.key === 'f' || e.key === 'F' || e.key === 'а' || e.key === 'А') {
+      e.preventDefault();
+      document.getElementById('btn-fx-toggle')?.click();
+    } else if (e.key === '[') {
+      e.preventDefault();
+      setLoopA();
+    } else if (e.key === ']') {
+      e.preventDefault();
+      setLoopB();
+    } else if (e.key === '\\') {
+      e.preventDefault();
+      toggleLoopActive();
     } else if (e.key === '/') {
       e.preventDefault();
       searchInput.focus();
@@ -1482,14 +1518,875 @@
       if (profileModalOverlay) profileModalOverlay.classList.remove('open');
       if (playlistModalOverlay) playlistModalOverlay.classList.remove('open');
       if (commentsModalOverlay) commentsModalOverlay.classList.remove('open');
+      document.getElementById('theme-modal-overlay')?.classList.remove('open');
+      document.getElementById('extensions-modal-overlay')?.classList.remove('open');
+      document.getElementById('lyrics-overlay')?.classList.remove('open');
+      document.getElementById('sleep-modal-overlay')?.classList.remove('open');
+      document.getElementById('fx-modal-overlay')?.classList.remove('open');
+      document.getElementById('looper-modal-overlay')?.classList.remove('open');
+      document.getElementById('card-modal-overlay')?.classList.remove('open');
     }
   });
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // TOAST NOTIFICATIONS
+  // ═══════════════════════════════════════════════════════════════════════
+  function showToast(msg) {
+    let toast = document.getElementById('sc-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'sc-toast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 96px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: var(--surface-dock);
+        color: var(--text-main);
+        border: 1px solid var(--border-hover);
+        box-shadow: 0 12px 36px rgba(0,0,0,0.8), 0 0 18px var(--orange-glow);
+        padding: 10px 22px;
+        border-radius: var(--radius-pill);
+        font-size: 13px;
+        font-weight: 600;
+        z-index: 500;
+        pointer-events: none;
+        opacity: 0;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2800);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // 10 THEMES SYSTEM
+  // ═══════════════════════════════════════════════════════════════════════
+  const THEME_COLORS = {
+    onyx: [255, 85, 0],
+    cyberpunk: [255, 230, 0],
+    synthwave: [247, 37, 133],
+    matrix: [0, 255, 102],
+    nordic: [0, 210, 255],
+    crimson: [255, 30, 86],
+    sakura: [255, 102, 196],
+    solar: [255, 183, 3],
+    hyperpop: [163, 230, 53],
+    titanium: [240, 240, 245]
+  };
+
+  function applyTheme(themeId) {
+    if (!THEME_COLORS[themeId]) themeId = 'onyx';
+    document.documentElement.setAttribute('data-theme', themeId);
+    try {
+      localStorage.setItem('sc_theme', themeId);
+    } catch (_) {}
+
+    document.querySelectorAll('.theme-card').forEach(card => {
+      if (card.dataset.themeId === themeId) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+
+    const rgb = THEME_COLORS[themeId] || [255, 85, 0];
+    if (window.setSmokeThemeColor) {
+      window.setSmokeThemeColor(rgb[0], rgb[1], rgb[2]);
+    }
+  }
+
+  function initThemes() {
+    let saved = 'onyx';
+    try {
+      saved = localStorage.getItem('sc_theme') || 'onyx';
+    } catch (_) {}
+    applyTheme(saved);
+
+    document.querySelectorAll('.theme-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.themeId;
+        applyTheme(id);
+        showToast(`🎨 Тема оформлення змінена: ${card.querySelector('.theme-title span')?.textContent || id}`);
+      });
+    });
+
+    const btnThemeModal = document.getElementById('btn-theme-modal');
+    const themeModalOverlay = document.getElementById('theme-modal-overlay');
+    const btnCloseThemeModal = document.getElementById('btn-close-theme-modal');
+
+    if (btnThemeModal && themeModalOverlay) {
+      btnThemeModal.addEventListener('click', () => {
+        themeModalOverlay.classList.add('open');
+      });
+      if (btnCloseThemeModal) {
+        btnCloseThemeModal.addEventListener('click', () => {
+          themeModalOverlay.classList.remove('open');
+        });
+      }
+      themeModalOverlay.addEventListener('click', (e) => {
+        if (e.target === themeModalOverlay) themeModalOverlay.classList.remove('open');
+      });
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSIONS HUB
+  // ═══════════════════════════════════════════════════════════════════════
+  function initExtensionsHub() {
+    const btnExtModal = document.getElementById('btn-extensions-modal');
+    const extModalOverlay = document.getElementById('extensions-modal-overlay');
+    const btnCloseExtModal = document.getElementById('btn-close-extensions-modal');
+
+    if (btnExtModal && extModalOverlay) {
+      btnExtModal.addEventListener('click', () => {
+        extModalOverlay.classList.add('open');
+      });
+      if (btnCloseExtModal) {
+        btnCloseExtModal.addEventListener('click', () => {
+          extModalOverlay.classList.remove('open');
+        });
+      }
+      extModalOverlay.addEventListener('click', (e) => {
+        if (e.target === extModalOverlay) extModalOverlay.classList.remove('open');
+      });
+    }
+
+    document.getElementById('ext-btn-open-lyrics')?.addEventListener('click', () => {
+      extModalOverlay.classList.remove('open');
+      openLyricsOverlay();
+    });
+    document.getElementById('ext-btn-open-sleep')?.addEventListener('click', () => {
+      extModalOverlay.classList.remove('open');
+      document.getElementById('sleep-modal-overlay')?.classList.add('open');
+    });
+    document.getElementById('ext-btn-open-fx')?.addEventListener('click', () => {
+      extModalOverlay.classList.remove('open');
+      document.getElementById('fx-modal-overlay')?.classList.add('open');
+    });
+    document.getElementById('ext-btn-open-looper')?.addEventListener('click', () => {
+      extModalOverlay.classList.remove('open');
+      document.getElementById('looper-modal-overlay')?.classList.add('open');
+    });
+    document.getElementById('ext-btn-open-card')?.addEventListener('click', () => {
+      extModalOverlay.classList.remove('open');
+      openCardGenerator();
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSION 1: SYNCED LYRICS & KARAOKE ENGINE
+  // ═══════════════════════════════════════════════════════════════════════
+  let lyricsLines = [];
+  let lyricsCurrentTrackId = null;
+  let activeLyricIndex = -1;
+
+  async function openLyricsOverlay() {
+    const overlay = document.getElementById('lyrics-overlay');
+    if (!overlay) return;
+    overlay.classList.add('open');
+
+    const curTrack = currentIndex >= 0 ? queue[currentIndex] : null;
+    if (!curTrack) {
+      document.getElementById('lyrics-container').innerHTML = '<div class="lyrics-empty">Запустите трек, чтобы увидеть слова и караоке</div>';
+      return;
+    }
+
+    document.getElementById('lyrics-title').textContent = curTrack.title;
+    document.getElementById('lyrics-artist').textContent = curTrack.artist;
+    document.getElementById('lyrics-art').src = curTrack.artwork_url || DEFAULT_ART;
+
+    if (lyricsCurrentTrackId !== curTrack.id) {
+      await loadLyricsForTrack(curTrack);
+    }
+  }
+
+  async function loadLyricsForTrack(track) {
+    lyricsCurrentTrackId = track.id;
+    lyricsLines = [];
+    activeLyricIndex = -1;
+    const container = document.getElementById('lyrics-container');
+    const badge = document.getElementById('lyrics-source-badge');
+    container.innerHTML = '<div class="lyrics-empty">⚡ Поиск текста в базе LRCLIB...</div>';
+
+    try {
+      const cleanTitle = track.title.replace(/\([^)]*\)|\[[^\]]*\]/g, '').trim();
+      const url = `https://lrclib.net/api/get?track_name=${encodeURIComponent(cleanTitle)}&artist_name=${encodeURIComponent(track.artist)}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.syncedLyrics) {
+          parseLrc(data.syncedLyrics);
+          if (badge) badge.textContent = '⚡ Synced LRCLIB';
+          renderLyricsLines();
+          return;
+        } else if (data.plainLyrics) {
+          generateTimedLinesFromPlain(data.plainLyrics, track.duration_ms ? track.duration_ms / 1000 : 180);
+          if (badge) badge.textContent = '📜 Plain Lyrics Timed';
+          renderLyricsLines();
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('LRCLIB query error:', e);
+    }
+
+    // Fallback: Rhythmic karaoke sequence
+    generateFallbackLyrics(track);
+    if (badge) badge.textContent = '✨ Acoustic Rhythm Mode';
+    renderLyricsLines();
+  }
+
+  function parseLrc(lrcText) {
+    const lines = lrcText.split('\n');
+    lyricsLines = [];
+    const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/g;
+    for (const line of lines) {
+      const text = line.replace(/\[\d{2}:\d{2}\.\d{2,3}\]/g, '').trim();
+      if (!text) continue;
+      timeRegex.lastIndex = 0;
+      let match;
+      while ((match = timeRegex.exec(line)) !== null) {
+        const min = parseInt(match[1], 10);
+        const sec = parseInt(match[2], 10);
+        const ms = parseFloat('0.' + match[3]);
+        const time = min * 60 + sec + ms;
+        lyricsLines.push({ time, text });
+      }
+    }
+    lyricsLines.sort((a, b) => a.time - b.time);
+  }
+
+  function generateTimedLinesFromPlain(plainText, totalDuration) {
+    const rawLines = plainText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    if (rawLines.length === 0) return;
+    const step = Math.max(3, (totalDuration - 10) / rawLines.length);
+    lyricsLines = rawLines.map((text, i) => ({
+      time: 4 + i * step,
+      text
+    }));
+  }
+
+  function generateFallbackLyrics(track) {
+    const totalDuration = track.duration_ms ? track.duration_ms / 1000 : (audio.duration || 180);
+    const phrases = [
+      `♪ [Вступление — ${track.artist}] ♪`,
+      `Погружение в частоты, кристальный звук`,
+      `Неоновые волны пробивают ночной город`,
+      `В ритме пульсирует чистый бас`,
+      `SoundCloud Ultimate • Lossless аудиопоток активен`,
+      `♪ [Главная тема & Дроп] ♪`,
+      `Звук на максимум, растворяемся в мелодии`,
+      `Студийный баланс, ни одной лишней гармоники`,
+      `♪ [Бридж & Развитие темы] ♪`,
+      `Эхо в тишине, частоты выравниваются в унисон`,
+      `Музыка говорит громче любых слов`,
+      `♪ [Завершение композиции] ♪`
+    ];
+    const step = Math.max(8, totalDuration / (phrases.length + 1));
+    lyricsLines = phrases.map((text, i) => ({
+      time: 2 + i * step,
+      text
+    }));
+  }
+
+  function renderLyricsLines() {
+    const container = document.getElementById('lyrics-container');
+    if (lyricsLines.length === 0) {
+      container.innerHTML = '<div class="lyrics-empty">Текст песни не найден</div>';
+      return;
+    }
+    container.innerHTML = lyricsLines.map((l, idx) => `
+      <div class="lyrics-line" data-idx="${idx}" data-time="${l.time}">
+        ${escapeHtml(l.text)}
+      </div>
+    `).join('');
+
+    container.querySelectorAll('.lyrics-line').forEach(el => {
+      el.addEventListener('click', () => {
+        const t = parseFloat(el.dataset.time);
+        if (!isNaN(t)) {
+          audio.currentTime = t;
+        }
+      });
+    });
+  }
+
+  function updateLyricsSync(currentTime) {
+    if (lyricsLines.length === 0) return;
+    const overlay = document.getElementById('lyrics-overlay');
+    if (!overlay || !overlay.classList.contains('open')) return;
+
+    let idx = -1;
+    for (let i = 0; i < lyricsLines.length; i++) {
+      if (currentTime >= lyricsLines[i].time) {
+        idx = i;
+      } else {
+        break;
+      }
+    }
+
+    if (idx !== activeLyricIndex) {
+      activeLyricIndex = idx;
+      const lines = document.querySelectorAll('.lyrics-line');
+      lines.forEach((el, i) => {
+        if (i === activeLyricIndex) {
+          el.classList.add('active');
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  function initLyricsEngine() {
+    document.getElementById('btn-lyrics-toggle')?.addEventListener('click', openLyricsOverlay);
+    document.getElementById('btn-close-lyrics')?.addEventListener('click', () => {
+      document.getElementById('lyrics-overlay')?.classList.remove('open');
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSION 2: SMART SLEEP TIMER
+  // ═══════════════════════════════════════════════════════════════════════
+  let sleepTimerInterval = null;
+  let sleepTargetTime = null;
+  let sleepTargetType = null;
+  let preFadeVolume = null;
+
+  function setSleepTimer(minutesOrType) {
+    cancelSleepTimer();
+    const badge = document.getElementById('sleep-badge');
+    const cancelBtn = document.getElementById('btn-cancel-sleep');
+
+    if (minutesOrType === 'track') {
+      sleepTargetType = 'track';
+      if (badge) {
+        badge.textContent = 'Track';
+        badge.style.display = 'inline-flex';
+      }
+      if (cancelBtn) cancelBtn.style.display = 'block';
+      showToast('🌙 Музыка выключится после окончания текущего трека');
+      return;
+    }
+
+    const mins = parseInt(minutesOrType, 10);
+    if (isNaN(mins)) return;
+    sleepTargetType = 'minutes';
+    sleepTargetTime = Date.now() + mins * 60 * 1000;
+    preFadeVolume = currentVolume;
+    if (badge) {
+      badge.textContent = `${mins}m`;
+      badge.style.display = 'inline-flex';
+    }
+    if (cancelBtn) cancelBtn.style.display = 'block';
+
+    sleepTimerInterval = setInterval(() => {
+      const remainingMs = sleepTargetTime - Date.now();
+      if (remainingMs <= 0) {
+        cancelSleepTimer();
+        audio.pause();
+        isPlaying = false;
+        updatePlayButtonUI(false);
+        setVolume(preFadeVolume || 0.8);
+        showToast('🌙 Таймер сна сработал: музыка остановлена');
+      } else {
+        const totalSec = Math.floor(remainingMs / 1000);
+        const m = Math.floor(totalSec / 60);
+        const s = totalSec % 60;
+        if (badge) badge.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+
+        if (totalSec <= 30 && preFadeVolume !== null) {
+          const ratio = Math.max(0, totalSec / 30);
+          setVolume(preFadeVolume * ratio, false);
+        }
+      }
+    }, 1000);
+
+    showToast(`🌙 Таймер сна установлен на ${mins} минут`);
+  }
+
+  function cancelSleepTimer() {
+    if (sleepTimerInterval) {
+      clearInterval(sleepTimerInterval);
+      sleepTimerInterval = null;
+    }
+    if (preFadeVolume !== null) {
+      setVolume(preFadeVolume, false);
+      preFadeVolume = null;
+    }
+    sleepTargetTime = null;
+    sleepTargetType = null;
+    const badge = document.getElementById('sleep-badge');
+    const cancelBtn = document.getElementById('btn-cancel-sleep');
+    if (badge) badge.style.display = 'none';
+    if (cancelBtn) cancelBtn.style.display = 'none';
+    document.querySelectorAll('.sleep-chip').forEach(c => c.classList.remove('active'));
+  }
+
+  function initSleepTimer() {
+    const overlay = document.getElementById('sleep-modal-overlay');
+    document.getElementById('btn-sleep-toggle')?.addEventListener('click', () => {
+      overlay?.classList.add('open');
+    });
+    document.getElementById('btn-close-sleep-modal')?.addEventListener('click', () => {
+      overlay?.classList.remove('open');
+    });
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+
+    document.querySelectorAll('.sleep-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.sleep-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const minVal = chip.dataset.minutes;
+        setSleepTimer(minVal);
+        setTimeout(() => overlay?.classList.remove('open'), 400);
+      });
+    });
+
+    document.getElementById('btn-cancel-sleep')?.addEventListener('click', () => {
+      cancelSleepTimer();
+      showToast('🌙 Таймер сна отменен');
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSION 3: AUDIO FX STUDIO (8D AUDIO, SPEED & NIGHTCORE)
+  // ═══════════════════════════════════════════════════════════════════════
+  let stereoPanner = null;
+  let is8DActive = false;
+  let panAngle = 0;
+  let orbitAnimId = null;
+
+  function init8DAudio() {
+    initEqualizer();
+  }
+
+  function toggle8D(active) {
+    init8DAudio();
+    is8DActive = active;
+    const dot = document.getElementById('radar-orbit-dot');
+
+    if (active) {
+      function animateOrbit() {
+        if (!is8DActive) return;
+        panAngle += 0.025;
+        const panVal = Math.sin(panAngle);
+        if (stereoPanner && audioCtx) {
+          stereoPanner.pan.setValueAtTime(panVal, audioCtx.currentTime);
+        }
+        if (dot) {
+          const radius = 42;
+          const x = Math.cos(panAngle) * radius;
+          const y = Math.sin(panAngle) * radius;
+          dot.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+        }
+        orbitAnimId = requestAnimationFrame(animateOrbit);
+      }
+      orbitAnimId = requestAnimationFrame(animateOrbit);
+      showToast('🎧 8D Audio активировано (360° бинауральное вращение)');
+    } else {
+      if (orbitAnimId) cancelAnimationFrame(orbitAnimId);
+      if (stereoPanner && audioCtx) stereoPanner.pan.setValueAtTime(0, audioCtx.currentTime);
+      if (dot) dot.style.transform = 'translate(-50%, -50%)';
+      showToast('🎧 8D Audio выключено');
+    }
+  }
+
+  function setPlaybackSpeed(rate) {
+    audio.playbackRate = rate;
+    const label = document.getElementById('fx-speed-label');
+    const slider = document.getElementById('fx-speed-slider');
+    if (label) label.textContent = `${rate.toFixed(2)}x`;
+    if (slider) slider.value = rate;
+  }
+
+  function initAudioFxStudio() {
+    const overlay = document.getElementById('fx-modal-overlay');
+    document.getElementById('btn-fx-toggle')?.addEventListener('click', () => {
+      overlay?.classList.add('open');
+    });
+    document.getElementById('btn-close-fx-modal')?.addEventListener('click', () => {
+      overlay?.classList.remove('open');
+    });
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+
+    const toggle8dInput = document.getElementById('fx-8d-toggle');
+    toggle8dInput?.addEventListener('change', (e) => {
+      toggle8D(e.target.checked);
+    });
+
+    const slider = document.getElementById('fx-speed-slider');
+    slider?.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      setPlaybackSpeed(val);
+      document.querySelectorAll('.speed-chip').forEach(c => c.classList.remove('active'));
+    });
+
+    document.querySelectorAll('.speed-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.speed-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const spd = parseFloat(chip.dataset.speed);
+        setPlaybackSpeed(spd);
+        showToast(`⚡ Скорость изменена: ${spd}x`);
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSION 4: A-B PRECISION LOOPER
+  // ═══════════════════════════════════════════════════════════════════════
+  let loopPointA = null;
+  let loopPointB = null;
+  let isLoopActive = false;
+
+  function setLoopA() {
+    loopPointA = audio.currentTime;
+    document.getElementById('loop-time-a').textContent = formatTime(loopPointA);
+    updateLoopMarkersUI();
+    showToast(`🔁 Метка [A] установлена: ${formatTime(loopPointA)}`);
+  }
+
+  function setLoopB() {
+    loopPointB = audio.currentTime;
+    document.getElementById('loop-time-b').textContent = formatTime(loopPointB);
+    updateLoopMarkersUI();
+    showToast(`🔁 Метка [B] установлена: ${formatTime(loopPointB)}`);
+  }
+
+  function toggleLoopActive() {
+    if (loopPointA === null || loopPointB === null) {
+      showToast('⚠️ Сначала установите обе метки [A] и [B]');
+      return;
+    }
+    if (loopPointA >= loopPointB) {
+      const temp = loopPointA;
+      loopPointA = loopPointB;
+      loopPointB = temp;
+      document.getElementById('loop-time-a').textContent = formatTime(loopPointA);
+      document.getElementById('loop-time-b').textContent = formatTime(loopPointB);
+    }
+    isLoopActive = !isLoopActive;
+    const btn = document.getElementById('btn-toggle-loop-active');
+    const dockBtn = document.getElementById('btn-looper-toggle');
+    if (isLoopActive) {
+      if (btn) {
+        btn.classList.add('active');
+        btn.innerHTML = '🔁 Цикл активен';
+      }
+      if (dockBtn) dockBtn.style.color = '#00FF66';
+      if (audio.currentTime < loopPointA || audio.currentTime > loopPointB) {
+        audio.currentTime = loopPointA;
+      }
+      showToast('🔁 A-B Looper активен!');
+    } else {
+      if (btn) {
+        btn.classList.remove('active');
+        btn.innerHTML = '🔁 Включить цикл';
+      }
+      if (dockBtn) dockBtn.style.color = '';
+      showToast('🔁 A-B Looper отключен');
+    }
+    updateLoopMarkersUI();
+  }
+
+  function clearLoop() {
+    loopPointA = null;
+    loopPointB = null;
+    isLoopActive = false;
+    document.getElementById('loop-time-a').textContent = '--:--';
+    document.getElementById('loop-time-b').textContent = '--:--';
+    const btn = document.getElementById('btn-toggle-loop-active');
+    if (btn) {
+      btn.classList.remove('active');
+      btn.innerHTML = '🔁 Включить цикл';
+    }
+    const dockBtn = document.getElementById('btn-looper-toggle');
+    if (dockBtn) dockBtn.style.color = '';
+    updateLoopMarkersUI();
+    showToast('🔁 Метки цикла сброшены');
+  }
+
+  function updateLoopMarkersUI() {
+    const dur = audio.duration;
+    const markerA = document.getElementById('loop-marker-a');
+    const markerB = document.getElementById('loop-marker-b');
+    const region = document.getElementById('loop-region');
+    if (!dur || !markerA || !markerB || !region) return;
+
+    if (loopPointA !== null) {
+      const pctA = (loopPointA / dur) * 100;
+      markerA.style.left = `${pctA}%`;
+      markerA.style.display = 'block';
+    } else {
+      markerA.style.display = 'none';
+    }
+
+    if (loopPointB !== null) {
+      const pctB = (loopPointB / dur) * 100;
+      markerB.style.left = `${pctB}%`;
+      markerB.style.display = 'block';
+    } else {
+      markerB.style.display = 'none';
+    }
+
+    if (loopPointA !== null && loopPointB !== null && isLoopActive) {
+      const startPct = Math.min(loopPointA, loopPointB) / dur * 100;
+      const widthPct = Math.abs(loopPointB - loopPointA) / dur * 100;
+      region.style.left = `${startPct}%`;
+      region.style.width = `${widthPct}%`;
+      region.style.display = 'block';
+    } else {
+      region.style.display = 'none';
+    }
+  }
+
+  function checkLooper(current) {
+    if (isLoopActive && loopPointA !== null && loopPointB !== null) {
+      const start = Math.min(loopPointA, loopPointB);
+      const end = Math.max(loopPointA, loopPointB);
+      if (current >= end || current < start - 0.2) {
+        audio.currentTime = start;
+      }
+    }
+  }
+
+  function initAbLooper() {
+    const overlay = document.getElementById('looper-modal-overlay');
+    document.getElementById('btn-looper-toggle')?.addEventListener('click', () => {
+      overlay?.classList.add('open');
+    });
+    document.getElementById('btn-close-looper-modal')?.addEventListener('click', () => {
+      overlay?.classList.remove('open');
+    });
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+
+    document.getElementById('btn-set-loop-a')?.addEventListener('click', setLoopA);
+    document.getElementById('btn-set-loop-b')?.addEventListener('click', setLoopB);
+    document.getElementById('btn-toggle-loop-active')?.addEventListener('click', toggleLoopActive);
+    document.getElementById('btn-clear-loop')?.addEventListener('click', clearLoop);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSION 5: BENTO TRACK CARD GENERATOR
+  // ═══════════════════════════════════════════════════════════════════════
+  function openCardGenerator() {
+    const overlay = document.getElementById('card-modal-overlay');
+    if (!overlay) return;
+    overlay.classList.add('open');
+    drawTrackCard();
+  }
+
+  function drawTrackCard() {
+    const canvas = document.getElementById('card-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = 800;
+    const h = canvas.height = 420;
+
+    const track = currentIndex >= 0 ? queue[currentIndex] : {
+      title: 'SoundCloud Ultimate Music',
+      artist: 'SoundCloud Ultimate',
+      duration_ms: 215000,
+      artwork_url: ''
+    };
+
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'onyx';
+    const rgb = THEME_COLORS[currentTheme] || [255, 85, 0];
+
+    // Background
+    const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+    bgGrad.addColorStop(0, '#0E0C14');
+    bgGrad.addColorStop(1, '#050407');
+    ctx.fillStyle = bgGrad;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, w, h, 28);
+    ctx.fill();
+
+    // Ambient Radial Glow
+    const glowGrad = ctx.createRadialGradient(w * 0.2, h * 0.35, 10, w * 0.2, h * 0.35, 260);
+    glowGrad.addColorStop(0, `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.3)`);
+    glowGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = glowGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // Border
+    ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.45)`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, w, h, 28);
+    ctx.stroke();
+
+    const renderCardContent = () => {
+      // Top Right Badge
+      ctx.fillStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.15)`;
+      ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.4)`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(w - 245, 45, 205, 36, 18);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+      ctx.font = 'bold 13px -apple-system, sans-serif';
+      ctx.fillText('⚡ SOUNDCLOUD ULTIMATE', w - 230, 68);
+
+      // Track Title
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 26px -apple-system, sans-serif';
+      let title = track.title;
+      if (title.length > 30) title = title.substring(0, 28) + '...';
+      ctx.fillText(title, 230, 105);
+
+      // Artist
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.font = '500 18px -apple-system, sans-serif';
+      ctx.fillText(track.artist, 230, 140);
+
+      // Metadata
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.font = '12px -apple-system, sans-serif';
+      const durStr = track.duration_ms ? formatTime(track.duration_ms / 1000) : '3:45';
+      ctx.fillText(`HQ Audio • ${durStr} • Zapret Active • Lossless Stream`, 230, 178);
+
+      // Stylized Waveform Bars
+      const waveStartY = 280;
+      const waveHeight = 65;
+      const barCount = 48;
+      const barWidth = 10;
+      const barGap = 5;
+      const startX = 40;
+
+      for (let i = 0; i < barCount; i++) {
+        const hNorm = 0.2 + 0.8 * Math.abs(Math.sin((i / barCount) * Math.PI * 3 + 1.2) * Math.cos(i * 0.4));
+        const curBarH = Math.max(8, waveHeight * hNorm);
+        const bx = startX + i * (barWidth + barGap);
+        const by = waveStartY + (waveHeight - curBarH) / 2;
+
+        const barGrad = ctx.createLinearGradient(bx, by, bx, by + curBarH);
+        barGrad.addColorStop(0, `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+        barGrad.addColorStop(1, `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.3)`);
+        ctx.fillStyle = barGrad;
+        ctx.beginPath();
+        ctx.roundRect(bx, by, barWidth, curBarH, 4);
+        ctx.fill();
+      }
+
+      // Footer
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.font = '11px -apple-system, sans-serif';
+      ctx.fillText('github.com/masyaslasher/soundcloud-ultimate', 40, h - 30);
+      ctx.fillText('AMOLED Bento Glass Edition', w - 210, h - 30);
+    };
+
+    if (track.artwork_url) {
+      const artImg = new Image();
+      artImg.crossOrigin = 'anonymous';
+      artImg.onload = () => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(40, 50, 160, 160, 18);
+        ctx.clip();
+        ctx.drawImage(artImg, 40, 50, 160, 160);
+        ctx.restore();
+
+        ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.6)`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(40, 50, 160, 160, 18);
+        ctx.stroke();
+
+        renderCardContent();
+      };
+      artImg.onerror = () => {
+        ctx.fillStyle = '#1C1A24';
+        ctx.beginPath();
+        ctx.roundRect(40, 50, 160, 160, 18);
+        ctx.fill();
+        renderCardContent();
+      };
+      artImg.src = track.artwork_url;
+    } else {
+      ctx.fillStyle = '#1C1A24';
+      ctx.beginPath();
+      ctx.roundRect(40, 50, 160, 160, 18);
+      ctx.fill();
+      renderCardContent();
+    }
+  }
+
+  function initCardGenerator() {
+    const overlay = document.getElementById('card-modal-overlay');
+    document.getElementById('dock-card-btn')?.addEventListener('click', openCardGenerator);
+    document.getElementById('btn-close-card-modal')?.addEventListener('click', () => {
+      overlay?.classList.remove('open');
+    });
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+
+    document.getElementById('btn-copy-card')?.addEventListener('click', () => {
+      const canvas = document.getElementById('card-canvas');
+      if (!canvas) return;
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        try {
+          navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+          ]).then(() => {
+            showToast('📋 Карточка скопирована в буфер обмена!');
+          }).catch(e => {
+            console.warn('Clipboard write failed:', e);
+            showToast('⚠️ Не удалось скопировать, используйте "Скачать PNG"');
+          });
+        } catch (e) {
+          showToast('⚠️ Скопируйте через "Скачать PNG"');
+        }
+      });
+    });
+
+    document.getElementById('btn-download-card')?.addEventListener('click', () => {
+      const canvas = document.getElementById('card-canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = `SoundCloud-Card-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('💾 Изображение карточки сохранено!');
+    });
+  }
 
   // Expose API
   window.scApp = {
     openArtistProfile,
     openPlaylistInspector,
     openCommentsModal,
+    openLyricsOverlay,
+    openCardGenerator,
+    applyTheme,
+    setSleepTimer,
+    toggle8D,
+    setPlaybackSpeed,
     startTrackRadio,
     loadMyHistory,
     loadMyLikes,
@@ -1498,6 +2395,29 @@
   };
 
   // Init
+  initThemes();
+  initExtensionsHub();
+  initLyricsEngine();
+  initSleepTimer();
+  initAudioFxStudio();
+  initAbLooper();
+  initCardGenerator();
+
+  // URL query params for direct modal/theme preview
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const themeParam = urlParams.get('theme');
+    if (themeParam) applyTheme(themeParam);
+    const modalParam = urlParams.get('modal');
+    if (modalParam === 'themes') document.getElementById('theme-modal-overlay')?.classList.add('open');
+    if (modalParam === 'extensions') document.getElementById('extensions-modal-overlay')?.classList.add('open');
+    if (modalParam === 'fx') document.getElementById('fx-modal-overlay')?.classList.add('open');
+    if (modalParam === 'lyrics') openLyricsOverlay();
+    if (modalParam === 'looper') document.getElementById('looper-modal-overlay')?.classList.add('open');
+    if (modalParam === 'sleep') document.getElementById('sleep-modal-overlay')?.classList.add('open');
+    if (modalParam === 'card') openCardGenerator();
+  } catch (_) {}
+
   setVolume(currentVolume, false);
   checkSystemStatus();
   checkAuthStatus();

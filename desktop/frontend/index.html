@@ -33,8 +33,20 @@
         </svg>
       </div>
 
-      <!-- Right Header: Status & User Auth -->
-      <div style="display: flex; align-items: center; gap: 14px;">
+      <!-- Right Header: Status, Themes, Extensions & User Auth -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <!-- Theme Selector Trigger -->
+        <button class="header-action-btn" id="btn-theme-modal" title="Выбрать тему оформления (10 AMOLED палитр)">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.57 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Темы (10)</span>
+        </button>
+
+        <!-- Extensions Hub Trigger -->
+        <button class="header-action-btn" id="btn-extensions-modal" title="Центр расширений (Караоке, 8D FX, Looper, Таймер сна, Карточки)">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+          <span>Расширения</span>
+        </button>
+
         <div id="antidpi-badge" title="Встроенный Zapret Anti-DPI (TLS Record Splitting + Cloudflare DoH). Полный обход блокировок РКН/ТСПУ без стороннего VPN" style="font-size: 11px; color: #00E5FF; display: flex; align-items: center; gap: 6px; background: rgba(0, 229, 255, 0.08); padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(0, 229, 255, 0.25); cursor: help; user-select: none; transition: background 0.2s, border-color 0.2s;">
           <span style="font-size: 11px; filter: drop-shadow(0 0 4px #00E5FF);">⚡</span>
           <span style="font-weight: 600; letter-spacing: 0.3px;">Zapret Active</span>
@@ -146,6 +158,10 @@
           <button class="download-btn" id="dock-download-btn" title="Скачать трек в MP3 (D)">
             <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
           </button>
+          <!-- Social Bento Card Button in Player -->
+          <button class="action-icon-btn" id="dock-card-btn" title="Создать карточку трека для соцсетей">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </button>
         </div>
 
         <!-- Center: Controls & Scrubber -->
@@ -179,6 +195,9 @@
           <div class="timeline-row">
             <span class="time-label" id="time-current">0:00</span>
             <div class="progress-track" id="progress-track">
+              <div class="loop-region" id="loop-region" style="display: none;"></div>
+              <div class="loop-marker" id="loop-marker-a" style="display: none;"></div>
+              <div class="loop-marker" id="loop-marker-b" style="display: none;"></div>
               <div class="progress-fill" id="progress-fill"></div>
               <div class="progress-handle" id="progress-handle"></div>
             </div>
@@ -186,8 +205,29 @@
           </div>
         </div>
 
-        <!-- Right: Extra Features (Equalizer, Visualizer, Volume, Queue) -->
+        <!-- Right: Extra Features (Lyrics, FX, Looper, Sleep, Equalizer, Visualizer, Volume, Queue) -->
         <div class="dock-right">
+          <!-- Lyrics & Karaoke Button -->
+          <button class="control-btn" id="btn-lyrics-toggle" title="Текст песни & Караоке (K)">
+            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+          </button>
+
+          <!-- Audio FX Studio Button -->
+          <button class="control-btn" id="btn-fx-toggle" title="Студия эффектов: 8D Audio & Скорость (F)">
+            <svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+          </button>
+
+          <!-- A-B Looper Button -->
+          <button class="control-btn" id="btn-looper-toggle" title="A-B Looper (Зацикливание фрагмента)">
+            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          </button>
+
+          <!-- Sleep Timer Button -->
+          <button class="control-btn" id="btn-sleep-toggle" title="Таймер сна">
+            <svg viewBox="0 0 24 24"><path d="M9.27 4.49c-.27.9-.42 1.85-.42 2.84 0 4.6 3.73 8.33 8.33 8.33 1 0 1.95-.15 2.85-.43C18.66 18.73 15.11 21 11 21 5.48 21 1 16.52 1 11c0-4.11 2.27-7.66 5.77-9.03-.49.77-.85 1.62-1.05 2.52h3.55zM17 2l1.25 2.75L21 6l-2.75 1.25L17 10l-1.25-2.75L13 6l2.75-1.25L17 2z"/></svg>
+            <span id="sleep-badge" class="sleep-timer-badge" style="display: none;">30m</span>
+          </button>
+
           <!-- Equalizer Button -->
           <button class="control-btn" id="btn-eq-toggle" title="Эквалайзер & Бас (E)">
             <svg viewBox="0 0 24 24"><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
@@ -416,6 +456,440 @@
     </div>
     <div class="vis-title" id="vis-title">Трек не выбран</div>
     <div class="vis-artist" id="vis-artist">SoundCloud Ultimate</div>
+  </div>
+
+  <!-- 7. Theme Selector Modal (10 Themes) -->
+  <div class="bento-modal-overlay" id="theme-modal-overlay">
+    <div class="bento-modal theme-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.57 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
+          Темы оформления (10 AMOLED палитр)
+        </div>
+        <button class="modal-close-btn" id="btn-close-theme-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="themes-grid" id="themes-grid">
+          <!-- 1. Onyx Orange -->
+          <div class="theme-card active" data-theme-id="onyx">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FF5500 0%, #1A0D07 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #FF5500;"></span>
+                <span class="theme-swatch" style="background: #0A090E;"></span>
+                <span class="theme-swatch" style="background: #FF7700;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Onyx Orange</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Классический AMOLED Bento & неоновый оранж</div>
+            </div>
+          </div>
+
+          <!-- 2. Cyberpunk 2077 -->
+          <div class="theme-card" data-theme-id="cyberpunk">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FFE600 0%, #00F0FF 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #FFE600;"></span>
+                <span class="theme-swatch" style="background: #00F0FF;"></span>
+                <span class="theme-swatch" style="background: #08070B;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Cyberpunk 2077</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Электрический желтый, кибер-голубой и Night City</div>
+            </div>
+          </div>
+
+          <!-- 3. Midnight Synthwave -->
+          <div class="theme-card" data-theme-id="synthwave">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #F72585 0%, #7209B7 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #F72585;"></span>
+                <span class="theme-swatch" style="background: #7209B7;"></span>
+                <span class="theme-swatch" style="background: #0A0612;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Midnight Synthwave</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Неоновая маджента, ультрафиолет и ретровейв 80-х</div>
+            </div>
+          </div>
+
+          <!-- 4. Matrix Emerald -->
+          <div class="theme-card" data-theme-id="matrix">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #00FF66 0%, #059669 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #00FF66;"></span>
+                <span class="theme-swatch" style="background: #050B07;"></span>
+                <span class="theme-swatch" style="background: #10B981;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Matrix Emerald</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Хакерский CRT-терминал и радиоактивный фосфор</div>
+            </div>
+          </div>
+
+          <!-- 5. Nordic Frost -->
+          <div class="theme-card" data-theme-id="nordic">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #00D2FF 0%, #3B82F6 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #00D2FF;"></span>
+                <span class="theme-swatch" style="background: #38BDF8;"></span>
+                <span class="theme-swatch" style="background: #060B11;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Nordic Frost</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Арктический лед, кристальный сапфир и океан</div>
+            </div>
+          </div>
+
+          <!-- 6. Crimson Blood -->
+          <div class="theme-card" data-theme-id="crimson">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FF1E56 0%, #990024 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #FF1E56;"></span>
+                <span class="theme-swatch" style="background: #990024;"></span>
+                <span class="theme-swatch" style="background: #0C0406;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Crimson Blood</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Кровавый рубин, готический обсидиан и вампирский вайб</div>
+            </div>
+          </div>
+
+          <!-- 7. Sakura Blossom -->
+          <div class="theme-card" data-theme-id="sakura">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FF66C4 0%, #B84DFF 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #FF66C4;"></span>
+                <span class="theme-swatch" style="background: #B84DFF;"></span>
+                <span class="theme-swatch" style="background: #0D0810;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Sakura Blossom</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Цветущая сакура, токийская ночь и пастельный неон</div>
+            </div>
+          </div>
+
+          <!-- 8. Solar Amber -->
+          <div class="theme-card" data-theme-id="solar">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FFB703 0%, #FB8500 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #FFB703;"></span>
+                <span class="theme-swatch" style="background: #FB8500;"></span>
+                <span class="theme-swatch" style="background: #0B0804;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Solar Amber</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Жидкое янтарь-золото и теплый закатный горизонт</div>
+            </div>
+          </div>
+
+          <!-- 9. Hyperpop Acid -->
+          <div class="theme-card" data-theme-id="hyperpop">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #A3E635 0%, #8B5CF6 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #A3E635;"></span>
+                <span class="theme-swatch" style="background: #8B5CF6;"></span>
+                <span class="theme-swatch" style="background: #090610;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Hyperpop Acid</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Кислотный лайм, глубокий аметист и гиперпоп</div>
+            </div>
+          </div>
+
+          <!-- 10. Monochrome Titanium -->
+          <div class="theme-card" data-theme-id="titanium">
+            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FFFFFF 0%, #64748B 100%);">
+              <div class="theme-swatches">
+                <span class="theme-swatch" style="background: #FFFFFF;"></span>
+                <span class="theme-swatch" style="background: #64748B;"></span>
+                <span class="theme-swatch" style="background: #000000;"></span>
+              </div>
+            </div>
+            <div class="theme-info">
+              <div class="theme-title">
+                <span>Monochrome Titanium</span>
+                <span class="theme-check-badge">Активно</span>
+              </div>
+              <div class="theme-desc">Чистый черный оникс, платина и люксовый титан</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Extensions Hub Modal -->
+  <div class="bento-modal-overlay" id="extensions-modal-overlay">
+    <div class="bento-modal extensions-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+          Центр встроенных расширений (5 модулей)
+        </div>
+        <button class="modal-close-btn" id="btn-close-extensions-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="extensions-list">
+          <!-- Ext 1: Lyrics & Karaoke -->
+          <div class="ext-card">
+            <div class="ext-icon-box">🎤</div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name">Караоке и Синхронный Текст Песни</span>
+                <span class="ext-badge pro">Встроен</span>
+              </div>
+              <div class="ext-desc">Автоматический поиск и авто-прокрутка текста трека строка за строкой с подсветкой и возможностью перемотки по клику на любую строчку.</div>
+            </div>
+            <button class="ext-action-btn" id="ext-btn-open-lyrics">Открыть караоке (K)</button>
+          </div>
+
+          <!-- Ext 2: Sleep Timer -->
+          <div class="ext-card">
+            <div class="ext-icon-box">🌙</div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name">Умный Таймер Сна</span>
+                <span class="ext-badge">Активен</span>
+              </div>
+              <div class="ext-desc">Остановка музыки через заданное время или в конце текущего трека с мягким 30-секундным затуханием звука, чтобы вы комфортно уснули.</div>
+            </div>
+            <button class="ext-action-btn" id="ext-btn-open-sleep">Настроить таймер</button>
+          </div>
+
+          <!-- Ext 3: Audio FX Studio -->
+          <div class="ext-card">
+            <div class="ext-icon-box">🎛️</div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name">Студия Эффектов: 8D Audio & Скорость</span>
+                <span class="ext-badge pro">WebAudio DSP</span>
+              </div>
+              <div class="ext-desc">360° пространственное бинауральное вращение звука вокруг головы в наушниках, Nightcore (+25% скорости и высоты), Slowed + Reverb и плавный питч.</div>
+            </div>
+            <button class="ext-action-btn" id="ext-btn-open-fx">Студия FX (F)</button>
+          </div>
+
+          <!-- Ext 4: A-B Looper -->
+          <div class="ext-card">
+            <div class="ext-icon-box">🔁</div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name">A-B Looper Повторитель</span>
+                <span class="ext-badge">Практика</span>
+              </div>
+              <div class="ext-desc">Мгновенная установка меток [A] и [B] на таймлайне для бесконечного бесшовного зацикливания дропов, битов или соло.</div>
+            </div>
+            <button class="ext-action-btn" id="ext-btn-open-looper">A-B Looper</button>
+          </div>
+
+          <!-- Ext 5: Bento Track Card Generator -->
+          <div class="ext-card">
+            <div class="ext-icon-box">🪪</div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name">Генератор Карточек Трека & Discord RPC</span>
+                <span class="ext-badge pro">HD Canvas</span>
+              </div>
+              <div class="ext-desc">Создание стильной неоновой AMOLED-карточки текущего трека с обложкой, волной и метаданными для публикации в Telegram, Discord или VK в 1 клик.</div>
+            </div>
+            <button class="ext-action-btn" id="ext-btn-open-card">Создать карточку</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Fullscreen Synced Lyrics & Karaoke Overlay -->
+  <div class="lyrics-overlay" id="lyrics-overlay">
+    <div class="lyrics-top-bar">
+      <div class="lyrics-track-info">
+        <img class="lyrics-track-art" id="lyrics-art" src="" alt="Cover">
+        <div>
+          <div class="lyrics-meta-title" id="lyrics-title">Название трека</div>
+          <div class="lyrics-meta-artist" id="lyrics-artist">Исполнитель</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="ext-badge pro" id="lyrics-source-badge">⚡ Synced LRC</span>
+        <button class="modal-close-btn" id="btn-close-lyrics">✕</button>
+      </div>
+    </div>
+    <div class="lyrics-container" id="lyrics-container">
+      <div class="lyrics-empty">Загрузка синхронизированного текста...</div>
+    </div>
+  </div>
+
+  <!-- 10. Sleep Timer Modal -->
+  <div class="bento-modal-overlay" id="sleep-modal-overlay">
+    <div class="bento-modal" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M9.27 4.49c-.27.9-.42 1.85-.42 2.84 0 4.6 3.73 8.33 8.33 8.33 1 0 1.95-.15 2.85-.43C18.66 18.73 15.11 21 11 21 5.48 21 1 16.52 1 11c0-4.11 2.27-7.66 5.77-9.03-.49.77-.85 1.62-1.05 2.52h3.55zM17 2l1.25 2.75L21 6l-2.75 1.25L17 10l-1.25-2.75L13 6l2.75-1.25L17 2z"/></svg>
+          Умный таймер сна
+        </div>
+        <button class="modal-close-btn" id="btn-close-sleep-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          Музыка плавно затихнет за 30 секунд до истечения времени, оберегая ваш сон.
+        </p>
+        <div class="sleep-grid">
+          <div class="sleep-chip" data-minutes="15">15 минут</div>
+          <div class="sleep-chip" data-minutes="30">30 минут</div>
+          <div class="sleep-chip" data-minutes="45">45 минут</div>
+          <div class="sleep-chip" data-minutes="60">1 час</div>
+          <div class="sleep-chip" data-minutes="90">1.5 часа</div>
+          <div class="sleep-chip" data-minutes="track">Конец трека</div>
+        </div>
+        <button class="sleep-cancel-btn" id="btn-cancel-sleep" style="display: none;">Отключить активный таймер</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Audio FX Studio Modal -->
+  <div class="bento-modal-overlay" id="fx-modal-overlay">
+    <div class="bento-modal" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+          Студия звуковых эффектов FX
+        </div>
+        <button class="modal-close-btn" id="btn-close-fx-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- 8D Audio Section -->
+        <div class="fx-section">
+          <div class="fx-header-row">
+            <span class="fx-title">
+              <span>🎧 8D Audio Spatializer</span>
+              <span class="ext-badge pro">360° Вращение</span>
+            </span>
+            <label class="switch">
+              <input type="checkbox" id="fx-8d-toggle">
+              <span class="slider-switch"></span>
+            </label>
+          </div>
+          <div class="radar-wrapper">
+            <div class="radar-circle">
+              <span class="radar-head">👤</span>
+              <div class="radar-orbit-dot" id="radar-orbit-dot"></div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-dim); text-align: center;">Рекомендуется слушать в наушниках для эффекта 3D-орбиты</div>
+        </div>
+
+        <!-- Speed & Nightcore Section -->
+        <div class="fx-section">
+          <div class="fx-header-row">
+            <span class="fx-title">⚡ Скорость & Тональность</span>
+            <span id="fx-speed-label" style="font-size: 12px; font-weight: 700; color: var(--orange-neon);">1.00x</span>
+          </div>
+          <input type="range" id="fx-speed-slider" min="0.5" max="2.0" step="0.05" value="1.0" style="width: 100%; accent-color: var(--orange-neon);">
+          <div class="speed-presets-row">
+            <div class="speed-chip active" data-speed="1.0">Обычная</div>
+            <div class="speed-chip" data-speed="1.25">🔥 Nightcore (1.25x)</div>
+            <div class="speed-chip" data-speed="0.85">🌊 Slowed (0.85x)</div>
+            <div class="speed-chip" data-speed="0.75">🌴 Vaporwave (0.75x)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. A-B Looper Modal -->
+  <div class="bento-modal-overlay" id="looper-modal-overlay">
+    <div class="bento-modal" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          A-B Looper (Зацикливание фрагмента)
+        </div>
+        <button class="modal-close-btn" id="btn-close-looper-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          Позволяет бесконечно воспроизводить выбранный фрагмент трека (соло, дроп, бит).
+        </div>
+        <div class="looper-controls-row" style="margin-bottom: 14px;">
+          <button class="looper-btn" id="btn-set-loop-a">
+            <span style="color: #00FF66; font-weight: 700;">[A]</span> Метка начала: <span id="loop-time-a">--:--</span>
+          </button>
+          <button class="looper-btn" id="btn-set-loop-b">
+            <span style="color: #FF5555; font-weight: 700;">[B]</span> Метка конца: <span id="loop-time-b">--:--</span>
+          </button>
+        </div>
+        <div class="looper-controls-row">
+          <button class="looper-btn" id="btn-toggle-loop-active" style="background: var(--surface-hover);">
+            🔁 Включить цикл
+          </button>
+          <button class="looper-btn" id="btn-clear-loop" style="color: var(--text-dim);">
+            ✕ Сбросить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. Bento Track Card Generator Modal -->
+  <div class="bento-modal-overlay" id="card-modal-overlay">
+    <div class="bento-modal" style="max-width: 600px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Bento-карточка трека для соцсетей
+        </div>
+        <button class="modal-close-btn" id="btn-close-card-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="card-preview-box">
+          <canvas id="card-canvas" width="800" height="420"></canvas>
+        </div>
+        <div class="card-actions-grid">
+          <button class="card-action-btn-main" id="btn-copy-card">
+            📋 Скопировать картинку
+          </button>
+          <button class="card-action-btn-secondary" id="btn-download-card">
+            💾 Скачать PNG
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Hidden Audio Engine -->

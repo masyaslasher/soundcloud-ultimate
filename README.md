@@ -21,7 +21,7 @@
 
 ---
 
-## 📦 Быстрая загрузка / Downloads (v1.1.0)
+## 📦 Быстрая загрузка / Downloads (v1.2.0)
 
 Готовые скомпилированные релизы доступны во вкладке [**GitHub Releases**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest):
 
@@ -30,9 +30,9 @@
 | 🪟 **Windows Portable** | [**`SoundCloud-Ultimate-Windows-x86_64-Portable.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать архив и запустить `soundcloud-desktop.exe` (не требует прав администратора) |
 | 🪟 **Windows .EXE** | [**`SoundCloud-Ultimate-Portable.exe`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Автономный исполняемый файл для Windows |
 | 🐧 **Linux AppImage** | [**`SoundCloud-Ultimate-x86_64.AppImage`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | `chmod +x SoundCloud-Ultimate-x86_64.AppImage` и запустить двойным кликом или в терминале |
-| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.1.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.1.0_amd64.deb` |
+| 🐧 **Debian / Ubuntu** | [**`soundcloud-ultimate_1.2.0_amd64.deb`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Установить пакет: `sudo dpkg -i soundcloud-ultimate_1.2.0_amd64.deb` |
 | 🐧 **Linux Standalone** | [**`soundcloud-ultimate-linux-x86_64.tar.gz`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Распаковать: `tar -xvf soundcloud-ultimate-linux-x86_64.tar.gz && ./run.sh` |
-| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.1.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
+| 🧩 **Chrome Extension** | [**`soundcloud-ultimate-chrome-extension-v1.2.0.zip`**](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest) | Включить режим разработчика в `chrome://extensions` и нажать «Загрузить распакованное» |
 
 ---
 
@@ -40,22 +40,38 @@
 
 <div align="center">
 
-### 1. Главный экран рекомендаций и чартов (Discover & Trending)
+### 1. Темы оформления: 10 разнообразных AMOLED Bento палитр
+![Themes Grid](screenshots/09_themes_10_palettes.png)
+
+### 2. Центр встроенных расширений (Караоке, FX, Looper, Таймер сна, Карточки)
+![Extensions Hub](screenshots/10_extensions_hub.png)
+
+### 3. Cyberpunk 2077 Тема & Midnight Synthwave Тема
+<p align="center">
+  <img src="screenshots/13_cyberpunk_neon_theme.png" width="48%" alt="Cyberpunk 2077 Theme" />
+  &nbsp;&nbsp;
+  <img src="screenshots/14_synthwave_theme.png" width="48%" alt="Synthwave Theme" />
+</p>
+
+### 4. Студия эффектов: 8D Audio (360° Вращение) & Скорость (Nightcore, Slowed)
+![Audio FX Studio](screenshots/11_audio_fx_8d_studio.png)
+
+### 5. Генератор неоновых Bento-карточек трека для Discord, Telegram и VK
+![Bento Social Track Card](screenshots/12_bento_social_track_card.png)
+
+### 6. Главный экран рекомендаций и чартов (Discover & Trending)
 ![Main Discover](screenshots/01_main_discover.png)
 
-### 2. Встроенный профиль артиста с треками и кнопкой подписки (In-App Artist Profile)
+### 7. Встроенный профиль артиста с треками и кнопкой подписки (In-App Artist Profile)
 ![Artist Profile](screenshots/02_in_app_artist_profile.png)
 
-### 3. Инспектор альбомов и плейлистов (Playlist Inspector)
+### 8. Инспектор альбомов и плейлистов (Playlist Inspector)
 ![Playlist Inspector](screenshots/03_in_app_playlist_inspector.png)
 
-### 4. Комментарии с таймкодами и публикацией в реальном времени (Track Comments)
+### 9. Комментарии с таймкодами и публикацией в реальном времени (Track Comments)
 ![Comments System](screenshots/04_in_app_comments_system.png)
 
-### 5. История прослушиваний и синхронизированная медиатека (Listening History)
-![Listening History](screenshots/05_listening_history.png)
-
-### 6. Лазерный Bento-ползунок громкости и Студийный эквалайзер
+### 10. Лазерный Bento-ползунок громкости и Студийный эквалайзер
 <p align="center">
   <img src="screenshots/06_bento_laser_volume.png" width="32%" alt="Volume Slider" />
   &nbsp;&nbsp;&nbsp;&nbsp;
@@ -63,6 +79,49 @@
 </p>
 
 </div>
+
+---
+
+## 🎨 10 Встроенных тем оформления (AMOLED Bento Themes)
+
+Переключение осуществляется мгновенно в 1 клик через кнопку **«Темы (10)»** в шапке плеера:
+
+1. **🧡 Onyx Orange** — оригинальный AMOLED Bento Glass и лазерный неоновый оранж `#FF5500`.
+2. **⚡ Cyberpunk 2077** — электрический кибер-желтый `#FFE600`, неон-циан `#00F0FF` и темный Night City.
+3. **🌆 Midnight Synthwave** — неоновая маджента `#F72585`, глубокий ультрафиолет `#7209B7` и ретровейв 80-х.
+4. **🟢 Matrix Emerald** — хакерский CRT-терминал, изумрудный фосфор `#00FF66` и темный матричный код.
+5. **❄️ Nordic Frost** — арктический неоновый лед `#00D2FF`, кристальный сапфир и океанический глубокий синий.
+6. **🩸 Crimson Blood** — кровавый рубин `#FF1E56`, готический вампирский обсидиан и темный кармин.
+7. **🌸 Sakura Blossom** — цветущая сакура токийской ночи, пастельный неон `#FF66C4` и розовое золото.
+8. **🍯 Solar Amber** — жидкое янтарь-золото `#FFB703`, закатный горизонт и теплые премиальные тона.
+9. **🔮 Hyperpop Acid** — кислотный лайм `#A3E635`, глубокий аметистовый фиолет и гиперпоп-стиль.
+10. **💎 Monochrome Titanium** — абсолютный оникс `#000000`, чистая платина `#FFFFFF` и титановый минимализм.
+
+---
+
+## 🧩 5 Встроенных расширений (Built-in Power Extensions)
+
+1. **🎤 Караоке и Синхронный Текст Песни (`K`):**
+   - Автоматический поиск текста трека в базе LRCLIB по исполнителю и названию.
+   - Синхронная построчная прокрутка в реальном времени с подсветкой поющей строки.
+   - Возможность перемотать воспроизведение кликом на любую строку текста.
+2. **🌙 Умный Таймер Сна:**
+   - Автоматическая остановка воспроизведения через 15, 30, 45, 60, 90 минут или «в конце текущего трека».
+   - Мягкое 30-секундное затухание звука (fade-out), предотвращающее резкое прерывание музыки во сне.
+   - Отображение оставшегося времени прямо на кнопке плеера (`🌙 24:18`).
+3. **🎛️ Студия Эффектов FX (`F`):**
+   - **8D Audio Spatializer (360°):** аппаратное бинауральное пространственное вращение стереобазы вокруг головы слушателя в наушниках с анимированным радаром.
+   - **Nightcore Режим (1.25x):** увеличение скорости и подъем гармоник.
+   - **Slowed + Reverb Режим (0.85x):** атмосферное замедление с глубоким басом.
+   - **Vaporwave Режим (0.75x) и Плавный регулятор скорости (0.5x – 2.0x).**
+4. **🔁 A-B Precision Looper (`[`, `]`, `\`):**
+   - Установка метки начала `[A]` и метки конца `[B]` прямо во время прослушивания.
+   - Визуальные маркеры и цветовая подсветка зацикленного фрагмента на таймлайне.
+   - Бесшовное циклическое воспроизведение любимых битов, дропов или гитарных соло.
+5. **🪪 Генератор Bento-Карточек Трека:**
+   - Мгновенное создание AMOLED-карточки текущего трека на HTML5 Canvas под цвет активной темы.
+   - Включает обложку, стилизованную аудио-волну, имя автора и lossless-бейдж.
+   - Копирование изображения в буфер обмена или сохранение в PNG для публикации в Telegram, Discord, VK в 1 клик.
 
 ---
 
@@ -111,6 +170,10 @@
 | `D` | Скачать текущий трек на компьютер |
 | `V` | Полноэкранный режим визуализатора |
 | `E` | Открыть 5-полосный студийный эквалайзер |
+| `K` | Открыть Караоке и Синхронный текст песни |
+| `F` | Открыть Студию звуковых эффектов FX (8D Audio, Скорость) |
+| `[` / `]` | Установить метки начала [A] и конца [B] в A-B Looper |
+| `\` | Включить / выключить зацикливание A-B Looper |
 | `C` | Открыть комментарии к играющему треку |
 | `P` | Открыть профиль автора текущего трека |
 | `H` | Открыть историю недавних прослушиваний |

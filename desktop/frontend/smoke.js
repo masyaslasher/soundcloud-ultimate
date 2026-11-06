@@ -5,6 +5,11 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    let currentSmokeRGB = [255, 85, 0];
+    window.setSmokeThemeColor = function(r, g, b) {
+        currentSmokeRGB = [r, g, b];
+    };
+
     let width, height;
     function resize() {
         width = canvas.width = window.innerWidth;
@@ -27,7 +32,7 @@
             this.vy = (Math.random() - 0.5) * 0.35;
             this.alpha = 0.03 + Math.random() * 0.05;
             this.alphaTarget = this.alpha;
-            // Mix between deep midnight violet and subtle warm amber/orange mist
+            // Mix between ambient mist and theme accent smoke
             this.isOrange = Math.random() > 0.65;
         }
 
@@ -49,14 +54,15 @@
             );
 
             if (this.isOrange) {
-                // Subtle glowing orange smoke
-                grad.addColorStop(0, `rgba(255, 85, 0, ${this.alpha * 1.2})`);
-                grad.addColorStop(0.5, `rgba(255, 120, 0, ${this.alpha * 0.5})`);
-                grad.addColorStop(1, 'rgba(255, 85, 0, 0)');
+                // Subtle glowing theme smoke
+                const [r, g, b] = currentSmokeRGB;
+                grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${this.alpha * 1.2})`);
+                grad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${this.alpha * 0.5})`);
+                grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
             } else {
-                // Deep ambient purple/indigo mist
-                grad.addColorStop(0, `rgba(60, 40, 95, ${this.alpha * 1.4})`);
-                grad.addColorStop(0.6, `rgba(30, 20, 50, ${this.alpha * 0.6})`);
+                // Deep ambient indigo mist
+                grad.addColorStop(0, `rgba(40, 30, 60, ${this.alpha * 1.4})`);
+                grad.addColorStop(0.6, `rgba(20, 15, 35, ${this.alpha * 0.6})`);
                 grad.addColorStop(1, 'rgba(10, 9, 15, 0)');
             }
 
