@@ -1451,6 +1451,11 @@
   audio.addEventListener('play', () => {
     isPlaying = true;
     updatePlayButtonUI(true);
+    if ('mediaSession' in navigator) {
+      try {
+        navigator.mediaSession.playbackState = 'playing';
+      } catch (_) {}
+    }
     if (currentIndex >= 0 && queue[currentIndex]) {
       syncDiscordRPC(queue[currentIndex], true);
     }
@@ -1459,6 +1464,11 @@
   audio.addEventListener('pause', () => {
     isPlaying = false;
     updatePlayButtonUI(false);
+    if ('mediaSession' in navigator) {
+      try {
+        navigator.mediaSession.playbackState = 'paused';
+      } catch (_) {}
+    }
     if (currentIndex >= 0 && queue[currentIndex]) {
       syncDiscordRPC(queue[currentIndex], false);
     }
@@ -2345,6 +2355,12 @@
     userDropdown.classList.toggle('open');
   });
 
+  if (userDropdown) {
+    userDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
   window.addEventListener('click', () => {
     userDropdown.classList.remove('open');
   });
@@ -2359,9 +2375,11 @@
   }
 
   btnLogout.addEventListener('click', async () => {
+    userDropdown.classList.remove('open');
     await fetch('/api/auth/logout', { method: 'POST' });
-    checkAuthStatus();
+    await checkAuthStatus();
     loadTrending('all-music');
+    showToast('👋 ' + (TRANSLATIONS[currentLang]?.logout || 'Signed Out'));
   });
 
   // 10. Bento Grid Rendering (Tracks & Playlists)
@@ -2695,6 +2713,24 @@
     }, 350);
   });
 
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      clearTimeout(searchTimeout);
+      const q = searchInput.value.trim();
+      performSearch(q);
+    }
+  });
+
+  const searchIcon = document.querySelector('.search-icon');
+  if (searchIcon) {
+    searchIcon.style.cursor = 'pointer';
+    searchIcon.addEventListener('click', () => {
+      clearTimeout(searchTimeout);
+      const q = searchInput.value.trim();
+      performSearch(q);
+    });
+  }
+
   // Chips Bar Click
   document.getElementById('chips-bar').addEventListener('click', (e) => {
     const chip = e.target.closest('.chip');
@@ -2971,6 +3007,7 @@
     function toggleMaximize() {
       postIpc('window:maximize');
       isMaximized = !isMaximized;
+      document.body.classList.toggle('is-maximized', isMaximized);
       if (iconMax) {
         if (isMaximized) {
           // Restore (double-window icon)
@@ -3838,9 +3875,19 @@
   }
 
   async function clearDiscordRPC() {
+    if (window.AndroidBridge && window.AndroidBridge.updatePlayback) {
+      try {
+        window.AndroidBridge.updatePlayback('', '', '', false, 0, 0);
+      } catch (_) {}
+    }
+    if ('mediaSession' in navigator) {
+      try {
+        navigator.mediaSession.playbackState = 'none';
+      } catch (_) {}
+    }
     try {
       await fetch('/api/discord/clear', { method: 'POST' });
-    } catch (e) {}
+    } catch (_) {}
   }
 
   async function checkDiscordStatus() {
@@ -4197,6 +4244,28 @@
     const savedMuted = localStorage.getItem('sc_muted');
     if (savedMuted === '1') isMuted = true;
   } catch (_) {}
+
+  // Expose global methods for Android Native Bridge and External controllers
+  window.togglePlayPause = togglePlayPause;
+  window.playNext = playNext;
+  window.playPrev = playPrev;
+  window.setVolume = setVolume;
+  window.handleAndroidBack = function() {
+    const openOverlay = document.querySelector('.modal-overlay.open, .bento-modal-overlay.open, #lyrics-overlay.open');
+    if (openOverlay) {
+      closeAllModals();
+      return true;
+    }
+    if (userDropdown && userDropdown.classList.contains('open')) {
+      userDropdown.classList.remove('open');
+      return true;
+    }
+    if (currentTab.val !== 'all-music') {
+      loadTrending('all-music');
+      return true;
+    }
+    return false;
+  };
 
   setVolume(currentVolume, true);
   checkSystemStatus();

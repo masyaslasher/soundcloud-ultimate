@@ -121,15 +121,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Modern back navigation handler
+        // Modern back navigation handler with in-app modal and navigation dismissal
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (webView.canGoBack()) {
-                    webView.goBack();
-                } else {
-                    moveTaskToBack(true);
-                }
+                webView.evaluateJavascript("(function(){ return window.handleAndroidBack ? window.handleAndroidBack() : false; })()", value -> {
+                    if (!"true".equals(value)) {
+                        if (webView.canGoBack()) {
+                            webView.goBack();
+                        } else {
+                            moveTaskToBack(true);
+                        }
+                    }
+                });
             }
         });
 

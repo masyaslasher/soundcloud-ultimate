@@ -3151,3 +3151,11 @@ input:checked + .slider-switch:before {
 .card-action-btn-secondary:hover {
   border-color: var(--orange-neon);
 }
+
+
+/* Maximized Window state: strip outer border and radius */
+body.is-maximized {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
