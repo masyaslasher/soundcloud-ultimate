@@ -42,8 +42,8 @@
 ### 1. 10 AMOLED Bento Color Themes
 ![Themes Grid](screenshots/09_themes_10_palettes.png)
 
-### 2. Built-in Extensions Hub (Karaoke, FX Studio, Looper, Sleep Timer, Social Cards)
-![Extensions Hub](screenshots/10_extensions_hub.png)
+### 2. Built-in Extensions Hub (Discord RPC, Lyrics Karaoke, FX Studio, Looper, Sleep Timer, Social Bento Cards)
+![Extensions Hub](screenshots/discord_rpc_extensions.png)
 
 ### 3. Synchronized Lyrics (Karaoke LRCLIB) & A-B Looper in Nordic Frost Theme
 <p align="center">
@@ -105,7 +105,7 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
 
 ---
 
-## 🧩 5 Built-in Power Extensions
+## 🧩 6 Built-in Power Extensions
 
 1. **🎤 Karaoke & Synchronized Lyrics (`K`):**
    - Automatic synced lyrics search powered by LRCLIB API based on artist and track metadata.
@@ -128,6 +128,16 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
    - Instantly generates AMOLED-styled track cards on HTML5 Canvas matching your active theme.
    - Includes artwork, sound wave, metadata, and lossless quality badge.
    - One-click copy to clipboard or download as PNG for Discord, Telegram, Twitter/X, and VK.
+6. **🎮 Discord Rich Presence (Cross-Platform for Linux & Windows):**
+   - Pure native Rust Discord IPC client built directly into the core engine with zero external dependencies.
+   - Full cross-platform support: Unix domain sockets on Linux (`/run/user/<uid>/discord-ipc-*`, `$XDG_RUNTIME_DIR`, Flatpak, Snap) and Named Pipes on Windows (`\\.\pipe\discord-ipc-*`).
+   - Real-time Discord profile status:
+     - **Activity Type:** "Listening to SoundCloud"
+     - **Track Info:** Title and artist (`by ...`)
+     - **Live Animated Timeline:** Automatic `start` and `end` timestamps displaying the live progress bar in Discord.
+     - **Artwork:** Full-resolution album cover and SoundCloud badge.
+     - **Interactive Button:** "Listen on SoundCloud" button linking directly to the track.
+     - **In-App Control:** Live status indicator in Extensions Hub (`Active • Connected as @user`), auto-reconnect worker, and on/off toggle.
 
 ---
 

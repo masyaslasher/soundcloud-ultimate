@@ -175,6 +175,10 @@
             <button class="action-icon-btn" id="dock-card-btn" title="Generate Social Bento Card">
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             </button>
+            <!-- Discord Rich Presence Indicator -->
+            <button class="action-icon-btn" id="dock-discord-btn" title="Discord Rich Presence (Active)" style="color: #5865F2;">
+              <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </button>
           </div>
         </div>
 
@@ -674,7 +678,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-          <span id="txt-ext-modal-title">Built-in Extensions Hub (5 Modules)</span>
+          <span id="txt-ext-modal-title">Built-in Extensions Hub (6 Modules)</span>
         </div>
         <button class="modal-close-btn" id="btn-close-extensions-modal">✕</button>
       </div>
@@ -743,6 +747,27 @@
               <div class="ext-desc">Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata to share on Discord, Telegram, or Twitter/X.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-card">Create Card</button>
+          </div>
+
+          <!-- Ext 6: Discord Rich Presence -->
+          <div class="ext-card">
+            <div class="ext-icon-box" style="background: rgba(88, 101, 242, 0.15); color: #5865F2;">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+            </div>
+            <div class="ext-content">
+              <div class="ext-title-row">
+                <span class="ext-name" id="txt-ext-discord-name">Discord Rich Presence (Linux & Windows)</span>
+                <span class="ext-badge" id="discord-badge-status" style="background: rgba(88, 101, 242, 0.2); color: #5865F2; border-color: rgba(88, 101, 242, 0.4);">Connecting...</span>
+              </div>
+              <div class="ext-desc" id="txt-ext-discord-desc">Broadcasts current track, artist, album art, animated progress bar, and "Listen on SoundCloud" button to your Discord profile on Linux & Windows.</div>
+              <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;" id="discord-user-info">Auto-sync with local Discord client</div>
+            </div>
+            <label class="switch" style="margin-left: 10px;">
+              <input type="checkbox" id="discord-rpc-toggle" checked>
+              <span class="slider-switch"></span>
+            </label>
           </div>
         </div>
       </div>

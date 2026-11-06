@@ -2321,7 +2321,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 480px;
+  max-height: 580px;
   overflow-y: auto;
 }
 

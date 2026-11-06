@@ -1,4 +1,5 @@
 mod antidpi;
+mod discord_rpc;
 mod launcher;
 mod models;
 mod soundcloud;
@@ -25,6 +26,7 @@ struct Assets;
 #[derive(Clone)]
 struct AppState {
     sc: Arc<SoundCloudClient>,
+    discord: Arc<discord_rpc::DiscordRpcManager>,
 }
 
 #[derive(serde::Deserialize)]
@@ -74,6 +76,9 @@ async fn main() {
     let proxy_url = antidpi_engine.as_ref().map(|e| e.proxy_url());
     let sc_client = Arc::new(SoundCloudClient::new(proxy_url));
 
+    // Initialize cross-platform Discord Rich Presence (Linux & Windows)
+    let discord_manager = discord_rpc::DiscordRpcManager::new();
+
     // Proactively refresh client_id in background
     let sc_clone = sc_client.clone();
     tokio::spawn(async move {
@@ -84,7 +89,10 @@ async fn main() {
         }
     });
 
-    let state = AppState { sc: sc_client };
+    let state = AppState {
+        sc: sc_client,
+        discord: discord_manager,
+    };
 
     let app = Router::new()
         // Core API
@@ -94,6 +102,11 @@ async fn main() {
         .route("/api/stream", get(api_stream))
         .route("/api/track/{id}", get(api_track))
         .route("/api/download", get(api_download))
+        // Discord Rich Presence API (Linux & Windows)
+        .route("/api/discord/activity", post(api_discord_activity))
+        .route("/api/discord/clear", post(api_discord_clear))
+        .route("/api/discord/status", get(api_discord_status))
+        .route("/api/discord/toggle", post(api_discord_toggle))
         // Media Proxy API (Bypasses Russian TSPU blocks for HLS and progressive audio)
         .route("/api/media/stream", get(api_media_stream))
         .route("/api/media/chunk", get(api_media_chunk))
@@ -663,6 +676,46 @@ async fn api_track(
         Ok(track) => (StatusCode::OK, Json(serde_json::json!(track))).into_response(),
         Err(e) => (StatusCode::NOT_FOUND, Json(serde_json::json!({ "error": e }))).into_response(),
     }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// DISCORD RICH PRESENCE HANDLERS (Cross-Platform Linux & Windows)
+// ═══════════════════════════════════════════════════════════════════════════
+
+#[derive(serde::Deserialize)]
+struct DiscordTogglePayload {
+    enabled: bool,
+}
+
+async fn api_discord_activity(
+    State(state): State<AppState>,
+    Json(payload): Json<discord_rpc::DiscordActivityPayload>,
+) -> impl IntoResponse {
+    state.discord.update_activity(payload).await;
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" }))).into_response()
+}
+
+async fn api_discord_clear(
+    State(state): State<AppState>,
+) -> impl IntoResponse {
+    state.discord.clear_activity().await;
+    (StatusCode::OK, Json(serde_json::json!({ "status": "ok" }))).into_response()
+}
+
+async fn api_discord_status(
+    State(state): State<AppState>,
+) -> impl IntoResponse {
+    let status = state.discord.get_status().await;
+    (StatusCode::OK, Json(status)).into_response()
+}
+
+async fn api_discord_toggle(
+    State(state): State<AppState>,
+    Json(payload): Json<DiscordTogglePayload>,
+) -> impl IntoResponse {
+    state.discord.set_enabled(payload.enabled).await;
+    let status = state.discord.get_status().await;
+    (StatusCode::OK, Json(status)).into_response()
 }
 
 async fn static_handler(uri: axum::http::Uri) -> Response {

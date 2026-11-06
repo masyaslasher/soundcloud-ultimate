@@ -336,6 +336,7 @@
       isPlaying = true;
       updatePlayButtonUI(true);
       setupMediaSession(track);
+      syncDiscordRPC(track, true);
     } catch (err) {
       console.error('Audio playback error:', err);
       playerTitle.textContent = `Playback error: ${track.title}`;
@@ -353,11 +354,17 @@
       audio.play().then(() => {
         isPlaying = true;
         updatePlayButtonUI(true);
+        if (currentIndex >= 0 && queue[currentIndex]) {
+          syncDiscordRPC(queue[currentIndex], true);
+        }
       });
     } else {
       audio.pause();
       isPlaying = false;
       updatePlayButtonUI(false);
+      if (currentIndex >= 0 && queue[currentIndex]) {
+        syncDiscordRPC(queue[currentIndex], false);
+      }
     }
   }
 
@@ -433,17 +440,24 @@
     } else {
       isPlaying = false;
       updatePlayButtonUI(false);
+      clearDiscordRPC();
     }
   });
 
   audio.addEventListener('play', () => {
     isPlaying = true;
     updatePlayButtonUI(true);
+    if (currentIndex >= 0 && queue[currentIndex]) {
+      syncDiscordRPC(queue[currentIndex], true);
+    }
   });
 
   audio.addEventListener('pause', () => {
     isPlaying = false;
     updatePlayButtonUI(false);
+    if (currentIndex >= 0 && queue[currentIndex]) {
+      syncDiscordRPC(queue[currentIndex], false);
+    }
   });
 
   // Timeline Scrubber
@@ -466,7 +480,12 @@
   });
 
   window.addEventListener('mouseup', () => {
-    if (isSeeking) isSeeking = false;
+    if (isSeeking) {
+      isSeeking = false;
+      if (currentIndex >= 0 && queue[currentIndex]) {
+        syncDiscordRPC(queue[currentIndex], !audio.paused);
+      }
+    }
   });
 
   // Volume Slider & Popup Controls
@@ -2376,6 +2395,143 @@
     });
   }
 
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXTENSION 6: DISCORD RICH PRESENCE (LINUX & WINDOWS)
+  // ═══════════════════════════════════════════════════════════════════════
+  let lastDiscordSync = 0;
+  let discordSyncTimeout = null;
+
+  async function syncDiscordRPC(track, playing) {
+    if (!track) return;
+    const toggle = document.getElementById('discord-rpc-toggle');
+    if (toggle && !toggle.checked) return;
+
+    clearTimeout(discordSyncTimeout);
+    const now = Date.now();
+    if (now - lastDiscordSync < 500) {
+      discordSyncTimeout = setTimeout(() => syncDiscordRPC(track, playing), 500);
+      return;
+    }
+    lastDiscordSync = now;
+
+    const curTime = audio ? (audio.currentTime || 0) : 0;
+    const dur = (audio && audio.duration && !isNaN(audio.duration) && audio.duration > 0)
+      ? audio.duration
+      : ((track.duration_ms ? track.duration_ms / 1000 : 0) || (track.duration || 0));
+
+    const payload = {
+      title: track.title || 'SoundCloud Track',
+      artist: track.artist || track.user?.username || 'SoundCloud Artist',
+      duration_secs: Math.round(dur),
+      current_time_secs: Math.round(curTime),
+      is_playing: !!playing,
+      permalink_url: track.permalink_url || null,
+      artwork_url: track.artwork_url || null
+    };
+
+    try {
+      const res = await fetch('/api/discord/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        checkDiscordStatus();
+      }
+    } catch (e) {
+      console.debug('Discord RPC sync failed:', e);
+    }
+  }
+
+  async function clearDiscordRPC() {
+    try {
+      await fetch('/api/discord/clear', { method: 'POST' });
+    } catch (e) {}
+  }
+
+  async function checkDiscordStatus() {
+    try {
+      const res = await fetch('/api/discord/status');
+      if (!res.ok) return;
+      const st = await res.json();
+      const toggle = document.getElementById('discord-rpc-toggle');
+      if (toggle && typeof st.enabled === 'boolean') {
+        toggle.checked = st.enabled;
+      }
+      updateDiscordBadge(st.connected, st.username);
+    } catch (e) {}
+  }
+
+  function updateDiscordBadge(connected, username) {
+    const badge = document.getElementById('discord-badge-status');
+    const userInfo = document.getElementById('discord-user-info');
+    const dockBtn = document.getElementById('dock-discord-btn');
+    if (badge) {
+      if (connected) {
+        badge.textContent = 'Active';
+        badge.style.background = 'rgba(87, 242, 135, 0.2)';
+        badge.style.color = '#57F287';
+        badge.style.borderColor = 'rgba(87, 242, 135, 0.4)';
+      } else {
+        badge.textContent = 'Standby';
+        badge.style.background = 'rgba(255, 255, 255, 0.08)';
+        badge.style.color = 'var(--text-dim)';
+        badge.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+      }
+    }
+    if (userInfo) {
+      if (connected && username) {
+        userInfo.textContent = `Connected as @${username} (Linux & Windows IPC)`;
+        userInfo.style.color = '#5865F2';
+      } else {
+        userInfo.textContent = 'Waiting for Discord desktop app...';
+        userInfo.style.color = 'var(--text-dim)';
+      }
+    }
+    if (dockBtn) {
+      dockBtn.style.opacity = connected ? '1' : '0.45';
+      dockBtn.title = connected && username ? `Discord RPC: Connected as @${username}` : 'Discord Rich Presence (Click to view)';
+    }
+  }
+
+  function initDiscordRPC() {
+    const dockBtn = document.getElementById('dock-discord-btn');
+    if (dockBtn) {
+      dockBtn.addEventListener('click', () => {
+        document.getElementById('extensions-modal-overlay')?.classList.add('open');
+      });
+    }
+
+    const toggle = document.getElementById('discord-rpc-toggle');
+    if (toggle) {
+      toggle.addEventListener('change', async () => {
+        try {
+          const res = await fetch('/api/discord/toggle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ enabled: toggle.checked })
+          });
+          const st = await res.json();
+          updateDiscordBadge(st.connected, st.username);
+          if (toggle.checked) {
+            showToast('Discord Rich Presence enabled');
+            if (currentIndex >= 0 && queue[currentIndex]) {
+              syncDiscordRPC(queue[currentIndex], isPlaying);
+            }
+          } else {
+            showToast('Discord Rich Presence disabled');
+          }
+        } catch (e) {
+          console.warn('Failed to toggle Discord RPC:', e);
+        }
+      });
+    }
+
+    // Check status immediately and poll every 8 seconds
+    checkDiscordStatus();
+    setInterval(checkDiscordStatus, 8000);
+  }
+
   // Expose API
   window.scApp = {
     openArtistProfile,
@@ -2383,6 +2539,7 @@
     openCommentsModal,
     openLyricsOverlay,
     openCardGenerator,
+    syncDiscordRPC,
     applyTheme,
     setSleepTimer,
     toggle8D,
@@ -2496,7 +2653,11 @@
         if (txtAuthDivider) txtAuthDivider.textContent = "или введите токен сессии";
         if (btnSubmitToken) btnSubmitToken.textContent = "Подключить аккаунт";
         if (txtThemeTitle) txtThemeTitle.textContent = "Темы оформления (10 AMOLED палитр)";
-        if (txtExtTitle) txtExtTitle.textContent = "Центр встроенных расширений (5 модулей)";
+        if (txtExtTitle) txtExtTitle.textContent = "Центр встроенных расширений (6 модулей)";
+        const txtExtDiscordName = document.getElementById("txt-ext-discord-name");
+        const txtExtDiscordDesc = document.getElementById("txt-ext-discord-desc");
+        if (txtExtDiscordName) txtExtDiscordName.textContent = "Discord Rich Presence (Linux и Windows)";
+        if (txtExtDiscordDesc) txtExtDiscordDesc.textContent = "Синхронизация трека, исполнителя, таймлайна и кликабельной ссылки в профиле Discord без сторонних утилит.";
         if (txtEqTitle) txtEqTitle.textContent = "Студийный Эквалайзер & Бас";
         if (txtCommentsTitle) txtCommentsTitle.textContent = "Комментарии к треку";
         if (commentInput) commentInput.placeholder = "Написать комментарий на текущей секунде...";
@@ -2544,7 +2705,11 @@
         if (txtAuthDivider) txtAuthDivider.textContent = "or enter session token manually";
         if (btnSubmitToken) btnSubmitToken.textContent = "Connect Account";
         if (txtThemeTitle) txtThemeTitle.textContent = "Themes (10 AMOLED Palettes)";
-        if (txtExtTitle) txtExtTitle.textContent = "Built-in Extensions Hub (5 Modules)";
+        if (txtExtTitle) txtExtTitle.textContent = "Built-in Extensions Hub (6 Modules)";
+        const txtExtDiscordName = document.getElementById("txt-ext-discord-name");
+        const txtExtDiscordDesc = document.getElementById("txt-ext-discord-desc");
+        if (txtExtDiscordName) txtExtDiscordName.textContent = "Discord Rich Presence (Linux & Windows)";
+        if (txtExtDiscordDesc) txtExtDiscordDesc.textContent = "Broadcasts current track, artist, album art, animated progress bar, and 'Listen on SoundCloud' button to your Discord profile on Linux & Windows.";
         if (txtEqTitle) txtEqTitle.textContent = "Studio Equalizer & Bass";
         if (txtCommentsTitle) txtCommentsTitle.textContent = "Track Comments";
         if (commentInput) commentInput.placeholder = "Write a comment at current timestamp...";
@@ -2601,6 +2766,7 @@
   initAudioFxStudio();
   initAbLooper();
   initCardGenerator();
+  initDiscordRPC();
 
   // URL query params for direct modal/theme preview
   try {
