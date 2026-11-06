@@ -956,6 +956,7 @@
   let currentRadioTrackTitle = '';
 
   function renderActiveTabTitle() {
+    if (!gridTitle) return;
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     if (currentTab.type === 'lib') {
       if (currentTab.val === 'likes') {
@@ -982,7 +983,7 @@
   const tracksGrid = document.getElementById('tracks-grid');
   const searchInput = document.getElementById('search-input');
   const gridTitle = document.getElementById('grid-title');
-  const heroSection = document.getElementById('hero-section');
+  const heroSection = document.getElementById('hero-discover-banner') || document.getElementById('hero-section');
   const heroTitle = document.getElementById('hero-title');
   const heroArtist = document.getElementById('hero-artist');
   const heroBgArt = document.getElementById('hero-bg-art');
@@ -2254,7 +2255,7 @@
         currentRadioTrackTitle = track.title;
         currentTab = { type: 'radio', val: track.id };
         renderActiveTabTitle();
-        heroSection.style.display = 'none';
+        if (heroSection) heroSection.style.display = 'none';
         renderTracks(queue);
         playerTitle.textContent = track.title;
       } else {
@@ -2281,10 +2282,6 @@
     try {
       const res = await fetch('/api/status');
       const data = await res.json();
-      const badge = document.getElementById('antidpi-badge');
-      if (badge && data.antidpi) {
-        badge.title = `⚡ Zapret: ${data.antidpi}\nISP/DPI bypass active. Music and API work without external VPN.`;
-      }
     } catch (e) {
       console.warn('System status check failed:', e);
     }
@@ -2427,19 +2424,20 @@
     userDropdown.classList.remove('open');
     await fetch('/api/auth/logout', { method: 'POST' });
     await checkAuthStatus();
-    loadTrending('all-music');
+    navigateTo('view-home');
     showToast('👋 ' + (TRANSLATIONS[currentLang]?.logout || 'Signed Out'));
   });
 
   // 10. Bento Grid Rendering (Tracks & Playlists)
   function renderTracks(tracks) {
+    if (!tracksGrid) return;
     tracksGrid.innerHTML = '';
     if (!tracks || tracks.length === 0) {
       const tTr = TRANSLATIONS[currentLang] || TRANSLATIONS.en; tracksGrid.innerHTML = `<div style="color: var(--text-dim); padding: 40px; font-size: 14px; text-align: center;">${tTr.no_tracks_found || 'No tracks found'}</div>`;
       return;
     }
 
-    if (tracks.length > 0 && heroSection.style.display !== 'none') {
+    if (tracks.length > 0 && heroSection && heroSection.style.display !== 'none') {
       const first = tracks[0];
       heroTitle.textContent = first.title;
       heroArtist.textContent = first.artist;
@@ -2499,6 +2497,7 @@
   }
 
   function renderPlaylists(playlists) {
+    if (!tracksGrid) return;
     tracksGrid.innerHTML = '';
     if (!playlists || playlists.length === 0) {
       const tPl = TRANSLATIONS[currentLang] || TRANSLATIONS.en; tracksGrid.innerHTML = `<div style="color: var(--text-dim); padding: 40px; font-size: 14px; text-align: center;">${tPl.no_playlists_found || 'No playlists found'}</div>`;
@@ -2606,7 +2605,7 @@
   async function loadMyLikes() {
     currentTab = { type: 'lib', val: 'likes' };
     renderActiveTabTitle();
-    heroSection.style.display = 'none';
+    if (heroSection) heroSection.style.display = 'none';
 
     if (!currentUser) {
       const localLikes = getLocalLikes();
@@ -2641,7 +2640,7 @@
   async function loadMyPlaylists() {
     currentTab = { type: 'lib', val: 'playlists' };
     renderActiveTabTitle();
-    heroSection.style.display = 'none';
+    if (heroSection) heroSection.style.display = 'none';
 
     if (!currentUser) {
       try {
@@ -2668,7 +2667,7 @@
   async function loadMyStream() {
     currentTab = { type: 'lib', val: 'stream' };
     renderActiveTabTitle();
-    heroSection.style.display = 'none';
+    if (heroSection) heroSection.style.display = 'none';
 
     if (!currentUser) {
       renderEmptyStreamState();
@@ -2693,7 +2692,7 @@
   async function loadMyHistory() {
     currentTab = { type: 'lib', val: 'history' };
     renderActiveTabTitle();
-    heroSection.style.display = 'none';
+    if (heroSection) heroSection.style.display = 'none';
 
     if (!currentUser) {
       const localHistory = getLocalHistory();
@@ -2725,7 +2724,7 @@
   async function loadTrending(genre = 'all-music') {
     currentTab = { type: 'genre', val: genre };
     renderActiveTabTitle();
-    heroSection.style.display = (genre === 'all-music') ? 'grid' : 'none';
+    if (heroSection) heroSection.style.display = (genre === 'all-music') ? 'grid' : 'none';
     try {
       const res = await fetch(`/api/trending?genre=${genre}&limit=32`);
       const data = await res.json();
@@ -2737,13 +2736,13 @@
 
   async function performSearch(query) {
     if (!query || !query.trim()) {
-      loadTrending('all-music');
+      navigateTo('view-home');
       return;
     }
     currentSearchQuery = query;
     currentTab = { type: 'search', val: query };
     renderActiveTabTitle();
-    heroSection.style.display = 'none';
+    if (heroSection) heroSection.style.display = 'none';
 
     try {
       const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=32`);
@@ -2780,34 +2779,13 @@
     });
   }
 
-  // Chips Bar Click
-  document.getElementById('chips-bar').addEventListener('click', (e) => {
-    const chip = e.target.closest('.chip');
-    if (!chip) return;
-
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    searchInput.value = '';
-
-    const type = chip.getAttribute('data-type');
-    const val = chip.getAttribute('data-val');
-
-    if (type === 'lib') {
-      if (val === 'likes') loadMyLikes();
-      else if (val === 'playlists') loadMyPlaylists();
-      else if (val === 'stream') loadMyStream();
-      else if (val === 'history') loadMyHistory();
-    } else {
-      loadTrending(val);
-    }
-  });
-
-  document.getElementById('brand-home').addEventListener('click', () => {
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    document.querySelector('.chip').classList.add('active');
-    searchInput.value = '';
-    loadTrending('all-music');
-  });
+  // Brand Home click navigates to Home
+  const brandHome = document.getElementById('brand-home');
+  if (brandHome) {
+    brandHome.addEventListener('click', () => {
+      navigateTo('view-home');
+    });
+  }
 
   // Overlay click to close
   [authModalOverlay, eqModalOverlay, profileModalOverlay, playlistModalOverlay, commentsModalOverlay].forEach(overlay => {
@@ -3752,7 +3730,7 @@
       ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
       ctx.font = '12px -apple-system, sans-serif';
       const durStr = track.duration_ms ? formatTime(track.duration_ms / 1000) : '3:45';
-      ctx.fillText(`HQ Audio • ${durStr} • Zapret Active • Lossless Stream`, 230, 178);
+      ctx.fillText(`HQ Audio • ${durStr} • Lossless Stream`, 230, 178);
 
       // Stylized Waveform Bars
       const waveStartY = 280;
@@ -4110,7 +4088,7 @@
       if (txtQueueTitle) txtQueueTitle.textContent = t.queue_title;
       if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = t.select_track;
 
-      // Translate Genre Chips in chips-bar
+      // Translate Genre Tags
       const genreKeys = ['phonk', 'electronic', 'hiphoprap', 'ambient', 'rock', 'danceedm', 'rbsoul', 'indie'];
       genreKeys.forEach(g => {
         const el = document.getElementById(`chip-genre-${g}`);
@@ -4379,8 +4357,8 @@
       userDropdown.classList.remove('open');
       return true;
     }
-    if (currentTab.val !== 'all-music') {
-      loadTrending('all-music');
+    if (currentActiveViewId !== 'view-home') {
+      navigateTo('view-home');
       return true;
     }
     return false;
@@ -4534,76 +4512,6 @@
     if (target) target.classList.add('active');
   }
 
-  // Left Sidebar Navigation Links
-  const navHome = document.getElementById('nav-item-home');
-  if (navHome) {
-    navHome.addEventListener('click', () => {
-      setActiveNavItem('nav-item-home');
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      const chipTrend = document.getElementById('chip-trending');
-      if (chipTrend) chipTrend.classList.add('active');
-      searchInput.value = '';
-      loadTrending('all-music');
-    });
-  }
-
-  const navSearch = document.getElementById('nav-item-search');
-  if (navSearch) {
-    navSearch.addEventListener('click', () => {
-      setActiveNavItem('nav-item-search');
-      searchInput.focus();
-      searchInput.select();
-    });
-  }
-
-  const navLib = document.getElementById('nav-item-library');
-  if (navLib) {
-    navLib.addEventListener('click', () => {
-      setActiveNavItem('nav-item-library');
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      const chipPl = document.getElementById('chip-playlists');
-      if (chipPl) chipPl.classList.add('active');
-      searchInput.value = '';
-      loadMyPlaylists();
-    });
-  }
-
-  const navLiked = document.getElementById('nav-item-liked');
-  if (navLiked) {
-    navLiked.addEventListener('click', () => {
-      setActiveNavItem('nav-item-liked');
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      const chipLk = document.getElementById('chip-likes');
-      if (chipLk) chipLk.classList.add('active');
-      searchInput.value = '';
-      loadMyLikes();
-    });
-  }
-
-  const navPlaylists = document.getElementById('nav-item-playlists');
-  if (navPlaylists) {
-    navPlaylists.addEventListener('click', () => {
-      setActiveNavItem('nav-item-playlists');
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      const chipPl = document.getElementById('chip-playlists');
-      if (chipPl) chipPl.classList.add('active');
-      searchInput.value = '';
-      loadMyPlaylists();
-    });
-  }
-
-  const navExplore = document.getElementById('nav-item-explore');
-  if (navExplore) {
-    navExplore.addEventListener('click', () => {
-      setActiveNavItem('nav-item-explore');
-      if (window.DiscoveryEngine && typeof window.DiscoveryEngine.open === 'function') {
-        window.DiscoveryEngine.open();
-      } else {
-        const chipDisc = document.getElementById('chip-discovery');
-        if (chipDisc) chipDisc.click();
-      }
-    });
-  }
 
   // Right Panel Controls
   const rpBtnPlay = document.getElementById('rp-btn-play');
@@ -4786,9 +4694,12 @@
       if (navEl) navEl.classList.add('active');
     }
 
-    // Scroll to top
+    // Scroll to top & enforce no scroll on Home
     const centerBody = document.getElementById('center-scrollable-body');
-    if (centerBody) centerBody.scrollTop = 0;
+    if (centerBody) {
+      centerBody.scrollTop = 0;
+      centerBody.style.overflowY = (viewId === 'view-home') ? 'hidden' : 'auto';
+    }
 
     // View-specific data loader
     onViewActivated(viewId, params);
@@ -5927,7 +5838,7 @@
     const plugins = [
       { id: 'p-discord', name: 'Discord Rich Presence', version: '2.1.0', desc: 'Real-time rich presence display on Discord profile with artwork & timestamps', enabled: true },
       { id: 'p-equalizer', name: 'Parametric Equalizer Pro', version: '1.4.0', desc: '10-band audio frequency equalizer with bass boost & preamp gain', enabled: true },
-      { id: 'p-zapret', name: 'Zapret Anti-DPI Engine', version: '1.8.2', desc: 'Native TLS ClientHello splitting + Cloudflare/Google DoH DNS resolver', enabled: true },
+      { id: 'p-normalizer', name: 'Volume Peak Normalizer', version: '1.2.0', desc: 'Real-time dynamic range normalization and loudness leveling', enabled: true },
       { id: 'p-lyrics', name: 'Karaoke Synced Lyrics', version: '1.2.0', desc: 'Real-time scrolling lyrics synchronization with verse highlights', enabled: true },
       { id: 'p-audiofx', name: 'Spatial 8D Audio Processor', version: '1.1.0', desc: 'Binaural 360-degree audio panning and playback speed adjuster', enabled: false },
       { id: 'p-scrobbler', name: 'Last.fm Scrobbler', version: '1.0.0', desc: 'Scrobble tracks to Last.fm and Libre.fm accounts', enabled: false }
@@ -6031,19 +5942,19 @@
     } else if (section === 'playback') {
       pane.innerHTML = `
         <div class="settings-card">
-          <div class="settings-card-title">Audio Engine & Zapret Anti-DPI</div>
-          <div class="settings-card-desc">Configure progressive streaming & DPI circumvention</div>
+          <div class="settings-card-title">Audio Engine & Playback</div>
+          <div class="settings-card-desc">Configure progressive streaming & audio buffering</div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">Zapret TSPU Bypass (split=2)</span>
-              <span class="settings-row-hint">Splits TLS ClientHello across TCP frames to evade DPI</span>
+              <span class="settings-row-label">High-Res Audio Buffering (10s Pre-fetch)</span>
+              <span class="settings-row-hint">Seamless gapless playback with adaptive chunking</span>
             </div>
             <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
           </div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">Encrypted DNS (DoH)</span>
-              <span class="settings-row-hint">Resolves api-v2.soundcloud.com via Cloudflare 1.1.1.1</span>
+              <span class="settings-row-label">Hardware Acceleration</span>
+              <span class="settings-row-hint">Use GPU acceleration for audio visualization and canvas</span>
             </div>
             <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
           </div>
@@ -6257,7 +6168,7 @@
             <span style="color: var(--text-muted);">Sample Rate</span><span style="color: var(--text-primary); font-weight: 600;">48.0 kHz 24-bit</span>
           </div>
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
-            <span style="color: var(--text-muted);">Bypass Routing</span><span style="color: #22C55E; font-weight: 600;">Zapret TLS Split Active</span>
+            <span style="color: var(--text-muted);">Stream Pipeline</span><span style="color: #22C55E; font-weight: 600;">Direct High-Res Audio</span>
           </div>
         </div>
       `;
@@ -6564,5 +6475,4 @@
   setVolume(currentVolume, true);
   checkSystemStatus();
   checkAuthStatus();
-  loadTrending('all-music');
 })();

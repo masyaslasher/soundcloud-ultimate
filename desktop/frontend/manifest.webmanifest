@@ -1,7 +1,7 @@
 {
   "name": "SoundCloud Ultimate",
   "short_name": "SoundCloud",
-  "description": "SoundCloud Ultimate — AMOLED Bento Glass Music Player with Built-in Zapret Anti-DPI, 10 Themes & Extensions",
+  "description": "SoundCloud Ultimate — AMOLED Bento Glass Music Player, 10 Themes & Extensions",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

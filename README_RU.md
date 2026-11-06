@@ -3,10 +3,9 @@
 [![Release](https://img.shields.io/github/v/release/masyaslasher/soundcloud-ultimate?color=ff5500&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange.svg?logo=rust)](https://www.rust-lang.org/)
 [![Android](https://img.shields.io/badge/Android-APK%20(v1.3.0)-3DDC84.svg?logo=android&logoColor=white)](https://github.com/masyaslasher/soundcloud-ultimate/releases/latest)
-[![Zapret Anti--DPI](https://img.shields.io/badge/Zapret%20Anti--DPI-Built--in%20%28No%20VPN%29-00E5FF.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Android%20%7C%20Chrome-brightgreen.svg)]()
-[![Design](https://img.shields.io/badge/Design-AMOLED%20Bento%20Glass-ff5500.svg)]()
+[![Design](https://img.shields.io/badge/Design-AMOLED%20Minimal%20Audio-a855f7.svg)]()
 
 <p align="center">
   <strong>🌐 Язык / Language:</strong>
@@ -15,16 +14,7 @@
 </p>
 
 > **SoundCloud Ultimate** — ультимативный нативный клиент нового поколения для прослушивания SoundCloud на ПК и Android.
-> Сочетает премиальный дизайн **AMOLED Bento Glass** (`#0A090E`, неоновые оранжевые лазерные акценты `#FF5500`), нативную скорость движка на Rust, **полностью автономное нативное окно без браузера**, отдельное приложение для **Android с фоновым воспроизведением и виджетом на экране блокировки**, встроенный 5-полосный студийный эквалайзер, 100% In-App социальную среду и **встроенный Zapret Anti-DPI + DoH обход блокировок для РФ без необходимости в стороннем VPN**.
-
----
-
-## ⚡ Встроенный Zapret Anti-DPI (Работает в РФ без VPN!)
-
-Приложение содержит полностью автономный встроенный Anti-DPI движок на чистом Rust (без установки драйверов WinDivert, ByeDPI или внешних утилит):
-- 🛡️ **TLS ClientHello Record Splitting:** Разбивает начальный TLS-пакет на позиции `split-pos=2` со сбросом TCP-окна (`TCP_NODELAY` + 5ms push), в результате чего ТСПУ РКН не может обнаружить SNI заблокированных доменов (`*.sndcdn.com`, `api-v2.soundcloud.com`, `*.soundcloud.cloud`).
-- 🌐 **Cloudflare & Google DoH (DNS-over-HTTPS):** Встроенный защищенный резолвер DNS через HTTPS, полностью предотвращающий DNS-спуфинг и подмену IP-адресов интернет-провайдерами.
-- 🎵 **Прозрачный стриминг аудио и HLS:** Все плейлисты `.m3u8` и аудио-сегменты (`.m4s`, `.aac`, `.mp3`) проксируются локальным сокетом. Звук играет мгновенно, без задержек и заиканий.
+> Сочетает премиальный дизайн **AMOLED Minimal Audio** (`#09090B`, фиолетовые акценты `#A855F7`), нативную скорость движка на Rust, **полностью автономное нативное окно без браузера**, отдельное приложение для **Android с фоновым воспроизведением и виджетом на экране блокировки**, встроенный студийный эквалайзер и 100% In-App социальную среду.
 
 ---
 
@@ -160,10 +150,7 @@
 
 ### 🖥️ Полноценное нативное десктопное приложение (Rust + Tao + Wry)
 - **Полная автономность от сторонних браузеров:** В отличие от решений на Electron или веб-ярлыков, десктопный клиент SoundCloud Ultimate теперь работает в собственном нативном системном окне на базе системного веб-движка (`wry`/`tao` с WebKitGTK в Linux и WebView2 в Windows). В диспетчере задач приложение отображается как единый процесс `soundcloud-desktop`, не запуская Chromium или вкладки браузера.
-- **⚡ Встроенный Zapret Anti-DPI движок:**
-  - Нативная реализация Record Splitting (разбиение TLS ClientHello на 2 байта + Cloudflare/Google DoH).
-  - Полный обход блокировок ТСПУ РКН: треки, поиск, обложки и API работают в РФ без VPN.
-  - Нулевая нагрузка на процессор и полное отсутствие необходимости в правах администратора или сторонних драйверах.
+- **Высокопроизводительный движок на Rust:** Асинхронный сервер на Axum с прогрессивным кэшированием аудиопотоков.
 - **100% In-App Экосистема:** Никаких перенаправлений на soundcloud.com. Профили артистов, альбомы, плейлисты, комментарии и похожие радиостанции открываются прямо внутри единого окна.
 - **100% Гостевой режим и опциональный вход:**
   - Никакой принудительной авторизации: слушайте тренды, ищите любую музыку, используйте 8D Audio, караоке-тексты, эквалайзер и лупер без аккаунта.

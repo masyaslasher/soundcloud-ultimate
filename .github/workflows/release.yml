@@ -66,7 +66,7 @@ jobs:
           Section: sound
           Priority: optional
           Homepage: https://github.com/${{ github.repository }}
-          Description: Ultimate Native SoundCloud Desktop Client with AMOLED Bento Glass UI and Zapret Anti-DPI
+          Description: Ultimate Native SoundCloud Desktop Client with AMOLED Minimal Audio UI
           EOF
           echo "2.0" > deb_build/debian-binary
           cd deb_build/control && tar --numeric-owner --owner=0 --group=0 -czvf ../control.tar.gz ./control && cd ../..

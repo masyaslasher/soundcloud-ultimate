@@ -1,4 +1,3 @@
-mod antidpi;
 mod discord_rpc;
 mod launcher;
 mod models;
@@ -122,17 +121,7 @@ fn main() {
     let (shutdown_tx, shutdown_rx) = tokio::sync::oneshot::channel::<()>();
 
     let (app_url, server_handle) = rt.block_on(async {
-        // Initialize built-in Anti-DPI (Zapret-style TLS Record Splitting + DoH)
-        let antidpi_engine = match antidpi::AntiDpiEngine::start().await {
-            Ok(engine) => Some(engine),
-            Err(e) => {
-                eprintln!("⚠️ Anti-DPI engine could not start: {}", e);
-                None
-            }
-        };
-
-        let proxy_url = antidpi_engine.as_ref().map(|e| e.proxy_url());
-        let sc_client = Arc::new(SoundCloudClient::new(proxy_url));
+        let sc_client = Arc::new(SoundCloudClient::new(None));
 
         // Initialize cross-platform Discord Rich Presence (Linux & Windows)
         let discord_manager = discord_rpc::DiscordRpcManager::new();
@@ -248,7 +237,6 @@ async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
         "client_id": id,
         "version": "1.3.0",
         "engine": "Rust + Bento AMOLED Glass",
-        "antidpi": "active (Zapret TLS Split + Cloudflare DoH)",
         "auth": auth
     }))
 }
@@ -279,8 +267,7 @@ async fn api_system_metrics(State(state): State<AppState>) -> impl IntoResponse 
         "os": std::env::consts::OS,
         "arch": std::env::consts::ARCH,
         "authenticated": logged_in,
-        "client_id_active": !client_id_cached.is_empty(),
-        "antidpi_status": "enabled"
+        "client_id_active": !client_id_cached.is_empty()
     }))
 }
 

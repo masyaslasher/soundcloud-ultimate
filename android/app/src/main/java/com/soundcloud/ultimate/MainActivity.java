@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 json.put("app", "SoundCloud Ultimate Android");
                 json.put("version", "1.3.0");
                 json.put("client_id", activeClientId);
-                json.put("antidpi", "active (Cloudflare & Google DoH)");
+                json.put("engine", "Android Native MediaPlayer");
                 json.put("auth", new JSONObject().put("authenticated", false));
                 return createJsonResponse(json.toString());
             }

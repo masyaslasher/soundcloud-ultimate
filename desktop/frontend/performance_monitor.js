@@ -140,7 +140,7 @@
           <div class="pm-chart">
             ${renderSparkline(memHistory, 10, 120, '#651fff')}
           </div>
-          <div class="pm-meta">Native Axum + Zapret Proxy</div>
+          <div class="pm-meta">Native Axum Engine</div>
         </div>
 
         <!-- Card 3: JS Frontend Heap -->

@@ -16,7 +16,7 @@
 
 <p align="center">
   <b>Next-generation standalone native desktop & Android client for SoundCloud.</b><br>
-  Built with <b>Rust</b>, <b>Tao + Wry</b>, native <b>Android (Java/Gradle)</b>, and modern <b>AMOLED Bento Glass</b> aesthetics. Includes built-in <b>Zapret Anti-DPI engine & DNS-over-HTTPS</b> (bypasses ISP blocks in Russia without VPN), <b>10 custom AMOLED themes</b>, <b>synchronized lyrics & karaoke</b>, <b>360° 8D Audio studio</b>, <b>background playback & lockscreen media controls</b> on Android, and a <b>100% in-app ecosystem</b>.
+  Built with <b>Rust</b>, <b>Tao + Wry</b>, native <b>Android (Java/Gradle)</b>, and modern <b>AMOLED Minimal Audio</b> aesthetics. Includes <b>10 custom AMOLED themes</b>, <b>synchronized lyrics & karaoke</b>, <b>360° 8D Audio studio</b>, <b>background playback & lockscreen media controls</b> on Android, and a <b>100% in-app ecosystem</b>.
 </p>
 
 </div>
@@ -153,10 +153,7 @@ Switch themes instantly with a single click via the **"Themes (10)"** header but
 
 ### 🖥️ True Native Desktop Application (Rust + Tao + Wry)
 - **Zero Browser Dependencies:** Unlike Electron or browser wrappers, SoundCloud Ultimate runs as a true native desktop application powered by `tao` and `wry` (WebKitGTK on Linux, WebView2 on Windows). In the process manager, it runs strictly as `soundcloud-desktop` without spawning Chromium or browser tabs.
-- **⚡ Built-in Zapret Anti-DPI Engine:**
-  - Native socket-level Record Splitting (TLS ClientHello split into 2 bytes + Cloudflare/Google DoH).
-  - Complete bypass of Russian ISP/RKN blocking without needing a VPN or external proxy.
-  - Zero CPU overhead, fully driverless (runs entirely in user-space, no administrator rights needed).
+- **High-Performance Audio Engine:** Native Axum asynchronous audio streaming with progressive caching and zero stutter.
 - **100% In-App Ecosystem:** No external browser tabs. Artist profiles, albums, playlists, track comments, and related radio stations render inside the app.
 - **100% Guest Mode & Optional Sign-In:**
   - Zero forced authentication: listen to Trending, search tracks, enjoy 8D audio, synced lyrics, equalizer, and looper instantly without an account.
