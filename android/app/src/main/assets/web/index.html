@@ -100,14 +100,14 @@
       <div class="chip" data-type="lib" data-val="playlists" id="chip-playlists">📂 Playlists</div>
       <div class="chip" data-type="lib" data-val="stream" id="chip-stream">📡 Stream</div>
       <div class="chip" data-type="lib" data-val="history" id="chip-history">🕒 History</div>
-      <div class="chip" data-type="genre" data-val="phonk">Phonk</div>
-      <div class="chip" data-type="genre" data-val="electronic">Electronic</div>
-      <div class="chip" data-type="genre" data-val="hiphoprap">Hip-Hop</div>
-      <div class="chip" data-type="genre" data-val="ambient">Ambient</div>
-      <div class="chip" data-type="genre" data-val="rock">Rock</div>
-      <div class="chip" data-type="genre" data-val="danceedm">EDM</div>
-      <div class="chip" data-type="genre" data-val="rbsoul">R&B</div>
-      <div class="chip" data-type="genre" data-val="indie">Indie</div>
+      <div class="chip" data-type="genre" data-val="phonk" id="chip-genre-phonk">Phonk</div>
+      <div class="chip" data-type="genre" data-val="electronic" id="chip-genre-electronic">Electronic</div>
+      <div class="chip" data-type="genre" data-val="hiphoprap" id="chip-genre-hiphoprap">Hip-Hop</div>
+      <div class="chip" data-type="genre" data-val="ambient" id="chip-genre-ambient">Ambient</div>
+      <div class="chip" data-type="genre" data-val="rock" id="chip-genre-rock">Rock</div>
+      <div class="chip" data-type="genre" data-val="danceedm" id="chip-genre-danceedm">EDM</div>
+      <div class="chip" data-type="genre" data-val="rbsoul" id="chip-genre-rbsoul">R&B</div>
+      <div class="chip" data-type="genre" data-val="indie" id="chip-genre-indie">Indie</div>
     </div>
 
     <!-- Content Area -->
@@ -671,7 +671,7 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-          <span id="txt-ext-modal-title">Built-in Extensions Hub (6 Modules)</span>
+          <span id="txt-ext-modal-title">Built-in Extensions Hub (7 Modules)</span>
         </div>
         <button class="modal-close-btn" id="btn-close-extensions-modal">✕</button>
       </div>
@@ -682,10 +682,10 @@
             <div class="ext-icon-box">🎤</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Karaoke & Synced Lyrics</span>
+                <span class="ext-name" id="txt-ext-lyrics-name">Karaoke & Synced Lyrics</span>
                 <span class="ext-badge pro">Built-in</span>
               </div>
-              <div class="ext-desc">Automatic synchronized lyrics lookup from LRCLIB with line-by-line real-time scrolling, active line highlight, and jump-to-time on click.</div>
+              <div class="ext-desc" id="txt-ext-lyrics-desc">Automatic synchronized lyrics lookup from LRCLIB with line-by-line real-time scrolling, active line highlight, and jump-to-time on click.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-lyrics">Open Karaoke (K)</button>
           </div>
@@ -695,10 +695,10 @@
             <div class="ext-icon-box">🌙</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Smart Sleep Timer</span>
+                <span class="ext-name" id="txt-ext-sleep-name">Smart Sleep Timer</span>
                 <span class="ext-badge">Active</span>
               </div>
-              <div class="ext-desc">Stop music after a set duration or at the end of the track, featuring a gentle 30-second volume fade-out to preserve your sleep.</div>
+              <div class="ext-desc" id="txt-ext-sleep-desc">Stop music after a set duration or at the end of the track, featuring a gentle 30-second volume fade-out to preserve your sleep.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-sleep">Configure Timer</button>
           </div>
@@ -708,10 +708,10 @@
             <div class="ext-icon-box">🎛️</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Audio FX Studio: 8D Audio & Speed</span>
+                <span class="ext-name" id="txt-ext-fx-name">Audio FX Studio: 8D Audio & Speed</span>
                 <span class="ext-badge pro">WebAudio DSP</span>
               </div>
-              <div class="ext-desc">360° binaural spatial audio rotation for headphones with radar, Nightcore (+25% speed/pitch), Slowed + Reverb, and smooth pitch slider.</div>
+              <div class="ext-desc" id="txt-ext-fx-desc">360° binaural spatial audio rotation for headphones with radar, Nightcore (+25% speed/pitch), Slowed + Reverb, and smooth pitch slider.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-fx">FX Studio (F)</button>
           </div>
@@ -721,10 +721,10 @@
             <div class="ext-icon-box">🔁</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">A-B Precision Looper</span>
+                <span class="ext-name" id="txt-ext-looper-name">A-B Precision Looper</span>
                 <span class="ext-badge">Practice</span>
               </div>
-              <div class="ext-desc">Instantly set loop points [A] and [B] on the timeline for infinite seamless repetition of drops, solos, and beats.</div>
+              <div class="ext-desc" id="txt-ext-looper-desc">Instantly set loop points [A] and [B] on the timeline for infinite seamless repetition of drops, solos, and beats.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-looper">A-B Looper</button>
           </div>
@@ -734,10 +734,10 @@
             <div class="ext-icon-box">🪪</div>
             <div class="ext-content">
               <div class="ext-title-row">
-                <span class="ext-name">Social Track Card Generator</span>
+                <span class="ext-name" id="txt-ext-card-name">Social Track Card Generator</span>
                 <span class="ext-badge pro">HD Canvas</span>
               </div>
-              <div class="ext-desc">Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata to share on Discord, Telegram, or Twitter/X.</div>
+              <div class="ext-desc" id="txt-ext-card-desc">Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata to share on Discord, Telegram, or Twitter/X.</div>
             </div>
             <button class="ext-action-btn" id="ext-btn-open-card">Create Card</button>
           </div>

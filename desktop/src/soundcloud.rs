@@ -570,7 +570,7 @@ impl SoundCloudClient {
 
         // Playlists
         let pl_url = format!(
-            "https://api-v2.soundcloud.com/search/playlists?q={}&client_id={}&limit=8",
+            "https://api-v2.soundcloud.com/search/playlists?q={}&client_id={}&limit=24",
             urlencoding(query),
             client_id
         );
@@ -916,11 +916,15 @@ fn parse_single_playlist(item: &Value) -> Option<PlaylistItem> {
 }
 
 fn urlencoding(input: &str) -> String {
+    let normalized = input.replace('+', " ");
     let mut encoded = String::new();
-    for byte in input.bytes() {
+    for byte in normalized.bytes() {
         match byte {
             b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
                 encoded.push(byte as char);
+            }
+            b' ' => {
+                encoded.push_str("%20");
             }
             _ => {
                 encoded.push_str(&format!("%{:02X}", byte));

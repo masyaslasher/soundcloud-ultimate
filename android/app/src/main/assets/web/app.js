@@ -102,7 +102,49 @@
     "no_history_desc": "Tracks you play will automatically appear here for quick access.",
     "stream_guest_title": "Personal Stream requires an account",
     "stream_guest_desc": "Stream shows updates from artists you follow on SoundCloud. You can listen freely to Trending, Liked Tracks, Playlists, and Search without an account, or sign in whenever you wish!",
-    "featured_playlists": "Featured & Top Playlists"
+    "featured_playlists": "Featured & Top Playlists",
+    "lang_native_name": "English",
+    "active_lang_prefix": "Active: ",
+    "trending_title": "Trending",
+    "search_results_title": "Search Results",
+    "radio_station_title": "Radio Station",
+    "genre_all": "All Genres",
+    "genres": {
+      "phonk": "Phonk",
+      "electronic": "Electronic",
+      "hiphoprap": "Hip-Hop",
+      "ambient": "Ambient",
+      "rock": "Rock",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Indie"
+    },
+    "subtitle_local_lib": "Local Library",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Featured & Top Playlists",
+    "subtitle_following": "Following",
+    "subtitle_local_history": "Local History",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Clear History",
+    "toast_history_cleared": "🗑️ History cleared",
+    "no_tracks_found": "No tracks found",
+    "no_playlists_found": "No playlists found",
+    "txt_stat_tracks": "Tracks",
+    "txt_stat_followers": "Followers",
+    "txt_stat_likes": "Likes",
+    "txt_prof_tracks_title": "Popular Tracks",
+    "txt_prof_pl_title": "Albums & Playlists",
+    "txt_play_playlist": "Play All",
+    "ext_lyrics_name": "Karaoke & Synced Lyrics",
+    "ext_lyrics_desc": "Automatic synchronized lyrics lookup from LRCLIB with line-by-line scrolling and vocal highlights.",
+    "ext_sleep_name": "Smart Sleep Timer",
+    "ext_sleep_desc": "Stop music after a set duration or at the end of the track, featuring a gentle 30-second volume fade-out.",
+    "ext_fx_name": "Audio FX Studio: 8D Audio & Speed",
+    "ext_fx_desc": "360° binaural spatial audio rotation for headphones with radar, Nightcore, Slowed + Reverb, and pitch slider.",
+    "ext_looper_name": "A-B Precision Looper",
+    "ext_looper_desc": "Instantly set loop points [A] and [B] on the timeline for infinite seamless repetition of drops and beats.",
+    "ext_card_name": "Social Track Card Generator",
+    "ext_card_desc": "Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata."
   },
   "ru": {
     "search_placeholder": "Поиск треков, исполнителей, альбомов...",
@@ -170,7 +212,49 @@
     "no_history_desc": "Прослушанные треки автоматически появятся здесь.",
     "stream_guest_title": "Личная лента доступна после входа",
     "stream_guest_desc": "Лента показывает обновления от авторов, на которых вы подписаны. Слушать тренды, лайки и плейлисты можно свободно без аккаунта!",
-    "featured_playlists": "Популярные плейлисты"
+    "featured_playlists": "Популярные плейлисты",
+    "lang_native_name": "Русский",
+    "active_lang_prefix": "Активно: ",
+    "trending_title": "В тренде",
+    "search_results_title": "Результаты поиска",
+    "radio_station_title": "Радиостанция",
+    "genre_all": "Все жанры",
+    "genres": {
+      "phonk": "Фонк",
+      "electronic": "Электроника",
+      "hiphoprap": "Хип-хоп",
+      "ambient": "Эмбиент",
+      "rock": "Рок",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Инди"
+    },
+    "subtitle_local_lib": "Локальная библиотека",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Популярные плейлисты",
+    "subtitle_following": "Подписки",
+    "subtitle_local_history": "Локальная история",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Очистить историю",
+    "toast_history_cleared": "🗑️ История очищена",
+    "no_tracks_found": "Треки не найдены",
+    "no_playlists_found": "Плейлисты не найдены",
+    "txt_stat_tracks": "Треков",
+    "txt_stat_followers": "Подписчиков",
+    "txt_stat_likes": "Лайков",
+    "txt_prof_tracks_title": "Популярные треки",
+    "txt_prof_pl_title": "Альбомы и плейлисты",
+    "txt_play_playlist": "Слушать всё",
+    "ext_lyrics_name": "Караоке и синхронный текст",
+    "ext_lyrics_desc": "Автоматический поиск текста в базе LRCLIB с синхронной построчной прокруткой и подсветкой строк.",
+    "ext_sleep_name": "Умный таймер сна",
+    "ext_sleep_desc": "Остановка музыки через заданное время с мягким 30-секундным затуханием звука.",
+    "ext_fx_name": "Студия аудио FX: 8D Audio и Скорость",
+    "ext_fx_desc": "360° бинауральное пространственное вращение стереобазы в наушниках с радаром, Nightcore и Slowed.",
+    "ext_looper_name": "A-B Прецизионный лупер",
+    "ext_looper_desc": "Мгновенная установка меток [A] и [B] для бесконечного бесшовного зацикливания любимых дропов и битов.",
+    "ext_card_name": "Генератор Bento-карточек трека",
+    "ext_card_desc": "Создание стильных AMOLED-карточек трека с аудиоволной и обложкой для соцсетей."
   },
   "de": {
     "search_placeholder": "Titel, Künstler, Alben suchen...",
@@ -238,7 +322,49 @@
     "no_history_desc": "Gespielte Titel werden automatisch hier angezeigt.",
     "stream_guest_title": "Persönlicher Stream erfordert ein Konto",
     "stream_guest_desc": "Der Stream zeigt Updates von Künstlern, denen Sie folgen. Trends, Favoriten und Playlists können ohne Konto gehört werden!",
-    "featured_playlists": "Beliebte Playlists"
+    "featured_playlists": "Beliebte Playlists",
+    "lang_native_name": "Deutsch",
+    "active_lang_prefix": "Aktiv: ",
+    "trending_title": "Angesagt",
+    "search_results_title": "Suchergebnisse",
+    "radio_station_title": "Radiosender",
+    "genre_all": "Alle Genres",
+    "genres": {
+      "phonk": "Phonk",
+      "electronic": "Elektronisch",
+      "hiphoprap": "Hip-Hop",
+      "ambient": "Ambient",
+      "rock": "Rock",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Indie"
+    },
+    "subtitle_local_lib": "Lokale Mediathek",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Beliebte Playlists",
+    "subtitle_following": "Abonnements",
+    "subtitle_local_history": "Lokaler Verlauf",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Verlauf löschen",
+    "toast_history_cleared": "🗑️ Verlauf gelöscht",
+    "no_tracks_found": "Keine Titel gefunden",
+    "no_playlists_found": "Keine Playlists gefunden",
+    "txt_stat_tracks": "Titel",
+    "txt_stat_followers": "Follower",
+    "txt_stat_likes": "Gefällt mir",
+    "txt_prof_tracks_title": "Beliebte Titel",
+    "txt_prof_pl_title": "Alben & Playlists",
+    "txt_play_playlist": "Alle abspielen",
+    "ext_lyrics_name": "Karaoke & Synchrone Songtexte",
+    "ext_lyrics_desc": "Automatische Songtextsuche über LRCLIB mit zeilenweisem Scrollen in Echtzeit.",
+    "ext_sleep_name": "Smarter Sleep-Timer",
+    "ext_sleep_desc": "Stoppt die Musik nach einer festgelegten Zeit mit sanfter 30-Sekunden-Ausblendung.",
+    "ext_fx_name": "Audio-FX-Studio: 8D & Tempo",
+    "ext_fx_desc": "360°-Binaural-Raumklang für Kopfhörer mit Radar, Nightcore und Slowed-Modus.",
+    "ext_looper_name": "A-B Präzisions-Looper",
+    "ext_looper_desc": "Setzen Sie Punkte [A] und [B] für nahtlose Endlosschleifen von Soli und Beats.",
+    "ext_card_name": "Social-Bento-Trackcard-Generator",
+    "ext_card_desc": "Erstellen Sie hochauflösende AMOLED-Karten für den aktuellen Titel zum Teilen."
   },
   "fr": {
     "search_placeholder": "Rechercher titres, artistes, albums...",
@@ -306,7 +432,49 @@
     "no_history_desc": "Les morceaux écoutés apparaîtront automatiquement ici.",
     "stream_guest_title": "Le flux personnel nécessite un compte",
     "stream_guest_desc": "Le flux affiche les mises à jour des créateurs que vous suivez. Vous pouvez écouter les tendances et les playlists sans compte !",
-    "featured_playlists": "Playlists populaires"
+    "featured_playlists": "Playlists populaires",
+    "lang_native_name": "Français",
+    "active_lang_prefix": "Actif : ",
+    "trending_title": "Tendances",
+    "search_results_title": "Résultats de recherche",
+    "radio_station_title": "Station Radio",
+    "genre_all": "Tous les genres",
+    "genres": {
+      "phonk": "Phonk",
+      "electronic": "Électronique",
+      "hiphoprap": "Hip-Hop",
+      "ambient": "Ambiant",
+      "rock": "Rock",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Indé"
+    },
+    "subtitle_local_lib": "Bibliothèque locale",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Playlists populaires",
+    "subtitle_following": "Abonnements",
+    "subtitle_local_history": "Historique local",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Effacer l'historique",
+    "toast_history_cleared": "🗑️ Historique effacé",
+    "no_tracks_found": "Aucun titre trouvé",
+    "no_playlists_found": "Aucune playlist trouvée",
+    "txt_stat_tracks": "Titres",
+    "txt_stat_followers": "Abonnés",
+    "txt_stat_likes": "J'aime",
+    "txt_prof_tracks_title": "Titres populaires",
+    "txt_prof_pl_title": "Albums et playlists",
+    "txt_play_playlist": "Tout écouter",
+    "ext_lyrics_name": "Karaoké & Paroles synchronisées",
+    "ext_lyrics_desc": "Recherche automatique des paroles avec défilement synchronisé en temps réel.",
+    "ext_sleep_name": "Minuteur de sommeil intelligent",
+    "ext_sleep_desc": "Arrête la musique avec un fondu doux de 30 secondes pour préserver votre sommeil.",
+    "ext_fx_name": "Studio d'effets audio : 8D & Vitesse",
+    "ext_fx_desc": "Spatialisation 360° pour casque avec radar, mode Nightcore et Slowed + Reverb.",
+    "ext_looper_name": "Looper de précision A-B",
+    "ext_looper_desc": "Définissez les points [A] et [B] pour répéter vos passages préférés en boucle infinie.",
+    "ext_card_name": "Générateur de carte Bento",
+    "ext_card_desc": "Générez des cartes AMOLED haute résolution du morceau actuel à partager."
   },
   "ja": {
     "search_placeholder": "曲、アーティスト、アルバムを検索...",
@@ -374,7 +542,49 @@
     "no_history_desc": "再生したトラックがここに自動的に表示されます。",
     "stream_guest_title": "ストリームにはアカウントが必要です",
     "stream_guest_desc": "ストリームにはフォロー中のアーティストの更新が表示されます。アカウントなしでトレンドやプレイリストを自由に聴くことができます！",
-    "featured_playlists": "注目のプレイリスト"
+    "featured_playlists": "注目のプレイリスト",
+    "lang_native_name": "日本語",
+    "active_lang_prefix": "有効: ",
+    "trending_title": "トレンド",
+    "search_results_title": "検索結果",
+    "radio_station_title": "ラジオ局",
+    "genre_all": "すべてのジャンル",
+    "genres": {
+      "phonk": "フォンク",
+      "electronic": "エレクトロニック",
+      "hiphoprap": "ヒップホップ",
+      "ambient": "アンビエント",
+      "rock": "ロック",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "インディー"
+    },
+    "subtitle_local_lib": "ローカルライブラリ",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "注目のプレイリスト",
+    "subtitle_following": "フォロー中",
+    "subtitle_local_history": "ローカル履歴",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "履歴を消去",
+    "toast_history_cleared": "🗑️ 履歴を消去しました",
+    "no_tracks_found": "トラックが見つかりません",
+    "no_playlists_found": "プレイリストが見つかりません",
+    "txt_stat_tracks": "曲数",
+    "txt_stat_followers": "フォロワー",
+    "txt_stat_likes": "いいね",
+    "txt_prof_tracks_title": "人気曲",
+    "txt_prof_pl_title": "アルバム＆プレイリスト",
+    "txt_play_playlist": "すべて再生",
+    "ext_lyrics_name": "カラオケ＆同期歌詞",
+    "ext_lyrics_desc": "LRCLIBによる歌詞自動検索とリアルタイムスクロール表示。",
+    "ext_sleep_name": "スマートスリープタイマー",
+    "ext_sleep_desc": "30秒間の穏やかなフェードアウト機能付きスリープタイマー。",
+    "ext_fx_name": "オーディオFXスタジオ: 8D＆速度",
+    "ext_fx_desc": "ヘッドフォン用360°立体音響回転、Nightcore、Slowed再生モード。",
+    "ext_looper_name": "A-Bプレシジョンルーパー",
+    "ext_looper_desc": "区間[A]-[B]を指定してギターソロやビートをシームレスに無限ループ再生。",
+    "ext_card_name": "Bentoトラックカードジェネレーター",
+    "ext_card_desc": "SNS共有用の美しいAMOLEDトラックカードをワンクリックで生成。"
   },
   "uk": {
     "search_placeholder": "Пошук треків, виконавців, альбомів...",
@@ -442,7 +652,49 @@
     "no_history_desc": "Прослухані треки автоматично з'являтимуться тут.",
     "stream_guest_title": "Особиста стрічка доступна після входу",
     "stream_guest_desc": "Стрічка показує оновлення від виконавців, за якими ви стежите. Слухати тренди, лайки та плейлісти можна вільно без акаунта!",
-    "featured_playlists": "Популярні плейлісти"
+    "featured_playlists": "Популярні плейлісти",
+    "lang_native_name": "Українська",
+    "active_lang_prefix": "Активно: ",
+    "trending_title": "У тренді",
+    "search_results_title": "Результати пошуку",
+    "radio_station_title": "Радіостанція",
+    "genre_all": "Усі жанри",
+    "genres": {
+      "phonk": "Фонк",
+      "electronic": "Електроніка",
+      "hiphoprap": "Хіп-хоп",
+      "ambient": "Ембієнт",
+      "rock": "Рок",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Інді"
+    },
+    "subtitle_local_lib": "Локальна бібліотека",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Популярні плейлісти",
+    "subtitle_following": "Підписки",
+    "subtitle_local_history": "Локальна історія",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Очистити історію",
+    "toast_history_cleared": "🗑️ Історію очищено",
+    "no_tracks_found": "Треків не знайдено",
+    "no_playlists_found": "Плейлістів не знайдено",
+    "txt_stat_tracks": "Треків",
+    "txt_stat_followers": "Підписників",
+    "txt_stat_likes": "Лайків",
+    "txt_prof_tracks_title": "Популярні треки",
+    "txt_prof_pl_title": "Альбоми та плейлісти",
+    "txt_play_playlist": "Слухати все",
+    "ext_lyrics_name": "Караоке та синхронний текст",
+    "ext_lyrics_desc": "Автоматичний пошук слів пісні в базі LRCLIB з синхронною прокруткою.",
+    "ext_sleep_name": "Розумний таймер сну",
+    "ext_sleep_desc": "Зупинка музики через заданий час з плавним 30-секундним затуханням звуку.",
+    "ext_fx_name": "Студія аудіо FX: 8D Audio та Швидкість",
+    "ext_fx_desc": "360° просторове обертання стереобази в навушниках з радаром, Nightcore і Slowed.",
+    "ext_looper_name": "A-B Прецизійний лупер",
+    "ext_looper_desc": "Миттєве встановлення міток [A] та [B] для безперервного зациклення улюблених фрагментів.",
+    "ext_card_name": "Генератор Bento-карток треку",
+    "ext_card_desc": "Створення стильних AMOLED-карток треку для публікації в соцмережах."
   },
   "pl": {
     "search_placeholder": "Szukaj utworów, wykonawców, albumów...",
@@ -510,7 +762,49 @@
     "no_history_desc": "Odtwarzane utwory pojawią się tutaj automatycznie.",
     "stream_guest_title": "Twój strumień wymaga konta",
     "stream_guest_desc": "Strumień pokazuje utwory obserwowanych wykonawców. Możesz swobodnie słuchać trendów i playlist bez konta!",
-    "featured_playlists": "Polecane playlisty"
+    "featured_playlists": "Polecane playlisty",
+    "lang_native_name": "Polski",
+    "active_lang_prefix": "Aktywny: ",
+    "trending_title": "Na czasie",
+    "search_results_title": "Wyniki wyszukiwania",
+    "radio_station_title": "Stacja radiowa",
+    "genre_all": "Wszystkie gatunki",
+    "genres": {
+      "phonk": "Phonk",
+      "electronic": "Elektroniczna",
+      "hiphoprap": "Hip-Hop",
+      "ambient": "Ambient",
+      "rock": "Rock",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Indie"
+    },
+    "subtitle_local_lib": "Lokalna biblioteka",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Polecane playlisty",
+    "subtitle_following": "Obserwowani",
+    "subtitle_local_history": "Lokalna historia",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Wyczyść historię",
+    "toast_history_cleared": "🗑️ Historia wyczyszczona",
+    "no_tracks_found": "Nie znaleziono utworów",
+    "no_playlists_found": "Nie znaleziono playlist",
+    "txt_stat_tracks": "Utworów",
+    "txt_stat_followers": "Obserwujących",
+    "txt_stat_likes": "Polubień",
+    "txt_prof_tracks_title": "Popularne utwory",
+    "txt_prof_pl_title": "Albumy i playlisty",
+    "txt_play_playlist": "Odtwórz wszystko",
+    "ext_lyrics_name": "Karaoke i zsynchronizowany tekst",
+    "ext_lyrics_desc": "Automatyczne wyszukiwanie tekstu z LRCLIB i przewijanie w czasie rzeczywistym.",
+    "ext_sleep_name": "Inteligentny wyłącznik czasowy",
+    "ext_sleep_desc": "Zatrzymuje odtwarzanie po określonym czasie z łagodnym 30-sekundowym wyciszaniem.",
+    "ext_fx_name": "Studio audio FX: 8D i Prędkość",
+    "ext_fx_desc": "Przestrzenne audio 360° dla słuchawek z radarem, Nightcore oraz trybem Slowed.",
+    "ext_looper_name": "Precyzyjny pętlik A-B",
+    "ext_looper_desc": "Ustaw punkty [A] i [B], aby bezszwowo zapętlać ulubione partie utworów.",
+    "ext_card_name": "Generator kart utworów Bento",
+    "ext_card_desc": "Generuj estetyczne karty AMOLED z metadanymi i falami dźwiękowymi do mediów społecznościowych."
   },
   "hy": {
     "search_placeholder": "Որոնել երգեր, կատարողներ, ալբոմներ...",
@@ -578,9 +872,78 @@
     "no_history_desc": "Ձեր լսած թրեքներն ինքնաբերաբար կհայտնվեն այստեղ:",
     "stream_guest_title": "Անձնական հոսքի համար անհրաժեշտ է մուտք գործել",
     "stream_guest_desc": "Հոսքը ցույց է տալիս ձեր հետևած կատարողների նորությունները: Թրենդները և երգացանկերը հասանելի են առանց գրանցման!",
-    "featured_playlists": "Հանրաճանաչ երգացանկեր"
+    "featured_playlists": "Հանրաճանաչ երգացանկեր",
+    "lang_native_name": "Հայերեն",
+    "active_lang_prefix": "Ակտիվ՝ ",
+    "trending_title": "Թրենդային",
+    "search_results_title": "Որոնման արդյունքներ",
+    "radio_station_title": "Ռադիոկայան",
+    "genre_all": "Բոլոր ժանրերը",
+    "genres": {
+      "phonk": "Ֆոնկ",
+      "electronic": "Էլեկտրոնային",
+      "hiphoprap": "Հիփ-հոփ",
+      "ambient": "Էմբիենթ",
+      "rock": "Ռոք",
+      "danceedm": "EDM",
+      "rbsoul": "R&B",
+      "indie": "Ինդի"
+    },
+    "subtitle_local_lib": "Տեղական գրադարան",
+    "subtitle_sc_lib": "SoundCloud",
+    "subtitle_featured_pl": "Հանրաճանաչ երգացանկեր",
+    "subtitle_following": "Հետևումներ",
+    "subtitle_local_history": "Տեղական պատմություն",
+    "subtitle_sc_history": "SoundCloud",
+    "btn_clear_history": "Մաքրել պատմությունը",
+    "toast_history_cleared": "🗑️ Պատմությունը մաքրվեց",
+    "no_tracks_found": "Երգեր չեն գտնվել",
+    "no_playlists_found": "Երգացանկեր չեն գտնվել",
+    "txt_stat_tracks": "Երգեր",
+    "txt_stat_followers": "Հետևորդներ",
+    "txt_stat_likes": "Հավանածներ",
+    "txt_prof_tracks_title": "Հանրաճանաչ երգեր",
+    "txt_prof_pl_title": "Ալբոմներ և երգացանկեր",
+    "txt_play_playlist": "Նվագարկել բոլորը",
+    "ext_lyrics_name": "Կարաոկե և սինխրոն տեքստ",
+    "ext_lyrics_desc": "LRCLIB բազայից երգերի տեքստերի որոնում՝ իրական ժամանակում սինխրոն տողերով:",
+    "ext_sleep_name": "Խելացի քնի ժամաչափ",
+    "ext_sleep_desc": "Երաժշտության անջատում սահուն 30 վայրկյան մարումով՝ պահպանելով ձեր քունը:",
+    "ext_fx_name": "Աուդիո FX Ստուդիա: 8D և Արագություն",
+    "ext_fx_desc": "360° ուղեծրային ձայն ականջակալների համար ռադարով, Nightcore և Slowed ռեժիմներով:",
+    "ext_looper_name": "A-B Ճշգրիտ Լուպեր",
+    "ext_looper_desc": "Տեղադրեք [A] և [B] կետերը սիրված սոլոները կամ բիթերն անվերջ կրկնելու համար:",
+    "ext_card_name": "Երգի Bento-քարտ սոցցանցերի համար",
+    "ext_card_desc": "Ստեղծեք ընթացիկ երգի բարձր որակի AMOLED քարտ՝ սոցիալական ցանցերում կիսվելու համար:"
   }
 };
+
+  // App State & Active View Tracking
+  let currentTab = { type: 'genre', val: 'all-music' };
+  let currentSearchQuery = '';
+  let currentRadioTrackTitle = '';
+
+  function renderActiveTabTitle() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    if (currentTab.type === 'lib') {
+      if (currentTab.val === 'likes') {
+        gridTitle.innerHTML = `${t.chip_likes} <span>•</span> ${currentUser ? t.subtitle_sc_lib : t.subtitle_local_lib}`;
+      } else if (currentTab.val === 'playlists') {
+        gridTitle.innerHTML = `${t.chip_playlists} <span>•</span> ${currentUser ? t.subtitle_sc_lib : t.subtitle_featured_pl}`;
+      } else if (currentTab.val === 'stream') {
+        gridTitle.innerHTML = `${t.chip_stream} <span>•</span> ${t.subtitle_following}`;
+      } else if (currentTab.val === 'history') {
+        gridTitle.innerHTML = `${t.chip_history} <span>•</span> ${currentUser ? t.subtitle_sc_history : t.subtitle_local_history}`;
+      }
+    } else if (currentTab.type === 'genre') {
+      const gName = (t.genres && t.genres[currentTab.val]) || (currentTab.val === 'all-music' ? t.genre_all : currentTab.val.toUpperCase());
+      gridTitle.innerHTML = `${t.trending_title}: <span>${gName}</span>`;
+    } else if (currentTab.type === 'search') {
+      gridTitle.innerHTML = `${t.search_results_title}: <span>"${escapeHtml(currentSearchQuery)}"</span>`;
+    } else if (currentTab.type === 'radio') {
+      gridTitle.innerHTML = `📻 ${t.radio_station_title}: <span>"${escapeHtml(currentRadioTrackTitle)}"</span>`;
+    }
+  }
 
   // DOM Elements
   const audio = document.getElementById('audio-engine');
@@ -1271,6 +1634,19 @@
       document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
         btn.classList.toggle('liked', willLike);
       });
+      if (currentTab.type === 'lib' && currentTab.val === 'likes' && !willLike) {
+        const cardToRemove = document.querySelector(`.track-card[data-id="${track.id}"]`);
+        if (cardToRemove) {
+          cardToRemove.style.opacity = '0';
+          cardToRemove.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            cardToRemove.remove();
+            if (getLocalLikes().length === 0) {
+              renderEmptyLikesState();
+            }
+          }, 200);
+        }
+      }
       return;
     }
 
@@ -1284,6 +1660,14 @@
     document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
       btn.classList.toggle('liked', willLike);
     });
+    if (currentTab.type === 'lib' && currentTab.val === 'likes' && !willLike) {
+      const cardToRemove = document.querySelector(`.track-card[data-id="${track.id}"]`);
+      if (cardToRemove) {
+        cardToRemove.style.opacity = '0';
+        cardToRemove.style.transform = 'scale(0.95)';
+        setTimeout(() => cardToRemove.remove(), 200);
+      }
+    }
 
     try {
       const method = willLike ? 'POST' : 'DELETE';
@@ -1689,7 +2073,9 @@
         queue = [track, ...data.tracks];
         currentIndex = 0;
         renderQueue();
-        gridTitle.innerHTML = `📻 Radio Station: <span>"${track.title}"</span> (${data.tracks.length} tracks)`;
+        currentRadioTrackTitle = track.title;
+        currentTab = { type: 'radio', val: track.id };
+        renderActiveTabTitle();
         heroSection.style.display = 'none';
         renderTracks(queue);
         playerTitle.textContent = track.title;
@@ -1836,7 +2222,7 @@
   function renderTracks(tracks) {
     tracksGrid.innerHTML = '';
     if (!tracks || tracks.length === 0) {
-      tracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; font-size: 14px;">No tracks found</div>';
+      const tTr = TRANSLATIONS[currentLang] || TRANSLATIONS.en; tracksGrid.innerHTML = `<div style="color: var(--text-dim); padding: 40px; font-size: 14px; text-align: center;">${tTr.no_tracks_found || 'No tracks found'}</div>`;
       return;
     }
 
@@ -1902,7 +2288,7 @@
   function renderPlaylists(playlists) {
     tracksGrid.innerHTML = '';
     if (!playlists || playlists.length === 0) {
-      tracksGrid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; font-size: 14px;">No playlists found</div>';
+      const tPl = TRANSLATIONS[currentLang] || TRANSLATIONS.en; tracksGrid.innerHTML = `<div style="color: var(--text-dim); padding: 40px; font-size: 14px; text-align: center;">${tPl.no_playlists_found || 'No playlists found'}</div>`;
       return;
     }
 
@@ -1928,122 +2314,181 @@
     });
   }
 
-  // 11. Library Navigation Calls
+  // 11. Library Navigation Calls & Views
+  function renderEmptyLikesState() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    tracksGrid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
+        <div style="font-size: 48px; margin-bottom: 12px;">❤️</div>
+        <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
+          ${t.no_likes_guest_title || 'Your Local Favorites is empty'}
+        </div>
+        <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
+          ${t.no_likes_guest_desc || 'Tap the ❤️ icon on any track to save it here, or sign in to sync with your SoundCloud account.'}
+        </div>
+        <button class="action-btn" id="btn-empty-likes-signin" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
+          ⚡ ${t.login_btn || 'Sign In to SoundCloud'}
+        </button>
+      </div>
+    `;
+    document.getElementById('btn-empty-likes-signin')?.addEventListener('click', () => {
+      document.getElementById('auth-modal-overlay')?.classList.add('open');
+    });
+  }
+
+  function renderEmptyStreamState() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    tracksGrid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
+        <div style="font-size: 48px; margin-bottom: 12px;">📡</div>
+        <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
+          ${t.stream_guest_title || 'Personal Stream requires an account'}
+        </div>
+        <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
+          ${t.stream_guest_desc || 'Stream shows updates from artists you follow on SoundCloud. You can listen freely to Trending, Liked Tracks, Playlists, and Search without an account, or sign in whenever you wish!'}
+        </div>
+        <button class="action-btn" id="btn-empty-stream-signin" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
+          ⚡ ${t.login_btn || 'Sign In to SoundCloud'}
+        </button>
+      </div>
+    `;
+    document.getElementById('btn-empty-stream-signin')?.addEventListener('click', () => {
+      document.getElementById('auth-modal-overlay')?.classList.add('open');
+    });
+  }
+
+  function renderEmptyHistoryState() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    tracksGrid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
+        <div style="font-size: 48px; margin-bottom: 12px;">🕒</div>
+        <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
+          ${t.no_history_title || 'No playback history yet'}
+        </div>
+        <div style="font-size: 13px; max-width: 400px; margin: 0 auto; line-height: 1.5;">
+          ${t.no_history_desc || 'Tracks you play will automatically appear here for quick access.'}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderHistoryTracks(tracks) {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    renderTracks(tracks);
+    const clearBar = document.createElement('div');
+    clearBar.style.cssText = 'grid-column: 1 / -1; display: flex; justify-content: flex-end; margin-bottom: 8px;';
+    clearBar.innerHTML = `
+      <button id="btn-clear-history-action" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-dim); padding: 6px 14px; border-radius: 9999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+        🗑️ ${t.btn_clear_history || 'Clear History'}
+      </button>
+    `;
+    tracksGrid.insertBefore(clearBar, tracksGrid.firstChild);
+    document.getElementById('btn-clear-history-action')?.addEventListener('click', () => {
+      saveLocalHistory([]);
+      renderEmptyHistoryState();
+      showToast(t.toast_history_cleared || 'History cleared');
+    });
+  }
+
   async function loadMyLikes() {
-    gridTitle.innerHTML = '❤️ ' + (TRANSLATIONS[currentLang]?.chip_likes || 'Liked Tracks') + ' <span>•</span> ' + (currentUser ? 'SoundCloud' : 'Local Library');
+    currentTab = { type: 'lib', val: 'likes' };
+    renderActiveTabTitle();
     heroSection.style.display = 'none';
 
     if (!currentUser) {
       const localLikes = getLocalLikes();
       if (localLikes.length === 0) {
-        tracksGrid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-            <div style="font-size: 48px; margin-bottom: 12px;">❤️</div>
-            <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
-              ${TRANSLATIONS[currentLang]?.no_likes_guest_title || 'Your Local Favorites is empty'}
-            </div>
-            <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
-              ${TRANSLATIONS[currentLang]?.no_likes_guest_desc || 'Tap the ❤️ icon on any track to save it here, or sign in to sync with your SoundCloud account.'}
-            </div>
-            <button class="action-btn" onclick="document.getElementById('auth-modal-overlay').classList.add('open')" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
-              ⚡ ${TRANSLATIONS[currentLang]?.login_btn || 'Sign In to SoundCloud'}
-            </button>
-          </div>
-        `;
+        renderEmptyLikesState();
         return;
       }
-      renderTracks(localLikes.map(t => ({ ...t, liked: true })));
+      renderTracks(localLikes.map(tr => ({ ...tr, liked: true })));
       return;
     }
 
     try {
       const res = await fetch('/api/me/likes?limit=50');
       const data = await res.json();
-      renderTracks((data.tracks || []).map(t => ({ ...t, liked: true })));
+      const tracks = data.tracks || [];
+      if (tracks.length === 0) {
+        renderEmptyLikesState();
+      } else {
+        renderTracks(tracks.map(tr => ({ ...tr, liked: true })));
+      }
     } catch (e) {
       console.error('Failed to load likes:', e);
-      renderTracks(getLocalLikes().map(t => ({ ...t, liked: true })));
+      const localLikes = getLocalLikes();
+      if (localLikes.length > 0) {
+        renderTracks(localLikes.map(tr => ({ ...tr, liked: true })));
+      } else {
+        renderEmptyLikesState();
+      }
     }
   }
 
   async function loadMyPlaylists() {
+    currentTab = { type: 'lib', val: 'playlists' };
+    renderActiveTabTitle();
     heroSection.style.display = 'none';
 
     if (!currentUser) {
-      gridTitle.innerHTML = '📂 ' + (TRANSLATIONS[currentLang]?.chip_playlists || 'Playlists') + ' <span>•</span> ' + (TRANSLATIONS[currentLang]?.featured_playlists || 'Featured & Top Playlists');
       try {
-        const res = await fetch('/api/search?q=top+hits+lofi+electronic&limit=30');
+        const res = await fetch('/api/search?q=top%20hits&limit=24');
         const data = await res.json();
         renderPlaylists(data.playlists || []);
       } catch (e) {
         console.error('Failed to load featured playlists:', e);
+        renderPlaylists([]);
       }
       return;
     }
 
-    gridTitle.innerHTML = '📂 ' + (TRANSLATIONS[currentLang]?.chip_playlists || 'Playlists') + ' <span>•</span> SoundCloud Library';
     try {
       const res = await fetch('/api/me/playlists');
       const data = await res.json();
       renderPlaylists(data.playlists || []);
     } catch (e) {
       console.error('Failed to load playlists:', e);
+      renderPlaylists([]);
     }
   }
 
   async function loadMyStream() {
+    currentTab = { type: 'lib', val: 'stream' };
+    renderActiveTabTitle();
     heroSection.style.display = 'none';
 
     if (!currentUser) {
-      gridTitle.innerHTML = '📡 ' + (TRANSLATIONS[currentLang]?.chip_stream || 'Stream') + ' <span>•</span> Following';
-      tracksGrid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-          <div style="font-size: 48px; margin-bottom: 12px;">📡</div>
-          <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
-            ${TRANSLATIONS[currentLang]?.stream_guest_title || 'Personal Stream requires an account'}
-          </div>
-          <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
-            ${TRANSLATIONS[currentLang]?.stream_guest_desc || 'Stream shows updates from artists you follow on SoundCloud. You can listen freely to Trending, Liked Tracks, Playlists, and Search without an account, or sign in whenever you wish!'}
-          </div>
-          <button class="action-btn" onclick="document.getElementById('auth-modal-overlay').classList.add('open')" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
-            ⚡ ${TRANSLATIONS[currentLang]?.login_btn || 'Sign In to SoundCloud'}
-          </button>
-        </div>
-      `;
+      renderEmptyStreamState();
       return;
     }
 
-    gridTitle.innerHTML = '📡 ' + (TRANSLATIONS[currentLang]?.chip_stream || 'Stream') + ' <span>•</span> Following';
     try {
       const res = await fetch('/api/me/stream');
       const data = await res.json();
-      renderTracks(data.tracks || []);
+      const tracks = data.tracks || [];
+      if (tracks.length === 0) {
+        renderEmptyStreamState();
+      } else {
+        renderTracks(tracks);
+      }
     } catch (e) {
       console.error('Failed to load stream:', e);
+      renderEmptyStreamState();
     }
   }
 
   async function loadMyHistory() {
-    gridTitle.innerHTML = '🕒 ' + (TRANSLATIONS[currentLang]?.chip_history || 'History') + ' <span>•</span> ' + (currentUser ? 'SoundCloud' : 'Local History');
+    currentTab = { type: 'lib', val: 'history' };
+    renderActiveTabTitle();
     heroSection.style.display = 'none';
 
     if (!currentUser) {
       const localHistory = getLocalHistory();
       if (localHistory.length === 0) {
-        tracksGrid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-            <div style="font-size: 48px; margin-bottom: 12px;">🕒</div>
-            <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
-              ${TRANSLATIONS[currentLang]?.no_history_title || 'No playback history yet'}
-            </div>
-            <div style="font-size: 13px; max-width: 400px; margin: 0 auto; line-height: 1.5;">
-              ${TRANSLATIONS[currentLang]?.no_history_desc || 'Tracks you play will automatically appear here for quick access.'}
-            </div>
-          </div>
-        `;
+        renderEmptyHistoryState();
         return;
       }
-      renderTracks(localHistory);
+      renderHistoryTracks(localHistory);
       return;
     }
 
@@ -2051,18 +2496,23 @@
       const res = await fetch('/api/me/history');
       const data = await res.json();
       if (data.tracks && data.tracks.length > 0) {
-        renderTracks(data.tracks);
+        renderHistoryTracks(data.tracks);
       } else {
-        renderTracks(getLocalHistory());
+        const localHistory = getLocalHistory();
+        if (localHistory.length > 0) renderHistoryTracks(localHistory);
+        else renderEmptyHistoryState();
       }
     } catch (e) {
-      renderTracks(getLocalHistory());
+      const localHistory = getLocalHistory();
+      if (localHistory.length > 0) renderHistoryTracks(localHistory);
+      else renderEmptyHistoryState();
     }
   }
 
   async function loadTrending(genre = 'all-music') {
-    gridTitle.innerHTML = `Trending: <span>${genre.toUpperCase()}</span>`;
-    heroSection.style.display = 'grid';
+    currentTab = { type: 'genre', val: genre };
+    renderActiveTabTitle();
+    heroSection.style.display = (genre === 'all-music') ? 'grid' : 'none';
     try {
       const res = await fetch(`/api/trending?genre=${genre}&limit=32`);
       const data = await res.json();
@@ -2074,10 +2524,12 @@
 
   async function performSearch(query) {
     if (!query || !query.trim()) {
-      loadTrending();
+      loadTrending('all-music');
       return;
     }
-    gridTitle.innerHTML = `Search Results: <span>"${query}"</span>`;
+    currentSearchQuery = query;
+    currentTab = { type: 'search', val: query };
+    renderActiveTabTitle();
     heroSection.style.display = 'none';
 
     try {
@@ -3316,7 +3768,7 @@
 
       // Update active indicator in Extensions Hub
       const ind = document.getElementById("current-lang-indicator");
-      if (ind) ind.textContent = "Active: " + t.dropdown_lang.replace("Language: ", "").replace("Язык: ", "");
+      if (ind) ind.textContent = (t.active_lang_prefix || "Active: ") + (t.lang_native_name || lang.toUpperCase());
 
       // Update active state in Language Modal cards
       document.querySelectorAll("#lang-grid .lang-card").forEach(card => {
@@ -3324,7 +3776,7 @@
         card.classList.toggle("active", code === lang);
       });
 
-      // DOM Elements
+      // Update Header & Nav
       const searchInp = document.getElementById("search-input");
       const txtThemes = document.getElementById("txt-themes-btn");
       const txtExt = document.getElementById("txt-extensions-btn");
@@ -3356,6 +3808,29 @@
       if (txtQueueTitle) txtQueueTitle.textContent = t.queue_title;
       if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = t.select_track;
 
+      // Translate Genre Chips in chips-bar
+      const genreKeys = ['phonk', 'electronic', 'hiphoprap', 'ambient', 'rock', 'danceedm', 'rbsoul', 'indie'];
+      genreKeys.forEach(g => {
+        const el = document.getElementById(`chip-genre-${g}`);
+        if (el && t.genres && t.genres[g]) {
+          el.textContent = t.genres[g];
+        }
+      });
+
+      // Update Current Active Tab Title immediately
+      renderActiveTabTitle();
+
+      // Refresh empty state if visible
+      if (currentTab.type === 'lib') {
+        if (currentTab.val === 'likes' && !currentUser && getLocalLikes().length === 0) {
+          renderEmptyLikesState();
+        } else if (currentTab.val === 'history' && !currentUser && getLocalHistory().length === 0) {
+          renderEmptyHistoryState();
+        } else if (currentTab.val === 'stream' && !currentUser) {
+          renderEmptyStreamState();
+        }
+      }
+
       // Modal elements
       const txtAuthTitle = document.getElementById("txt-auth-modal-title");
       const btn1Click = document.getElementById("btn-import-browser");
@@ -3371,6 +3846,18 @@
       const txtExtLangName = document.getElementById("txt-ext-lang-name");
       const txtExtLangDesc = document.getElementById("txt-ext-lang-desc");
       const extBtnChangeLang = document.getElementById("ext-btn-open-lang");
+
+      const txtExtLyricsName = document.getElementById("txt-ext-lyrics-name");
+      const txtExtLyricsDesc = document.getElementById("txt-ext-lyrics-desc");
+      const txtExtSleepName = document.getElementById("txt-ext-sleep-name");
+      const txtExtSleepDesc = document.getElementById("txt-ext-sleep-desc");
+      const txtExtFxName = document.getElementById("txt-ext-fx-name");
+      const txtExtFxDesc = document.getElementById("txt-ext-fx-desc");
+      const txtExtLooperName = document.getElementById("txt-ext-looper-name");
+      const txtExtLooperDesc = document.getElementById("txt-ext-looper-desc");
+      const txtExtCardName = document.getElementById("txt-ext-card-name");
+      const txtExtCardDesc = document.getElementById("txt-ext-card-desc");
+
       const txtEqTitle = document.getElementById("txt-eq-title");
       const txtCommentsTitle = document.getElementById("txt-comments-title");
       const commentInput = document.getElementById("new-comment-input");
@@ -3394,6 +3881,13 @@
       const txtBtnDownloadCard = document.getElementById("txt-btn-download-card");
       const txtLangModalTitle = document.getElementById("txt-lang-modal-title");
 
+      const statTracks = document.getElementById("txt-stat-tracks");
+      const statFollowers = document.getElementById("txt-stat-followers");
+      const statLikes = document.getElementById("txt-stat-likes");
+      const profTracksTitle = document.getElementById("txt-prof-tracks-title");
+      const profPlTitle = document.getElementById("txt-prof-pl-title");
+      const playPlaylist = document.getElementById("txt-play-playlist");
+
       if (txtAuthTitle) txtAuthTitle.textContent = t.auth_title;
       if (btn1Click) btn1Click.textContent = t.btn_import;
       if (txtAuthHelpHead) txtAuthHelpHead.textContent = t.auth_help_head;
@@ -3408,6 +3902,18 @@
       if (txtExtLangName) txtExtLangName.textContent = t.ext_lang_name;
       if (txtExtLangDesc) txtExtLangDesc.textContent = t.ext_lang_desc;
       if (extBtnChangeLang) extBtnChangeLang.textContent = t.ext_btn_change_lang;
+
+      if (txtExtLyricsName) txtExtLyricsName.textContent = t.ext_lyrics_name;
+      if (txtExtLyricsDesc) txtExtLyricsDesc.textContent = t.ext_lyrics_desc;
+      if (txtExtSleepName) txtExtSleepName.textContent = t.ext_sleep_name;
+      if (txtExtSleepDesc) txtExtSleepDesc.textContent = t.ext_sleep_desc;
+      if (txtExtFxName) txtExtFxName.textContent = t.ext_fx_name;
+      if (txtExtFxDesc) txtExtFxDesc.textContent = t.ext_fx_desc;
+      if (txtExtLooperName) txtExtLooperName.textContent = t.ext_looper_name;
+      if (txtExtLooperDesc) txtExtLooperDesc.textContent = t.ext_looper_desc;
+      if (txtExtCardName) txtExtCardName.textContent = t.ext_card_name;
+      if (txtExtCardDesc) txtExtCardDesc.textContent = t.ext_card_desc;
+
       if (txtEqTitle) txtEqTitle.textContent = t.eq_title;
       if (txtCommentsTitle) txtCommentsTitle.textContent = t.comments_title;
       if (commentInput) commentInput.placeholder = t.comment_placeholder;
@@ -3430,6 +3936,13 @@
       if (txtBtnCopyCard) txtBtnCopyCard.textContent = t.btn_copy_card;
       if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = t.btn_download_card;
       if (txtLangModalTitle) txtLangModalTitle.textContent = t.lang_modal_title;
+
+      if (statTracks) statTracks.textContent = t.txt_stat_tracks;
+      if (statFollowers) statFollowers.textContent = t.txt_stat_followers;
+      if (statLikes) statLikes.textContent = t.txt_stat_likes;
+      if (profTracksTitle) profTracksTitle.textContent = t.txt_prof_tracks_title;
+      if (profPlTitle) profPlTitle.textContent = t.txt_prof_pl_title;
+      if (playPlaylist) playPlaylist.textContent = t.txt_play_playlist;
     }
 
     // Modal listeners
