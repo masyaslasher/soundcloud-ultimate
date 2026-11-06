@@ -7,8 +7,30 @@
 
   const STORAGE_KEY = 'sc_theme_config_v2';
 
-  // 15 Curated Presets (5 Minimalist Design Tokens + 10 Classic AMOLED Palettes)
+  // 16 Curated Presets (Quiet Dark Minimal Audio + 5 Minimalist Design Tokens + 10 Classic AMOLED Palettes)
   const PRESETS = {
+    'quiet-dark': {
+      name: 'Quiet Dark (AMOLED)',
+      category: 'Minimalist',
+      desc: 'Minimal audio aesthetic with #09090B AMOLED black and restrained purple accent',
+      colors: {
+        bg: '#09090B',
+        sidebar: '#0D0D11',
+        surface: '#121217',
+        surfaceSecondary: '#18181F',
+        dock: 'rgba(18, 18, 23, 0.96)',
+        hover: '#18181F',
+        border: '#27272F',
+        borderHover: '#353540',
+        accent: '#A855F7',
+        accentBright: '#C084FC',
+        accentGlow: 'rgba(168, 85, 247, 0.25)',
+        textMain: '#F4F4F5',
+        textMuted: '#A1A1AA',
+        textDim: '#71717A'
+      },
+      swatches: ['#09090B', '#121217', '#A855F7']
+    },
     'graphite': {
       name: 'Graphite Minimal',
       category: 'Minimalist',
@@ -312,21 +334,21 @@
   };
 
   const DEFAULT_CONFIG = {
-    activeThemeId: 'graphite',
+    activeThemeId: 'quiet-dark',
     isCustom: false,
     customColors: {
-      bg: '#101010',
-      surface: '#171717',
-      dock: '#141414',
-      border: '#2B2B2B',
-      accent: '#4A90E2',
-      textMain: '#F0F0F0',
-      textMuted: '#999999'
+      bg: '#09090B',
+      surface: '#121217',
+      dock: '#121217',
+      border: '#27272F',
+      accent: '#A855F7',
+      textMain: '#F4F4F5',
+      textMuted: '#A1A1AA'
     },
     density: 'comfortable', // 'compact', 'comfortable', 'expanded'
     borderRadius: 'smooth', // 'sharp', 'subtle', 'smooth', 'round', 'pill'
     fontScale: 'default',   // 'small', 'default', 'large'
-    fontFamily: 'system',   // 'system', 'inter', 'mono', 'serif'
+    fontFamily: 'inter',    // 'system', 'inter', 'mono', 'serif'
     borderThickness: 1      // 1 or 2
   };
 
@@ -414,7 +436,7 @@
       }
     } else {
       // Clear custom inline styles and apply preset attribute
-      const presetId = state.activeThemeId || 'graphite';
+      const presetId = state.activeThemeId || 'quiet-dark';
       root.setAttribute('data-theme', presetId);
 
       // Clear inline color overrides so data-theme CSS kicks in
@@ -425,8 +447,22 @@
       ];
       colorProps.forEach(p => root.style.removeProperty(p));
 
-      // Smoke color sync
+      // Quiet Dark & Modern token sync for all presets
       const preset = PRESETS[presetId];
+      if (preset && preset.colors) {
+        root.style.setProperty('--bg-main', preset.colors.bg);
+        if (preset.colors.sidebar) root.style.setProperty('--bg-sidebar', preset.colors.sidebar);
+        root.style.setProperty('--surface-primary', preset.colors.surface);
+        if (preset.colors.surfaceSecondary) root.style.setProperty('--surface-secondary', preset.colors.surfaceSecondary);
+        root.style.setProperty('--accent-primary', preset.colors.accent);
+        root.style.setProperty('--accent-hover', preset.colors.accentBright || preset.colors.accent);
+        root.style.setProperty('--accent-glow', preset.colors.accentGlow || 'rgba(168, 85, 247, 0.25)');
+        root.style.setProperty('--text-primary', preset.colors.textMain);
+        root.style.setProperty('--text-secondary', preset.colors.textMuted);
+        root.style.setProperty('--border-subtle', preset.colors.border);
+      }
+
+      // Smoke color sync
       if (preset && window.setSmokeThemeColor) {
         const rgb = hexToRgbArr(preset.colors.accent);
         window.setSmokeThemeColor(rgb[0], rgb[1], rgb[2]);
@@ -831,7 +867,7 @@
 
     // Reset Defaults
     document.getElementById('btn-reset-theme-defaults')?.addEventListener('click', () => {
-      if (confirm('Reset all theme and appearance settings back to Graphite Minimal?')) {
+      if (confirm('Reset all theme and appearance settings back to Quiet Dark (AMOLED)?')) {
         state = Object.assign({}, DEFAULT_CONFIG);
         saveConfig();
         applyTokens();

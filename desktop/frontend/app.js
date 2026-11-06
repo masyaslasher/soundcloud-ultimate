@@ -1259,6 +1259,7 @@
       history.unshift(track);
       if (history.length > 50) history = history.slice(0, 50);
       saveLocalHistory(history);
+      renderRecentlyPlayedRow();
     } catch (_) {}
   }
 
@@ -1321,6 +1322,7 @@
     document.title = `🎵 ${track.title} • ${track.artist} | SoundCloud`;
 
     dockLikeBtn.classList.toggle('liked', isTrackLiked(track.id, track.liked));
+    syncRightPanel(track);
 
     try {
       playerTitle.textContent = `Loading: ${track.title}...`;
@@ -1397,10 +1399,18 @@
       playIconSvg.innerHTML = SVG_PAUSE;
       playIconSvg.classList.remove('play-triangle');
       vinylRecord.classList.add('spinning');
+      const rpPlayIcon = document.getElementById('rp-play-icon');
+      if (rpPlayIcon) rpPlayIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+      const rpSw = document.getElementById('rp-soundwave');
+      if (rpSw) rpSw.classList.add('active');
     } else {
       playIconSvg.innerHTML = SVG_PLAY;
       playIconSvg.classList.add('play-triangle');
       vinylRecord.classList.remove('spinning');
+      const rpPlayIcon = document.getElementById('rp-play-icon');
+      if (rpPlayIcon) rpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      const rpSw = document.getElementById('rp-soundwave');
+      if (rpSw) rpSw.classList.remove('active');
     }
   }
 
@@ -1438,6 +1448,7 @@
     if (window.MiniPlayer && typeof window.MiniPlayer.syncProgress === 'function') {
       window.MiniPlayer.syncProgress(current, duration);
     }
+    syncRightPanelProgress(current, duration);
 
     const percent = (current / duration) * 100;
     progressFill.style.width = `${percent}%`;
@@ -1769,6 +1780,7 @@
       item.addEventListener('click', () => playTrack(t, idx));
       queueList.appendChild(item);
     });
+    renderRightPanelQueue();
   }
 
   // 3. Like & Download Actions
@@ -1792,6 +1804,8 @@
       if (btnEl) btnEl.classList.toggle('liked', willLike);
       if (currentIndex >= 0 && queue[currentIndex] && queue[currentIndex].id === track.id) {
         dockLikeBtn.classList.toggle('liked', willLike);
+        const rpLikeBtn = document.getElementById('rp-like-btn');
+        if (rpLikeBtn) rpLikeBtn.classList.toggle('liked', willLike);
       }
       document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
         btn.classList.toggle('liked', willLike);
@@ -1818,6 +1832,8 @@
     if (btnEl) btnEl.classList.toggle('liked', willLike);
     if (currentIndex >= 0 && queue[currentIndex] && queue[currentIndex].id === track.id) {
       dockLikeBtn.classList.toggle('liked', willLike);
+      const rpLikeBtn = document.getElementById('rp-like-btn');
+      if (rpLikeBtn) rpLikeBtn.classList.toggle('liked', willLike);
     }
     document.querySelectorAll(`.track-card[data-id="${track.id}"] .like-btn`).forEach(btn => {
       btn.classList.toggle('liked', willLike);
@@ -4369,6 +4385,350 @@
     }
     return false;
   };
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // QUIET DARK / 3-COLUMN LAYOUT ENGINE (Sidebar, Center & Right Panel)
+  // ═══════════════════════════════════════════════════════════════════════
+
+  function syncRightPanel(track) {
+    if (!track) return;
+    const rpTrackArt = document.getElementById('rp-track-art');
+    const rpTrackTitle = document.getElementById('rp-track-title');
+    const rpTrackArtist = document.getElementById('rp-track-artist');
+    const rpLikeBtn = document.getElementById('rp-like-btn');
+    const rpSoundwave = document.getElementById('rp-soundwave');
+
+    if (rpTrackArt) rpTrackArt.src = track.artwork_url || 'assets/default_artwork.png';
+    if (rpTrackTitle) rpTrackTitle.textContent = track.title || 'SoundCloud Track';
+    if (rpTrackArtist) rpTrackArtist.textContent = track.artist || 'SoundCloud';
+    if (rpLikeBtn) rpLikeBtn.classList.toggle('liked', isTrackLiked(track.id, track.liked));
+    if (rpSoundwave) rpSoundwave.classList.toggle('active', isPlaying);
+  }
+
+  function syncRightPanelProgress(cur, dur) {
+    const rpTimeCurrent = document.getElementById('rp-time-current');
+    const rpTimeTotal = document.getElementById('rp-time-total');
+    const rpProgressFill = document.getElementById('rp-progress-fill');
+    if (rpTimeCurrent) rpTimeCurrent.textContent = formatTime(cur);
+    if (rpTimeTotal) rpTimeTotal.textContent = formatTime(dur);
+    if (rpProgressFill && dur > 0) {
+      const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+      rpProgressFill.style.width = `${pct}%`;
+    }
+  }
+
+  function renderRightPanelQueue() {
+    const rpQueueList = document.getElementById('rp-queue-list');
+    if (!rpQueueList) return;
+    rpQueueList.innerHTML = '';
+    if (queue.length === 0) {
+      rpQueueList.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 24px 0; font-size: 12px;">Queue is empty</div>';
+      return;
+    }
+
+    queue.forEach((t, idx) => {
+      const isCur = (idx === currentIndex);
+      const item = document.createElement('div');
+      item.className = `rp-queue-item ${isCur ? 'active' : ''}`;
+      const art = t.artwork_url || 'assets/default_artwork.png';
+      item.innerHTML = `
+        <img class="rp-q-art" src="${art}" alt="" onerror="this.src='assets/default_artwork.png'">
+        <div class="rp-q-info">
+          <div class="rp-q-title">${escapeHtml(t.title)}</div>
+          <div class="rp-q-artist">${escapeHtml(t.artist)}</div>
+        </div>
+        ${isCur ? `
+          <div class="rp-soundwave active" style="margin-left: auto;">
+            <span class="sw-bar"></span>
+            <span class="sw-bar"></span>
+            <span class="sw-bar"></span>
+          </div>
+        ` : ''}
+      `;
+      item.addEventListener('click', () => playTrack(t, idx));
+      rpQueueList.appendChild(item);
+    });
+  }
+
+  function renderRecentlyPlayedRow() {
+    const row = document.getElementById('recently-played-row');
+    if (!row) return;
+    const history = getLocalHistory();
+    row.innerHTML = '';
+
+    if (history.length === 0) {
+      const curated = [
+        {
+          title: 'sad girl hours',
+          subtitle: 'Playlist • 1,234 likes',
+          artwork_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&q=80',
+          query: 'sad girl hours'
+        },
+        {
+          title: '★',
+          subtitle: 'Playlist • 823 likes',
+          artwork_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&q=80',
+          query: 'ambient aesthetic'
+        },
+        {
+          title: 'witch house vibes',
+          subtitle: 'Playlist • 42K likes',
+          artwork_url: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&q=80',
+          query: 'witch house'
+        },
+        {
+          title: 'lofi beats',
+          subtitle: 'Playlist • 3.4M likes',
+          artwork_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80',
+          query: 'lofi hip hop'
+        }
+      ];
+      curated.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'recent-card';
+        card.innerHTML = `
+          <div class="recent-card-thumb-wrap">
+            <img class="recent-card-art" src="${c.artwork_url}" alt="${c.title}" onerror="this.src='assets/default_artwork.png'">
+            <button class="recent-card-play-btn" title="Play ${c.title}">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="recent-card-title">${c.title}</div>
+          <div class="recent-card-meta">${c.subtitle}</div>
+        `;
+        card.addEventListener('click', () => {
+          if (searchInput) {
+            searchInput.value = c.query;
+            performSearch(c.query);
+          }
+        });
+        row.appendChild(card);
+      });
+      return;
+    }
+
+    history.slice(0, 10).forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'recent-card';
+      const art = t.artwork_url || 'assets/default_artwork.png';
+      card.innerHTML = `
+        <div class="recent-card-thumb-wrap">
+          <img class="recent-card-art" src="${art}" alt="${escapeHtml(t.title)}" onerror="this.src='assets/default_artwork.png'">
+          <button class="recent-card-play-btn" title="Play ${escapeHtml(t.title)}">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <div class="recent-card-title">${escapeHtml(t.title)}</div>
+        <div class="recent-card-meta">${escapeHtml(t.artist || 'Track')}</div>
+      `;
+      card.addEventListener('click', () => {
+        playTrack(t);
+      });
+      row.appendChild(card);
+    });
+  }
+
+  function setActiveNavItem(id) {
+    document.querySelectorAll('.app-sidebar .nav-item').forEach(el => el.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+  }
+
+  // Left Sidebar Navigation Links
+  const navHome = document.getElementById('nav-item-home');
+  if (navHome) {
+    navHome.addEventListener('click', () => {
+      setActiveNavItem('nav-item-home');
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      const chipTrend = document.getElementById('chip-trending');
+      if (chipTrend) chipTrend.classList.add('active');
+      searchInput.value = '';
+      loadTrending('all-music');
+    });
+  }
+
+  const navSearch = document.getElementById('nav-item-search');
+  if (navSearch) {
+    navSearch.addEventListener('click', () => {
+      setActiveNavItem('nav-item-search');
+      searchInput.focus();
+      searchInput.select();
+    });
+  }
+
+  const navLib = document.getElementById('nav-item-library');
+  if (navLib) {
+    navLib.addEventListener('click', () => {
+      setActiveNavItem('nav-item-library');
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      const chipPl = document.getElementById('chip-playlists');
+      if (chipPl) chipPl.classList.add('active');
+      searchInput.value = '';
+      loadMyPlaylists();
+    });
+  }
+
+  const navLiked = document.getElementById('nav-item-liked');
+  if (navLiked) {
+    navLiked.addEventListener('click', () => {
+      setActiveNavItem('nav-item-liked');
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      const chipLk = document.getElementById('chip-likes');
+      if (chipLk) chipLk.classList.add('active');
+      searchInput.value = '';
+      loadMyLikes();
+    });
+  }
+
+  const navPlaylists = document.getElementById('nav-item-playlists');
+  if (navPlaylists) {
+    navPlaylists.addEventListener('click', () => {
+      setActiveNavItem('nav-item-playlists');
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      const chipPl = document.getElementById('chip-playlists');
+      if (chipPl) chipPl.classList.add('active');
+      searchInput.value = '';
+      loadMyPlaylists();
+    });
+  }
+
+  const navExplore = document.getElementById('nav-item-explore');
+  if (navExplore) {
+    navExplore.addEventListener('click', () => {
+      setActiveNavItem('nav-item-explore');
+      if (window.DiscoveryEngine && typeof window.DiscoveryEngine.open === 'function') {
+        window.DiscoveryEngine.open();
+      } else {
+        const chipDisc = document.getElementById('chip-discovery');
+        if (chipDisc) chipDisc.click();
+      }
+    });
+  }
+
+  // Right Panel Controls
+  const rpBtnPlay = document.getElementById('rp-btn-play');
+  if (rpBtnPlay) rpBtnPlay.addEventListener('click', togglePlayPause);
+
+  const rpBtnPrev = document.getElementById('rp-btn-prev');
+  if (rpBtnPrev) rpBtnPrev.addEventListener('click', playPrev);
+
+  const rpBtnNext = document.getElementById('rp-btn-next');
+  if (rpBtnNext) rpBtnNext.addEventListener('click', playNext);
+
+  const rpBtnShuffle = document.getElementById('rp-btn-shuffle');
+  if (rpBtnShuffle) {
+    rpBtnShuffle.addEventListener('click', () => {
+      btnShuffle.click();
+      rpBtnShuffle.classList.toggle('active', isShuffle);
+    });
+  }
+
+  const rpBtnRepeat = document.getElementById('rp-btn-repeat');
+  if (rpBtnRepeat) {
+    rpBtnRepeat.addEventListener('click', () => {
+      btnRepeat.click();
+      rpBtnRepeat.classList.toggle('active', repeatMode > 0);
+    });
+  }
+
+  const rpLikeBtn = document.getElementById('rp-like-btn');
+  if (rpLikeBtn) {
+    rpLikeBtn.addEventListener('click', () => {
+      if (currentIndex >= 0 && queue[currentIndex]) {
+        toggleTrackLike(queue[currentIndex], rpLikeBtn);
+      }
+    });
+  }
+
+  const rpOptionsBtn = document.getElementById('rp-options-btn');
+  if (rpOptionsBtn) {
+    rpOptionsBtn.addEventListener('click', () => {
+      if (currentIndex >= 0 && queue[currentIndex]) {
+        if (window.TrackInspector && typeof window.TrackInspector.open === 'function') {
+          window.TrackInspector.open(queue[currentIndex]);
+        }
+      }
+    });
+  }
+
+  const rpProgressTrack = document.getElementById('rp-progress-track');
+  if (rpProgressTrack) {
+    rpProgressTrack.addEventListener('click', (e) => {
+      if (!audio.duration) return;
+      const rect = rpProgressTrack.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      const clamped = Math.max(0, Math.min(1, pos));
+      audio.currentTime = clamped * audio.duration;
+    });
+  }
+
+  const rpQueueClear = document.getElementById('rp-queue-clear');
+  if (rpQueueClear) {
+    rpQueueClear.addEventListener('click', () => {
+      if (queue.length > 0) {
+        if (currentIndex >= 0 && currentIndex < queue.length) {
+          const cur = queue[currentIndex];
+          queue.length = 0;
+          queue.push(cur);
+          currentIndex = 0;
+        } else {
+          queue.length = 0;
+          currentIndex = -1;
+        }
+        renderQueue();
+        renderRightPanelQueue();
+        showToast('Queue cleared');
+      }
+    });
+  }
+
+  // Right Panel Toggle Button
+  const btnToggleRp = document.getElementById('btn-toggle-right-panel');
+  if (btnToggleRp) {
+    btnToggleRp.addEventListener('click', () => {
+      const isCollapsed = document.body.classList.toggle('right-panel-collapsed');
+      try {
+        localStorage.setItem('sc_rp_collapsed', isCollapsed ? '1' : '0');
+      } catch (_) {}
+    });
+    if (localStorage.getItem('sc_rp_collapsed') === '1') {
+      document.body.classList.add('right-panel-collapsed');
+    }
+  }
+
+  // Global Ctrl + K search hotkey
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      if (searchInput) {
+        searchInput.focus();
+        searchInput.select();
+      }
+    }
+  });
+
+  // Hero Discover Banner & See all Recent
+  const heroExploreBtn = document.getElementById('hero-explore-btn');
+  if (heroExploreBtn) {
+    heroExploreBtn.addEventListener('click', () => {
+      if (window.DiscoveryEngine && typeof window.DiscoveryEngine.open === 'function') {
+        window.DiscoveryEngine.open();
+      } else {
+        const chipDisc = document.getElementById('chip-discovery');
+        if (chipDisc) chipDisc.click();
+      }
+    });
+  }
+
+  const btnSeeAllRecent = document.getElementById('btn-see-all-recent');
+  if (btnSeeAllRecent) {
+    btnSeeAllRecent.addEventListener('click', () => {
+      const chipHist = document.getElementById('chip-history');
+      if (chipHist) chipHist.click();
+    });
+  }
+
+  renderRecentlyPlayedRow();
 
   setVolume(currentVolume, true);
   checkSystemStatus();
