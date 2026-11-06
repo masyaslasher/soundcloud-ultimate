@@ -2399,18 +2399,30 @@
   initLanguageSwitcher();
 
   // ═══════════════════════════════════════════════════════════════════════
-  // LANGUAGE SWITCHER (EN / RU)
+  // SUBTLE & UNOBTRUSIVE LANGUAGE SWITCHER (EN / RU)
   // ═══════════════════════════════════════════════════════════════════════
   function initLanguageSwitcher() {
     const btnLang = document.getElementById("btn-lang-toggle");
-    const langLabel = document.getElementById("lang-label");
+    const btnDropdownLang = document.getElementById("btn-dropdown-lang");
+    const optEn = document.getElementById("lang-opt-en");
+    const optRu = document.getElementById("lang-opt-ru");
     let currentLang = localStorage.getItem("lang") || "en";
 
     function applyLanguage(lang) {
       currentLang = lang;
       localStorage.setItem("lang", lang);
-      if (langLabel) langLabel.textContent = lang.toUpperCase();
 
+      // Update subtle header pill
+      if (optEn) optEn.classList.toggle("active", lang === "en");
+      if (optRu) optRu.classList.toggle("active", lang === "ru");
+
+      // Update dropdown item
+      const txtDropLang = document.getElementById("txt-dropdown-lang");
+      if (txtDropLang) {
+        txtDropLang.textContent = lang === "ru" ? "Язык: Русский (RU)" : "Language: English (EN)";
+      }
+
+      // DOM Elements
       const searchInp = document.getElementById("search-input");
       const txtThemes = document.getElementById("txt-themes-btn");
       const txtExt = document.getElementById("txt-extensions-btn");
@@ -2425,6 +2437,38 @@
       const heroTag = document.getElementById("hero-tag");
       const txtListenNow = document.getElementById("txt-listen-now");
       const txtQueueTitle = document.getElementById("txt-queue-title");
+
+      // Modal elements
+      const txtAuthTitle = document.getElementById("txt-auth-modal-title");
+      const btn1Click = document.getElementById("btn-import-browser");
+      const txtAuthHelpHead = document.getElementById("txt-auth-help-head");
+      const txtAuthHelpBody = document.getElementById("txt-auth-help-body");
+      const btnOpenSc = document.getElementById("btn-open-sc-signin");
+      const txtAuthDivider = document.getElementById("txt-auth-divider");
+      const btnSubmitToken = document.getElementById("btn-submit-token");
+      const txtThemeTitle = document.getElementById("txt-theme-modal-title");
+      const txtExtTitle = document.getElementById("txt-ext-modal-title");
+      const txtEqTitle = document.getElementById("txt-eq-title");
+      const txtCommentsTitle = document.getElementById("txt-comments-title");
+      const commentInput = document.getElementById("new-comment-input");
+      const btnSendComment = document.getElementById("btn-send-comment");
+      const txtSleepTitle = document.getElementById("txt-sleep-modal-title");
+      const txtSleepDesc = document.getElementById("txt-sleep-desc");
+      const sleepChipTrack = document.getElementById("sleep-chip-track");
+      const btnCancelSleep = document.getElementById("btn-cancel-sleep");
+      const txtFxTitle = document.getElementById("txt-fx-modal-title");
+      const txtRadarHint = document.getElementById("txt-radar-hint");
+      const txtFxSpeedTitle = document.getElementById("txt-fx-speed-title");
+      const speedChipNorm = document.getElementById("speed-chip-norm");
+      const txtLooperTitle = document.getElementById("txt-looper-modal-title");
+      const txtLooperDesc = document.getElementById("txt-looper-desc");
+      const txtLoopStart = document.getElementById("txt-loop-start");
+      const txtLoopEnd = document.getElementById("txt-loop-end");
+      const txtBtnLoopActive = document.getElementById("txt-btn-loop-active");
+      const txtBtnLoopClear = document.getElementById("txt-btn-loop-clear");
+      const txtCardTitle = document.getElementById("txt-card-modal-title");
+      const txtBtnCopyCard = document.getElementById("txt-btn-copy-card");
+      const txtBtnDownloadCard = document.getElementById("txt-btn-download-card");
 
       if (lang === "ru") {
         if (searchInp) searchInp.placeholder = "Поиск треков, исполнителей, альбомов...";
@@ -2442,6 +2486,38 @@
         if (txtListenNow) txtListenNow.textContent = "Слушать сейчас";
         if (txtQueueTitle) txtQueueTitle.textContent = "Очередь воспроизведения";
         if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = "Выберите трек для воспроизведения";
+
+        // Modals RU
+        if (txtAuthTitle) txtAuthTitle.textContent = "Вход в аккаунт SoundCloud";
+        if (btn1Click) btn1Click.textContent = "⚡ Авторизоваться в 1 клик (из Chromium)";
+        if (txtAuthHelpHead) txtAuthHelpHead.textContent = "Вход без ручного ввода токенов:";
+        if (txtAuthHelpBody) txtAuthHelpBody.textContent = "Если вы уже вошли на soundcloud.com в Chromium, нажмите кнопку выше — приложение автоматически подключит ваш аккаунт!";
+        if (btnOpenSc) btnOpenSc.textContent = "🌐 Открыть страницу входа SoundCloud в браузере";
+        if (txtAuthDivider) txtAuthDivider.textContent = "или введите токен сессии";
+        if (btnSubmitToken) btnSubmitToken.textContent = "Подключить аккаунт";
+        if (txtThemeTitle) txtThemeTitle.textContent = "Темы оформления (10 AMOLED палитр)";
+        if (txtExtTitle) txtExtTitle.textContent = "Центр встроенных расширений (5 модулей)";
+        if (txtEqTitle) txtEqTitle.textContent = "Студийный Эквалайзер & Бас";
+        if (txtCommentsTitle) txtCommentsTitle.textContent = "Комментарии к треку";
+        if (commentInput) commentInput.placeholder = "Написать комментарий на текущей секунде...";
+        if (btnSendComment) btnSendComment.textContent = "Отправить";
+        if (txtSleepTitle) txtSleepTitle.textContent = "Умный таймер сна";
+        if (txtSleepDesc) txtSleepDesc.textContent = "Музыка плавно затихнет за 30 секунд до истечения времени, оберегая ваш сон.";
+        if (sleepChipTrack) sleepChipTrack.textContent = "Конец трека";
+        if (btnCancelSleep) btnCancelSleep.textContent = "Отключить активный таймер";
+        if (txtFxTitle) txtFxTitle.textContent = "Студия звуковых эффектов FX";
+        if (txtRadarHint) txtRadarHint.textContent = "Рекомендуется слушать в наушниках для эффекта 3D-орбиты";
+        if (txtFxSpeedTitle) txtFxSpeedTitle.textContent = "⚡ Скорость & Тональность";
+        if (speedChipNorm) speedChipNorm.textContent = "Обычная";
+        if (txtLooperTitle) txtLooperTitle.textContent = "A-B Looper (Зацикливание фрагмента)";
+        if (txtLooperDesc) txtLooperDesc.textContent = "Позволяет бесконечно воспроизводить выбранный фрагмент трека (соло, дроп, бит).";
+        if (txtLoopStart) txtLoopStart.textContent = "Метка начала:";
+        if (txtLoopEnd) txtLoopEnd.textContent = "Метка конца:";
+        if (txtBtnLoopActive) txtBtnLoopActive.textContent = "Включить цикл";
+        if (txtBtnLoopClear) txtBtnLoopClear.textContent = "Сбросить";
+        if (txtCardTitle) txtCardTitle.textContent = "Bento-карточка трека для соцсетей";
+        if (txtBtnCopyCard) txtBtnCopyCard.textContent = "Скопировать картинку";
+        if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = "Скачать PNG";
       } else {
         if (searchInp) searchInp.placeholder = "Search tracks, artists, albums...";
         if (txtThemes) txtThemes.textContent = "Themes (10)";
@@ -2458,16 +2534,63 @@
         if (txtListenNow) txtListenNow.textContent = "Listen Now";
         if (txtQueueTitle) txtQueueTitle.textContent = "Play Queue";
         if (!isPlaying && currentIndex === -1 && playerTitle) playerTitle.textContent = "Select a track to play";
+
+        // Modals EN
+        if (txtAuthTitle) txtAuthTitle.textContent = "Sign In to SoundCloud";
+        if (btn1Click) btn1Click.textContent = "⚡ 1-Click Sign In (from Chromium)";
+        if (txtAuthHelpHead) txtAuthHelpHead.textContent = "Sign in without manual tokens:";
+        if (txtAuthHelpBody) txtAuthHelpBody.textContent = "If you are already logged in to soundcloud.com in Chromium / Chrome, click the button above to connect automatically!";
+        if (btnOpenSc) btnOpenSc.textContent = "🌐 Open SoundCloud Login Page in Browser";
+        if (txtAuthDivider) txtAuthDivider.textContent = "or enter session token manually";
+        if (btnSubmitToken) btnSubmitToken.textContent = "Connect Account";
+        if (txtThemeTitle) txtThemeTitle.textContent = "Themes (10 AMOLED Palettes)";
+        if (txtExtTitle) txtExtTitle.textContent = "Built-in Extensions Hub (5 Modules)";
+        if (txtEqTitle) txtEqTitle.textContent = "Studio Equalizer & Bass";
+        if (txtCommentsTitle) txtCommentsTitle.textContent = "Track Comments";
+        if (commentInput) commentInput.placeholder = "Write a comment at current timestamp...";
+        if (btnSendComment) btnSendComment.textContent = "Send";
+        if (txtSleepTitle) txtSleepTitle.textContent = "Smart Sleep Timer";
+        if (txtSleepDesc) txtSleepDesc.textContent = "Music will gently fade out over 30 seconds before stopping, preserving your sleep.";
+        if (sleepChipTrack) sleepChipTrack.textContent = "End of track";
+        if (btnCancelSleep) btnCancelSleep.textContent = "Cancel Active Timer";
+        if (txtFxTitle) txtFxTitle.textContent = "Audio FX Studio";
+        if (txtRadarHint) txtRadarHint.textContent = "Headphones recommended for 3D orbital binaural effect";
+        if (txtFxSpeedTitle) txtFxSpeedTitle.textContent = "⚡ Speed & Pitch";
+        if (speedChipNorm) speedChipNorm.textContent = "Normal";
+        if (txtLooperTitle) txtLooperTitle.textContent = "A-B Precision Looper";
+        if (txtLooperDesc) txtLooperDesc.textContent = "Seamlessly loop any segment of the track (guitar solo, beat drop, chorus).";
+        if (txtLoopStart) txtLoopStart.textContent = "Start:";
+        if (txtLoopEnd) txtLoopEnd.textContent = "End:";
+        if (txtBtnLoopActive) txtBtnLoopActive.textContent = "Enable Loop";
+        if (txtBtnLoopClear) txtBtnLoopClear.textContent = "Reset";
+        if (txtCardTitle) txtCardTitle.textContent = "Social Bento Track Card Generator";
+        if (txtBtnCopyCard) txtBtnCopyCard.textContent = "Copy to Clipboard";
+        if (txtBtnDownloadCard) txtBtnDownloadCard.textContent = "Download PNG";
       }
     }
 
+    function toggleLanguage() {
+      const nextLang = currentLang === "en" ? "ru" : "en";
+      applyLanguage(nextLang);
+      showToast(nextLang === "ru" ? "🇷🇺 Язык интерфейса: Русский" : "🇬🇧 Interface Language: English");
+    }
+
     if (btnLang) {
-      btnLang.addEventListener("click", () => {
-        const nextLang = currentLang === "en" ? "ru" : "en";
-        applyLanguage(nextLang);
-        showToast(nextLang === "ru" ? "🇷🇺 Язык интерфейса: Русский" : "🇬🇧 Interface Language: English");
+      btnLang.addEventListener("click", toggleLanguage);
+    }
+    if (btnDropdownLang) {
+      btnDropdownLang.addEventListener("click", () => {
+        toggleLanguage();
+        if (userDropdown) userDropdown.classList.remove("open");
       });
     }
+
+    // Subtle Hotkey: Alt + Shift + L
+    window.addEventListener("keydown", (e) => {
+      if (e.altKey && e.shiftKey && (e.key === "L" || e.key === "l" || e.key === "д" || e.key === "Д")) {
+        toggleLanguage();
+      }
+    });
 
     applyLanguage(currentLang);
   }

@@ -2168,6 +2168,47 @@ body {
   fill: var(--orange-neon);
 }
 
+/* Subtle Unobtrusive Language Toggle */
+.subtle-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  margin-left: 2px;
+}
+
+.subtle-lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+}
+
+.subtle-lang-toggle .lang-opt {
+  transition: color 0.2s ease, font-weight 0.2s ease;
+  color: var(--text-dim);
+}
+
+.subtle-lang-toggle .lang-opt.active {
+  color: #FFFFFF;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+.subtle-lang-toggle .lang-sep {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    THEME SELECTOR MODAL
    ═══════════════════════════════════════════════════════════════════════ */
