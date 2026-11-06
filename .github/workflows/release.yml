@@ -221,5 +221,3 @@ jobs:
           files: release_files/*
           name: "SoundCloud Ultimate v1.3.0 — Official Release"
           generate_release_notes: true
-          name: "SoundCloud Ultimate ${{ github.ref_name }} — Official Release"
-          generate_release_notes: true
