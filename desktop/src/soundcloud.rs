@@ -1,6 +1,6 @@
 use crate::models::{
-    ArtistProfile, AuthStatus, CommentItem, PlaylistItem, PostCommentPayload, SearchResponse,
-    StreamResponse, TrackItem, UserProfile,
+    ArtistProfile, AuthStatus, CommentItem, HomeFeedResponse, PlaylistItem, PostCommentPayload,
+    SearchResponse, StreamResponse, TrackItem, UserProfile,
 };
 use regex::Regex;
 use serde_json::Value;
@@ -449,38 +449,69 @@ impl SoundCloudClient {
         let me = self.get_me().await?;
         let client_id = self.get_client_id().await;
 
-        let url = format!(
-            "https://api-v2.soundcloud.com/users/{}/track_likes?client_id={}&limit={}",
-            me.id, client_id, limit
-        );
-
-        let req = self.client.get(&url);
-        let req = self.apply_auth(req, Some(&token));
-
-        let resp = req.send().await.map_err(|e| e.to_string())?;
-        let val: Value = resp.json().await.map_err(|e| e.to_string())?;
-
         let mut tracks = Vec::new();
-        if let Some(col) = val.get("collection").and_then(|c| c.as_array()) {
-            for item in col {
-                let track_val = item.get("track").unwrap_or(item);
-                if let Some(mut t) = parse_single_track(track_val) {
-                    t.liked = Some(true);
-                    tracks.push(t);
+        let target_limit = if limit <= 50 { 500 } else { limit };
+        let mut next_url = Some(format!(
+            "https://api-v2.soundcloud.com/users/{}/track_likes?client_id={}&limit=50&linked_partitioning=1",
+            me.id, client_id
+        ));
+
+        let mut page = 0;
+        while let Some(url) = next_url.take() {
+            page += 1;
+            let req = self.client.get(&url);
+            let req = self.apply_auth(req, Some(&token));
+
+            let resp = match req.send().await {
+                Ok(r) => r,
+                Err(e) => {
+                    eprintln!("⚠️ Error fetching likes page {}: {}", page, e);
+                    break;
+                }
+            };
+
+            let val: Value = match resp.json().await {
+                Ok(v) => v,
+                Err(_) => break,
+            };
+
+            if let Some(col) = val.get("collection").and_then(|c| c.as_array()) {
+                for item in col {
+                    let track_val = item.get("track").unwrap_or(item);
+                    if let Some(mut t) = parse_single_track(track_val) {
+                        t.liked = Some(true);
+                        tracks.push(t);
+                    }
                 }
             }
+
+            if tracks.len() >= target_limit || page >= 40 {
+                break;
+            }
+
+            if let Some(next_href) = val.get("next_href").and_then(|v| v.as_str())
+                && !next_href.is_empty() {
+                    let full_url = if !next_href.contains("client_id=") {
+                        let sep = if next_href.contains('?') { "&" } else { "?" };
+                        format!("{}{sep}client_id={}", next_href, client_id)
+                    } else {
+                        next_href.to_string()
+                    };
+                    next_url = Some(full_url);
+                }
         }
 
+        println!("✨ Retrieved {} total liked tracks across {} pages", tracks.len(), page);
         Ok(tracks)
     }
 
-    pub async fn get_my_playlists(&self, limit: usize) -> Result<Vec<PlaylistItem>, String> {
+    pub async fn get_my_followings(&self, limit: usize) -> Result<Vec<UserProfile>, String> {
         let token = self.get_oauth_token().await.ok_or_else(|| "Not logged in".to_string())?;
         let me = self.get_me().await?;
         let client_id = self.get_client_id().await;
 
         let url = format!(
-            "https://api-v2.soundcloud.com/users/{}/playlists?client_id={}&limit={}",
+            "https://api-v2.soundcloud.com/users/{}/followings?client_id={}&limit={}&linked_partitioning=1",
             me.id, client_id, limit
         );
 
@@ -490,16 +521,199 @@ impl SoundCloudClient {
         let resp = req.send().await.map_err(|e| e.to_string())?;
         let val: Value = resp.json().await.map_err(|e| e.to_string())?;
 
-        let mut playlists = Vec::new();
-        if let Some(col) = val.get("collection").and_then(|c| c.as_array()).or_else(|| val.as_array()) {
+        let mut artists = Vec::new();
+        if let Some(col) = val.get("collection").and_then(|c| c.as_array()) {
+            for item in col {
+                if let Some(u) = parse_user_item(item) {
+                    artists.push(u);
+                }
+            }
+        }
+        Ok(artists)
+    }
+
+    pub async fn batch_resolve_tracks(&self, track_ids: &[u64]) -> Result<Vec<TrackItem>, String> {
+        if track_ids.is_empty() {
+            return Ok(Vec::new());
+        }
+        let client_id = self.get_client_id().await;
+        let token = self.get_oauth_token().await;
+        let mut results = Vec::new();
+
+        for chunk in track_ids.chunks(50) {
+            let ids_str = chunk.iter().map(|id| id.to_string()).collect::<Vec<_>>().join(",");
+            let url = format!(
+                "https://api-v2.soundcloud.com/tracks?ids={}&client_id={}",
+                ids_str, client_id
+            );
+
+            let req = self.client.get(&url);
+            let req = self.apply_auth(req, token.as_deref());
+
+            if let Ok(resp) = req.send().await
+                && let Ok(val) = resp.json::<Value>().await
+                && let Some(arr) = val.as_array()
+            {
+                for item in arr {
+                    if let Some(t) = parse_single_track(item) {
+                        results.push(t);
+                    }
+                }
+            }
+        }
+        Ok(results)
+    }
+
+    pub async fn get_my_playlists_and_albums(&self) -> Result<(Vec<PlaylistItem>, Vec<PlaylistItem>), String> {
+        let token = self.get_oauth_token().await.ok_or_else(|| "Not logged in".to_string())?;
+        let me = self.get_me().await?;
+        let client_id = self.get_client_id().await;
+
+        // 1. Created playlists
+        let url1 = format!(
+            "https://api-v2.soundcloud.com/users/{}/playlists?client_id={}&limit=50",
+            me.id, client_id
+        );
+        let req1 = self.apply_auth(self.client.get(&url1), Some(&token));
+
+        // 2. Liked playlists & albums
+        let url2 = format!(
+            "https://api-v2.soundcloud.com/users/{}/playlist_likes?client_id={}&limit=50",
+            me.id, client_id
+        );
+        let req2 = self.apply_auth(self.client.get(&url2), Some(&token));
+
+        let mut all_playlists = Vec::new();
+
+        if let Ok(resp) = req1.send().await
+            && let Ok(val) = resp.json::<Value>().await
+            && let Some(col) = val.get("collection").and_then(|c| c.as_array()).or_else(|| val.as_array())
+        {
             for item in col {
                 if let Some(p) = parse_single_playlist(item) {
-                    playlists.push(p);
+                    all_playlists.push(p);
                 }
             }
         }
 
-        Ok(playlists)
+        if let Ok(resp) = req2.send().await
+            && let Ok(val) = resp.json::<Value>().await
+            && let Some(col) = val.get("collection").and_then(|c| c.as_array()).or_else(|| val.as_array())
+        {
+            for item in col {
+                let pl_val = item.get("playlist").unwrap_or(item);
+                if let Some(p) = parse_single_playlist(pl_val)
+                    && !all_playlists.iter().any(|existing| existing.id == p.id) {
+                        all_playlists.push(p);
+                    }
+            }
+        }
+
+        // 3. Batch resolve any missing tracks for each playlist/album
+        for pl in all_playlists.iter_mut() {
+            let missing_ids: Vec<u64> = pl.tracks.iter()
+                .filter(|t| t.title == "Unknown Title" || t.duration_ms == 0)
+                .map(|t| t.id)
+                .collect();
+
+            if !missing_ids.is_empty()
+                && let Ok(resolved) = self.batch_resolve_tracks(&missing_ids).await {
+                    let map: std::collections::HashMap<u64, TrackItem> = resolved.into_iter().map(|t| (t.id, t)).collect();
+                    for track in pl.tracks.iter_mut() {
+                        if let Some(full) = map.get(&track.id) {
+                            *track = full.clone();
+                        }
+                    }
+                }
+        }
+
+        let mut user_playlists = Vec::new();
+        let mut user_albums = Vec::new();
+
+        for pl in all_playlists {
+            if pl.is_album.unwrap_or(false) {
+                user_albums.push(pl);
+            } else {
+                user_playlists.push(pl);
+            }
+        }
+
+        Ok((user_playlists, user_albums))
+    }
+
+    pub async fn get_home_feed(&self) -> Result<HomeFeedResponse, String> {
+        let recently_played = self.get_my_history(15).await.unwrap_or_default();
+
+        let mut more_of_what_you_like = Vec::new();
+        if let Ok(likes) = self.get_my_likes(10, 0).await {
+            for liked in likes.iter().take(3) {
+                if let Ok(related) = self.get_related_tracks(liked.id, 8).await {
+                    for t in related {
+                        if !more_of_what_you_like.iter().any(|existing: &TrackItem| existing.id == t.id) {
+                            more_of_what_you_like.push(t);
+                        }
+                    }
+                }
+                if more_of_what_you_like.len() >= 12 {
+                    break;
+                }
+            }
+        }
+
+        let mut from_artists_you_follow = Vec::new();
+        if let Ok(followings) = self.get_my_followings(6).await {
+            for artist in followings.iter().take(3) {
+                if let Ok(profile) = self.get_artist_profile(artist.id).await {
+                    for t in profile.tracks.into_iter().take(4) {
+                        if !from_artists_you_follow.iter().any(|existing: &TrackItem| existing.id == t.id) {
+                            from_artists_you_follow.push(t);
+                        }
+                    }
+                }
+            }
+        }
+
+        let trending = self.get_trending(None, 20).await.unwrap_or_default();
+
+        if more_of_what_you_like.is_empty() {
+            more_of_what_you_like = trending.iter().take(10).cloned().collect();
+        }
+
+        Ok(HomeFeedResponse {
+            recently_played,
+            more_of_what_you_like,
+            from_artists_you_follow,
+            trending,
+        })
+    }
+
+    pub async fn get_my_playlists(&self, limit: usize) -> Result<Vec<PlaylistItem>, String> {
+        let (playlists, _) = self.get_my_playlists_and_albums().await?;
+        if playlists.is_empty() {
+            // Fallback to basic if empty
+            let token = self.get_oauth_token().await.ok_or_else(|| "Not logged in".to_string())?;
+            let me = self.get_me().await?;
+            let client_id = self.get_client_id().await;
+            let url = format!(
+                "https://api-v2.soundcloud.com/users/{}/playlists?client_id={}&limit={}",
+                me.id, client_id, limit
+            );
+            let req = self.client.get(&url);
+            let req = self.apply_auth(req, Some(&token));
+            let resp = req.send().await.map_err(|e| e.to_string())?;
+            let val: Value = resp.json().await.map_err(|e| e.to_string())?;
+            let mut pl = Vec::new();
+            if let Some(col) = val.get("collection").and_then(|c| c.as_array()).or_else(|| val.as_array()) {
+                for item in col {
+                    if let Some(p) = parse_single_playlist(item) {
+                        pl.push(p);
+                    }
+                }
+            }
+            Ok(pl)
+        } else {
+            Ok(playlists)
+        }
     }
 
     pub async fn get_my_stream(&self, limit: usize) -> Result<Vec<TrackItem>, String> {
@@ -550,71 +764,89 @@ impl SoundCloudClient {
         Ok(resp.status().is_success())
     }
 
-    pub async fn search(&self, query: &str, limit: usize, offset: usize) -> Result<SearchResponse, String> {
+    pub async fn search(&self, query: &str, limit: usize, offset: usize, filter: Option<&str>) -> Result<SearchResponse, String> {
         let client_id = self.get_client_id().await;
         let token = self.get_oauth_token().await;
+        let cat = filter.unwrap_or("all").to_lowercase();
+
+        let mut tracks = Vec::new();
+        let mut playlists = Vec::new();
+        let mut users = Vec::new();
+        let mut next_href = None;
 
         // Tracks
-        let tracks_url = format!(
-            "https://api-v2.soundcloud.com/search/tracks?q={}&client_id={}&limit={}&offset={}",
-            urlencoding(query),
-            client_id,
-            limit,
-            offset
-        );
+        if cat == "all" || cat == "tracks" {
+            let track_limit = if cat == "tracks" { limit.max(30) } else { limit };
+            let tracks_url = format!(
+                "https://api-v2.soundcloud.com/search/tracks?q={}&client_id={}&limit={}&offset={}",
+                urlencoding(query),
+                client_id,
+                track_limit,
+                offset
+            );
 
-        let req = self.client.get(&tracks_url);
-        let req = self.apply_auth(req, token.as_deref());
-        let val: Value = req.send().await.map_err(|e| e.to_string())?.json().await.unwrap_or_default();
-        let tracks = parse_track_collection(&val);
+            let req = self.client.get(&tracks_url);
+            let req = self.apply_auth(req, token.as_deref());
+            if let Ok(resp) = req.send().await
+                && let Ok(val) = resp.json::<Value>().await
+            {
+                tracks = parse_track_collection(&val);
+                next_href = val.get("next_href").and_then(|v| v.as_str()).map(|s| s.to_string());
+            }
+        }
 
         // Playlists
-        let pl_url = format!(
-            "https://api-v2.soundcloud.com/search/playlists?q={}&client_id={}&limit=24",
-            urlencoding(query),
-            client_id
-        );
-        let mut playlists = Vec::new();
-        if let Ok(pl_resp) = self.client.get(&pl_url).send().await
-            && let Ok(pl_val) = pl_resp.json::<Value>().await
-                && let Some(col) = pl_val.get("collection").and_then(|c| c.as_array()) {
-                    for item in col {
-                        if let Some(p) = parse_single_playlist(item) {
-                            playlists.push(p);
-                        }
+        if cat == "all" || cat == "playlists" || cat == "albums" {
+            let pl_limit = if cat == "playlists" || cat == "albums" { limit.max(24) } else { 12 };
+            let pl_url = format!(
+                "https://api-v2.soundcloud.com/search/playlists?q={}&client_id={}&limit={}",
+                urlencoding(query),
+                client_id,
+                pl_limit
+            );
+            if let Ok(pl_resp) = self.client.get(&pl_url).send().await
+                && let Ok(pl_val) = pl_resp.json::<Value>().await
+                && let Some(col) = pl_val.get("collection").and_then(|c| c.as_array())
+            {
+                for item in col {
+                    if let Some(p) = parse_single_playlist(item) {
+                        playlists.push(p);
                     }
-                }
-
-        // Users / Artists
-        let u_url = format!(
-            "https://api-v2.soundcloud.com/search/users?q={}&client_id={}&limit=6",
-            urlencoding(query),
-            client_id
-        );
-        let mut users = Vec::new();
-        if let Ok(u_resp) = self.client.get(&u_url).send().await
-            && let Ok(u_val) = u_resp.json::<Value>().await
-            && let Some(col) = u_val.get("collection").and_then(|c| c.as_array())
-        {
-            for item in col {
-                if let (Some(id), Some(username)) = (item.get("id").and_then(|v| v.as_u64()), item.get("username").and_then(|u| u.as_str())) {
-                    users.push(UserProfile {
-                        id,
-                        username: username.to_string(),
-                        avatar_url: item.get("avatar_url").and_then(|a| a.as_str()).map(|s| s.replace("-large.jpg", "-t500x500.jpg")),
-                        permalink_url: item.get("permalink_url").and_then(|p| p.as_str()).map(|s| s.to_string()),
-                        followers_count: item.get("followers_count").and_then(|f| f.as_u64()),
-                        followings_count: item.get("followings_count").and_then(|f| f.as_u64()),
-                        likes_count: item.get("likes_count").and_then(|l| l.as_u64()),
-                        playlist_count: item.get("playlist_count").and_then(|p| p.as_u64()),
-                        description: item.get("description").and_then(|d| d.as_str()).map(|s| s.to_string()),
-                        city: item.get("city").and_then(|c| c.as_str()).map(|s| s.to_string()),
-                    });
                 }
             }
         }
 
-        let next_href = val.get("next_href").and_then(|v| v.as_str()).map(|s| s.to_string());
+        // Users / Artists
+        if cat == "all" || cat == "artists" || cat == "users" {
+            let u_limit = if cat == "artists" || cat == "users" { limit.max(24) } else { 8 };
+            let u_url = format!(
+                "https://api-v2.soundcloud.com/search/users?q={}&client_id={}&limit={}",
+                urlencoding(query),
+                client_id,
+                u_limit
+            );
+            if let Ok(u_resp) = self.client.get(&u_url).send().await
+                && let Ok(u_val) = u_resp.json::<Value>().await
+                && let Some(col) = u_val.get("collection").and_then(|c| c.as_array())
+            {
+                for item in col {
+                    if let (Some(id), Some(username)) = (item.get("id").and_then(|v| v.as_u64()), item.get("username").and_then(|u| u.as_str())) {
+                        users.push(UserProfile {
+                            id,
+                            username: username.to_string(),
+                            avatar_url: item.get("avatar_url").and_then(|a| a.as_str()).map(|s| s.replace("-large.jpg", "-t500x500.jpg")),
+                            permalink_url: item.get("permalink_url").and_then(|p| p.as_str()).map(|s| s.to_string()),
+                            followers_count: item.get("followers_count").and_then(|f| f.as_u64()),
+                            followings_count: item.get("followings_count").and_then(|f| f.as_u64()),
+                            likes_count: item.get("likes_count").and_then(|l| l.as_u64()),
+                            playlist_count: item.get("playlist_count").and_then(|p| p.as_u64()),
+                            description: item.get("description").and_then(|d| d.as_str()).map(|s| s.to_string()),
+                            city: item.get("city").and_then(|c| c.as_str()).map(|s| s.to_string()),
+                        });
+                    }
+                }
+            }
+        }
 
         Ok(SearchResponse { tracks, playlists, users, next_href })
     }
@@ -648,7 +880,7 @@ impl SoundCloudClient {
         }
 
         if tracks.is_empty() {
-            let fallback = self.search("trending", limit, 0).await?;
+            let fallback = self.search("trending", limit, 0, None).await?;
             return Ok(fallback.tracks);
         }
 
@@ -881,6 +1113,32 @@ fn parse_single_track(item: &Value) -> Option<TrackItem> {
     })
 }
 
+fn parse_user_item(item: &Value) -> Option<UserProfile> {
+    let id = item.get("id")?.as_u64()?;
+    let username = item.get("username").and_then(|u| u.as_str()).unwrap_or("User").to_string();
+    let avatar_url = item.get("avatar_url").and_then(|a| a.as_str()).map(|s| s.replace("-large.jpg", "-t500x500.jpg"));
+    let permalink_url = item.get("permalink_url").and_then(|p| p.as_str()).map(|s| s.to_string());
+    let followers_count = item.get("followers_count").and_then(|f| f.as_u64());
+    let followings_count = item.get("followings_count").and_then(|f| f.as_u64());
+    let likes_count = item.get("likes_count").and_then(|l| l.as_u64()).or_else(|| item.get("public_favorites_count").and_then(|l| l.as_u64()));
+    let playlist_count = item.get("playlist_count").and_then(|p| p.as_u64());
+    let description = item.get("description").and_then(|d| d.as_str()).map(|s| s.to_string());
+    let city = item.get("city").and_then(|c| c.as_str()).map(|s| s.to_string());
+
+    Some(UserProfile {
+        id,
+        username,
+        avatar_url,
+        permalink_url,
+        followers_count,
+        followings_count,
+        likes_count,
+        playlist_count,
+        description,
+        city,
+    })
+}
+
 fn parse_single_playlist(item: &Value) -> Option<PlaylistItem> {
     let id = item.get("id")?.as_u64()?;
     let title = item.get("title").and_then(|t| t.as_str()).unwrap_or("Playlist").to_string();
@@ -902,6 +1160,13 @@ fn parse_single_playlist(item: &Value) -> Option<PlaylistItem> {
         }
     }
 
+    let is_album = item.get("is_album").and_then(|v| v.as_bool())
+        .or_else(|| item.get("set_type").and_then(|st| st.as_str()).map(|s| s == "album"));
+    let release_year = item.get("release_date")
+        .and_then(|d| d.as_str())
+        .and_then(|s| s.split('-').next().map(|y| y.to_string()))
+        .or_else(|| item.get("created_at").and_then(|d| d.as_str()).and_then(|s| s.split('-').next().map(|y| y.to_string())));
+
     Some(PlaylistItem {
         id,
         title,
@@ -912,6 +1177,8 @@ fn parse_single_playlist(item: &Value) -> Option<PlaylistItem> {
         duration_ms,
         permalink_url,
         tracks,
+        is_album,
+        release_year,
     })
 }
 

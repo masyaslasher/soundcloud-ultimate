@@ -34,6 +34,8 @@ struct SearchParams {
     q: Option<String>,
     limit: Option<usize>,
     offset: Option<usize>,
+    filter: Option<String>,
+    cat: Option<String>,
 }
 
 #[derive(serde::Deserialize)]
@@ -86,8 +88,11 @@ fn create_router(state: AppState) -> Router {
         // User Library API
         .route("/api/me/likes", get(api_me_likes))
         .route("/api/me/playlists", get(api_me_playlists))
+        .route("/api/me/albums", get(api_me_albums))
+        .route("/api/me/followings", get(api_me_followings))
         .route("/api/me/stream", get(api_me_stream))
         .route("/api/me/history", get(api_me_history))
+        .route("/api/home/feed", get(api_home_feed))
         .route("/api/tracks/{id}/like", post(api_track_like))
         .route("/api/tracks/{id}/like", delete(api_track_unlike))
         // Artist & Profile API
@@ -235,7 +240,7 @@ async fn api_status(State(state): State<AppState>) -> impl IntoResponse {
     Json(serde_json::json!({
         "status": "ok",
         "client_id": id,
-        "version": "1.3.0",
+        "version": "2.0.0-beta.1",
         "engine": "Rust + Bento AMOLED Glass",
         "auth": auth
     }))
@@ -248,12 +253,11 @@ async fn api_system_metrics(State(state): State<AppState>) -> impl IntoResponse 
     {
         if let Ok(content) = std::fs::read_to_string("/proc/self/statm") {
             let parts: Vec<&str> = content.split_whitespace().collect();
-            if parts.len() >= 2 {
-                if let Ok(pages) = parts[1].parse::<u64>() {
+            if parts.len() >= 2
+                && let Ok(pages) = parts[1].parse::<u64>() {
                     let page_size = 4096;
                     mem_rss_mb = ((pages * page_size) as f64) / (1024.0 * 1024.0);
                 }
-            }
         }
     }
     let client_id_cached = state.sc.get_client_id().await;
@@ -357,6 +361,27 @@ async fn api_me_playlists(State(state): State<AppState>) -> impl IntoResponse {
     match state.sc.get_my_playlists(50).await {
         Ok(playlists) => (StatusCode::OK, Json(serde_json::json!({ "playlists": playlists }))).into_response(),
         Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_me_albums(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_my_playlists_and_albums().await {
+        Ok((_, albums)) => (StatusCode::OK, Json(serde_json::json!({ "albums": albums }))).into_response(),
+        Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_me_followings(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_my_followings(50).await {
+        Ok(artists) => (StatusCode::OK, Json(serde_json::json!({ "artists": artists }))).into_response(),
+        Err(e) => (StatusCode::UNAUTHORIZED, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_home_feed(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_home_feed().await {
+        Ok(feed) => (StatusCode::OK, Json(feed)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
     }
 }
 
@@ -472,8 +497,9 @@ async fn api_search(
     let q = params.q.unwrap_or_else(|| "popular".to_string());
     let limit = params.limit.unwrap_or(24);
     let offset = params.offset.unwrap_or(0);
+    let filter = params.filter.or(params.cat);
 
-    match state.sc.search(&q, limit, offset).await {
+    match state.sc.search(&q, limit, offset, filter.as_deref()).await {
         Ok(res) => (StatusCode::OK, Json(serde_json::json!(res))).into_response(),
         Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
     }

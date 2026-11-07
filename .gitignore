@@ -2,12 +2,27 @@
 target/
 **/*.rs.bk
 
+# Local build environments & custom toolchain overrides
+.cargo/
+.lib/
+.pkgconfig/
+
 # Node & Build artifacts
 node_modules/
 dist/
+dist_linux/
+dist_windows/
+dist_releases/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Release Archives & Checksums
+*.tar.gz
+*.deb
+*.AppImage
+*.zip
+SHA256SUMS
 
 # User credentials & session tokens
 auth.json
@@ -23,7 +38,3 @@ Thumbs.db
 *.bak
 .vscode/
 .idea/
-dist_releases/
-
-
-

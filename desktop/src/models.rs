@@ -60,6 +60,8 @@ pub struct PlaylistItem {
     pub duration_ms: u64,
     pub permalink_url: Option<String>,
     pub tracks: Vec<TrackItem>,
+    pub is_album: Option<bool>,
+    pub release_year: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -98,4 +100,12 @@ pub struct AuthStatus {
 pub struct PostCommentPayload {
     pub body: String,
     pub timestamp_ms: Option<u64>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct HomeFeedResponse {
+    pub recently_played: Vec<TrackItem>,
+    pub more_of_what_you_like: Vec<TrackItem>,
+    pub from_artists_you_follow: Vec<TrackItem>,
+    pub trending: Vec<TrackItem>,
 }

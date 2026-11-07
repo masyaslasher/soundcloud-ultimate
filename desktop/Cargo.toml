@@ -1,9 +1,10 @@
 [package]
 name = "soundcloud-desktop"
-version = "1.3.0"
+version = "2.0.0-beta.1"
 edition = "2024"
 
 [dependencies]
+sc-core = { path = "../crates/sc-core" }
 axum = "0.8.9"
 image = { version = "0.25", default-features = false, features = ["png"] }
 mime_guess = "2.0.5"
@@ -16,4 +17,3 @@ tao = "0.30"
 tokio = { version = "1.54.1", features = ["full"] }
 tower-http = { version = "0.7.1", features = ["cors", "fs"] }
 wry = "0.47"
-

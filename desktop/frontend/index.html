@@ -10,24 +10,47 @@
   <!-- Custom Frameless Window Titlebar (Bento Glass CSD) -->
   <div class="custom-titlebar" id="custom-titlebar">
     <div class="titlebar-drag-region" id="titlebar-drag-region">
-      <div class="titlebar-brand">
+      <div class="titlebar-brand" id="brand-home-top" style="cursor: pointer;">
         <svg viewBox="0 0 24 24" class="titlebar-logo">
           <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
         </svg>
-        <span class="titlebar-title">SoundCloud Ultimate</span>
+        <span class="titlebar-title">SoundCloud</span>
         <span class="titlebar-badge">Desktop</span>
       </div>
     </div>
-    <div class="titlebar-controls">
-      <button class="titlebar-btn btn-min" id="titlebar-btn-min" title="Minimize">
-        <svg viewBox="0 0 12 12"><rect y="5" width="12" height="1.5" fill="currentColor"/></svg>
+
+    <!-- Center Search Capsule -->
+    <div class="titlebar-search-slot">
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input type="text" id="search-input" class="search-input" placeholder="Search SoundCloud..." autocomplete="off">
+        <span class="search-kbd-badge">Ctrl + K</span>
+        <button class="search-clear-btn" id="btn-search-clear" style="display: none;">&times;</button>
+      </div>
+    </div>
+
+    <!-- Right Controls: Auth, Panel Toggle & Window Buttons -->
+    <div class="titlebar-right-actions">
+      <button class="top-auth-btn" id="btn-login-trigger" title="Sign In to SoundCloud">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span id="txt-header-login">Sign In</span>
       </button>
-      <button class="titlebar-btn btn-max" id="titlebar-btn-max" title="Maximize">
-        <svg id="titlebar-icon-max" viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      <button class="action-icon-pill" id="btn-toggle-right-panel" title="Toggle Now Playing & Queue Panel">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-2h4V7h-4v10z"/></svg>
       </button>
-      <button class="titlebar-btn btn-close" id="titlebar-btn-close" title="Close">
-        <svg viewBox="0 0 12 12"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      </button>
+      <div class="titlebar-controls">
+        <button class="titlebar-btn btn-min" id="titlebar-btn-min" title="Minimize">
+          <svg viewBox="0 0 12 12"><rect y="5" width="12" height="1.5" fill="currentColor"/></svg>
+        </button>
+        <button class="titlebar-btn btn-max" id="titlebar-btn-max" title="Maximize">
+          <svg id="titlebar-icon-max" viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+        <button class="titlebar-btn btn-close" id="titlebar-btn-close" title="Close">
+          <svg viewBox="0 0 12 12"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -58,10 +81,6 @@
             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             <span id="txt-nav-search">Search</span>
           </button>
-          <button class="nav-item" id="nav-item-library" title="Library">
-            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-            <span id="txt-nav-library">Library</span>
-          </button>
           <button class="nav-item" id="nav-item-liked" title="Liked Tracks">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             <span id="txt-nav-liked">Liked Tracks</span>
@@ -82,32 +101,7 @@
             <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
             <span id="txt-nav-history">History</span>
           </button>
-          <button class="nav-item" id="nav-item-downloads" title="Downloads">
-            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            <span id="txt-nav-downloads">Downloads</span>
-          </button>
         </nav>
-
-        <!-- Studio Hubs -->
-        <div class="sidebar-section-title">STUDIO & TOOLS</div>
-        <div class="sidebar-sub-nav">
-          <button class="nav-item-sub" id="btn-smart-playlists" title="Smart Rule-Based Playlists">
-            <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
-            <span>Smart Mixes</span>
-          </button>
-          <button class="nav-item-sub" id="btn-analytics-dashboard" title="Personal Listening Statistics & Wrapped">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-            <span>Analytics</span>
-          </button>
-          <button class="nav-item-sub" id="btn-plugin-studio" title="Plugin Studio & Extensions">
-            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <span>Plugins</span>
-          </button>
-          <button class="nav-item-sub" id="nav-item-queue" title="Full Queue Manager">
-            <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-            <span>Queue</span>
-          </button>
-        </div>
 
         <!-- Sidebar Bottom: Settings, About, User Profile -->
         <div class="sidebar-bottom">
@@ -207,77 +201,78 @@
 
       <!-- 2. CENTER MAIN CONTENT -->
       <main class="app-center-main" id="app-center-main">
-        <!-- Top Nav & Search Bar -->
-        <header class="center-top-bar" id="center-top-bar">
-          <!-- Search Wrapper -->
-          <div class="search-wrapper">
-            <svg class="search-icon" viewBox="0 0 24 24">
-              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-            <input type="text" id="search-input" class="search-input" placeholder="Search SoundCloud..." autocomplete="off">
-            <span class="search-kbd-badge">Ctrl + K</span>
-            <button class="search-clear-btn" id="btn-search-clear" style="display: none;">&times;</button>
-          </div>
-
-          <!-- Top Right Tools (Auth Button + Notifications + Panel Toggle) -->
-          <div class="center-top-actions">
-            <button class="top-auth-btn" id="btn-login-trigger" title="Sign In to SoundCloud">
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-              <span id="txt-header-login">Sign In</span>
-            </button>
-            <button class="action-icon-pill" id="btn-notifications" title="Notifications">
-              <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            </button>
-            <button class="action-icon-pill" id="btn-toggle-right-panel" title="Toggle Now Playing & Queue Panel">
-              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-2h4V7h-4v10z"/></svg>
-            </button>
-          </div>
-        </header>
-
         <!-- Scrollable Body -->
         <div class="center-scrollable-body" id="center-scrollable-body">
 
-          <!-- 1. HOME VIEW (Active by default) -->
+          <!-- 1. HOME VIEW (Active by default, Authentic SoundCloud Discover) -->
           <div class="app-page-view active" id="view-home">
-            <!-- Hero Banner: Discover new music -->
-            <div class="hero-discover-banner" id="hero-discover-banner">
-              <div class="hero-banner-content">
-                <h1 class="hero-banner-title">Discover<br>new music</h1>
-                <p class="hero-banner-subtitle">Explore tracks, artists and playlists from the SoundCloud community.</p>
-                <button class="hero-explore-btn" id="hero-explore-btn">
-                  <span>Explore</span> <span class="arrow-right">→</span>
-                </button>
-                <div class="hero-dots">
-                  <span class="dot active"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
+            <!-- 1. Recently Played Shelf -->
+            <section class="content-section shelf-section" id="section-recently-played">
+              <div class="section-header-row">
+                <div class="section-title-wrap">
+                  <h2 class="section-title">Recently Played</h2>
+                  <p class="section-subtitle">Recently played tracks by you</p>
+                </div>
+                <div class="shelf-nav-actions">
+                  <button class="shelf-nav-btn shelf-prev" id="btn-recent-prev" title="Scroll Left">‹</button>
+                  <button class="shelf-nav-btn shelf-next" id="btn-recent-next" title="Scroll Right">›</button>
                 </div>
               </div>
-              <div class="hero-banner-backdrop"></div>
-            </div>
-
-            <!-- Recently Played Horizontal Row (Matching Reference) -->
-            <div class="content-section" id="section-recently-played">
-              <div class="section-header-row">
-                <h2 class="section-title">Recently played</h2>
-                <button class="section-link-btn" id="btn-see-all-recent">See all →</button>
-              </div>
-              <div class="recently-played-row" id="recently-played-row">
+              <div class="shelf-carousel-track" id="recently-played-row">
                 <!-- Rendered dynamically -->
               </div>
-            </div>
+            </section>
 
-            <!-- Recommended for you Horizontal Row (Matching Reference) -->
-            <div class="content-section" id="section-recommended">
+            <!-- 2. More of What You Like Shelf -->
+            <section class="content-section shelf-section" id="section-more-like">
               <div class="section-header-row">
-                <h2 class="section-title">Recommended for you</h2>
-                <button class="section-link-btn" id="btn-see-all-recommended">See all →</button>
+                <div class="section-title-wrap">
+                  <h2 class="section-title">More of What You Like</h2>
+                  <p class="section-subtitle">Suggestions based on what you have liked and played</p>
+                </div>
+                <div class="shelf-nav-actions">
+                  <button class="shelf-nav-btn shelf-prev" id="btn-more-prev" title="Scroll Left">‹</button>
+                  <button class="shelf-nav-btn shelf-next" id="btn-more-next" title="Scroll Right">›</button>
+                </div>
               </div>
-              <div class="recently-played-row" id="recommended-row">
+              <div class="shelf-carousel-track" id="more-like-row">
                 <!-- Rendered dynamically -->
               </div>
-            </div>
+            </section>
+
+            <!-- 3. Your Liked Tracks Shelf -->
+            <section class="content-section shelf-section" id="section-home-liked">
+              <div class="section-header-row">
+                <div class="section-title-wrap">
+                  <h2 class="section-title">Your Liked Tracks</h2>
+                  <p class="section-subtitle">Your collection of favorite tracks</p>
+                </div>
+                <div class="shelf-nav-actions">
+                  <button class="shelf-nav-btn shelf-prev" id="btn-liked-prev" title="Scroll Left">‹</button>
+                  <button class="shelf-nav-btn shelf-next" id="btn-liked-next" title="Scroll Right">›</button>
+                </div>
+              </div>
+              <div class="shelf-carousel-track" id="home-liked-row">
+                <!-- Rendered dynamically -->
+              </div>
+            </section>
+
+            <!-- 4. Artists You Follow Shelf -->
+            <section class="content-section shelf-section" id="section-home-artists">
+              <div class="section-header-row">
+                <div class="section-title-wrap">
+                  <h2 class="section-title">Artists You Follow</h2>
+                  <p class="section-subtitle">Creators and musicians you follow on SoundCloud</p>
+                </div>
+                <div class="shelf-nav-actions">
+                  <button class="shelf-nav-btn shelf-prev" id="btn-artists-prev" title="Scroll Left">‹</button>
+                  <button class="shelf-nav-btn shelf-next" id="btn-artists-next" title="Scroll Right">›</button>
+                </div>
+              </div>
+              <div class="shelf-carousel-track artists-shelf-track" id="home-artists-row">
+                <!-- Rendered dynamically -->
+              </div>
+            </section>
           </div>
 
           <!-- 2. SEARCH VIEW -->
@@ -288,7 +283,6 @@
                 <button class="search-cat-pill active" data-cat="all">All</button>
                 <button class="search-cat-pill" data-cat="tracks">Tracks</button>
                 <button class="search-cat-pill" data-cat="artists">Artists</button>
-                <button class="search-cat-pill" data-cat="albums">Albums</button>
                 <button class="search-cat-pill" data-cat="playlists">Playlists</button>
               </div>
             </div>
@@ -310,13 +304,13 @@
                 </div>
                 <div class="search-tags-row" id="trending-searches-row">
                   <span class="search-tag-chip" data-q="Phonk">🔥 Phonk</span>
-                  <span class="search-tag-chip" data-q="Witch House">👁️ Witch House</span>
-                  <span class="search-tag-chip" data-q="Ambient">🌌 Ambient</span>
-                  <span class="search-tag-chip" data-q="Lofi Hip Hop">☕ Lofi Hip Hop</span>
-                  <span class="search-tag-chip" data-q="Drift Phonk">🏎️ Drift Phonk</span>
+                  <span class="search-tag-chip" data-q="Hip-Hop">🎤 Hip-Hop</span>
+                  <span class="search-tag-chip" data-q="Electronic">⚡ Electronic</span>
+                  <span class="search-tag-chip" data-q="Rock">🎸 Rock</span>
+                  <span class="search-tag-chip" data-q="Pop">✨ Pop</span>
+                  <span class="search-tag-chip" data-q="Chill">🎧 Chill</span>
                   <span class="search-tag-chip" data-q="Synthwave">🌆 Synthwave</span>
-                  <span class="search-tag-chip" data-q="Chillstep">🎧 Chillstep</span>
-                  <span class="search-tag-chip" data-q="Anime Lofi">🌸 Anime Lofi</span>
+                  <span class="search-tag-chip" data-q="Ambient">🌌 Ambient</span>
                 </div>
               </div>
             </div>
@@ -331,39 +325,7 @@
             </div>
           </div>
 
-          <!-- 3. LIBRARY VIEW -->
-          <div class="app-page-view" id="view-library" style="display: none;">
-            <div class="page-header-row">
-              <div>
-                <h1 class="page-title">Your Library</h1>
-                <p class="page-subtitle">Playlists, albums, followed artists and saved tracks</p>
-              </div>
-              <div class="lib-toolbar">
-                <input type="text" id="lib-search-input" class="lib-search-input" placeholder="Search in library...">
-                <div class="view-mode-toggle">
-                  <button class="mode-btn active" id="btn-lib-mode-grid" title="Grid View">
-                    <svg viewBox="0 0 24 24"><path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z"/></svg>
-                  </button>
-                  <button class="mode-btn" id="btn-lib-mode-list" title="List View">
-                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="lib-nav-tabs" id="lib-nav-tabs">
-              <button class="lib-tab active" data-tab="all">All</button>
-              <button class="lib-tab" data-tab="playlists">Playlists</button>
-              <button class="lib-tab" data-tab="albums">Albums</button>
-              <button class="lib-tab" data-tab="artists">Artists</button>
-              <button class="lib-tab" data-tab="tracks">Tracks</button>
-              <button class="lib-tab" data-tab="downloads">Downloads</button>
-            </div>
-
-            <div class="lib-content-area" id="lib-content-area"></div>
-          </div>
-
-          <!-- 4. LIKED TRACKS VIEW -->
+          <!-- 3. LIKED TRACKS VIEW -->
           <div class="app-page-view" id="view-liked" style="display: none;">
             <div class="liked-hero-banner">
               <div class="liked-hero-art">
@@ -577,86 +539,7 @@
             <div class="history-grouped-list" id="history-grouped-list"></div>
           </div>
 
-          <!-- 9. DOWNLOADS VIEW -->
-          <div class="app-page-view" id="view-downloads" style="display: none;">
-            <div class="page-header-row">
-              <div>
-                <h1 class="page-title">Downloads & Offline Audio</h1>
-                <p class="page-subtitle">Manage downloaded MP3s and storage</p>
-              </div>
-              <button class="secondary-pill-btn" id="btn-open-downloads-folder">📂 Open Folder</button>
-            </div>
-            <div class="downloads-storage-bar">
-              <div class="storage-info-row">
-                <span id="dl-storage-text">145 MB used / 10 GB allocated</span>
-                <span id="dl-count-text">12 downloaded tracks</span>
-              </div>
-              <div class="storage-progress-track">
-                <div class="storage-progress-fill" style="width: 14%;"></div>
-              </div>
-            </div>
-            <div class="tracklist-table-wrap">
-              <table class="tracklist-table">
-                <thead>
-                  <tr>
-                    <th style="width: 44px; text-align: center;">#</th>
-                    <th>TITLE</th>
-                    <th>ARTIST</th>
-                    <th>SIZE</th>
-                    <th>STATUS</th>
-                    <th style="width: 80px; text-align: center;">ACTIONS</th>
-                  </tr>
-                </thead>
-                <tbody id="downloads-tbody"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- 10. SMART MIXES VIEW -->
-          <div class="app-page-view" id="view-smart-mixes" style="display: none;">
-            <div class="page-header-row">
-              <div>
-                <h1 class="page-title">Smart Mixes</h1>
-                <p class="page-subtitle">Personalized algorithmic feeds and rule-based compilations</p>
-              </div>
-              <button class="primary-pill-btn" id="btn-smart-builder-trigger">+ Custom Rule Mix</button>
-            </div>
-            <div class="smart-mixes-content" id="smart-mixes-content"></div>
-          </div>
-
-          <!-- 11. ANALYTICS VIEW -->
-          <div class="app-page-view" id="view-analytics" style="display: none;">
-            <div class="page-header-row">
-              <div>
-                <h1 class="page-title">Listening Analytics</h1>
-                <p class="page-subtitle">Personal listening metrics, habits and statistics</p>
-              </div>
-              <div class="analytics-actions-row">
-                <div class="time-filter-pills" id="analytics-time-pills">
-                  <button class="time-pill active" data-range="7d">7 Days</button>
-                  <button class="time-pill" data-range="30d">30 Days</button>
-                  <button class="time-pill" data-range="90d">90 Days</button>
-                  <button class="time-pill" data-range="all">All Time</button>
-                </div>
-                <button class="secondary-pill-btn" id="btn-analytics-csv">📊 Export CSV</button>
-                <button class="secondary-pill-btn" id="btn-analytics-json">💾 Export JSON</button>
-              </div>
-            </div>
-            <div class="analytics-dashboard-body" id="analytics-dashboard-body"></div>
-          </div>
-
-          <!-- 12. PLUGINS VIEW -->
-          <div class="app-page-view" id="view-plugins" style="display: none;">
-            <div class="page-header-row">
-              <div>
-                <h1 class="page-title">Plugin Studio & Extensions</h1>
-                <p class="page-subtitle">Customize and extend your SoundCloud desktop client</p>
-              </div>
-            </div>
-            <div class="plugins-grid" id="plugins-view-grid"></div>
-          </div>
-
-          <!-- 13. SETTINGS VIEW -->
+          <!-- 9. SETTINGS VIEW -->
           <div class="app-page-view" id="view-settings" style="display: none;">
             <div class="settings-2col-layout">
               <aside class="settings-nav-sidebar">
@@ -666,29 +549,12 @@
                 <button class="settings-nav-btn" data-sec="playback">Playback & Audio Engine</button>
                 <button class="settings-nav-btn" data-sec="soundcloud">SoundCloud API & Auth</button>
                 <button class="settings-nav-btn" data-sec="library">Library & History</button>
-                <button class="settings-nav-btn" data-sec="downloads">Downloads & Storage</button>
                 <button class="settings-nav-btn" data-sec="shortcuts">Keyboard Shortcuts</button>
                 <button class="settings-nav-btn" data-sec="privacy">Privacy & Telemetry</button>
                 <button class="settings-nav-btn" data-sec="advanced">Advanced & System Diagnostics</button>
               </aside>
               <main class="settings-content-pane" id="settings-content-pane"></main>
             </div>
-          </div>
-
-          <!-- 14. QUEUE VIEW -->
-          <div class="app-page-view" id="view-queue" style="display: none;">
-            <div class="page-header-row">
-              <div>
-                <h1 class="page-title">Play Queue</h1>
-                <p class="page-subtitle">Manage upcoming playback order and queue history</p>
-              </div>
-              <div class="queue-actions-row">
-                <button class="secondary-pill-btn" id="btn-queue-view-clear">Clear Queue</button>
-                <button class="secondary-pill-btn" id="btn-queue-view-shuffle">🔀 Shuffle Queue</button>
-                <button class="primary-pill-btn" id="btn-queue-view-save">+ Save as Playlist</button>
-              </div>
-            </div>
-            <div class="queue-full-content" id="queue-full-content"></div>
           </div>
 
         </div>
@@ -766,7 +632,7 @@
     </div>
 
     <!-- Floating Bottom Player Dock (Active on smaller viewports or when right panel is hidden) -->
-    <div class="player-dock-wrapper">
+    <div class="player-dock-wrapper" id="player-dock-wrapper">
       <div class="player-dock">
         <!-- Left: Current Track Info + Like + Comments + Radio + Download + Card -->
         <div class="dock-left">
@@ -934,7 +800,7 @@
        ═══════════════════════════════════════════════════════════════════════ -->
 
   <!-- 1. Authentication Modal -->
-  <div class="bento-modal-overlay" id="auth-modal-overlay">
+  <div class="bento-modal-overlay" id="auth-modal-overlay" style="display: none;">
     <div class="bento-modal">
       <div class="modal-header">
         <div class="modal-title">
@@ -944,7 +810,7 @@
         <button class="modal-close-btn" id="btn-close-auth-modal">✕</button>
       </div>
       <div class="modal-body">
-        <button class="auth-submit-btn" id="btn-import-browser" style="background: var(--gradient-orange); font-size: 15px; padding: 16px;">
+        <button class="auth-submit-btn" id="btn-import-browser" style="background: var(--gradient-orange); font-size: 15px; padding: 14px;">
           ⚡ 1-Click Sign In (from Chromium)
         </button>
 
@@ -957,9 +823,26 @@
           🌐 Open SoundCloud Login Page in Browser
         </button>
 
+        <!-- Option A: Profile URL / Username -->
+        <div style="display: flex; align-items: center; gap: 12px; margin: 8px 0;">
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">or enter profile url / username</span>
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+        </div>
+
+        <div class="auth-input-group">
+          <label class="auth-label">SoundCloud Username or Profile Link</label>
+          <input type="text" id="auth-public-input" class="auth-text-input" placeholder="e.g. aluynon or https://soundcloud.com/aluynon">
+        </div>
+
+        <button class="auth-submit-btn" id="btn-submit-public" style="background: #181824; border: 1px solid var(--accent-primary); color: #FFF; margin-bottom: 8px;">
+          Connect by Username
+        </button>
+
+        <!-- Option B: OAuth token -->
         <div style="display: flex; align-items: center; gap: 12px; margin: 4px 0;">
           <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
-          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;" id="txt-auth-divider">or enter session token manually</span>
+          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;" id="txt-auth-divider">or enter oauth token manually</span>
           <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
         </div>
 
@@ -976,7 +859,7 @@
   </div>
 
   <!-- 2. In-App Artist / User Profile Modal -->
-  <div class="bento-modal-overlay" id="profile-modal-overlay">
+  <div class="bento-modal-overlay" id="profile-modal-overlay" style="display: none;">
     <div class="bento-modal profile-modal">
       <div class="profile-hero">
         <button class="modal-close-btn" id="btn-close-profile-modal" style="position: absolute; top: 16px; right: 20px;">✕</button>
@@ -1009,7 +892,7 @@
   </div>
 
   <!-- 3. In-App Playlist & Album Inspector Modal -->
-  <div class="bento-modal-overlay" id="playlist-modal-overlay">
+  <div class="bento-modal-overlay" id="playlist-modal-overlay" style="display: none;">
     <div class="bento-modal playlist-modal">
       <button class="modal-close-btn" id="btn-close-playlist-modal" style="position: absolute; top: 16px; right: 20px; z-index: 10;">✕</button>
       <div class="playlist-header-row">
@@ -1031,7 +914,7 @@
   </div>
 
   <!-- 4. In-App Track Comments Modal -->
-  <div class="bento-modal-overlay" id="comments-modal-overlay">
+  <div class="bento-modal-overlay" id="comments-modal-overlay" style="display: none;">
     <div class="bento-modal comments-modal">
       <div class="modal-header">
         <div class="modal-title">
@@ -1053,7 +936,7 @@
   </div>
 
   <!-- 5. Equalizer Modal -->
-  <div class="bento-modal-overlay" id="eq-modal-overlay">
+  <div class="bento-modal-overlay" id="eq-modal-overlay" style="display: none;">
     <div class="bento-modal eq-modal">
       <div class="modal-header">
         <div class="modal-title">
@@ -1103,7 +986,7 @@
   </div>
 
   <!-- 6. Fullscreen Vinyl Visualizer Overlay -->
-  <div class="visualizer-overlay" id="visualizer-overlay">
+  <div class="visualizer-overlay" id="visualizer-overlay" style="display: none;">
     <button class="vis-close-btn" id="btn-close-vis" title="Close (Esc / V)">✕</button>
     <div class="vinyl-record" id="vinyl-record">
       <img class="vinyl-center-art" id="vis-art" src="" alt="Vinyl Art">
@@ -1112,306 +995,12 @@
     <div class="vis-artist" id="vis-artist">SoundCloud Ultimate</div>
   </div>
 
-  <!-- 7. Theme Selector Modal (10 Themes) -->
-  <div class="bento-modal-overlay" id="theme-modal-overlay">
-    <div class="bento-modal theme-modal">
-      <div class="modal-header">
-        <div class="modal-title">
-          <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.57 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span id="txt-theme-modal-title">Themes (10 AMOLED Palettes)</span>
-        </div>
-        <button class="modal-close-btn" id="btn-close-theme-modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="themes-grid" id="themes-grid">
-          <!-- 1. Onyx Orange -->
-          <div class="theme-card active" data-theme-id="onyx">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FF5500 0%, #1A0D07 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #FF5500;"></span>
-                <span class="theme-swatch" style="background: #0A090E;"></span>
-                <span class="theme-swatch" style="background: #FF7700;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Onyx Orange</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Classic AMOLED Bento & neon orange</div>
-            </div>
-          </div>
 
-          <!-- 2. Cyberpunk 2077 -->
-          <div class="theme-card" data-theme-id="cyberpunk">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FFE600 0%, #00F0FF 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #FFE600;"></span>
-                <span class="theme-swatch" style="background: #00F0FF;"></span>
-                <span class="theme-swatch" style="background: #08070B;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Cyberpunk 2077</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Electric yellow, cyber cyan and Night City dark slate</div>
-            </div>
-          </div>
 
-          <!-- 3. Midnight Synthwave -->
-          <div class="theme-card" data-theme-id="synthwave">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #F72585 0%, #7209B7 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #F72585;"></span>
-                <span class="theme-swatch" style="background: #7209B7;"></span>
-                <span class="theme-swatch" style="background: #0A0612;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Midnight Synthwave</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Neon magenta, ultraviolet and 80s retrowave vibe</div>
-            </div>
-          </div>
 
-          <!-- 4. Matrix Emerald -->
-          <div class="theme-card" data-theme-id="matrix">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #00FF66 0%, #059669 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #00FF66;"></span>
-                <span class="theme-swatch" style="background: #050B07;"></span>
-                <span class="theme-swatch" style="background: #10B981;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Matrix Emerald</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Hacker CRT terminal and radioactive phosphor green</div>
-            </div>
-          </div>
-
-          <!-- 5. Nordic Frost -->
-          <div class="theme-card" data-theme-id="nordic">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #00D2FF 0%, #3B82F6 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #00D2FF;"></span>
-                <span class="theme-swatch" style="background: #38BDF8;"></span>
-                <span class="theme-swatch" style="background: #060B11;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Nordic Frost</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Arctic ice cyan, crystal sapphire and ocean navy</div>
-            </div>
-          </div>
-
-          <!-- 6. Crimson Blood -->
-          <div class="theme-card" data-theme-id="crimson">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FF1E56 0%, #990024 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #FF1E56;"></span>
-                <span class="theme-swatch" style="background: #990024;"></span>
-                <span class="theme-swatch" style="background: #0C0406;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Crimson Blood</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Ruby blood, gothic obsidian and vampire dark carmine</div>
-            </div>
-          </div>
-
-          <!-- 7. Sakura Blossom -->
-          <div class="theme-card" data-theme-id="sakura">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FF66C4 0%, #B84DFF 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #FF66C4;"></span>
-                <span class="theme-swatch" style="background: #B84DFF;"></span>
-                <span class="theme-swatch" style="background: #0D0810;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Sakura Blossom</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Cherry blossom, Tokyo night and pastel neon pink</div>
-            </div>
-          </div>
-
-          <!-- 8. Solar Amber -->
-          <div class="theme-card" data-theme-id="solar">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FFB703 0%, #FB8500 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #FFB703;"></span>
-                <span class="theme-swatch" style="background: #FB8500;"></span>
-                <span class="theme-swatch" style="background: #0B0804;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Solar Amber</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Liquid amber gold and warm sunset horizon glow</div>
-            </div>
-          </div>
-
-          <!-- 9. Hyperpop Acid -->
-          <div class="theme-card" data-theme-id="hyperpop">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #A3E635 0%, #8B5CF6 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #A3E635;"></span>
-                <span class="theme-swatch" style="background: #8B5CF6;"></span>
-                <span class="theme-swatch" style="background: #090610;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Hyperpop Acid</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Acid lime, deep amethyst purple and hyperpop styling</div>
-            </div>
-          </div>
-
-          <!-- 10. Monochrome Titanium -->
-          <div class="theme-card" data-theme-id="titanium">
-            <div class="theme-preview-banner" style="background: linear-gradient(135deg, #FFFFFF 0%, #64748B 100%);">
-              <div class="theme-swatches">
-                <span class="theme-swatch" style="background: #FFFFFF;"></span>
-                <span class="theme-swatch" style="background: #64748B;"></span>
-                <span class="theme-swatch" style="background: #000000;"></span>
-              </div>
-            </div>
-            <div class="theme-info">
-              <div class="theme-title">
-                <span>Monochrome Titanium</span>
-                <span class="theme-check-badge">Active</span>
-              </div>
-              <div class="theme-desc">Pure black onyx, platinum white and luxury titanium</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 8. Extensions Hub Modal -->
-  <div class="bento-modal-overlay" id="extensions-modal-overlay">
-    <div class="bento-modal extensions-modal">
-      <div class="modal-header">
-        <div class="modal-title">
-          <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-          <span id="txt-ext-modal-title">Built-in Extensions Hub (6 Modules)</span>
-        </div>
-        <button class="modal-close-btn" id="btn-close-extensions-modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="extensions-list">
-          <!-- Ext 1: Lyrics & Karaoke -->
-          <div class="ext-card">
-            <div class="ext-icon-box">🎤</div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-lyrics-name">Karaoke & Synced Lyrics</span>
-                <span class="ext-badge pro">Built-in</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-lyrics-desc">Automatic synchronized lyrics lookup from LRCLIB with line-by-line real-time scrolling, active line highlight, and jump-to-time on click.</div>
-            </div>
-            <button class="ext-action-btn" id="ext-btn-open-lyrics">Open Karaoke (K)</button>
-          </div>
-
-          <!-- Ext 2: Sleep Timer -->
-          <div class="ext-card">
-            <div class="ext-icon-box">🌙</div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-sleep-name">Smart Sleep Timer</span>
-                <span class="ext-badge">Active</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-sleep-desc">Stop music after a set duration or at the end of the track, featuring a gentle 30-second volume fade-out to preserve your sleep.</div>
-            </div>
-            <button class="ext-action-btn" id="ext-btn-open-sleep">Configure Timer</button>
-          </div>
-
-          <!-- Ext 3: Audio FX Studio -->
-          <div class="ext-card">
-            <div class="ext-icon-box">🎛️</div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-fx-name">Audio FX Studio: 8D Audio & Speed</span>
-                <span class="ext-badge pro">WebAudio DSP</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-fx-desc">360° binaural spatial audio rotation for headphones with radar, Nightcore (+25% speed/pitch), Slowed + Reverb, and smooth pitch slider.</div>
-            </div>
-            <button class="ext-action-btn" id="ext-btn-open-fx">FX Studio (F)</button>
-          </div>
-
-          <!-- Ext 4: A-B Looper -->
-          <div class="ext-card">
-            <div class="ext-icon-box">🔁</div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-looper-name">A-B Precision Looper</span>
-                <span class="ext-badge">Practice</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-looper-desc">Instantly set loop points [A] and [B] on the timeline for infinite seamless repetition of drops, solos, and beats.</div>
-            </div>
-            <button class="ext-action-btn" id="ext-btn-open-looper">A-B Looper</button>
-          </div>
-
-          <!-- Ext 5: Bento Track Card Generator -->
-          <div class="ext-card">
-            <div class="ext-icon-box">🪪</div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-card-name">Social Track Card Generator</span>
-                <span class="ext-badge pro">HD Canvas</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-card-desc">Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata to share on Discord, Telegram, or Twitter/X.</div>
-            </div>
-            <button class="ext-action-btn" id="ext-btn-open-card">Create Card</button>
-          </div>
-
-          <!-- Ext 6: Discord Rich Presence -->
-          <div class="ext-card">
-            <div class="ext-icon-box" style="background: rgba(88, 101, 242, 0.15); color: #5865F2;">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
-            </div>
-            <div class="ext-content">
-              <div class="ext-title-row">
-                <span class="ext-name" id="txt-ext-discord-name">Discord Rich Presence (Linux & Windows)</span>
-                <span class="ext-badge" id="discord-badge-status" style="background: rgba(88, 101, 242, 0.2); color: #5865F2; border-color: rgba(88, 101, 242, 0.4);">Connecting...</span>
-              </div>
-              <div class="ext-desc" id="txt-ext-discord-desc">Broadcasts current track, artist, album art, animated progress bar, and "Listen on SoundCloud" button to your Discord profile on Linux & Windows.</div>
-              <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;" id="discord-user-info">Auto-sync with local Discord client</div>
-            </div>
-            <label class="switch" style="margin-left: 10px;">
-              <input type="checkbox" id="discord-rpc-toggle" checked>
-              <span class="slider-switch"></span>
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- 9. Fullscreen Synced Lyrics & Karaoke Overlay -->
-  <div class="lyrics-overlay" id="lyrics-overlay">
+  <div class="lyrics-overlay" id="lyrics-overlay" style="display: none;">
     <div class="lyrics-top-bar">
       <div class="lyrics-track-info">
         <img class="lyrics-track-art" id="lyrics-art" src="" alt="Cover">
@@ -1431,7 +1020,7 @@
   </div>
 
   <!-- 10. Sleep Timer Modal -->
-  <div class="bento-modal-overlay" id="sleep-modal-overlay">
+  <div class="bento-modal-overlay" id="sleep-modal-overlay" style="display: none;">
     <div class="bento-modal" style="max-width: 440px;">
       <div class="modal-header">
         <div class="modal-title">
@@ -1458,7 +1047,7 @@
   </div>
 
   <!-- 11. Audio FX Studio Modal -->
-  <div class="bento-modal-overlay" id="fx-modal-overlay">
+  <div class="bento-modal-overlay" id="fx-modal-overlay" style="display: none;">
     <div class="bento-modal" style="max-width: 480px;">
       <div class="modal-header">
         <div class="modal-title">
@@ -1508,7 +1097,7 @@
   </div>
 
   <!-- 12. A-B Looper Modal -->
-  <div class="bento-modal-overlay" id="looper-modal-overlay">
+  <div class="bento-modal-overlay" id="looper-modal-overlay" style="display: none;">
     <div class="bento-modal" style="max-width: 440px;">
       <div class="modal-header">
         <div class="modal-title">
@@ -1542,7 +1131,7 @@
   </div>
 
   <!-- 13. Bento Track Card Generator Modal -->
-  <div class="bento-modal-overlay" id="card-modal-overlay">
+  <div class="bento-modal-overlay" id="card-modal-overlay" style="display: none;">
     <div class="bento-modal" style="max-width: 600px;">
       <div class="modal-header">
         <div class="modal-title">
@@ -1650,7 +1239,7 @@
   </div>
 
   <!-- Playlist Editor Modal -->
-  <div class="modal-overlay" id="modal-playlist-editor">
+  <div class="modal-overlay" id="modal-playlist-editor" style="display: none;">
     <div class="quiet-dark-modal-card">
       <div class="modal-header">
         <h2 class="modal-title" id="pl-editor-title">Create / Edit Playlist</h2>
@@ -1678,7 +1267,7 @@
   </div>
 
   <!-- Confirmation Dialog Modal -->
-  <div class="modal-overlay" id="modal-confirm">
+  <div class="modal-overlay" id="modal-confirm" style="display: none;">
     <div class="quiet-dark-modal-card confirm-modal-card">
       <div class="modal-header">
         <h2 class="modal-title" id="confirm-title">Confirm Action</h2>
@@ -1695,7 +1284,7 @@
   </div>
 
   <!-- Keyboard Shortcuts Cheat Sheet Modal -->
-  <div class="modal-overlay" id="modal-shortcuts">
+  <div class="modal-overlay" id="modal-shortcuts" style="display: none;">
     <div class="quiet-dark-modal-card shortcuts-modal-card">
       <div class="modal-header">
         <h2 class="modal-title">⌨️ Keyboard Shortcuts</h2>
@@ -1728,15 +1317,10 @@
   <!-- Scripts -->
   <script src="hls.min.js"></script>
   <script src="smoke.js"></script>
-  <script src="theme_studio.js"></script>
-  <script src="analytics.js"></script>
-  <script src="smart_playlists.js"></script>
   <script src="queue_manager.js"></script>
   <script src="visualizer.js"></script>
-  <script src="discovery.js"></script>
   <script src="track_inspector.js"></script>
   <script src="performance_monitor.js"></script>
-  <script src="plugins.js"></script>
   <script src="mini_player.js"></script>
   <script src="app.js"></script>
 </body>

@@ -121,7 +121,7 @@
     const tabs = modal.querySelectorAll('.sc-tab-btn');
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
+        tabs.forEach(t => { t.classList.remove('active'); });
         tab.classList.add('active');
         activeTab = tab.dataset.tab;
         renderContent();

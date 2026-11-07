@@ -1,0 +1,42 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.6/schema.json",
+  "files": {
+    "includes": [
+      "desktop/frontend/**",
+      "!desktop/frontend/hls.min.js"
+    ],
+    "ignoreUnknown": true
+  },
+  "formatter": {
+    "enabled": false
+  },
+  "assist": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "a11y": {
+        "recommended": false
+      },
+      "style": {
+        "recommended": false
+      },
+      "complexity": {
+        "recommended": false
+      },
+      "suspicious": {
+        "noDuplicateProperties": "error",
+        "noDuplicateSelectors": "error",
+        "noRedundantUseStrict": "off",
+        "noAssignInExpressions": "warn",
+        "useIterableCallbackReturn": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "warn",
+        "noInnerDeclarations": "off"
+      }
+    }
+  }
+}

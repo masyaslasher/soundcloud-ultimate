@@ -126,7 +126,7 @@
 
     overlay.querySelectorAll('.vis-mode-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        overlay.querySelectorAll('.vis-mode-chip').forEach(b => b.classList.remove('active'));
+        overlay.querySelectorAll('.vis-mode-chip').forEach(b => { b.classList.remove('active'); });
         btn.classList.add('active');
         currentMode = btn.dataset.mode;
         updateCenterArtVisibility();

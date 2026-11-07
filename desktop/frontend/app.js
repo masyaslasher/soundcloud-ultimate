@@ -21,6 +21,7 @@
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
     return num.toString();
   }
+  const formatNumber = formatCount;
 
   function escapeHtml(str) {
     if (!str) return '';
@@ -38,7 +39,7 @@
   const TRANSLATIONS = {
   "en": {
     "search_placeholder": "Search tracks, artists, albums...",
-    "themes_btn": "Themes (10)",
+    "themes_btn": "Settings",
     "extensions_btn": "Extensions (6)",
     "login_btn": "Sign In",
     "my_profile": "My Profile",
@@ -152,7 +153,7 @@
   },
   "ru": {
     "search_placeholder": "Поиск треков, исполнителей, альбомов...",
-    "themes_btn": "Темы (10)",
+    "themes_btn": "Настройки",
     "extensions_btn": "Расширения (6)",
     "login_btn": "Войти в аккаунт",
     "my_profile": "Мой профиль",
@@ -2370,19 +2371,12 @@
   async function syncUserData() {
     if (!currentUser) return;
     try {
-      const res = await fetch('/api/me/likes?limit=50');
+      const res = await fetch('/api/me/likes?limit=1000');
       if (res.ok) {
         const data = await res.json();
         if (data.tracks && Array.isArray(data.tracks)) {
           window.scUserLikes = data.tracks;
-          const currentLocal = getLocalLikes();
-          const merged = [...data.tracks];
-          currentLocal.forEach(loc => {
-            if (!merged.some(m => m.id === loc.id)) {
-              merged.push(loc);
-            }
-          });
-          saveLocalLikes(merged);
+          saveLocalLikes(data.tracks);
         }
       }
     } catch (err) {
@@ -2405,8 +2399,10 @@
       renderLikedView();
     } else if (currentActiveViewId === 'view-playlists') {
       renderPlaylistsView();
-    } else if (currentActiveViewId === 'view-library') {
-      renderLibraryView(activeLibraryTab, 'recent', libraryViewMode);
+    } else if (currentActiveViewId === 'view-albums') {
+      renderAlbumsView();
+    } else if (currentActiveViewId === 'view-artists') {
+      renderArtistsView();
     }
   }
 
@@ -2486,6 +2482,36 @@
       btnSubmitToken.textContent = 'Connect Account';
     }
   });
+
+  const btnSubmitPublic = document.getElementById('btn-submit-public');
+  const authPublicInput = document.getElementById('auth-public-input');
+  if (btnSubmitPublic && authPublicInput) {
+    btnSubmitPublic.addEventListener('click', async () => {
+      const val = authPublicInput.value.trim();
+      if (!val) return;
+      btnSubmitPublic.textContent = 'Connecting...';
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: val, username: val })
+        });
+        const data = await res.json();
+        if (data.authenticated) {
+          authModalOverlay.classList.remove('open');
+          await checkAuthStatus();
+          await syncUserData();
+          showToast('✨ Connected to profile!');
+        } else {
+          showToast('⚠️ ' + (data.error || 'Profile not found.'));
+        }
+      } catch (e) {
+        showToast('⚠️ Connection error: ' + e);
+      } finally {
+        btnSubmitPublic.textContent = 'Connect by Username';
+      }
+    });
+  }
 
   userBadge.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -2730,37 +2756,7 @@
     }
   }
 
-  async function loadMyHistory() {
-    currentTab = { type: 'lib', val: 'history' };
-    renderActiveTabTitle();
-    if (heroSection) heroSection.style.display = 'none';
 
-    if (!currentUser) {
-      const localHistory = getLocalHistory();
-      if (localHistory.length === 0) {
-        renderEmptyHistoryState();
-        return;
-      }
-      renderHistoryTracks(localHistory);
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/me/history');
-      const data = await res.json();
-      if (data.tracks && data.tracks.length > 0) {
-        renderHistoryTracks(data.tracks);
-      } else {
-        const localHistory = getLocalHistory();
-        if (localHistory.length > 0) renderHistoryTracks(localHistory);
-        else renderEmptyHistoryState();
-      }
-    } catch (e) {
-      const localHistory = getLocalHistory();
-      if (localHistory.length > 0) renderHistoryTracks(localHistory);
-      else renderEmptyHistoryState();
-    }
-  }
 
   async function loadTrending(genre = 'all-music') {
     currentTab = { type: 'genre', val: genre };
@@ -2782,23 +2778,41 @@
     }
     const q = query.trim();
     currentSearchQuery = q;
-    if (searchInput) searchInput.value = q;
     navigateTo('view-search', { query: q });
   }
 
   searchInput.addEventListener('input', (e) => {
     clearTimeout(searchTimeout);
     const q = e.target.value.trim();
+    const btnClear = document.getElementById('btn-search-clear');
+    if (btnClear) {
+      btnClear.style.display = e.target.value ? 'block' : 'none';
+    }
     searchTimeout = setTimeout(() => {
-      performSearch(q);
-    }, 350);
+      if (!q) {
+        if (currentActiveViewId === 'view-search') {
+          renderSearchView('', activeSearchCategory);
+        }
+        return;
+      }
+      if (currentActiveViewId !== 'view-search') {
+        navigateTo('view-search', { query: q });
+      } else {
+        renderSearchView(q, activeSearchCategory);
+      }
+    }, 300);
   });
 
   searchInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       clearTimeout(searchTimeout);
       const q = searchInput.value.trim();
-      performSearch(q);
+      if (!q) return;
+      if (currentActiveViewId !== 'view-search') {
+        navigateTo('view-search', { query: q });
+      } else {
+        renderSearchView(q, activeSearchCategory);
+      }
     }
   });
 
@@ -2808,7 +2822,13 @@
     searchIcon.addEventListener('click', () => {
       clearTimeout(searchTimeout);
       const q = searchInput.value.trim();
-      performSearch(q);
+      if (q) {
+        if (currentActiveViewId !== 'view-search') {
+          navigateTo('view-search', { query: q });
+        } else {
+          renderSearchView(q, activeSearchCategory);
+        }
+      }
     });
   }
 
@@ -4442,108 +4462,220 @@
     });
   }
 
-  function renderRecentlyPlayedRow() {
-    const row = document.getElementById('recently-played-row');
-    if (!row) return;
-    const history = getLocalHistory();
-    row.innerHTML = '';
+  function createShelfTrackCard(track, idx, trackList) {
+    const card = document.createElement('div');
+    card.className = 'shelf-track-card';
+    const art = track.artwork_url || 'assets/default_artwork.png';
+    card.innerHTML = `
+      <div class="shelf-track-art-wrap">
+        <img class="shelf-track-art" src="${art}" alt="${escapeHtml(track.title)}" onerror="this.src='assets/default_artwork.png'">
+        <button class="shelf-track-play-btn" title="Play ${escapeHtml(track.title)}">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+      <div class="shelf-track-meta">
+        <div class="shelf-track-title" title="${escapeHtml(track.title)}">${escapeHtml(track.title)}</div>
+        <div class="shelf-track-artist" title="${escapeHtml(track.artist || 'Artist')}">${escapeHtml(track.artist || 'Artist')}</div>
+      </div>
+    `;
 
-    if (history.length === 0) {
-      const curated = [
-        {
-          title: 'sad girl hours',
-          subtitle: 'Playlist • 1,234 likes',
-          artwork_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&q=80',
-          query: 'sad girl hours'
-        },
-        {
-          title: '★',
-          subtitle: 'Playlist • 823 likes',
-          artwork_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&q=80',
-          query: 'ambient aesthetic'
-        },
-        {
-          title: 'witch house vibes',
-          subtitle: 'Playlist • 42K likes',
-          artwork_url: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&q=80',
-          query: 'witch house'
-        },
-        {
-          title: 'lofi beats',
-          subtitle: 'Playlist • 3.4M likes',
-          artwork_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80',
-          query: 'lofi hip hop'
-        }
-      ];
-      curated.forEach(c => {
-        const card = document.createElement('div');
-        card.className = 'recent-card';
-        card.innerHTML = `
-          <div class="recent-card-thumb-wrap">
-            <img class="recent-card-art" src="${c.artwork_url}" alt="${c.title}" onerror="this.src='assets/default_artwork.png'">
-            <button class="recent-card-play-btn" title="Play ${c.title}">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
-          <div class="recent-card-title">${c.title}</div>
-          <div class="recent-card-meta">${c.subtitle}</div>
-        `;
-        const playBtn = card.querySelector('.recent-card-play-btn');
-        if (playBtn) {
-          playBtn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            try {
-              const res = await fetch(`/api/search?q=${encodeURIComponent(c.query)}&limit=25`);
-              const data = await res.json();
-              if (data.tracks && data.tracks.length > 0) {
-                queue = data.tracks;
-                currentIndex = 0;
-                playTrack(queue[0], 0);
-              }
-            } catch (err) {
-              console.warn('Playback error:', err);
-            }
-          });
-        }
-        card.addEventListener('click', () => {
-          if (searchInput) searchInput.value = c.query;
-          navigateTo('view-search', { query: c.query });
-        });
-        row.appendChild(card);
+    const playBtn = card.querySelector('.shelf-track-play-btn');
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        queue = trackList;
+        currentIndex = idx;
+        playTrack(track, idx);
       });
-      return;
     }
 
-    history.slice(0, 10).forEach(t => {
-      const card = document.createElement('div');
-      card.className = 'recent-card';
-      const art = t.artwork_url || 'assets/default_artwork.png';
-      card.innerHTML = `
-        <div class="recent-card-thumb-wrap">
-          <img class="recent-card-art" src="${art}" alt="${escapeHtml(t.title)}" onerror="this.src='assets/default_artwork.png'">
-          <button class="recent-card-play-btn" title="Play ${escapeHtml(t.title)}">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
-        <div class="recent-card-title">${escapeHtml(t.title)}</div>
-        <div class="recent-card-meta">${escapeHtml(t.artist || 'Track')}</div>
-      `;
-      const playBtn = card.querySelector('.recent-card-play-btn');
-      if (playBtn) {
-        playBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          playTrack(t);
-        });
-      }
-      card.addEventListener('click', () => {
-        playTrack(t);
-      });
-      row.appendChild(card);
+    card.addEventListener('click', () => {
+      queue = trackList;
+      currentIndex = idx;
+      playTrack(track, idx);
     });
+
+    return card;
+  }
+
+  function createArtistCircleCard(artist) {
+    const card = document.createElement('div');
+    card.className = 'artist-circle-card';
+    const avatar = artist.avatar_url || 'assets/default_artwork.png';
+    const name = artist.username || artist.name || 'Artist';
+    const followers = artist.followers_count ? `${formatNumber(artist.followers_count)} followers` : 'Artist';
+
+    card.innerHTML = `
+      <div class="artist-circle-avatar-wrap">
+        <img class="artist-circle-avatar" src="${avatar}" alt="${escapeHtml(name)}" onerror="this.src='assets/default_artwork.png'">
+      </div>
+      <div class="artist-circle-name" title="${escapeHtml(name)}">${escapeHtml(name)}</div>
+      <div class="artist-circle-subtitle">${followers}</div>
+    `;
+
+    card.addEventListener('click', () => {
+      openArtistDetail({ id: artist.id, name, artwork_url: avatar });
+    });
+
+    return card;
+  }
+
+  function setupShelfNavigation(prevBtnId, nextBtnId, trackId) {
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+    const track = document.getElementById(trackId);
+    if (!track) return;
+
+    if (prevBtn) {
+      prevBtn.onclick = () => {
+        track.scrollBy({ left: -420, behavior: 'smooth' });
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = () => {
+        track.scrollBy({ left: 420, behavior: 'smooth' });
+      };
+    }
+  }
+
+  async function renderRecentlyPlayedRow() {
+    const row = document.getElementById('recently-played-row');
+    if (!row) return;
+    row.innerHTML = '';
+
+    let items = getLocalHistory();
+    if (items.length === 0) {
+      try {
+        const res = await fetch('/api/home/feed');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.recently_played && data.recently_played.length > 0) {
+            items = data.recently_played;
+          } else if (data.trending && data.trending.length > 0) {
+            items = data.trending.slice(0, 12);
+          }
+        }
+      } catch (_) {}
+    }
+
+    if (items.length === 0) {
+      try {
+        const res = await fetch('/api/trending?genre=all-music&limit=12');
+        if (res.ok) {
+          const data = await res.json();
+          items = data.tracks || [];
+        }
+      } catch (_) {}
+    }
+
+    items.slice(0, 14).forEach((t, idx) => {
+      row.appendChild(createShelfTrackCard(t, idx, items));
+    });
+    setupShelfNavigation('btn-recent-prev', 'btn-recent-next', 'recently-played-row');
+  }
+
+  async function renderMoreLikeRow() {
+    const row = document.getElementById('more-like-row');
+    if (!row) return;
+    row.innerHTML = '';
+
+    let items = [];
+    try {
+      const res = await fetch('/api/home/feed');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.recommendations && data.recommendations.length > 0) {
+          items = data.recommendations;
+        } else if (data.trending && data.trending.length > 0) {
+          items = data.trending.slice(10, 24);
+        }
+      }
+    } catch (_) {}
+
+    if (items.length === 0) {
+      try {
+        const res = await fetch('/api/trending?genre=electronic&limit=14');
+        if (res.ok) {
+          const data = await res.json();
+          items = data.tracks || [];
+        }
+      } catch (_) {}
+    }
+
+    items.slice(0, 14).forEach((t, idx) => {
+      row.appendChild(createShelfTrackCard(t, idx, items));
+    });
+    setupShelfNavigation('btn-more-prev', 'btn-more-next', 'more-like-row');
+  }
+
+  async function renderHomeLikedRow() {
+    const row = document.getElementById('home-liked-row');
+    if (!row) return;
+    row.innerHTML = '';
+
+    let items = [];
+    try {
+      const res = await fetch('/api/me/likes?limit=20');
+      if (res.ok) {
+        const data = await res.json();
+        items = data.likes || data.collection || (Array.isArray(data) ? data : []);
+      }
+    } catch (_) {}
+
+    if (items.length === 0) {
+      items = getLocalLikes();
+    }
+
+    if (items.length === 0) {
+      try {
+        const res = await fetch('/api/trending?genre=ambient&limit=14');
+        if (res.ok) {
+          const data = await res.json();
+          items = data.tracks || [];
+        }
+      } catch (_) {}
+    }
+
+    items.slice(0, 16).forEach((t, idx) => {
+      row.appendChild(createShelfTrackCard(t, idx, items));
+    });
+    setupShelfNavigation('btn-liked-prev', 'btn-liked-next', 'home-liked-row');
+  }
+
+  async function renderHomeArtistsRow() {
+    const row = document.getElementById('home-artists-row');
+    if (!row) return;
+    row.innerHTML = '';
+
+    let artists = [];
+    try {
+      const res = await fetch('/api/me/followings');
+      if (res.ok) {
+        const data = await res.json();
+        artists = data.artists || data.collection || data.users || (Array.isArray(data) ? data : []);
+      }
+    } catch (_) {}
+
+    if (artists.length === 0) {
+      try {
+        const res = await fetch('/api/search?q=electronic&filter=artists&limit=14');
+        if (res.ok) {
+          const data = await res.json();
+          artists = data.artists || data.users || [];
+        }
+      } catch (_) {}
+    }
+
+    artists.slice(0, 16).forEach((a) => {
+      row.appendChild(createArtistCircleCard(a));
+    });
+    setupShelfNavigation('btn-artists-prev', 'btn-artists-next', 'home-artists-row');
   }
 
   function setActiveNavItem(id) {
-    document.querySelectorAll('.app-sidebar .nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.app-sidebar .nav-item').forEach(el => {
+      el.classList.remove('active');
+    });
     const target = document.getElementById(id);
     if (target) target.classList.add('active');
   }
@@ -4711,18 +4843,12 @@
     const navMap = {
       'view-home': 'nav-item-home',
       'view-search': 'nav-item-search',
-      'view-library': 'nav-item-library',
       'view-liked': 'nav-item-liked',
       'view-playlists': 'nav-item-playlists',
       'view-albums': 'nav-item-albums',
       'view-artists': 'nav-item-artists',
       'view-history': 'nav-item-history',
-      'view-downloads': 'nav-item-downloads',
-      'view-smart-mixes': 'btn-smart-playlists',
-      'view-analytics': 'btn-analytics-dashboard',
-      'view-plugins': 'btn-plugin-studio',
-      'view-settings': 'btn-theme-modal',
-      'view-queue': 'nav-item-queue'
+      'view-settings': 'btn-theme-modal'
     };
 
     const navId = navMap[viewId];
@@ -4748,13 +4874,12 @@
     switch (viewId) {
       case 'view-home':
         renderRecentlyPlayedRow();
-        renderRecommendedRow();
+        renderMoreLikeRow();
+        renderHomeLikedRow();
+        renderHomeArtistsRow();
         break;
       case 'view-search':
         renderSearchView(params.query || searchInput.value || '', params.cat || activeSearchCategory);
-        break;
-      case 'view-library':
-        renderLibraryView(params.tab || activeLibraryTab, 'recent', libraryViewMode);
         break;
       case 'view-liked':
         renderLikedView();
@@ -4780,97 +4905,13 @@
       case 'view-history':
         renderHistoryView();
         break;
-      case 'view-downloads':
-        renderDownloadsView();
-        break;
-      case 'view-smart-mixes':
-        renderSmartMixesView();
-        break;
-      case 'view-analytics':
-        renderAnalyticsView(params.range || '7d');
-        break;
-      case 'view-plugins':
-        renderPluginsView();
-        break;
       case 'view-settings':
         renderSettingsView(params.section || 'general');
-        break;
-      case 'view-queue':
-        renderQueueView();
         break;
     }
   }
 
-  // 2. Home Page: Recommended For You Row (Matching Reference)
-  function renderRecommendedRow() {
-    const row = document.getElementById('recommended-row');
-    if (!row) return;
-    row.innerHTML = '';
 
-    const curated = [
-      {
-        title: 'chill vibes',
-        subtitle: 'Playlist • 1.1M likes',
-        artwork_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&q=80',
-        query: 'chill vibes relax'
-      },
-      {
-        title: 'aesthetic beats',
-        subtitle: 'Playlist • 872K likes',
-        artwork_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&q=80',
-        query: 'aesthetic lofi beats'
-      },
-      {
-        title: 'dreamcore',
-        subtitle: 'Playlist • 679K likes',
-        artwork_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&q=80',
-        query: 'dreamcore ambient'
-      },
-      {
-        title: 'night drive',
-        subtitle: 'Playlist • 1.3M likes',
-        artwork_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&q=80',
-        query: 'night drive synthwave phonk'
-      }
-    ];
-
-    curated.forEach(c => {
-      const card = document.createElement('div');
-      card.className = 'recent-card';
-      card.innerHTML = `
-        <div class="recent-card-thumb-wrap">
-          <img class="recent-card-art" src="${c.artwork_url}" alt="${c.title}" onerror="this.src='assets/default_artwork.png'">
-          <button class="recent-card-play-btn" title="Play ${c.title}">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
-        <div class="recent-card-title">${c.title}</div>
-        <div class="recent-card-meta">${c.subtitle}</div>
-      `;
-      const playBtn = card.querySelector('.recent-card-play-btn');
-      if (playBtn) {
-        playBtn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          try {
-            const res = await fetch(`/api/search?q=${encodeURIComponent(c.query)}&limit=25`);
-            const data = await res.json();
-            if (data.tracks && data.tracks.length > 0) {
-              queue = data.tracks;
-              currentIndex = 0;
-              playTrack(queue[0], 0);
-            }
-          } catch (err) {
-            console.warn('Playback error:', err);
-          }
-        });
-      }
-      card.addEventListener('click', () => {
-        if (searchInput) searchInput.value = c.query;
-        navigateTo('view-search', { query: c.query });
-      });
-      row.appendChild(card);
-    });
-  }
 
   // 3. Search View Engine
   function getRecentSearches() {
@@ -4945,15 +4986,21 @@
     }
 
     // Fetch live search results
-    fetch(`/api/search?q=${encodeURIComponent(trimmed)}&limit=30`)
+    fetch(`/api/search?q=${encodeURIComponent(trimmed)}&filter=${encodeURIComponent(category)}&limit=30`)
       .then(res => res.json())
       .then(data => {
         const tracks = data.tracks || data.collection || (Array.isArray(data) ? data : []);
         const playlists = data.playlists || [];
         const users = data.users || [];
-        if (countBadge) countBadge.textContent = `${tracks.length} tracks found`;
 
-        if (tracks.length === 0) {
+        let totalCount = tracks.length;
+        if (category === 'artists') totalCount = users.length;
+        else if (category === 'playlists') totalCount = playlists.length;
+        else if (category === 'all') totalCount = tracks.length + users.length + playlists.length;
+
+        if (countBadge) countBadge.textContent = `${totalCount} results found`;
+
+        if (totalCount === 0) {
           resultsContent.innerHTML = `
             <div style="text-align: center; padding: 60px 20px;">
               <div style="font-size: 36px; margin-bottom: 12px;">🔍</div>
@@ -4964,9 +5011,99 @@
           return;
         }
 
-        // Render based on active category
-        if (category === 'tracks' || category === 'all') {
-          let html = `
+        let html = '';
+
+        // Category: Artists
+        if (category === 'artists') {
+          html = '<div class="artists-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 16px; padding: 12px 0;">';
+          const artistList = users.length > 0 ? users : tracks.map(t => ({ id: t.id, username: t.artist, avatar_url: t.artwork_url }));
+          artistList.forEach(u => {
+            const avatar = u.avatar_url || 'assets/default_artwork.png';
+            const name = u.username || u.name || 'Artist';
+            const fCount = u.followers_count ? `${formatNumber(u.followers_count)} followers` : 'SoundCloud Artist';
+            html += `
+              <div class="artist-circle-card" style="width: 100%;" data-artist="${escapeHtml(name)}">
+                <div class="artist-circle-avatar-wrap">
+                  <img class="artist-circle-avatar" src="${avatar}" alt="${escapeHtml(name)}" onerror="this.src='assets/default_artwork.png'">
+                </div>
+                <div class="artist-circle-name" title="${escapeHtml(name)}">${escapeHtml(name)}</div>
+                <div class="artist-circle-subtitle">${fCount}</div>
+              </div>
+            `;
+          });
+          html += '</div>';
+          resultsContent.innerHTML = html;
+
+          resultsContent.querySelectorAll('.artist-circle-card').forEach((card, idx) => {
+            card.addEventListener('click', () => {
+              const a = artistList[idx];
+              openArtistDetail({ id: a.id, name: a.username || a.name, artwork_url: a.avatar_url });
+            });
+          });
+          return;
+        }
+
+        // Category: Playlists
+        if (category === 'playlists') {
+          html = '<div class="playlists-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; padding: 12px 0;">';
+          playlists.forEach(pl => {
+            const art = pl.artwork_url || 'assets/default_artwork.png';
+            const author = pl.user?.username || 'Curator';
+            const count = pl.track_count || pl.tracks_count || 0;
+            html += `
+              <div class="media-card playlist-card" data-id="${pl.id}">
+                <div class="media-card-art-wrap">
+                  <img class="media-card-art" src="${art}" alt="${escapeHtml(pl.title)}" onerror="this.src='assets/default_artwork.png'">
+                  <button class="media-card-play-btn" title="Play Playlist"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+                </div>
+                <div class="media-card-title">${escapeHtml(pl.title)}</div>
+                <div class="media-card-subtitle">${escapeHtml(author)} • ${count} tracks</div>
+              </div>
+            `;
+          });
+          html += '</div>';
+          resultsContent.innerHTML = html;
+
+          resultsContent.querySelectorAll('.playlist-card').forEach((card, idx) => {
+            card.addEventListener('click', () => {
+              openPlaylistDetail(playlists[idx]);
+            });
+          });
+          return;
+        }
+
+        // Category: All (Composite)
+        if (category === 'all') {
+          if (users.length > 0) {
+            html += `
+              <div class="search-composite-section" style="margin-bottom: 24px;">
+                <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 12px;">Top Artists</h3>
+                <div style="display: flex; gap: 14px; overflow-x: auto; padding-bottom: 6px;">
+            `;
+            users.slice(0, 5).forEach(u => {
+              const avatar = u.avatar_url || 'assets/default_artwork.png';
+              const name = u.username || u.name || 'Artist';
+              const fCount = u.followers_count ? `${formatNumber(u.followers_count)} followers` : 'Artist';
+              html += `
+                <div class="artist-circle-card composite-artist-card" data-id="${u.id}">
+                  <div class="artist-circle-avatar-wrap">
+                    <img class="artist-circle-avatar" src="${avatar}" alt="${escapeHtml(name)}" onerror="this.src='assets/default_artwork.png'">
+                  </div>
+                  <div class="artist-circle-name" title="${escapeHtml(name)}">${escapeHtml(name)}</div>
+                  <div class="artist-circle-subtitle">${fCount}</div>
+                </div>
+              `;
+            });
+            html += `</div></div>`;
+          }
+        }
+
+        // Tracks table (for 'tracks' or 'all')
+        if (tracks.length > 0) {
+          if (category === 'all') {
+            html += `<h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 10px;">Tracks</h3>`;
+          }
+          html += `
             <div class="tracklist-table-wrap">
               <table class="tracklist-table">
                 <thead>
@@ -4980,7 +5117,8 @@
                 </thead>
                 <tbody>
           `;
-          tracks.forEach((t, idx) => {
+          const displayTracks = category === 'all' ? tracks.slice(0, 15) : tracks;
+          displayTracks.forEach((t, idx) => {
             const isLiked = isTrackLiked(t.id, t.liked);
             const art = t.artwork_url || 'assets/default_artwork.png';
             html += `
@@ -5009,81 +5147,69 @@
             `;
           });
           html += '</tbody></table></div>';
-          resultsContent.innerHTML = html;
-
-          // Wire row clicks
-          resultsContent.querySelectorAll('tr.track-row').forEach(row => {
-            const idx = parseInt(row.getAttribute('data-idx'), 10);
-            row.addEventListener('click', (e) => {
-              if (e.target.closest('button')) return;
-              queue = tracks;
-              currentIndex = idx;
-              playTrack(tracks[idx], idx);
-            });
-            row.querySelector('[data-act="like"]')?.addEventListener('click', (e) => {
-              e.stopPropagation();
-              toggleTrackLike(tracks[idx], e.currentTarget);
-            });
-            row.querySelector('[data-act="menu"]')?.addEventListener('click', (e) => {
-              e.stopPropagation();
-              openContextMenu(e, tracks[idx]);
-            });
-          });
-        } else if (category === 'artists') {
-          // Extract unique artists
-          const artistsMap = new Map();
-          tracks.forEach(t => {
-            if (!artistsMap.has(t.artist)) {
-              artistsMap.set(t.artist, { name: t.artist, artwork_url: t.artwork_url });
-            }
-          });
-          let html = '<div class="artists-grid">';
-          artistsMap.forEach(a => {
-            html += `
-              <div class="media-card artist-card" data-artist="${escapeHtml(a.name)}">
-                <div class="media-card-art-wrap">
-                  <img class="media-card-art" src="${a.artwork_url || 'assets/default_artwork.png'}" alt="" onerror="this.src='assets/default_artwork.png'">
-                  <button class="media-card-play-btn" title="Play ${escapeHtml(a.name)}"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-                </div>
-                <div class="media-card-title">${escapeHtml(a.name)}</div>
-                <div class="media-card-subtitle">Artist • SoundCloud Verified</div>
-              </div>
-            `;
-          });
-          html += '</div>';
-          resultsContent.innerHTML = html;
-
-          resultsContent.querySelectorAll('.artist-card').forEach(card => {
-            const artistName = card.getAttribute('data-artist');
-            card.addEventListener('click', () => {
-              openArtistDetail({ name: artistName, artwork_url: card.querySelector('img').src });
-            });
-          });
-        } else {
-          // Albums / Playlists grid
-          let html = '<div class="playlists-grid">';
-          tracks.slice(0, 12).forEach((t, i) => {
-            html += `
-              <div class="media-card" data-idx="${i}">
-                <div class="media-card-art-wrap">
-                  <img class="media-card-art" src="${t.artwork_url || 'assets/default_artwork.png'}" alt="" onerror="this.src='assets/default_artwork.png'">
-                  <button class="media-card-play-btn" title="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-                </div>
-                <div class="media-card-title">${escapeHtml(t.title)}</div>
-                <div class="media-card-subtitle">${escapeHtml(t.artist)} • Album / Single</div>
-              </div>
-            `;
-          });
-          html += '</div>';
-          resultsContent.innerHTML = html;
-
-          resultsContent.querySelectorAll('.media-card').forEach(card => {
-            const i = parseInt(card.getAttribute('data-idx'), 10);
-            card.addEventListener('click', () => {
-              playTrack(tracks[i]);
-            });
-          });
         }
+
+        // Composite playlists if 'all' and playlists exist
+        if (category === 'all' && playlists.length > 0) {
+          html += `
+            <div class="search-composite-section" style="margin-top: 24px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 12px;">Playlists</h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px;">
+          `;
+          playlists.slice(0, 6).forEach(pl => {
+            const art = pl.artwork_url || 'assets/default_artwork.png';
+            const author = pl.user?.username || 'Curator';
+            const count = pl.track_count || pl.tracks_count || 0;
+            html += `
+              <div class="media-card composite-playlist-card" data-id="${pl.id}">
+                <div class="media-card-art-wrap">
+                  <img class="media-card-art" src="${art}" alt="${escapeHtml(pl.title)}" onerror="this.src='assets/default_artwork.png'">
+                  <button class="media-card-play-btn" title="Play Playlist"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+                </div>
+                <div class="media-card-title">${escapeHtml(pl.title)}</div>
+                <div class="media-card-subtitle">${escapeHtml(author)} • ${count} tracks</div>
+              </div>
+            `;
+          });
+          html += `</div></div>`;
+        }
+
+        resultsContent.innerHTML = html;
+
+        // Wire track rows
+        resultsContent.querySelectorAll('tr.track-row').forEach(row => {
+          const idx = parseInt(row.getAttribute('data-idx'), 10);
+          row.addEventListener('click', (e) => {
+            if (e.target.closest('button')) return;
+            queue = tracks;
+            currentIndex = idx;
+            playTrack(tracks[idx], idx);
+          });
+          row.querySelector('[data-act="like"]')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleTrackLike(tracks[idx], e.currentTarget);
+          });
+          row.querySelector('[data-act="menu"]')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openContextMenu(e, tracks[idx]);
+          });
+        });
+
+        // Wire composite artists
+        resultsContent.querySelectorAll('.composite-artist-card').forEach((card, idx) => {
+          card.addEventListener('click', () => {
+            const u = users[idx];
+            if (u) openArtistDetail({ id: u.id, name: u.username || u.name, artwork_url: u.avatar_url });
+          });
+        });
+
+        // Wire composite playlists
+        resultsContent.querySelectorAll('.composite-playlist-card').forEach((card, idx) => {
+          card.addEventListener('click', () => {
+            const pl = playlists[idx];
+            if (pl) openPlaylistDetail(pl);
+          });
+        });
       })
       .catch(err => {
         // Graceful fallback for offline / mock testing
@@ -5153,13 +5279,13 @@
 
     if (ownerEl) ownerEl.textContent = currentUser ? currentUser.username : 'Guest';
 
-    // Auto-fetch from SoundCloud if user logged in and local list is empty
-    if (currentUser && likes.length === 0) {
+    // Auto-fetch from SoundCloud if user logged in
+    if (currentUser) {
       try {
-        const res = await fetch('/api/me/likes?limit=50');
+        const res = await fetch('/api/me/likes?limit=1000');
         if (res.ok) {
           const data = await res.json();
-          if (data.tracks && Array.isArray(data.tracks) && data.tracks.length > 0) {
+          if (data.tracks && Array.isArray(data.tracks)) {
             likes = data.tracks;
             saveLocalLikes(likes);
           }
@@ -5566,34 +5692,66 @@
   }
 
   // 7. Albums View Engine
-  function renderAlbumsView() {
+  async function renderAlbumsView() {
     const grid = document.getElementById('albums-grid');
     if (!grid) return;
 
-    const curatedAlbums = [
-      { id: 'alb-1', title: 'METAMORPHOSIS (Deluxe)', artist: 'INTERWORLD', year: '2023', tracks_count: 12, artwork_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&q=80' },
-      { id: 'alb-2', title: 'MIDNIGHT CITY ESCAPE', artist: 'KAVINSKY & Friends', year: '2024', tracks_count: 14, artwork_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&q=80' },
-      { id: 'alb-3', title: 'DRIFT SPIRIT VOL. 3', artist: 'KORDHELL & Hensonn', year: '2023', tracks_count: 10, artwork_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&q=80' },
-      { id: 'alb-4', title: 'ETHEREAL RESONANCE', artist: 'Øneheart', year: '2024', tracks_count: 8, artwork_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80' }
-    ];
+    grid.innerHTML = '<div style="color: var(--text-muted); padding: 40px; text-align: center;">Loading albums...</div>';
+
+    let albums = [];
+    if (currentUser) {
+      try {
+        const res = await fetch('/api/me/albums');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.albums && Array.isArray(data.albums)) {
+            albums = data.albums;
+          }
+        }
+      } catch (_) {}
+    }
+
+    if (albums.length === 0) {
+      try {
+        const res = await fetch('/api/search?q=album&filter=playlists&limit=12');
+        if (res.ok) {
+          const data = await res.json();
+          const items = data.collection || data.playlists || [];
+          albums = items.map(p => ({
+            id: p.id,
+            title: p.title,
+            artist: p.user ? (p.user.username || p.user.name || 'Artist') : 'Artist',
+            tracks_count: p.track_count || 10,
+            artwork_url: p.artwork_url || 'assets/default_artwork.png',
+            year: p.release_year || 'Album'
+          }));
+        }
+      } catch (_) {}
+    }
+
+    if (albums.length === 0) {
+      grid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; text-align: center;">No albums found. Save albums to your library to see them here!</div>';
+      return;
+    }
 
     let html = '';
-    curatedAlbums.forEach(alb => {
+    albums.forEach(alb => {
+      const art = alb.artwork_url || 'assets/default_artwork.png';
       html += `
         <div class="media-card" data-album-id="${alb.id}">
           <div class="media-card-art-wrap">
-            <img class="media-card-art" src="${alb.artwork_url}" alt="" onerror="this.src='assets/default_artwork.png'">
+            <img class="media-card-art" src="${art}" alt="" onerror="this.src='assets/default_artwork.png'">
             <button class="media-card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
           </div>
           <div class="media-card-title">${escapeHtml(alb.title)}</div>
-          <div class="media-card-subtitle">${escapeHtml(alb.artist)} • ${alb.year}</div>
+          <div class="media-card-subtitle">${escapeHtml(alb.artist || 'Artist')} • ${alb.tracks_count || alb.track_count || 10} tracks</div>
         </div>
       `;
     });
     grid.innerHTML = html;
 
     grid.querySelectorAll('.media-card').forEach((card, idx) => {
-      card.addEventListener('click', () => renderAlbumDetail(curatedAlbums[idx]));
+      card.addEventListener('click', () => renderAlbumDetail(albums[idx]));
     });
   }
 
@@ -5610,18 +5768,24 @@
     const stats = document.getElementById('album-detail-stats');
     const tbody = document.getElementById('album-tracks-tbody');
 
-    if (art) art.src = album.artwork_url;
+    if (art) art.src = album.artwork_url || 'assets/default_artwork.png';
     if (title) title.textContent = album.title;
-    if (artist) artist.textContent = album.artist;
-    if (stats) stats.textContent = `${album.tracks_count || 10} tracks • Released ${album.year || '2024'}`;
+    if (artist) artist.textContent = album.artist || 'Artist';
+    if (stats) stats.textContent = `${album.tracks_count || album.track_count || 10} tracks • Released ${album.year || '2024'}`;
 
     if (!tbody) return;
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--text-muted);">Loading album tracks...</td></tr>';
 
-    fetch(`/api/search?q=${encodeURIComponent(album.title)}&limit=10`)
+    fetch(`/api/playlists/${album.id}`)
       .then(r => r.json())
       .then(data => {
-        const tracks = data.collection || data || [];
+        const tracks = data.tracks || [];
+        if (tracks.length === 0) {
+          return fetch(`/api/search?q=${encodeURIComponent(album.title)}&limit=15`).then(r => r.json()).then(d => d.tracks || d.collection || []);
+        }
+        return tracks;
+      })
+      .then(tracks => {
         tbody.innerHTML = '';
         tracks.forEach((t, i) => {
           const tr = document.createElement('tr');
@@ -5630,14 +5794,14 @@
             <td class="table-idx-col">${i + 1}</td>
             <td>
               <div class="table-track-cell">
-                <img class="table-track-art" src="${t.artwork_url || album.artwork_url}" alt="" onerror="this.src='assets/default_artwork.png'">
+                <img class="table-track-art" src="${t.artwork_url || album.artwork_url || 'assets/default_artwork.png'}" alt="" onerror="this.src='assets/default_artwork.png'">
                 <div class="table-track-info">
                   <div class="table-track-title">${escapeHtml(t.title)}</div>
-                  <div class="table-track-artist">${escapeHtml(t.artist || album.artist)}</div>
+                  <div class="table-track-artist">${escapeHtml(t.artist || album.artist || 'Artist')}</div>
                 </div>
               </div>
             </td>
-            <td style="color: var(--text-secondary);">${escapeHtml(album.artist)}</td>
+            <td style="color: var(--text-secondary);">${escapeHtml(album.artist || 'Artist')}</td>
             <td style="text-align: right; color: var(--text-muted); font-size: 12px;">${formatDurationMs(t.duration_ms)}</td>
             <td class="table-actions-cell">
               <button class="table-icon-btn" title="Options">•••</button>
@@ -5657,35 +5821,74 @@
   }
 
   // 8. Artists View Engine
-  function renderArtistsView() {
+  async function renderArtistsView() {
     const grid = document.getElementById('artists-grid');
     if (!grid) return;
 
-    const featuredArtists = [
-      { name: 'KORDHELL', followers: '1.2M', artwork_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&q=80' },
-      { name: 'INTERWORLD', followers: '840K', artwork_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&q=80' },
-      { name: 'Hensonn', followers: '620K', artwork_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&q=80' },
-      { name: 'Øneheart', followers: '950K', artwork_url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80' },
-      { name: 'DVRST', followers: '1.4M', artwork_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&q=80' }
-    ];
+    grid.innerHTML = '<div style="color: var(--text-muted); padding: 40px; text-align: center;">Loading followed artists...</div>';
+
+    let artists = [];
+    if (currentUser) {
+      try {
+        const res = await fetch('/api/me/followings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.artists && Array.isArray(data.artists)) {
+            artists = data.artists.map(a => ({
+              id: a.id,
+              name: a.username,
+              followers: a.followers_count ? (a.followers_count >= 1000000 ? `${(a.followers_count / 1000000).toFixed(1)}M` : (a.followers_count >= 1000 ? `${(a.followers_count / 1000).toFixed(0)}K` : a.followers_count)) : 'Artist',
+              artwork_url: a.avatar_url || 'assets/default_artwork.png'
+            }));
+          }
+        }
+      } catch (_) {}
+    }
+
+    if (artists.length === 0) {
+      try {
+        const res = await fetch('/api/search?q=phonk&limit=12');
+        if (res.ok) {
+          const data = await res.json();
+          const trs = data.tracks || data.collection || [];
+          const seen = new Set();
+          trs.forEach(t => {
+            if (t.artist && !seen.has(t.artist)) {
+              seen.add(t.artist);
+              artists.push({
+                id: t.id,
+                name: t.artist,
+                followers: 'SoundCloud Artist',
+                artwork_url: t.artwork_url || 'assets/default_artwork.png'
+              });
+            }
+          });
+        }
+      } catch (_) {}
+    }
+
+    if (artists.length === 0) {
+      grid.innerHTML = '<div style="color: var(--text-dim); padding: 40px; text-align: center;">No followed artists found.</div>';
+      return;
+    }
 
     let html = '';
-    featuredArtists.forEach(art => {
+    artists.forEach(art => {
       html += `
         <div class="media-card artist-card" data-artist="${escapeHtml(art.name)}">
-          <div class="media-card-art-wrap">
+          <div class="media-card-art-wrap" style="border-radius: 50%;">
             <img class="media-card-art" src="${art.artwork_url}" alt="" onerror="this.src='assets/default_artwork.png'">
             <button class="media-card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
           </div>
           <div class="media-card-title">${escapeHtml(art.name)}</div>
-          <div class="media-card-subtitle">${art.followers} followers</div>
+          <div class="media-card-subtitle">${art.followers}</div>
         </div>
       `;
     });
     grid.innerHTML = html;
 
     grid.querySelectorAll('.artist-card').forEach((card, idx) => {
-      card.addEventListener('click', () => renderArtistDetail(featuredArtists[idx]));
+      card.addEventListener('click', () => renderArtistDetail(artists[idx]));
     });
   }
 
@@ -6502,17 +6705,11 @@
   const navItemsSetup = [
     { id: 'nav-item-home', view: 'view-home' },
     { id: 'nav-item-search', view: 'view-search' },
-    { id: 'nav-item-library', view: 'view-library' },
     { id: 'nav-item-liked', view: 'view-liked' },
     { id: 'nav-item-playlists', view: 'view-playlists' },
     { id: 'nav-item-albums', view: 'view-albums' },
     { id: 'nav-item-artists', view: 'view-artists' },
     { id: 'nav-item-history', view: 'view-history' },
-    { id: 'nav-item-downloads', view: 'view-downloads' },
-    { id: 'btn-smart-playlists', view: 'view-smart-mixes' },
-    { id: 'btn-analytics-dashboard', view: 'view-analytics' },
-    { id: 'btn-plugin-studio', view: 'view-plugins' },
-    { id: 'nav-item-queue', view: 'view-queue' },
     { id: 'btn-theme-modal', view: 'view-settings' }
   ];
 
@@ -6526,25 +6723,45 @@
     }
   });
 
-  // Top Search Input Auto-Routing
-  if (searchInput) {
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.trim();
+  // Category Pills in Search
+  document.querySelectorAll('.search-cat-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.getAttribute('data-cat') || 'all';
+      renderSearchView(searchInput.value ? searchInput.value.trim() : '', cat);
+    });
+  });
+
+  // Trending Genre Search Chips
+  document.querySelectorAll('#trending-searches-row .search-tag-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const q = chip.getAttribute('data-q');
+      if (!q) return;
+      document.querySelectorAll('#trending-searches-row .search-tag-chip').forEach(c => { c.classList.remove('active'); });
+      chip.classList.add('active');
+      searchInput.value = q;
+      const btnClear = document.getElementById('btn-search-clear');
+      if (btnClear) btnClear.style.display = 'block';
       if (currentActiveViewId !== 'view-search') {
         navigateTo('view-search', { query: q });
       } else {
         renderSearchView(q, activeSearchCategory);
       }
     });
-  }
-
-  // Category Pills in Search
-  document.querySelectorAll('.search-cat-pill').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cat = btn.getAttribute('data-cat');
-      renderSearchView(searchInput.value || '', cat);
-    });
   });
+
+  // Search Clear Button
+  const btnSearchClear = document.getElementById('btn-search-clear');
+  if (btnSearchClear) {
+    btnSearchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      btnSearchClear.style.display = 'none';
+      document.querySelectorAll('#trending-searches-row .search-tag-chip').forEach(c => { c.classList.remove('active'); });
+      if (currentActiveViewId === 'view-search') {
+        renderSearchView('', activeSearchCategory);
+      }
+      searchInput.focus();
+    });
+  }
 
   // Library Mode & Tab Switchers
   document.getElementById('btn-lib-mode-grid')?.addEventListener('click', () => renderLibraryView(activeLibraryTab, 'recent', 'grid'));
@@ -6599,7 +6816,7 @@
     } else if (e.key === 'Escape') {
       closeExpandedPlayer();
       closeContextMenu();
-      document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+      document.querySelectorAll('.modal-overlay.open').forEach(m => { m.classList.remove('open'); });
     } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
       showShortcuts();
     }
@@ -6638,9 +6855,23 @@
   window.navigateToView = navigateTo;
 
   // Initial Views Initialization
-  renderRecommendedRow();
+  renderRecentlyPlayedRow();
+  renderMoreLikeRow();
+  renderHomeLikedRow();
+  renderHomeArtistsRow();
 
   setVolume(currentVolume, true);
   checkSystemStatus();
   checkAuthStatus();
+
+  function handleHashNavigation() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      navigateTo(hash);
+    }
+  }
+  window.addEventListener('hashchange', handleHashNavigation);
+  if (window.location.hash) {
+    setTimeout(handleHashNavigation, 100);
+  }
 })();
