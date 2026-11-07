@@ -2,7 +2,7 @@
 
 # SoundCloud Ultimate (Quiet Dark AMOLED Edition)
 
-[![Release](https://img.shields.io/badge/Релиз-v2.0.0--beta.1-A855F7?style=for-the-badge&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1)
+[![Release](https://img.shields.io/badge/Релиз-v2.0.0-A855F7?style=for-the-badge&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
 [![Архитектура](https://img.shields.io/badge/Архитектура-Cargo%20Workspace-blue?style=for-the-badge)]()
 [![Платформа](https://img.shields.io/badge/Платформа-Linux%20%7C%20Windows-brightgreen?style=for-the-badge)]()
@@ -16,7 +16,7 @@
 
 <p align="center">
   <b>Ультимативный нативный десктопный клиент нового поколения для SoundCloud.</b><br>
-  Построен на базе высокопроизводительного модульного <b>Rust Cargo Workspace</b> (<code>sc-core</code>) и современного интерфейса в стиле <b>Quiet Dark AMOLED</b> (фон <code>#09090B</code>, карточки <code>#121217</code>, акцент <code>#A855F7</code>).
+  Построен на базе высокопроизводительного модульного <b>Rust Cargo Workspace</b> (<code>sc-core</code>) и современного интерфейса в стиле <b>Quiet Dark AMOLED</b> (фон <code>#09090B</code>, поверхности <code>#121418</code>, границы <code>#222630</code>, фирменный акцент <code>#FF5500</code>).
   100% нативный десктоп без браузерных обёрток и зависимостей.
 </p>
 
@@ -42,8 +42,9 @@ SoundCloud-Ultimate/
     │   ├── main.rs          # Встроенный рантайм Axum, нативное окно Tao + Wry с кастомным заголовком
     │   └── soundcloud.rs    # Мост между ядром sc-core и локальным веб-интерфейсом
     └── frontend/            # Quiet Dark AMOLED Single-Page интерфейс
-        ├── index.html       # 4 аутентичные полки, поиск с категориями, плеерный док
+        ├── index.html       # 4 аутентичные полки, поиск с категориями, фиксированный плеерный док
         ├── app.js           # Однонаправленный поиск, карусели треков, синхронизация аккаунта
+        ├── queue_manager.js # Движок очереди Quiet Dark (Smart Shuffle, Deduplicate, пресеты)
         └── style.css        # Дизайн-система Quiet Dark, полная изоляция модальных окон
 ```
 
@@ -53,10 +54,14 @@ SoundCloud-Ultimate/
 
 | Экран | Описание | Скриншот |
 | :--- | :--- | :--- |
-| **Главная (Discover)** | Аутентичная лента SoundCloud с 4 горизонтальными полками (*Недавно прослушанные*, *Больше похожего*, *Понравившиеся треки*, *Ваши подписки*) и кнопками карусели ‹ / ›. | ![Home Discover](assets/screenshots/home.png) |
+| **Главная (Discover)** | Аутентичная лента SoundCloud с горизонтальными полками (*Недавно прослушанные*, *Специально для вас*, *Больше похожего*, *Понравившиеся треки*, *Ваши подписки*) и кнопками карусели ‹ / ›. | ![Home Discover](assets/screenshots/home.png) |
 | **Поиск и категории** | Живой поиск без фантомного ввода, фильтрация по вкладкам (*Все*, *Треки*, *Артисты*, *Плейлисты*) и чипы жанров (*Phonk, Synthwave, Cyberpunk, Trap, Ambient*). | ![Search View](assets/screenshots/search.png) |
+| **Современная очередь (Queue)** | Панель очереди воспроизведения в Quiet Dark с функциями *Smart Shuffle* (чередование артистов), *Deduplicate*, пресетами *Save Queue* и удалением треков по клику. | ![Playback Queue](assets/screenshots/queue.png) |
+| **Настройки и звук** | Четкая иерархия из 5 разделов (*Основные*, *Звук и воспроизведение*, *Темы*, *Дополнения*, *Горячие клавиши*) со стилизованными выпадающими списками. | ![Settings View](assets/screenshots/settings.png) |
+| **Конструктор тем** | Создание собственных цветовых палитр с мгновенным предпросмотром и импортом/экспортом в JSON. | ![Themes Studio](assets/screenshots/themes.png) |
+| **Профиль и загрузка треков** | Редактирование профиля, смена аватара, описания и встроенная загрузка собственных аудиофайлов. | ![User Profile](assets/screenshots/profile.png) |
 | **Понравившиеся треки** | Полная синхронизация библиотеки аккаунта (>160 треков) с курсорной пагинацией, мгновенным запуском и переключением лайков. | ![Liked Tracks](assets/screenshots/liked.png) |
-| **Подписки и артисты** | Профили артистов, счётчик подписчиков, обложки, дискография и мгновенный переход. | ![Artists View](assets/screenshots/artists.png) |
+| **Каталог артистов** | Профили артистов, счётчик подписчиков, обложки, дискография и мгновенный переход к трекам. | ![Artists View](assets/screenshots/artists.png) |
 
 ---
 
@@ -64,8 +69,9 @@ SoundCloud-Ultimate/
 
 - **Аутентичный Discover как в оригинальном SoundCloud:** Никаких лишних баннеров, только чистые карусели музыки.
 - **Мощное Rust-ядро:** Высокая скорость работы, авто-ротация `client_id`, стриминг HLS и нулевое зависание.
-- **Эстетика Quiet Dark AMOLED:** Глубокий черный фон (`#09090B`), мягкие границы (`#27272A`), фиолетовый акцент (`#A855F7`), жестко закрепленные заголовок (52px) и плеер (72px).
-- **Полная изоляция модальных окон:** Все диалоги и настройки скрыты (`display: none; position: fixed; inset: 0;`) и не ломают сетку страницы.
+- **Эстетика Quiet Dark AMOLED:** Глубокий черный фон (`#09090B`), мягкие границы (`#222630`), фирменный оранжевый акцент (`#FF5500`), жестко закрепленные заголовок (52px) и плеер (72px).
+- **Продвинутая очередь воспроизведения:** Умное перемешивание, дедупликация, поиск по очереди и сохранение снапшотов.
+- **Полная изоляция модальных окон:** Все диалоги и настройки изолированы (`position: fixed; inset: 0; z-index: 2000;`) с тремя векторами закрытия (Escape, клик по фону, кнопка ×).
 - **Нативный Discord Rich Presence:** Название трека, автор, обложка и анимированный прогресс-бар в Discord.
 - **Аудио-эффекты и Караоке:** 5-полосный эквалайзер, 360° 8D Audio, режимы Nightcore/Slowed и синхронные тексты песен через LRCLIB (`K`).
 
@@ -98,16 +104,16 @@ cargo build --release -p soundcloud-desktop
 
 ## Релизы и пакеты
 
-Готовые бинарные сборки доступны в [GitHub Releases](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1):
+Готовые автономные сборки доступны на странице [GitHub Releases](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0):
 
-- **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0-beta.1.tar.gz`
-- **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0-beta.1_amd64.deb`
-- **Linux AppImage:** `SoundCloud-Ultimate-x86_64.AppImage`
+- **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0.tar.gz`
+- **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0_amd64.deb`
+- **Linux AppImage:** `SoundCloud-Ultimate-v2.0.0-x86_64.AppImage`
 - **Windows Portable:** `SoundCloud-Ultimate-Windows-x86_64-Portable.zip`
 
 ---
 
 ## Лицензия
 
-Проект распространяется под лицензией [MIT License](LICENSE).
-SoundCloud является зарегистрированной торговой маркой SoundCloud Global Limited & Co. KG. Этот проект является независимым клиентом с открытым исходным кодом.
+Проект распространяется под лицензией [MIT](LICENSE).
+SoundCloud является зарегистрированной торговой маркой SoundCloud Global Limited & Co. KG. Этот проект представляет собой независимый свободный клиент с открытым исходным кодом.

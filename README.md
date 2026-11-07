@@ -2,7 +2,7 @@
 
 # SoundCloud Ultimate (Quiet Dark AMOLED Edition)
 
-[![Release](https://img.shields.io/badge/Release-v2.0.0--beta.1-A855F7?style=for-the-badge&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1)
+[![Release](https://img.shields.io/badge/Release-v2.0.0-A855F7?style=for-the-badge&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
 [![Architecture](https://img.shields.io/badge/Architecture-Cargo%20Workspace-blue?style=for-the-badge)]()
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-brightgreen?style=for-the-badge)]()
@@ -16,7 +16,7 @@
 
 <p align="center">
   <b>Next-generation standalone native desktop client for SoundCloud.</b><br>
-  Engineered with a high-performance <b>Rust Workspace Core</b> (<code>sc-core</code>) and modern <b>Quiet Dark AMOLED</b> aesthetics (<code>#09090B</code> background, <code>#121217</code> cards, <code>#A855F7</code> purple accent).
+  Engineered with a high-performance <b>Rust Workspace Core</b> (<code>sc-core</code>) and modern <b>Quiet Dark AMOLED</b> aesthetics (<code>#09090B</code> background, <code>#121418</code> surfaces, <code>#222630</code> borders, <code>#FF5500</code> brand accent).
   100% native desktop experience with zero browser dependencies.
 </p>
 
@@ -42,8 +42,9 @@ SoundCloud-Ultimate/
     │   ├── main.rs          # Embedded Axum runtime, Tao + Wry native frameless CSD window
     │   └── soundcloud.rs    # Core API bridge & local audio streaming
     └── frontend/            # Quiet Dark AMOLED Single-Page Interface
-        ├── index.html       # 4 Authentic Shelves, Search Categories, Player Dock
+        ├── index.html       # 4 Authentic Shelves, Search Categories, Fixed Player Dock
         ├── app.js           # Debounced unidirectional search, carousel navigation, audio player
+        ├── queue_manager.js # Modern Quiet Dark queue engine (Smart Shuffle, Deduplicate, Presets)
         └── style.css        # Strict Quiet Dark AMOLED design tokens, zero leaking modals
 ```
 
@@ -53,10 +54,14 @@ SoundCloud-Ultimate/
 
 | Screen | Description | Preview |
 | :--- | :--- | :--- |
-| **Discover Home** | Authentic SoundCloud Discover feed featuring 4 horizontal shelves (*Recently Played*, *More of What You Like*, *Your Liked Tracks*, *Artists You Follow*) with carousel arrow buttons. | ![Home Discover](assets/screenshots/home.png) |
-| **Search & Categories** | Real-time debounced search with tab filters (*All*, *Tracks*, *Artists*, *Playlists*) and trending genre chips (*Phonk, Synthwave, Cyberpunk, Trap, Ambient*). | ![Search View](assets/screenshots/search.png) |
-| **Liked Library** | Complete account library synchronization with full multi-page cursor pagination (>160 tracks), sort by date, instant playback, and like/unlike toggle. | ![Liked Tracks](assets/screenshots/liked.png) |
-| **Artists & Followings** | In-app artist profiles, follower counts, avatar art, discographies, and instant profile navigation. | ![Artists View](assets/screenshots/artists.png) |
+| **Discover Home** | Authentic SoundCloud Discover feed featuring horizontal shelves (*Recently Played*, *Mixed for You*, *More of What You Like*, *Liked Tracks*, *Artists You Follow*) with carousel navigation. | ![Home Discover](assets/screenshots/home.png) |
+| **Search & Browse** | Real-time debounced search with category filters (*All*, *Tracks*, *Artists*, *Playlists*) and curated genre grid (*Phonk, Synthwave, Cyberpunk, Trap, Ambient*). | ![Search View](assets/screenshots/search.png) |
+| **Modern Playback Queue** | Quiet Dark queue panel with *Smart Shuffle* (artist repetition avoidance), *Deduplicate*, *Save Queue* presets, and instant track deletion. | ![Playback Queue](assets/screenshots/queue.png) |
+| **Settings & Audio** | Streamlined 5-tab settings hierarchy (*General*, *Playback & Audio*, *Themes*, *Add-ons*, *Keyboard Shortcuts*) with Quiet Dark selectors. | ![Settings View](assets/screenshots/settings.png) |
+| **Themes Studio** | Dynamic theme creator with real-time palette preview and instant JSON export/import. | ![Themes Studio](assets/screenshots/themes.png) |
+| **User Profile & Uploads** | Profile editor with avatar customization, bio editing, and native track upload capabilities. | ![User Profile](assets/screenshots/profile.png) |
+| **Liked Library** | Complete account library synchronization with full multi-page cursor pagination (>160 tracks), sort by date, and instant like toggle. | ![Liked Tracks](assets/screenshots/liked.png) |
+| **Artists Directory** | In-app artist profiles, follower counts, avatar art, discographies, and instant profile navigation. | ![Artists View](assets/screenshots/artists.png) |
 
 ---
 
@@ -64,8 +69,9 @@ SoundCloud-Ultimate/
 
 - **Authentic SoundCloud Discover:** Clean horizontal carousel shelves without cluttered hero banners.
 - **High-Performance Rust Core:** Powered by `reqwest`, `tokio`, and `sc-core` with automatic client_id rotation and resilient fallback streams.
-- **Quiet Dark AMOLED Aesthetic:** Deep blacks (`#09090B`), subtle border contrast (`#27272A`), elegant purple glow (`#A855F7`), and strictly pinned custom titlebar (52px) and player dock (72px).
-- **True In-App Modal Isolation:** All dialogs and popups remain strictly isolated (`display: none; position: fixed; inset: 0;`) until explicitly invoked, ensuring zero document flow distortion.
+- **Quiet Dark AMOLED Aesthetic:** Deep blacks (`#09090B`), subtle border contrast (`#222630`), elegant brand accent (`#FF5500`), and strictly pinned custom titlebar and player dock.
+- **Modern Playback Queue:** Feature-complete queue management with drag-and-drop reordering, deduplication, and saved snapshots.
+- **True In-App Modal Isolation:** All dialogs and popups remain strictly isolated (`position: fixed; inset: 0; z-index: 2000;`) until explicitly invoked, with three dismiss vectors (Escape, backdrop click, close button).
 - **Native Discord Rich Presence:** Displays track title, artist, live elapsed/remaining progress bar, and cover art on your Discord profile.
 - **Audio FX & Equalizer:** 5-band studio EQ, 360° 8D Audio spatializer, Nightcore/Slowed modes, and LRCLIB synchronized karaoke lyrics (`K`).
 
@@ -100,11 +106,11 @@ cargo build --release -p soundcloud-desktop
 
 ## Package Distribution
 
-Pre-compiled standalone packages are available under [GitHub Releases](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1):
+Pre-compiled standalone packages are available under [GitHub Releases](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0):
 
-- **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0-beta.1.tar.gz`
-- **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0-beta.1_amd64.deb`
-- **Linux AppImage:** `SoundCloud-Ultimate-x86_64.AppImage`
+- **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0.tar.gz`
+- **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0_amd64.deb`
+- **Linux AppImage:** `SoundCloud-Ultimate-v2.0.0-x86_64.AppImage`
 - **Windows Portable:** `SoundCloud-Ultimate-Windows-x86_64-Portable.zip`
 
 ---
