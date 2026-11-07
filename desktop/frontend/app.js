@@ -2908,6 +2908,10 @@
     document.getElementById('looper-modal-overlay')?.classList.remove('open');
     document.getElementById('card-modal-overlay')?.classList.remove('open');
     document.getElementById('lang-modal-overlay')?.classList.remove('open');
+    document.getElementById('queue-manager-modal-overlay')?.classList.remove('open');
+    if (window.QueueManager && typeof window.QueueManager.close === 'function') {
+      window.QueueManager.close();
+    }
     if (userDropdown) userDropdown.classList.remove('open');
   }
 
@@ -5103,13 +5107,25 @@
 
     const trimmed = (query || '').trim();
     if (!trimmed) {
-      if (preSection) preSection.style.display = 'block';
-      if (resultsSection) resultsSection.style.display = 'none';
+      if (preSection) {
+        preSection.style.setProperty('display', 'block', 'important');
+        preSection.classList.remove('hidden');
+      }
+      if (resultsSection) {
+        resultsSection.style.setProperty('display', 'none', 'important');
+        resultsSection.classList.add('hidden');
+      }
       return;
     }
 
-    if (preSection) preSection.style.display = 'none';
-    if (resultsSection) resultsSection.style.display = 'block';
+    if (preSection) {
+      preSection.style.setProperty('display', 'none', 'important');
+      preSection.classList.add('hidden');
+    }
+    if (resultsSection) {
+      resultsSection.style.setProperty('display', 'flex', 'important');
+      resultsSection.classList.remove('hidden');
+    }
     if (queryDisplay) queryDisplay.textContent = trimmed;
     if (resultsContent) {
       resultsContent.innerHTML = '<div style="color: var(--text-muted); padding: 40px; text-align: center;"><div class="skeleton-shimmer" style="height: 120px; border-radius: 12px; margin-bottom: 12px;"></div>Searching SoundCloud...</div>';

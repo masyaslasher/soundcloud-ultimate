@@ -121,17 +121,6 @@ html, body {
   letter-spacing: 0.3px;
 }
 
-.titlebar-badge {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--accent-primary);
-  background: rgba(168, 85, 247, 0.12);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  padding: 1px 7px;
-  border-radius: 999px;
-  letter-spacing: 0.5px;
-}
 
 .titlebar-search-slot {
   flex: 1;
@@ -6878,12 +6867,22 @@ input:checked + .toggle-slider:before {
    SEARCH RESULTS VERTICAL FLOW FIX (NO OVERLAPS)
    ═════════════════════════════════════════════════════════════════════════ */
 .search-results-section {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 20px !important;
-  position: relative !important;
-  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  width: 100%;
   box-sizing: border-box;
+}
+
+.search-results-section.hidden,
+.search-results-section[style*="display: none"] {
+  display: none !important;
+}
+
+.search-pre-content.hidden,
+.search-pre-content[style*="display: none"] {
+  display: none !important;
 }
 
 .search-results-section .section-header-row {
@@ -7070,3 +7069,372 @@ input:checked + .toggle-slider:before {
   border-color: var(--accent-primary) !important;
   background: rgba(255, 85, 0, 0.04) !important;
 }
+
+/* ═════════════════════════════════════════════════════════════════════════
+   QUIET DARK ADVANCED PLAY QUEUE MODAL
+   ═════════════════════════════════════════════════════════════════════════ */
+#queue-manager-modal-overlay,
+.queue-manager-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.78) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  z-index: 2000 !important;
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+#queue-manager-modal-overlay.open,
+.queue-manager-modal-overlay.open {
+  display: flex !important;
+  animation: queueFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes queueFadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.queue-manager-modal {
+  background-color: #121418 !important;
+  border: 1px solid #222630 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  width: 100% !important;
+  max-width: 660px !important;
+  height: 80vh !important;
+  max-height: 720px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  color: #F3F4F6 !important;
+}
+
+.queue-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #1E222A;
+  flex-shrink: 0;
+}
+
+.queue-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #F3F4F6;
+  letter-spacing: -0.2px;
+}
+
+.queue-count-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9CA3AF;
+  background: #181B22;
+  border: 1px solid #262A34;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.queue-modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #9CA3AF;
+  font-size: 22px;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.queue-modal-close-btn:hover {
+  background: #1E222A;
+  color: #FFFFFF;
+}
+
+.queue-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #15181E;
+  border-bottom: 1px solid #1E222A;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.queue-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.queue-flat-btn {
+  background: #181B22;
+  border: 1px solid #262A34;
+  color: #D1D5DB;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.queue-flat-btn:hover {
+  background: #222630;
+  border-color: #374151;
+  color: #FFFFFF;
+}
+
+.queue-btn-danger {
+  color: #F87171;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.queue-btn-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #EF4444;
+  color: #FCA5A5;
+}
+
+.queue-filter-wrap {
+  position: relative;
+  padding: 12px 20px 0;
+  flex-shrink: 0;
+}
+
+.queue-filter-icon {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-20%);
+  color: #6B7280;
+  pointer-events: none;
+}
+
+.queue-filter-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #181B22;
+  border: 1px solid #262A34;
+  border-radius: 8px;
+  padding: 8px 14px 8px 36px;
+  color: #F3F4F6;
+  font-size: 12.5px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.queue-filter-input:focus {
+  border-color: #FF5500;
+}
+
+.queue-filter-input::placeholder {
+  color: #6B7280;
+}
+
+.queue-tabs-bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #1E222A;
+  flex-shrink: 0;
+}
+
+.queue-tab-btn {
+  background: transparent;
+  border: none;
+  color: #9CA3AF;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.queue-tab-btn:hover {
+  color: #F3F4F6;
+  background: #181B22;
+}
+
+.queue-tab-btn.active {
+  color: #FFFFFF;
+  background: #222630;
+}
+
+.queue-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
+}
+
+.queue-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.queue-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.queue-body::-webkit-scrollbar-thumb {
+  background: #262A34;
+  border-radius: 3px;
+}
+
+.queue-body::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+.queue-interactive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.queue-row-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: transparent;
+  transition: background-color 0.12s ease;
+  user-select: none;
+}
+
+.queue-row-item:hover {
+  background: #181B22;
+}
+
+.queue-row-item.now-playing {
+  background: #1A1E26;
+  border-left: 3px solid #FF5500;
+}
+
+.queue-row-idx {
+  width: 22px;
+  font-size: 12px;
+  color: #6B7280;
+  text-align: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.queue-row-item.now-playing .queue-row-idx {
+  color: #FF5500;
+  font-weight: 700;
+}
+
+.queue-row-art {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #1E222A;
+}
+
+.queue-row-meta {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.queue-row-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #F3F4F6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue-row-item.now-playing .queue-row-title {
+  color: #FF5500;
+}
+
+.queue-row-artist {
+  font-size: 11.5px;
+  color: #9CA3AF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue-row-duration {
+  font-size: 12px;
+  color: #6B7280;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  padding: 0 4px;
+}
+
+.queue-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.btn-queue-del {
+  background: transparent;
+  border: none;
+  color: #6B7280;
+  font-size: 18px;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-queue-del:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+}
+
+.btn-queue-move {
+  background: transparent;
+  border: none;
+  color: #6B7280;
+  font-size: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-queue-move:hover {
+  background: #222630;
+  color: #F3F4F6;
+}
+
