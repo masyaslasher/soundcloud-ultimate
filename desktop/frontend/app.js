@@ -36,8 +36,25 @@
 
   // Global Language & Translations (8 Languages)
   let currentLang = localStorage.getItem('lang') || 'en';
+  let applyLanguage = null;
+  let currentActiveSettingsSection = 'general';
   const TRANSLATIONS = {
   "en": {
+    "nav_home": "Home",
+    "nav_search": "Search",
+    "nav_liked": "Liked Tracks",
+    "nav_playlists": "Playlists",
+    "nav_albums": "Albums",
+    "nav_artists": "Artists",
+    "nav_history": "History",
+    "nav_settings": "Settings",
+    "nav_about": "About",
+    "settings_title": "Settings",
+    "settings_tab_general": "General",
+    "settings_tab_playback": "Playback & Audio",
+    "settings_tab_themes": "Themes",
+    "settings_tab_addons": "Add-ons",
+    "settings_tab_shortcuts": "Keyboard Shortcuts",
     "search_placeholder": "Search tracks, artists, albums...",
     "themes_btn": "Settings",
     "extensions_btn": "Extensions (6)",
@@ -152,6 +169,21 @@
     "toast_lang_switched": "Language switched to English"
   },
   "ru": {
+    "nav_home": "Главная",
+    "nav_search": "Поиск",
+    "nav_liked": "Мои лайки",
+    "nav_playlists": "Плейлисты",
+    "nav_albums": "Альбомы",
+    "nav_artists": "Исполнители",
+    "nav_history": "История",
+    "nav_settings": "Настройки",
+    "nav_about": "О программе",
+    "settings_title": "Настройки",
+    "settings_tab_general": "Основные",
+    "settings_tab_playback": "Звук и воспроизведение",
+    "settings_tab_themes": "Темы оформления",
+    "settings_tab_addons": "Дополнения",
+    "settings_tab_shortcuts": "Горячие клавиши",
     "search_placeholder": "Поиск треков, исполнителей, альбомов...",
     "themes_btn": "Настройки",
     "extensions_btn": "Расширения (6)",
@@ -995,6 +1027,7 @@
   const playerTitle = document.getElementById('player-title');
   const playerArtist = document.getElementById('player-artist');
   const dockLikeBtn = document.getElementById('dock-like-btn');
+  const dockAddPlaylistBtn = document.getElementById('dock-add-playlist-btn');
   const dockCommentsBtn = document.getElementById('dock-comments-btn');
   const dockRadioBtn = document.getElementById('dock-radio-btn');
   const dockDownloadBtn = document.getElementById('dock-download-btn');
@@ -1867,13 +1900,21 @@
     }
   }
 
-  dockLikeBtn.addEventListener('click', () => {
+  dockLikeBtn?.addEventListener('click', () => {
     if (currentIndex >= 0 && queue[currentIndex]) {
       toggleTrackLike(queue[currentIndex], dockLikeBtn);
     }
   });
 
-  dockDownloadBtn.addEventListener('click', () => {
+  dockAddPlaylistBtn?.addEventListener('click', () => {
+    if (currentIndex >= 0 && queue[currentIndex]) {
+      openPlaylistEditor(queue[currentIndex]);
+    } else {
+      showToast(currentLang === 'ru' ? 'Выберите трек для добавления в плейлист' : 'Select a track to add to playlist');
+    }
+  });
+
+  dockDownloadBtn?.addEventListener('click', () => {
     if (currentIndex >= 0 && queue[currentIndex]) {
       const track = queue[currentIndex];
       window.location.href = `/api/download?id=${track.id}`;
@@ -1881,12 +1922,12 @@
   });
 
   // 4. Equalizer & Visualizer Toggles
-  btnEqToggle.addEventListener('click', () => {
-    eqModalOverlay.classList.toggle('open');
+  btnEqToggle?.addEventListener('click', () => {
+    eqModalOverlay?.classList.toggle('open');
   });
 
-  btnCloseEqModal.addEventListener('click', () => {
-    eqModalOverlay.classList.remove('open');
+  btnCloseEqModal?.addEventListener('click', () => {
+    eqModalOverlay?.classList.remove('open');
   });
 
   btnVisToggle.addEventListener('click', () => {
@@ -2240,7 +2281,7 @@
     commentsModalOverlay.classList.remove('open');
   });
 
-  dockCommentsBtn.addEventListener('click', () => {
+  dockCommentsBtn?.addEventListener('click', () => {
     openCommentsModal();
   });
 
@@ -2278,7 +2319,7 @@
     }
   }
 
-  dockRadioBtn.addEventListener('click', startTrackRadio);
+  dockRadioBtn?.addEventListener('click', startTrackRadio);
 
   // Click artist name in player dock
   playerArtist.addEventListener('click', () => {
@@ -3117,14 +3158,10 @@
       });
     });
 
-    const btnThemeModal = document.getElementById('btn-theme-modal');
     const themeModalOverlay = document.getElementById('theme-modal-overlay');
     const btnCloseThemeModal = document.getElementById('btn-close-theme-modal');
 
-    if (btnThemeModal && themeModalOverlay) {
-      btnThemeModal.addEventListener('click', () => {
-        themeModalOverlay.classList.add('open');
-      });
+    if (themeModalOverlay) {
       if (btnCloseThemeModal) {
         btnCloseThemeModal.addEventListener('click', () => {
           themeModalOverlay.classList.remove('open');
@@ -4044,7 +4081,7 @@
     currentLang = localStorage.getItem("lang") || "en";
     if (!TRANSLATIONS[currentLang]) currentLang = "en";
 
-    function applyLanguage(lang) {
+    applyLanguage = function(lang) {
       if (!TRANSLATIONS[lang]) lang = "en";
       currentLang = lang;
       localStorage.setItem("lang", lang);
@@ -4086,8 +4123,42 @@
       const txtListenNow = document.getElementById("txt-listen-now");
       const txtQueueTitle = document.getElementById("txt-queue-title");
 
+      // Sidebar Navigation Links
+      const txtNavHome = document.getElementById("txt-nav-home");
+      const txtNavSearch = document.getElementById("txt-nav-search");
+      const txtNavLiked = document.getElementById("txt-nav-liked");
+      const txtNavPlaylists = document.getElementById("txt-nav-playlists");
+      const txtNavAlbums = document.getElementById("txt-nav-albums");
+      const txtNavArtists = document.getElementById("txt-nav-artists");
+      const txtNavHistory = document.getElementById("txt-nav-history");
+      const txtNavAbout = document.getElementById("txt-nav-about");
+
+      if (txtNavHome) txtNavHome.textContent = t.nav_home || "Home";
+      if (txtNavSearch) txtNavSearch.textContent = t.nav_search || "Search";
+      if (txtNavLiked) txtNavLiked.textContent = t.nav_liked || "Liked Tracks";
+      if (txtNavPlaylists) txtNavPlaylists.textContent = t.nav_playlists || "Playlists";
+      if (txtNavAlbums) txtNavAlbums.textContent = t.nav_albums || "Albums";
+      if (txtNavArtists) txtNavArtists.textContent = t.nav_artists || "Artists";
+      if (txtNavHistory) txtNavHistory.textContent = t.nav_history || "History";
+      if (txtThemes) txtThemes.textContent = t.nav_settings || "Settings";
+      if (txtNavAbout) txtNavAbout.textContent = t.nav_about || "About";
+
+      // Settings Navigation Tabs
+      const settingsNavTitle = document.querySelector(".settings-nav-title");
+      if (settingsNavTitle) settingsNavTitle.textContent = t.settings_title || "Settings";
+      const btnSecGeneral = document.querySelector('.settings-nav-btn[data-sec="general"]');
+      const btnSecPlayback = document.querySelector('.settings-nav-btn[data-sec="playback"]');
+      const btnSecThemes = document.querySelector('.settings-nav-btn[data-sec="themes"]');
+      const btnSecAddons = document.querySelector('.settings-nav-btn[data-sec="addons"]');
+      const btnSecShortcuts = document.querySelector('.settings-nav-btn[data-sec="shortcuts"]');
+      if (btnSecGeneral) btnSecGeneral.textContent = t.settings_tab_general || "General";
+      if (btnSecPlayback) btnSecPlayback.textContent = t.settings_tab_playback || "Playback & Audio";
+      if (btnSecThemes) btnSecThemes.textContent = t.settings_tab_themes || "Themes";
+      if (btnSecAddons) btnSecAddons.textContent = t.settings_tab_addons || "Add-ons";
+      if (btnSecShortcuts) btnSecShortcuts.textContent = t.settings_tab_shortcuts || "Keyboard Shortcuts";
+
       if (searchInp) searchInp.placeholder = t.search_placeholder;
-      if (txtThemes) txtThemes.textContent = t.themes_btn;
+      if (txtThemes) txtThemes.textContent = t.nav_settings || t.themes_btn || "Settings";
       if (txtExt) txtExt.textContent = t.extensions_btn;
       if (chipTrend) chipTrend.textContent = t.chip_trending;
       if (chipLk) chipLk.textContent = t.chip_likes;
@@ -4226,7 +4297,17 @@
       if (profTracksTitle) profTracksTitle.textContent = t.txt_prof_tracks_title;
       if (profPlTitle) profPlTitle.textContent = t.txt_prof_pl_title;
       if (playPlaylist) playPlaylist.textContent = t.txt_play_playlist;
-    }
+
+      // Re-render active view if Settings is open to sync text & selections
+      if (typeof renderSettingsView === 'function') {
+        const viewSettings = document.getElementById('view-settings');
+        if (viewSettings && (viewSettings.classList.contains('active') || viewSettings.style.display === 'block')) {
+          renderSettingsView(currentActiveSettingsSection || 'general');
+        }
+      }
+    };
+
+    window.applyLanguage = applyLanguage;
 
     // Dropdown language list click handlers
     document.querySelectorAll("#dropdown-lang-list .dropdown-lang-item").forEach(item => {
@@ -4336,16 +4417,6 @@
   const btnMiniToggle = document.getElementById('btn-mini-toggle');
   if (btnMiniToggle) btnMiniToggle.addEventListener('click', () => window.MiniPlayer && window.MiniPlayer.toggle());
 
-  // Override or link ThemeStudio
-  const btnThemeModalEl = document.getElementById('btn-theme-modal');
-  if (btnThemeModalEl) {
-    btnThemeModalEl.addEventListener('click', (e) => {
-      if (window.ThemeStudio) {
-        e.stopImmediatePropagation();
-        window.ThemeStudio.open();
-      }
-    }, true);
-  }
 
   // Queue toggle link
   const btnQueueToggleEl = document.getElementById('btn-queue-toggle');
@@ -6327,9 +6398,16 @@
   }
 
   // 14. Settings View Engine
+  currentActiveSettingsSection = 'general';
   function renderSettingsView(section = 'general') {
+    const validSections = ['general', 'playback', 'themes', 'addons', 'shortcuts'];
+    if (!validSections.includes(section)) section = 'general';
+    currentActiveSettingsSection = section;
+
     const pane = document.getElementById('settings-content-pane');
     if (!pane) return;
+
+    const isRu = currentLang === 'ru';
 
     document.querySelectorAll('.settings-nav-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-sec') === section);
@@ -6338,31 +6416,31 @@
     if (section === 'general') {
       pane.innerHTML = `
         <div class="settings-card">
-          <div class="settings-card-title">Startup & Behavior</div>
-          <div class="settings-card-desc">Control how SoundCloud Ultimate behaves on system start</div>
+          <div class="settings-card-title">${isRu ? 'Запуск и поведение' : 'Startup & Behavior'}</div>
+          <div class="settings-card-desc">${isRu ? 'Настройка поведения SoundCloud Ultimate при запуске' : 'Control how SoundCloud Ultimate behaves on system start'}</div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">Launch on system startup</span>
-              <span class="settings-row-hint">Automatically start minimized in tray</span>
+              <span class="settings-row-label">${isRu ? 'Запускать при старте системы' : 'Launch on system startup'}</span>
+              <span class="settings-row-hint">${isRu ? 'Автоматически запускать свернутым в трей' : 'Automatically start minimized in tray'}</span>
             </div>
             <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
           </div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">Desktop Notifications</span>
-              <span class="settings-row-hint">Show toast notification on track changes</span>
+              <span class="settings-row-label">${isRu ? 'Уведомления на рабочем столе' : 'Desktop Notifications'}</span>
+              <span class="settings-row-hint">${isRu ? 'Показывать всплывающее уведомление при смене трека' : 'Show toast notification on track changes'}</span>
             </div>
             <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
           </div>
         </div>
 
         <div class="settings-card">
-          <div class="settings-card-title">Localization / Язык</div>
-          <div class="settings-card-desc">Select interface language (8 supported languages)</div>
+          <div class="settings-card-title">${isRu ? 'Язык интерфейса' : 'Localization / Language'}</div>
+          <div class="settings-card-desc">${isRu ? 'Выберите язык интерфейса приложения' : 'Select interface display language'}</div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">Display Language</span>
-              <span class="settings-row-hint">Current: ${currentLang.toUpperCase()}</span>
+              <span class="settings-row-label">${isRu ? 'Текущий язык' : 'Display Language'}</span>
+              <span class="settings-row-hint">${isRu ? 'Активно: ' : 'Current: '}${currentLang.toUpperCase()}</span>
             </div>
             <select id="settings-lang-select" class="dropdown-select">
               <option value="en" ${currentLang==='en'?'selected':''}>English [EN]</option>
@@ -6383,19 +6461,19 @@
     } else if (section === 'themes') {
       pane.innerHTML = `
         <div class="settings-card">
-          <div class="settings-card-title">Installed Themes</div>
-          <div class="settings-card-desc">Color themes loaded dynamically from ~/.config/soundcloud-ultimate/themes/</div>
-          <div id="themes-list-container" style="display: flex; flex-direction: column; gap: 8px; margin: 16px 0;">Loading themes...</div>
+          <div class="settings-card-title">${isRu ? 'Установленные темы' : 'Installed Themes'}</div>
+          <div class="settings-card-desc">${isRu ? 'Темы оформления загружаются из ~/.config/soundcloud-ultimate/themes/' : 'Color themes loaded dynamically from ~/.config/soundcloud-ultimate/themes/'}</div>
+          <div id="themes-list-container" style="display: flex; flex-direction: column; gap: 8px; margin: 16px 0;">${isRu ? 'Загрузка тем...' : 'Loading themes...'}</div>
           <div style="display: flex; gap: 12px; margin-top: 14px;">
-            <button class="secondary-pill-btn" id="btn-open-themes-folder">Open Themes Folder</button>
-            <button class="secondary-pill-btn" id="btn-import-theme-json">Import Theme (.json)</button>
+            <button class="secondary-pill-btn" id="btn-open-themes-folder">${isRu ? 'Открыть папку с темами' : 'Open Themes Folder'}</button>
+            <button class="secondary-pill-btn" id="btn-import-theme-json">${isRu ? 'Импортировать тему (.json)' : 'Import Theme (.json)'}</button>
             <input type="file" id="input-import-theme" accept=".json" style="display: none;">
           </div>
         </div>
 
         <div class="settings-card" style="margin-top: 20px;">
-          <div class="settings-card-title">Theme Creator</div>
-          <div class="settings-card-desc">Create your own custom palette and save to your themes directory</div>
+          <div class="settings-card-title">${isRu ? 'Конструктор тем' : 'Theme Creator'}</div>
+          <div class="settings-card-desc">${isRu ? 'Создайте собственную палитру и сохраните в каталог тем' : 'Create your own custom palette and save to your themes directory'}</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0;">
             <div class="settings-row"><span class="settings-row-label">Window BG</span><input type="color" id="thm-bg-window" value="#09090B"></div>
             <div class="settings-row"><span class="settings-row-label">Surface BG</span><input type="color" id="thm-bg-surface" value="#121215"></div>
@@ -6407,8 +6485,8 @@
             <div class="settings-row"><span class="settings-row-label">Player BG</span><input type="color" id="thm-player-bg" value="#0D0D10"></div>
           </div>
           <div style="display: flex; gap: 12px; align-items: center;">
-            <input type="text" id="thm-new-name" class="table-search-input" placeholder="New Theme Name (e.g. Cyberpunk)" style="width: 240px;">
-            <button class="primary-pill-btn" id="btn-save-custom-theme">Save as New Theme</button>
+            <input type="text" id="thm-new-name" class="table-search-input" placeholder="${isRu ? 'Название темы (напр. Cyberpunk)' : 'New Theme Name (e.g. Cyberpunk)'}" style="width: 240px;">
+            <button class="primary-pill-btn" id="btn-save-custom-theme">${isRu ? 'Сохранить тему' : 'Save as New Theme'}</button>
           </div>
         </div>
       `;
@@ -6506,14 +6584,14 @@
     } else if (section === 'addons') {
       pane.innerHTML = `
         <div class="settings-card">
-          <div class="settings-card-title">Add-ons & Extensions Engine</div>
-          <div class="settings-card-desc">Dynamic add-ons managed from ~/.config/soundcloud-ultimate/addons/</div>
+          <div class="settings-card-title">${isRu ? 'Движок дополнений и расширений' : 'Add-ons & Extensions Engine'}</div>
+          <div class="settings-card-desc">${isRu ? 'Динамические дополнения из ~/.config/soundcloud-ultimate/addons/' : 'Dynamic add-ons managed from ~/.config/soundcloud-ultimate/addons/'}</div>
           <div style="display: flex; gap: 12px; margin: 16px 0; align-items: center;">
             <input type="text" id="addon-url-input" class="table-search-input" placeholder="https://github.com/user/addon-name" style="flex: 1;">
-            <button class="primary-pill-btn" id="btn-install-addon-url">Install from URL</button>
-            <button class="secondary-pill-btn" id="btn-open-addons-dir">Open Add-ons Folder</button>
+            <button class="primary-pill-btn" id="btn-install-addon-url">${isRu ? 'Установить по ссылке' : 'Install from URL'}</button>
+            <button class="secondary-pill-btn" id="btn-open-addons-dir">${isRu ? 'Открыть папку дополнений' : 'Open Add-ons Folder'}</button>
           </div>
-          <div id="addons-list-container" style="margin-top: 16px;">Loading add-ons...</div>
+          <div id="addons-list-container" style="margin-top: 16px;">${isRu ? 'Загрузка дополнений...' : 'Loading add-ons...'}</div>
         </div>
       `;
 
@@ -6526,8 +6604,8 @@
           if (addons.length === 0) {
             container.innerHTML = `
               <div style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border-subtle); border-radius: 12px; color: var(--text-muted);">
-                <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">No add-ons installed</div>
-                <div style="font-size: 13px;">Add-ons are loaded dynamically from ~/.config/soundcloud-ultimate/addons/.</div>
+                <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">${isRu ? 'Нет установленных дополнений' : 'No add-ons installed'}</div>
+                <div style="font-size: 13px;">${isRu ? 'Дополнения загружаются динамически из ~/.config/soundcloud-ultimate/addons/.' : 'Add-ons are loaded dynamically from ~/.config/soundcloud-ultimate/addons/.'}</div>
               </div>
             `;
             return;
@@ -6567,44 +6645,45 @@
         showToast(resData.message || 'Add-on installation requested');
         renderSettingsView('addons');
       });
-    } else if (section === 'appearance') {
-      pane.innerHTML = `
-        <div class="settings-card">
-          <div class="settings-card-title">Appearance & Theme Studio</div>
-          <div class="settings-card-desc">SoundCloud Ultimate features full Theme Studio integration</div>
-          <div style="display: flex; gap: 12px; margin-top: 14px;">
-            <button class="primary-pill-btn" onclick="window.ThemeStudio && window.ThemeStudio.open()">Open Theme Studio</button>
-            <button class="secondary-pill-btn" onclick="window.ThemeStudio && window.ThemeStudio.applyPreset('quiet-dark')">Reset to Quiet Dark</button>
-          </div>
-        </div>
-      `;
     } else if (section === 'playback') {
       pane.innerHTML = `
         <div class="settings-card">
-          <div class="settings-card-title">Audio Engine & Playback</div>
-          <div class="settings-card-desc">Configure progressive streaming & audio buffering</div>
+          <div class="settings-card-title">${isRu ? 'Звук и воспроизведение' : 'Audio Engine & Playback'}</div>
+          <div class="settings-card-desc">${isRu ? 'Настройка прогрессивного аудиопотока и буферизации' : 'Configure progressive streaming & audio buffering'}</div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">High-Res Audio Buffering (10s Pre-fetch)</span>
-              <span class="settings-row-hint">Seamless gapless playback with adaptive chunking</span>
+              <span class="settings-row-label">${isRu ? 'Буферизация высокого разрешения (10 сек предзагрузка)' : 'High-Res Audio Buffering (10s Pre-fetch)'}</span>
+              <span class="settings-row-hint">${isRu ? 'Бесшовное gapless-воспроизведение с адаптивными чанками' : 'Seamless gapless playback with adaptive chunking'}</span>
             </div>
             <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
           </div>
           <div class="settings-row">
             <div class="settings-row-info">
-              <span class="settings-row-label">Hardware Acceleration</span>
-              <span class="settings-row-hint">Use GPU acceleration for audio visualization and canvas</span>
+              <span class="settings-row-label">${isRu ? 'Аппаратное ускорение' : 'Hardware Acceleration'}</span>
+              <span class="settings-row-hint">${isRu ? 'Использовать GPU для отрисовки холста и визуализации' : 'Use GPU acceleration for audio visualization and canvas'}</span>
             </div>
             <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
           </div>
         </div>
       `;
-    } else {
+    } else if (section === 'shortcuts') {
       pane.innerHTML = `
         <div class="settings-card">
-          <div class="settings-card-title">${section.toUpperCase()} Settings</div>
-          <div class="settings-card-desc">Configuration options for ${section}</div>
-          <p style="color: var(--text-secondary); font-size: 13px;">All parameters are actively saved to your local profile.</p>
+          <div class="settings-card-title">${isRu ? 'Горячие клавиши' : 'Keyboard Shortcuts'}</div>
+          <div class="settings-card-desc">${isRu ? 'Глобальные комбинации клавиш для навигации и управления плеером' : 'Global key bindings for player navigation and playback control'}</div>
+          <div class="shortcuts-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 16px;">
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Воспроизведение / Пауза' : 'Play / Pause'}</span><span class="shortcut-key">Space</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Следующий трек' : 'Next Track'}</span><span class="shortcut-key">Alt + Right / N</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Предыдущий трек' : 'Previous Track'}</span><span class="shortcut-key">Alt + Left / P</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Поиск' : 'Search'}</span><span class="shortcut-key">Ctrl + K</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Добавить в лайки' : 'Toggle Like'}</span><span class="shortcut-key">L</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Случайный порядок' : 'Shuffle Mode'}</span><span class="shortcut-key">S</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Повтор трека' : 'Repeat Mode'}</span><span class="shortcut-key">R</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Полноэкранный плеер' : 'Expanded Now Playing'}</span><span class="shortcut-key">F</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Громкость выше / ниже' : 'Volume Up / Down'}</span><span class="shortcut-key">Up / Down</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Перемотка вперед / назад' : 'Seek Forward / Back'}</span><span class="shortcut-key">Left / Right</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">${isRu ? 'Закрыть модальное окно' : 'Close Modal / Overlay'}</span><span class="shortcut-key">Esc</span></div>
+          </div>
         </div>
       `;
     }
