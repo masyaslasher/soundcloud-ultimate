@@ -4750,7 +4750,7 @@
       const res = await fetch('/api/me/likes?limit=20');
       if (res.ok) {
         const data = await res.json();
-        items = data.likes || data.collection || (Array.isArray(data) ? data : []);
+        items = data.tracks || data.likes || data.collection || (Array.isArray(data) ? data : []);
       }
     } catch (_) {}
 
@@ -5425,13 +5425,13 @@
 
     if (ownerEl) ownerEl.textContent = currentUser ? currentUser.username : 'Guest';
 
-    // Auto-fetch from SoundCloud if user logged in
-    if (currentUser) {
+    // Auto-fetch from SoundCloud if user logged in or local list empty
+    if (currentUser || likes.length === 0) {
       try {
         const res = await fetch('/api/me/likes?limit=1000');
         if (res.ok) {
           const data = await res.json();
-          if (data.tracks && Array.isArray(data.tracks)) {
+          if (data.tracks && Array.isArray(data.tracks) && data.tracks.length > 0) {
             likes = data.tracks;
             saveLocalLikes(likes);
           }
@@ -5974,22 +5974,20 @@
     grid.innerHTML = '<div style="color: var(--text-muted); padding: 40px; text-align: center;">Loading followed artists...</div>';
 
     let artists = [];
-    if (currentUser) {
-      try {
-        const res = await fetch('/api/me/followings');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.artists && Array.isArray(data.artists)) {
-            artists = data.artists.map(a => ({
-              id: a.id,
-              name: a.username,
-              followers: a.followers_count ? (a.followers_count >= 1000000 ? `${(a.followers_count / 1000000).toFixed(1)}M` : (a.followers_count >= 1000 ? `${(a.followers_count / 1000).toFixed(0)}K` : a.followers_count)) : 'Artist',
-              artwork_url: a.avatar_url || 'assets/default_artwork.png'
-            }));
-          }
+    try {
+      const res = await fetch('/api/me/followings');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.artists && Array.isArray(data.artists)) {
+          artists = data.artists.map(a => ({
+            id: a.id,
+            name: a.username,
+            followers: a.followers_count ? (a.followers_count >= 1000000 ? `${(a.followers_count / 1000000).toFixed(1)}M` : (a.followers_count >= 1000 ? `${(a.followers_count / 1000).toFixed(0)}K` : a.followers_count)) : 'Artist',
+            artwork_url: a.avatar_url || 'assets/default_artwork.png'
+          }));
         }
-      } catch (_) {}
-    }
+      }
+    } catch (_) {}
 
     if (artists.length === 0) {
       try {

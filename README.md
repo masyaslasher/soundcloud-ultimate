@@ -54,17 +54,17 @@ SoundCloud-Ultimate/
 
 | Screen | Description | Preview |
 | :--- | :--- | :--- |
-| **Discover Home** | Authentic SoundCloud Discover feed featuring horizontal shelves (*Recently Played*, *Mixed for You*, *More of What You Like*, *Liked Tracks*, *Artists You Follow*) with carousel navigation. | ![Home Discover](assets/screenshots/home.png) |
-| **Search & Browse** | Real-time debounced search with category filters (*All*, *Tracks*, *Artists*, *Playlists*) and curated genre grid (*Phonk, Synthwave, Cyberpunk, Trap, Ambient*). | ![Search View](assets/screenshots/search.png) |
-| **Search Results** | Live multi-category search results with waveform previews and instant streaming. | ![Search Results](assets/screenshots/search_results.png) |
-| **Modern Playback Queue** | Quiet Dark queue panel with *Smart Shuffle* (artist repetition avoidance), *Deduplicate*, *Save Queue* presets, and instant track deletion. | ![Playback Queue](assets/screenshots/queue.png) |
-| **Settings & Audio** | Streamlined 5-tab settings hierarchy (*General*, *Playback & Audio*, *Themes*, *Add-ons*, *Keyboard Shortcuts*) with Quiet Dark selectors. | ![Settings View](assets/screenshots/settings.png) |
-| **Themes Studio** | Dynamic theme creator with real-time palette preview and instant JSON export/import. | ![Themes Studio](assets/screenshots/themes.png) |
-| **Add-ons SDK** | Clean modular add-ons system dynamically loaded from `~/.config/soundcloud-ultimate/addons/`. | ![Add-ons SDK](assets/screenshots/addons.png) |
-| **User Profile & Uploads** | Profile editor with avatar customization, bio editing, and native track upload capabilities. | ![User Profile](assets/screenshots/profile.png) |
-| **Liked Library** | Complete account library synchronization with full multi-page cursor pagination (>160 tracks), sort by date, and instant like toggle. | ![Liked Tracks](assets/screenshots/liked.png) |
-| **Artists Directory** | In-app artist profiles, follower counts, avatar art, discographies, and instant profile navigation. | ![Artists View](assets/screenshots/artists.png) |
-| **Keyboard Shortcuts** | Comprehensive desktop hotkey matrix for swift mouse-free navigation and playback. | ![Keyboard Shortcuts](assets/screenshots/shortcuts.png) |
+| **Discover Home** | Authentic SoundCloud Discover feed featuring horizontal shelves (*Recently Played*, *Mixed for You*, *More of What You Like*, *Liked Tracks*, *Artists You Follow*) with carousel navigation. | ![Home Discover](assets/screenshots/v2/01_discover_home.png) |
+| **Search & Browse** | Real-time debounced search with category filters (*All*, *Tracks*, *Artists*, *Playlists*) and curated genre grid (*Phonk, Synthwave, Cyberpunk, Trap, Ambient*). | ![Search View](assets/screenshots/v2/02_search_browse.png) |
+| **Search Results** | Live multi-category search results with waveform previews and instant streaming. | ![Search Results](assets/screenshots/v2/03_search_results.png) |
+| **Modern Playback Queue** | Quiet Dark queue panel with *Smart Shuffle* (artist repetition avoidance), *Deduplicate*, *Save Queue* presets, and instant track deletion. | ![Playback Queue](assets/screenshots/v2/04_playback_queue.png) |
+| **Settings & Audio** | Streamlined 5-tab settings hierarchy (*General*, *Playback & Audio*, *Themes*, *Add-ons*, *Keyboard Shortcuts*) with Quiet Dark selectors. | ![Settings View](assets/screenshots/v2/05_settings_general.png) |
+| **Themes Studio** | Dynamic theme creator with real-time palette preview and instant JSON export/import. | ![Themes Studio](assets/screenshots/v2/06_themes_studio.png) |
+| **Add-ons SDK** | Clean modular add-ons system dynamically loaded from `~/.config/soundcloud-ultimate/addons/`. | ![Add-ons SDK](assets/screenshots/v2/07_addons_sdk.png) |
+| **User Profile & Uploads** | Profile editor with avatar customization, bio editing, and native track upload capabilities. | ![User Profile](assets/screenshots/v2/08_user_profile.png) |
+| **Liked Library** | Complete account library synchronization with full multi-page cursor pagination (>160 tracks), sort by date, and instant like toggle. | ![Liked Tracks](assets/screenshots/v2/09_liked_tracks.png) |
+| **Artists Directory** | In-app artist profiles, follower counts, avatar art, discographies, and instant profile navigation. | ![Artists View](assets/screenshots/v2/10_artists_directory.png) |
+| **Keyboard Shortcuts** | Comprehensive desktop hotkey matrix for swift mouse-free navigation and playback. | ![Keyboard Shortcuts](assets/screenshots/v2/11_keyboard_shortcuts.png) |
 
 ---
 
