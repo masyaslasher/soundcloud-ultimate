@@ -18,6 +18,7 @@ pub struct TrackItem {
     pub liked: Option<bool>,
 }
 
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UserProfile {
     pub id: u64,

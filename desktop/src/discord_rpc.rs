@@ -233,7 +233,7 @@ async fn discord_rpc_worker(
                                 username = user.as_str().map(|s| s.to_string());
                             }
 
-                            println!("✨ Discord Rich Presence connected: {}", username.as_deref().unwrap_or("Discord Client"));
+                            println!("Discord Rich Presence connected: {}", username.as_deref().unwrap_or("Discord Client"));
 
                                 {
                                     let mut s = status.write().await;
@@ -349,7 +349,7 @@ async fn send_activity_packet(stream: &mut IpcStream, act: &DiscordActivityPaylo
     let state_text = if act.is_playing {
         format!("by {}", act.artist)
     } else {
-        format!("by {} (⏸️ Paused)", act.artist)
+        format!("by {} (Paused)", act.artist)
     };
 
     let mut buttons = Vec::new();

@@ -1,6 +1,6 @@
 <div align="center">
 
-# ☁️ SoundCloud Ultimate (Quiet Dark AMOLED Edition)
+# SoundCloud Ultimate (Quiet Dark AMOLED Edition)
 
 [![Release](https://img.shields.io/badge/Release-v2.0.0--beta.1-A855F7?style=for-the-badge&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <strong>🌐 Language:</strong>
+  <strong>Language:</strong>
   <a href="README.md"><strong>English</strong></a> •
   <a href="README_RU.md">Русский (README_RU.md)</a>
 </p>
@@ -24,7 +24,7 @@
 
 ---
 
-## 🏛️ Modular Architecture
+## Modular Architecture
 
 SoundCloud Ultimate is structured as an enterprise-grade Rust Cargo Workspace:
 
@@ -49,7 +49,7 @@ SoundCloud-Ultimate/
 
 ---
 
-## 📸 Interface Gallery
+## Interface Gallery
 
 | Screen | Description | Preview |
 | :--- | :--- | :--- |
@@ -60,18 +60,18 @@ SoundCloud-Ultimate/
 
 ---
 
-## ⚡ Key Highlights
+## Key Highlights
 
-- **🎧 Authentic SoundCloud Discover:** Clean horizontal carousel shelves without cluttered hero banners.
-- **⚡ High-Performance Rust Core:** Powered by `reqwest`, `tokio`, and `sc-core` with automatic client_id rotation and resilient fallback streams.
-- **🌌 Quiet Dark AMOLED Aesthetic:** Deep blacks (`#09090B`), subtle border contrast (`#27272A`), elegant purple glow (`#A855F7`), and strictly pinned custom titlebar (52px) and player dock (72px).
-- **🔒 True In-App Modal Isolation:** All dialogs and popups remain strictly isolated (`display: none; position: fixed; inset: 0;`) until explicitly invoked, ensuring zero document flow distortion.
-- **🎮 Native Discord Rich Presence:** Displays track title, artist, live elapsed/remaining progress bar, and cover art on your Discord profile.
-- **🎛️ Audio FX & Equalizer:** 5-band studio EQ, 360° 8D Audio spatializer, Nightcore/Slowed modes, and LRCLIB synchronized karaoke lyrics (`K`).
+- **Authentic SoundCloud Discover:** Clean horizontal carousel shelves without cluttered hero banners.
+- **High-Performance Rust Core:** Powered by `reqwest`, `tokio`, and `sc-core` with automatic client_id rotation and resilient fallback streams.
+- **Quiet Dark AMOLED Aesthetic:** Deep blacks (`#09090B`), subtle border contrast (`#27272A`), elegant purple glow (`#A855F7`), and strictly pinned custom titlebar (52px) and player dock (72px).
+- **True In-App Modal Isolation:** All dialogs and popups remain strictly isolated (`display: none; position: fixed; inset: 0;`) until explicitly invoked, ensuring zero document flow distortion.
+- **Native Discord Rich Presence:** Displays track title, artist, live elapsed/remaining progress bar, and cover art on your Discord profile.
+- **Audio FX & Equalizer:** 5-band studio EQ, 360° 8D Audio spatializer, Nightcore/Slowed modes, and LRCLIB synchronized karaoke lyrics (`K`).
 
 ---
 
-## 🛠️ Building & Running from Source
+## Building & Running from Source
 
 ### Prerequisites
 
@@ -98,18 +98,18 @@ cargo build --release -p soundcloud-desktop
 
 ---
 
-## 📦 Package Distribution
+## Package Distribution
 
 Pre-compiled standalone packages are available under [GitHub Releases](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1):
 
-- 🐧 **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0-beta.1.tar.gz`
-- 🐧 **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0-beta.1_amd64.deb`
-- 🐧 **Linux AppImage:** `SoundCloud-Ultimate-x86_64.AppImage`
-- 🪟 **Windows Portable:** `SoundCloud-Ultimate-Windows-x86_64-Portable.zip`
+- **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0-beta.1.tar.gz`
+- **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0-beta.1_amd64.deb`
+- **Linux AppImage:** `SoundCloud-Ultimate-x86_64.AppImage`
+- **Windows Portable:** `SoundCloud-Ultimate-Windows-x86_64-Portable.zip`
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
 SoundCloud is a registered trademark of SoundCloud Global Limited & Co. KG. This project is an independent open-source client.

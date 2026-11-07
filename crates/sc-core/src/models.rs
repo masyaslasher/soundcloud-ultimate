@@ -19,6 +19,42 @@ pub struct TrackItem {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct UploadedTrack {
+    pub id: u64,
+    pub title: String,
+    pub artist: String,
+    pub genre: Option<String>,
+    pub tags: Option<String>,
+    pub description: Option<String>,
+    pub privacy: String,
+    pub duration_ms: u64,
+    pub audio_file: String,
+    pub artwork_file: Option<String>,
+    pub created_at: u64,
+}
+
+impl UploadedTrack {
+    pub fn to_track_item(&self) -> TrackItem {
+        TrackItem {
+            id: self.id,
+            title: self.title.clone(),
+            artist: self.artist.clone(),
+            artist_id: None,
+            artist_avatar: None,
+            artwork_url: Some(format!("/api/local-artwork/{}", self.id)),
+            duration_ms: self.duration_ms,
+            playback_count: Some(0),
+            likes_count: Some(0),
+            waveform_url: None,
+            stream_url: Some(format!("/api/local-audio/{}", self.id)),
+            genre: self.genre.clone(),
+            permalink_url: None,
+            liked: Some(false),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct UserProfile {
     pub id: u64,
     pub username: String,

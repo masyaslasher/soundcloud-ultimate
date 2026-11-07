@@ -325,7 +325,7 @@ async fn send_activity_packet(stream: &mut IpcStream, act: &DiscordActivityPaylo
     let state_text = if act.is_playing {
         format!("by {}", act.artist)
     } else {
-        format!("by {} (⏸️ Paused)", act.artist)
+        format!("by {} (Paused)", act.artist)
     };
 
     let mut buttons = Vec::new();

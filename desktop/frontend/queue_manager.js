@@ -101,19 +101,19 @@
             <span>Advanced Play Queue</span>
             <span class="studio-badge" id="queue-count-badge">0 Tracks</span>
           </div>
-          <button class="modal-close-btn" id="btn-close-queue-mgr">✕</button>
+          <button class="modal-close-btn" id="btn-close-queue-mgr">&times;</button>
         </div>
 
         <!-- Toolbar -->
         <div class="queue-toolbar" style="padding: 12px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
           <div style="display: flex; gap: 6px;">
-            <button class="btn-subtle" id="btn-smart-shuffle" title="Smart Shuffle: avoids repeating same artist consecutively">🎲 Smart Shuffle</button>
-            <button class="btn-subtle" id="btn-dedup-queue" title="Detect & Remove duplicates">✨ Deduplicate</button>
-            <button class="btn-subtle" id="btn-clear-queue-all" style="color: #FF5555;">🗑️ Clear</button>
+            <button class="btn-subtle" id="btn-smart-shuffle" title="Smart Shuffle: avoids repeating same artist consecutively">Smart Shuffle</button>
+            <button class="btn-subtle" id="btn-dedup-queue" title="Detect & Remove duplicates">Deduplicate</button>
+            <button class="btn-subtle" id="btn-clear-queue-all" style="color: #FF5555;">Clear</button>
           </div>
           <div style="display: flex; gap: 6px;">
-            <button class="btn-subtle" id="btn-save-current-queue">💾 Save Queue</button>
-            <button class="btn-subtle" id="btn-view-saved-queues">📂 Saved (<span id="saved-queue-count">0</span>)</button>
+            <button class="btn-subtle" id="btn-save-current-queue"> Save Queue</button>
+            <button class="btn-subtle" id="btn-view-saved-queues"> Saved (<span id="saved-queue-count">0</span>)</button>
           </div>
         </div>
 
@@ -154,7 +154,7 @@
       const shuffled = smartShuffle(q, curIdx);
       window.setAppQueue(shuffled, 0);
       updateQueueListView();
-      if (window.showToast) window.showToast('🎲 Smart Shuffle applied: artist variety optimized');
+      if (window.showToast) window.showToast('Smart Shuffle applied: artist variety optimized');
     });
 
     document.getElementById('btn-dedup-queue')?.addEventListener('click', () => {
@@ -164,9 +164,9 @@
       if (res.removedCount > 0) {
         window.setAppQueue(res.tracks);
         updateQueueListView();
-        if (window.showToast) window.showToast(`✨ Removed ${res.removedCount} duplicate track(s)`);
+        if (window.showToast) window.showToast(` Removed ${res.removedCount} duplicate track(s)`);
       } else {
-        if (window.showToast) window.showToast('✅ No duplicates found in queue');
+        if (window.showToast) window.showToast(' No duplicates found in queue');
       }
     });
 
@@ -178,7 +178,7 @@
         const current = q[curIdx] ? [q[curIdx]] : [];
         window.setAppQueue(current, 0);
         updateQueueListView();
-        if (window.showToast) window.showToast('🗑️ Upcoming queue cleared');
+        if (window.showToast) window.showToast(' Upcoming queue cleared');
       }
     });
 
@@ -244,7 +244,7 @@
         <div class="queue-row-actions">
           ${index > 0 ? `<button class="btn-queue-move" data-dir="-1" title="Move Up">↑</button>` : ''}
           ${index < q.length - 1 ? `<button class="btn-queue-move" data-dir="1" title="Move Down">↓</button>` : ''}
-          ${!isCurrent ? `<button class="btn-queue-del" title="Remove track from queue">✕</button>` : ''}
+          ${!isCurrent ? `<button class="btn-queue-del" title="Remove track from queue">&times;</button>` : ''}
         </div>
       `;
 
@@ -300,7 +300,7 @@
       const timeStr = timeAgo < 1 ? 'Just now' : `${timeAgo}m ago`;
 
       row.innerHTML = `
-        <span class="queue-row-idx">🕒</span>
+        <span class="queue-row-idx"></span>
         <img class="queue-row-art" src="${t.artwork_url || ''}" alt="" onerror="this.style.display='none'">
         <div class="queue-row-meta">
           <div class="queue-row-title">${t.title || 'Track'}</div>
@@ -317,7 +317,7 @@
           const q = window.getAppQueue();
           q.push(t);
           window.setAppQueue(q);
-          if (window.showToast) window.showToast(`➕ Added "${t.title}" to queue`);
+          if (window.showToast) window.showToast(` Added "${t.title}" to queue`);
         }
       });
 
@@ -363,7 +363,7 @@
   function promptSaveQueue() {
     const q = window.getAppQueue ? window.getAppQueue() : [];
     if (q.length === 0) {
-      if (window.showToast) window.showToast('⚠️ Queue is empty');
+      if (window.showToast) window.showToast(' Queue is empty');
       return;
     }
     const name = prompt('Enter a name for this saved queue preset:', `Queue Preset ${Object.keys(savedQueues).length + 1}`);
@@ -372,14 +372,14 @@
       saveSavedQueuesToStorage();
       const countEl = document.getElementById('saved-queue-count');
       if (countEl) countEl.textContent = Object.keys(savedQueues).length;
-      if (window.showToast) window.showToast(`💾 Saved queue "${name.trim()}" (${q.length} tracks)`);
+      if (window.showToast) window.showToast(` Saved queue "${name.trim()}" (${q.length} tracks)`);
     }
   }
 
   function openSavedQueuesModal() {
     const names = Object.keys(savedQueues);
     if (names.length === 0) {
-      if (window.showToast) window.showToast('ℹ️ No saved queues yet. Click "Save Queue" to create one!');
+      if (window.showToast) window.showToast('No saved queues yet. Click "Save Queue" to create one!');
       return;
     }
 
@@ -390,8 +390,8 @@
     modal.innerHTML = `
       <div class="bento-modal" style="max-width: 500px;">
         <div class="modal-header">
-          <div class="modal-title"><span>📂 Saved Queues Presets</span></div>
-          <button class="modal-close-btn" id="btn-close-saved-m">✕</button>
+          <div class="modal-title"><span>Saved Queues Presets</span></div>
+          <button class="modal-close-btn" id="btn-close-saved-m">&times;</button>
         </div>
         <div class="modal-body" style="padding: 16px 24px;">
           <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -403,7 +403,7 @@
                 </div>
                 <div style="display: flex; gap: 8px;">
                   <button class="action-btn btn-load-saved-q" data-name="${name}" style="padding: 6px 14px; border-radius: 999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">Load</button>
-                  <button class="btn-subtle btn-del-saved-q" data-name="${name}" style="color: #FF5555;">🗑️</button>
+                  <button class="btn-subtle btn-del-saved-q" data-name="${name}" style="color: #FF5555;"></button>
                 </div>
               </div>
             `).join('')}

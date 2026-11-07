@@ -103,9 +103,9 @@
         </div>
 
         <div class="sc-inspector-footer">
-          <button class="btn-secondary" id="btn-inspect-copy-link">🔗 Copy Web Link</button>
-          <button class="btn-secondary" id="btn-inspect-copy-stream">📡 Copy Stream URL</button>
-          <button class="btn-primary" id="btn-inspect-queue">➕ Add to Queue</button>
+          <button class="btn-secondary" id="btn-inspect-copy-link"> Copy Web Link</button>
+          <button class="btn-secondary" id="btn-inspect-copy-stream">Copy Stream URL</button>
+          <button class="btn-primary" id="btn-inspect-queue">Add to Queue</button>
         </div>
       </div>
     `;
@@ -192,7 +192,7 @@
               </tr>
               <tr>
                 <td class="lbl">Artist / Creator</td>
-                <td class="val">${user.username || 'Unknown Artist'} ${user.verified ? '✓' : ''}</td>
+                <td class="val">${user.username || 'Unknown Artist'} ${user.verified ? '(Verified)' : ''}</td>
               </tr>
               <tr>
                 <td class="lbl">Track ID</td>
@@ -269,7 +269,7 @@
     body.innerHTML = `
       <div class="sc-audio-diag-panel">
         <div class="sc-diag-section">
-          <h4>🔊 Active Audio Pipeline</h4>
+          <h4>Active Audio Pipeline</h4>
           <div class="sc-diag-card">
             <div class="diag-item">
               <span class="d-label">Proxy Route:</span>
@@ -291,7 +291,7 @@
         </div>
 
         <div class="sc-diag-section">
-          <h4>📦 Transcoding Formats (${transcodings.length})</h4>
+          <h4>Transcoding Formats (${transcodings.length})</h4>
           <div class="sc-transcodings-list">
             ${transcodingsHtml}
           </div>
@@ -306,7 +306,7 @@
       <div class="sc-json-viewer-wrap">
         <div class="sc-json-toolbar">
           <span>JSON Size: ${(rawStr.length / 1024).toFixed(1)} KB</span>
-          <button class="btn-micro" id="btn-copy-raw-json">📋 Copy JSON</button>
+          <button class="btn-micro" id="btn-copy-raw-json">Copy JSON</button>
         </div>
         <pre class="sc-json-pre"><code>${escapeHtml(rawStr)}</code></pre>
       </div>

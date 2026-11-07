@@ -1,6 +1,6 @@
 <div align="center">
 
-# ☁️ SoundCloud Ultimate (Quiet Dark AMOLED Edition)
+# SoundCloud Ultimate (Quiet Dark AMOLED Edition)
 
 [![Release](https://img.shields.io/badge/Релиз-v2.0.0--beta.1-A855F7?style=for-the-badge&logo=github)](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1)
 [![Rust](https://img.shields.io/badge/Rust-1.85+-orange?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
@@ -9,7 +9,7 @@
 [![Лицензия](https://img.shields.io/badge/Лицензия-MIT-green?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <strong>🌐 Язык / Language:</strong>
+  <strong>Язык / Language:</strong>
   <a href="README.md">English (README.md)</a> •
   <a href="README_RU.md"><strong>Русский</strong></a>
 </p>
@@ -24,7 +24,7 @@
 
 ---
 
-## 🏛️ Модульная архитектура
+## Модульная архитектура
 
 Проект переведён на эталонную архитектуру рабочего пространства Cargo Workspace:
 
@@ -49,7 +49,7 @@ SoundCloud-Ultimate/
 
 ---
 
-## 📸 Галерея интерфейса
+## Галерея интерфейса
 
 | Экран | Описание | Скриншот |
 | :--- | :--- | :--- |
@@ -60,18 +60,18 @@ SoundCloud-Ultimate/
 
 ---
 
-## ⚡ Ключевые возможности
+## Ключевые возможности
 
-- **🎧 Аутентичный Discover как в оригинальном SoundCloud:** Никаких лишних баннеров, только чистые карусели музыки.
-- **⚡ Мощное Rust-ядро:** Высокая скорость работы, авто-ротация `client_id`, стриминг HLS и нулевое зависание.
-- **🌌 Эстетика Quiet Dark AMOLED:** Глубокий черный фон (`#09090B`), мягкие границы (`#27272A`), фиолетовый акцент (`#A855F7`), жестко закрепленные заголовок (52px) и плеер (72px).
-- **🔒 Полная изоляция модальных окон:** Все диалоги и настройки скрыты (`display: none; position: fixed; inset: 0;`) и не ломают сетку страницы.
-- **🎮 Нативный Discord Rich Presence:** Название трека, автор, обложка и анимированный прогресс-бар в Discord.
-- **🎛️ Аудио-эффекты и Караоке:** 5-полосный эквалайзер, 360° 8D Audio, режимы Nightcore/Slowed и синхронные тексты песен через LRCLIB (`K`).
+- **Аутентичный Discover как в оригинальном SoundCloud:** Никаких лишних баннеров, только чистые карусели музыки.
+- **Мощное Rust-ядро:** Высокая скорость работы, авто-ротация `client_id`, стриминг HLS и нулевое зависание.
+- **Эстетика Quiet Dark AMOLED:** Глубокий черный фон (`#09090B`), мягкие границы (`#27272A`), фиолетовый акцент (`#A855F7`), жестко закрепленные заголовок (52px) и плеер (72px).
+- **Полная изоляция модальных окон:** Все диалоги и настройки скрыты (`display: none; position: fixed; inset: 0;`) и не ломают сетку страницы.
+- **Нативный Discord Rich Presence:** Название трека, автор, обложка и анимированный прогресс-бар в Discord.
+- **Аудио-эффекты и Караоке:** 5-полосный эквалайзер, 360° 8D Audio, режимы Nightcore/Slowed и синхронные тексты песен через LRCLIB (`K`).
 
 ---
 
-## 🛠️ Сборка и запуск из исходного кода
+## Сборка и запуск из исходного кода
 
 ### Системные зависимости (Debian / Ubuntu / Linux Mint)
 
@@ -96,18 +96,18 @@ cargo build --release -p soundcloud-desktop
 
 ---
 
-## 📦 Релизы и пакеты
+## Релизы и пакеты
 
 Готовые бинарные сборки доступны в [GitHub Releases](https://github.com/masyaslasher/soundcloud-ultimate/releases/tag/v2.0.0-beta.1):
 
-- 🐧 **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0-beta.1.tar.gz`
-- 🐧 **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0-beta.1_amd64.deb`
-- 🐧 **Linux AppImage:** `SoundCloud-Ultimate-x86_64.AppImage`
-- 🪟 **Windows Portable:** `SoundCloud-Ultimate-Windows-x86_64-Portable.zip`
+- **Linux Standalone:** `soundcloud-ultimate-linux-x86_64-v2.0.0-beta.1.tar.gz`
+- **Debian / Ubuntu:** `soundcloud-ultimate_2.0.0-beta.1_amd64.deb`
+- **Linux AppImage:** `SoundCloud-Ultimate-x86_64.AppImage`
+- **Windows Portable:** `SoundCloud-Ultimate-Windows-x86_64-Portable.zip`
 
 ---
 
-## 📄 Лицензия
+## Лицензия
 
 Проект распространяется под лицензией [MIT License](LICENSE).
 SoundCloud является зарегистрированной торговой маркой SoundCloud Global Limited & Co. KG. Этот проект является независимым клиентом с открытым исходным кодом.

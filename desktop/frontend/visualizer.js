@@ -15,12 +15,12 @@
   let isFullscreen = false;
 
   const MODES = [
-    { id: 'spectrum', name: '📊 Spectrum Analyzer', desc: 'Frequency spectrum bars with peak caps' },
-    { id: 'waveform', name: '〰️ Oscilloscope', desc: 'Real-time oscilloscope time-domain wave' },
-    { id: 'circular', name: '⭕ Circular Spectrum', desc: 'Radial frequency ring radiating from album art' },
-    { id: 'bass', name: '💥 Bass Pulse', desc: 'Dynamic bass-reactive orbital glow' },
-    { id: 'peak', name: '📶 Studio Peak Meter', desc: 'Stereo dBFS LED peak level meters' },
-    { id: 'minimal', name: '✨ Minimal Wave', desc: 'Refined 3-line harmonic acoustic wave' }
+    { id: 'spectrum', name: 'Spectrum Analyzer', desc: 'Frequency spectrum bars with peak caps' },
+    { id: 'waveform', name: 'Oscilloscope', desc: 'Real-time oscilloscope time-domain wave' },
+    { id: 'circular', name: 'Circular Spectrum', desc: 'Radial frequency ring radiating from album art' },
+    { id: 'bass', name: 'Bass Pulse', desc: 'Dynamic bass-reactive orbital glow' },
+    { id: 'peak', name: 'Studio Peak Meter', desc: 'Stereo dBFS LED peak level meters' },
+    { id: 'minimal', name: 'Minimal Wave', desc: 'Refined 3-line harmonic acoustic wave' }
   ];
 
   // Initialize WebAudio AnalyserNode from existing audio pipeline
@@ -32,7 +32,7 @@
       analyser.fftSize = 512;
       analyser.smoothingTimeConstant = 0.82;
       sourceNode.connect(analyser);
-      console.log('✨ WebAudio AnalyserNode connected successfully (real-time stream).');
+      console.log(' WebAudio AnalyserNode connected successfully (real-time stream).');
     } catch (e) {
       console.warn('Failed to attach AnalyserNode:', e);
     }
@@ -70,8 +70,8 @@
 
           <!-- Controls -->
           <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="btn-subtle" id="btn-vis-fullscreen" title="Toggle Fullscreen">⛶ Fullscreen</button>
-            <button class="modal-close-btn" id="btn-close-studio-vis">✕</button>
+            <button class="btn-subtle" id="btn-vis-fullscreen" title="Toggle Fullscreen">Fullscreen Fullscreen</button>
+            <button class="modal-close-btn" id="btn-close-studio-vis">&times;</button>
           </div>
         </div>
 

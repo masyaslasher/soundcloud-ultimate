@@ -44,20 +44,20 @@
     "login_btn": "Sign In",
     "my_profile": "My Profile",
     "logout": "Sign Out",
-    "chip_trending": "🔥 Trending",
-    "chip_likes": "❤️ Liked",
-    "chip_playlists": "📂 Playlists",
-    "chip_stream": "📡 Stream",
-    "chip_history": "🕒 History",
-    "hero_tag": "🔥 Top of the Week",
+    "chip_trending": "Trending",
+    "chip_likes": "Liked",
+    "chip_playlists": "Playlists",
+    "chip_stream": "Stream",
+    "chip_history": "History",
+    "hero_tag": "Top of the Week",
     "listen_now": "Listen Now",
     "queue_title": "Play Queue",
     "select_track": "Select a track to play",
     "auth_title": "Sign In to SoundCloud",
-    "btn_import": "⚡ 1-Click Sign In (from Chromium)",
+    "btn_import": "1-Click Sign In (from Chromium)",
     "auth_help_head": "Sign in without manual tokens:",
     "auth_help_body": "If you are already logged in to soundcloud.com in Chromium / Chrome, click the button above to connect automatically!",
-    "btn_open_sc": "🌐 Open SoundCloud Login Page in Browser",
+    "btn_open_sc": "Open SoundCloud Login Page in Browser",
     "auth_divider": "or enter session token manually",
     "btn_submit_token": "Connect Account",
     "theme_title": "Themes (10 AMOLED Palettes)",
@@ -77,7 +77,7 @@
     "btn_cancel_sleep": "Cancel Active Timer",
     "fx_title": "Audio FX Studio",
     "radar_hint": "Headphones recommended for 3D orbital binaural effect",
-    "fx_speed_title": "⚡ Speed & Pitch",
+    "fx_speed_title": "Speed & Pitch",
     "speed_norm": "Normal",
     "looper_title": "A-B Precision Looper",
     "looper_desc": "Seamlessly loop any segment of the track (guitar solo, beat drop, chorus).",
@@ -89,8 +89,8 @@
     "btn_copy_card": "Copy to Clipboard",
     "btn_download_card": "Download PNG",
     "dropdown_lang": "Language: English",
-    "lang_modal_title": "🌐 Select Language",
-    "toast_lang": "🇺🇸 Language set to English",
+    "lang_modal_title": "Select Language",
+    "toast_lang": "Language set to English",
     "toast_liked": "Added to SoundCloud Likes",
     "toast_unliked": "Removed from SoundCloud Likes",
     "toast_liked_guest": "Added to Local Favorites • Sign in to sync",
@@ -98,7 +98,7 @@
     "toast_guest_follow": "Sign in to SoundCloud to follow artists",
     "toast_guest_comment": "Sign in to SoundCloud to post comments",
     "no_likes_guest_title": "Your Local Favorites is empty",
-    "no_likes_guest_desc": "Tap ❤️ on any track to save it here, or sign in to sync with SoundCloud.",
+    "no_likes_guest_desc": "Tap on any track to save it here, or sign in to sync with SoundCloud.",
     "no_history_title": "No playback history yet",
     "no_history_desc": "Tracks you play will automatically appear here for quick access.",
     "stream_guest_title": "Personal Stream requires an account",
@@ -127,7 +127,7 @@
     "subtitle_local_history": "Local History",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Clear History",
-    "toast_history_cleared": "🗑️ History cleared",
+    "toast_history_cleared": "History cleared",
     "no_tracks_found": "No tracks found",
     "no_playlists_found": "No playlists found",
     "txt_stat_tracks": "Tracks",
@@ -148,8 +148,8 @@
     "ext_card_desc": "Generate high-res aesthetic AMOLED cards for the current track with waveform, art, and metadata.",
     "guest_user": "Guest",
     "drop_lang_header": "Language / Язык",
-    "dropdown_login": "⚡ Sign In / Войти",
-    "toast_lang_switched": "🇺🇸 Language switched to English"
+    "dropdown_login": "Sign In / Войти",
+    "toast_lang_switched": "Language switched to English"
   },
   "ru": {
     "search_placeholder": "Поиск треков, исполнителей, альбомов...",
@@ -158,20 +158,20 @@
     "login_btn": "Войти в аккаунт",
     "my_profile": "Мой профиль",
     "logout": "Выйти",
-    "chip_trending": "🔥 В тренде",
-    "chip_likes": "❤️ Мои Лайки",
-    "chip_playlists": "📂 Мои Плейлисты",
-    "chip_stream": "📡 Моя Лента",
-    "chip_history": "🕒 История",
-    "hero_tag": "🔥 Топ недели",
+    "chip_trending": "В тренде",
+    "chip_likes": "Мои Лайки",
+    "chip_playlists": "Мои Плейлисты",
+    "chip_stream": "Моя Лента",
+    "chip_history": "История",
+    "hero_tag": "Топ недели",
     "listen_now": "Слушать сейчас",
     "queue_title": "Очередь воспроизведения",
     "select_track": "Выберите трек для воспроизведения",
     "auth_title": "Вход в аккаунт SoundCloud",
-    "btn_import": "⚡ Авторизоваться в 1 клик (из Chromium)",
+    "btn_import": "Авторизоваться в 1 клик (из Chromium)",
     "auth_help_head": "Вход без ручного ввода токенов:",
     "auth_help_body": "Если вы уже вошли на soundcloud.com в Chromium, нажмите кнопку выше — приложение автоматически подключит ваш аккаунт!",
-    "btn_open_sc": "🌐 Открыть страницу входа SoundCloud в браузере",
+    "btn_open_sc": "Открыть страницу входа SoundCloud в браузере",
     "auth_divider": "или введите токен сессии",
     "btn_submit_token": "Подключить аккаунт",
     "theme_title": "Темы оформления (10 AMOLED палитр)",
@@ -191,7 +191,7 @@
     "btn_cancel_sleep": "Отключить активный таймер",
     "fx_title": "Студия звуковых эффектов FX",
     "radar_hint": "Рекомендуется слушать в наушниках для эффекта 3D-орбиты",
-    "fx_speed_title": "⚡ Скорость & Тональность",
+    "fx_speed_title": "Скорость & Тональность",
     "speed_norm": "Обычная",
     "looper_title": "A-B Looper (Зацикливание фрагмента)",
     "looper_desc": "Позволяет бесконечно воспроизводить выбранный фрагмент трека (соло, дроп, бит).",
@@ -203,8 +203,8 @@
     "btn_copy_card": "Скопировать картинку",
     "btn_download_card": "Скачать PNG",
     "dropdown_lang": "Язык: Русский",
-    "lang_modal_title": "🌐 Выберите язык",
-    "toast_lang": "🇷🇺 Язык интерфейса: Русский",
+    "lang_modal_title": "Выберите язык",
+    "toast_lang": "Язык интерфейса: Русский",
     "toast_liked": "Добавлено в лайки SoundCloud",
     "toast_unliked": "Удалено из лайков SoundCloud",
     "toast_liked_guest": "Добавлено в локальные лайки • Войдите для синхронизации",
@@ -212,7 +212,7 @@
     "toast_guest_follow": "Войдите в SoundCloud, чтобы подписаться на исполнителя",
     "toast_guest_comment": "Войдите в SoundCloud, чтобы оставлять комментарии",
     "no_likes_guest_title": "Ваши локальные лайки пусты",
-    "no_likes_guest_desc": "Нажмите ❤️ на любом треке, чтобы сохранить его, или войдите в аккаунт.",
+    "no_likes_guest_desc": "Нажмите на любом треке, чтобы сохранить его, или войдите в аккаунт.",
     "no_history_title": "История прослушиваний пуста",
     "no_history_desc": "Прослушанные треки автоматически появятся здесь.",
     "stream_guest_title": "Личная лента доступна после входа",
@@ -241,7 +241,7 @@
     "subtitle_local_history": "Локальная история",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Очистить историю",
-    "toast_history_cleared": "🗑️ История очищена",
+    "toast_history_cleared": "История очищена",
     "no_tracks_found": "Треки не найдены",
     "no_playlists_found": "Плейлисты не найдены",
     "txt_stat_tracks": "Треков",
@@ -262,8 +262,8 @@
     "ext_card_desc": "Создание стильных AMOLED-карточек трека с аудиоволной и обложкой для соцсетей.",
     "guest_user": "Гость",
     "drop_lang_header": "Язык интерфейса",
-    "dropdown_login": "⚡ Войти в аккаунт",
-    "toast_lang_switched": "🇷🇺 Язык интерфейса изменен на Русский"
+    "dropdown_login": "Войти в аккаунт",
+    "toast_lang_switched": "Язык интерфейса изменен на Русский"
   },
   "de": {
     "search_placeholder": "Titel, Künstler, Alben suchen...",
@@ -272,20 +272,20 @@
     "login_btn": "Anmelden",
     "my_profile": "Mein Profil",
     "logout": "Abmelden",
-    "chip_trending": "🔥 Angesagt",
-    "chip_likes": "❤️ Favoriten",
-    "chip_playlists": "📂 Playlists",
-    "chip_stream": "📡 Feed",
-    "chip_history": "🕒 Verlauf",
-    "hero_tag": "🔥 Hit der Woche",
+    "chip_trending": "Angesagt",
+    "chip_likes": "Favoriten",
+    "chip_playlists": "Playlists",
+    "chip_stream": "Feed",
+    "chip_history": "Verlauf",
+    "hero_tag": "Hit der Woche",
     "listen_now": "Jetzt anhören",
     "queue_title": "Wiedergabeliste",
     "select_track": "Titel zum Abspielen auswählen",
     "auth_title": "Bei SoundCloud anmelden",
-    "btn_import": "⚡ 1-Klick-Anmeldung (aus Chromium)",
+    "btn_import": "1-Klick-Anmeldung (aus Chromium)",
     "auth_help_head": "Anmelden ohne manuelle Token:",
     "auth_help_body": "Wenn Sie bereits bei soundcloud.com in Chromium / Chrome angemeldet sind, klicken Sie oben für die automatische Verbindung!",
-    "btn_open_sc": "🌐 SoundCloud-Anmeldeseite im Browser öffnen",
+    "btn_open_sc": "SoundCloud-Anmeldeseite im Browser öffnen",
     "auth_divider": "oder Sitzungstoken manuell eingeben",
     "btn_submit_token": "Konto verbinden",
     "theme_title": "Designs (10 AMOLED-Farbpaletten)",
@@ -305,7 +305,7 @@
     "btn_cancel_sleep": "Aktiven Timer abbrechen",
     "fx_title": "Audio-FX-Studio",
     "radar_hint": "Kopfhörer für 3D-Binaural-Orbital-Effekt empfohlen",
-    "fx_speed_title": "⚡ Geschwindigkeit & Tonhöhe",
+    "fx_speed_title": "Geschwindigkeit & Tonhöhe",
     "speed_norm": "Normal",
     "looper_title": "A-B Präzisions-Looper",
     "looper_desc": "Wiederholen Sie nahtlos jeden beliebigen Teil des Titels (Gitarrensolo, Beat-Drop, Refrain).",
@@ -317,8 +317,8 @@
     "btn_copy_card": "In Zwischenablage kopieren",
     "btn_download_card": "PNG herunterladen",
     "dropdown_lang": "Sprache: Deutsch",
-    "lang_modal_title": "🌐 Sprache auswählen",
-    "toast_lang": "🇩🇪 Sprache auf Deutsch eingestellt",
+    "lang_modal_title": "Sprache auswählen",
+    "toast_lang": "Sprache auf Deutsch eingestellt",
     "toast_liked": "Zu SoundCloud-Favoriten hinzugefügt",
     "toast_unliked": "Aus SoundCloud-Favoriten entfernt",
     "toast_liked_guest": "Zu lokalen Favoriten hinzugefügt • Zum Synchronisieren anmelden",
@@ -326,7 +326,7 @@
     "toast_guest_follow": "Bei SoundCloud anmelden, um Künstlern zu folgen",
     "toast_guest_comment": "Bei SoundCloud anmelden, um Kommentare zu posten",
     "no_likes_guest_title": "Ihre lokalen Favoriten sind leer",
-    "no_likes_guest_desc": "Tippen Sie auf ❤️ bei einem beliebigen Titel, um ihn zu speichern, oder melden Sie sich an.",
+    "no_likes_guest_desc": "Tippen Sie auf bei einem beliebigen Titel, um ihn zu speichern, oder melden Sie sich an.",
     "no_history_title": "Noch kein Wiedergabeverlauf",
     "no_history_desc": "Gespielte Titel werden automatisch hier angezeigt.",
     "stream_guest_title": "Persönlicher Stream erfordert ein Konto",
@@ -355,7 +355,7 @@
     "subtitle_local_history": "Lokaler Verlauf",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Verlauf löschen",
-    "toast_history_cleared": "🗑️ Verlauf gelöscht",
+    "toast_history_cleared": "Verlauf gelöscht",
     "no_tracks_found": "Keine Titel gefunden",
     "no_playlists_found": "Keine Playlists gefunden",
     "txt_stat_tracks": "Titel",
@@ -376,8 +376,8 @@
     "ext_card_desc": "Erstellen Sie hochauflösende AMOLED-Karten für den aktuellen Titel zum Teilen.",
     "guest_user": "Gast",
     "drop_lang_header": "Oberflächensprache",
-    "dropdown_login": "⚡ Bei SoundCloud anmelden",
-    "toast_lang_switched": "🇩🇪 Sprache auf Deutsch geändert"
+    "dropdown_login": "Bei SoundCloud anmelden",
+    "toast_lang_switched": "Sprache auf Deutsch geändert"
   },
   "fr": {
     "search_placeholder": "Rechercher titres, artistes, albums...",
@@ -386,20 +386,20 @@
     "login_btn": "Se connecter",
     "my_profile": "Mon profil",
     "logout": "Déconnexion",
-    "chip_trending": "🔥 Tendances",
-    "chip_likes": "❤️ J'aime",
-    "chip_playlists": "📂 Playlists",
-    "chip_stream": "📡 Flux",
-    "chip_history": "🕒 Historique",
-    "hero_tag": "🔥 Top de la semaine",
+    "chip_trending": "Tendances",
+    "chip_likes": "J'aime",
+    "chip_playlists": "Playlists",
+    "chip_stream": "Flux",
+    "chip_history": "Historique",
+    "hero_tag": "Top de la semaine",
     "listen_now": "Écouter",
     "queue_title": "File d'attente",
     "select_track": "Sélectionnez un titre à lire",
     "auth_title": "Connexion à SoundCloud",
-    "btn_import": "⚡ Connexion en 1 clic (depuis Chromium)",
+    "btn_import": "Connexion en 1 clic (depuis Chromium)",
     "auth_help_head": "Connexion sans jetons manuels :",
     "auth_help_body": "Si vous êtes déjà connecté à soundcloud.com dans Chromium / Chrome, cliquez ci-dessus pour vous connecter automatiquement !",
-    "btn_open_sc": "🌐 Ouvrir la page de connexion SoundCloud dans le navigateur",
+    "btn_open_sc": "Ouvrir la page de connexion SoundCloud dans le navigateur",
     "auth_divider": "ou entrer le jeton de session manuellement",
     "btn_submit_token": "Connecter le compte",
     "theme_title": "Thèmes (10 palettes AMOLED)",
@@ -419,7 +419,7 @@
     "btn_cancel_sleep": "Désactiver le minuteur",
     "fx_title": "Studio d'effets audio FX",
     "radar_hint": "Casque recommandé pour l'effet binaural 3D en orbite",
-    "fx_speed_title": "⚡ Vitesse & Tonalité",
+    "fx_speed_title": "Vitesse & Tonalité",
     "speed_norm": "Normale",
     "looper_title": "Looper de précision A-B",
     "looper_desc": "Répétez en boucle n'importe quel segment du morceau (solo de guitare, drop, refrain).",
@@ -431,8 +431,8 @@
     "btn_copy_card": "Copier l'image",
     "btn_download_card": "Télécharger PNG",
     "dropdown_lang": "Langue : Français",
-    "lang_modal_title": "🌐 Choisir la langue",
-    "toast_lang": "🇫🇷 Langue définie sur Français",
+    "lang_modal_title": "Choisir la langue",
+    "toast_lang": "Langue définie sur Français",
     "toast_liked": "Ajouté aux favoris SoundCloud",
     "toast_unliked": "Retiré des favoris SoundCloud",
     "toast_liked_guest": "Ajouté aux favoris locaux • Connectez-vous pour synchroniser",
@@ -440,7 +440,7 @@
     "toast_guest_follow": "Connectez-vous à SoundCloud pour suivre les artistes",
     "toast_guest_comment": "Connectez-vous à SoundCloud pour publier des commentaires",
     "no_likes_guest_title": "Vos favoris locaux sont vides",
-    "no_likes_guest_desc": "Appuyez sur ❤️ sur n'importe quel titre pour l'enregistrer, ou connectez-vous.",
+    "no_likes_guest_desc": "Appuyez sur sur n'importe quel titre pour l'enregistrer, ou connectez-vous.",
     "no_history_title": "Aucun historique d'écoute",
     "no_history_desc": "Les morceaux écoutés apparaîtront automatiquement ici.",
     "stream_guest_title": "Le flux personnel nécessite un compte",
@@ -469,7 +469,7 @@
     "subtitle_local_history": "Historique local",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Effacer l'historique",
-    "toast_history_cleared": "🗑️ Historique effacé",
+    "toast_history_cleared": "Historique effacé",
     "no_tracks_found": "Aucun titre trouvé",
     "no_playlists_found": "Aucune playlist trouvée",
     "txt_stat_tracks": "Titres",
@@ -490,8 +490,8 @@
     "ext_card_desc": "Générez des cartes AMOLED haute résolution du morceau actuel à partager.",
     "guest_user": "Invité",
     "drop_lang_header": "Langue de l'interface",
-    "dropdown_login": "⚡ Se connecter à SoundCloud",
-    "toast_lang_switched": "🇫🇷 Langue changée en Français"
+    "dropdown_login": "Se connecter à SoundCloud",
+    "toast_lang_switched": "Langue changée en Français"
   },
   "ja": {
     "search_placeholder": "曲、アーティスト、アルバムを検索...",
@@ -500,20 +500,20 @@
     "login_btn": "ログイン",
     "my_profile": "マイプロフィール",
     "logout": "ログアウト",
-    "chip_trending": "🔥 トレンド",
-    "chip_likes": "❤️ いいね",
-    "chip_playlists": "📂 プレイリスト",
-    "chip_stream": "📡 フィード",
-    "chip_history": "🕒 履歴",
-    "hero_tag": "🔥 今週のトップ",
+    "chip_trending": "トレンド",
+    "chip_likes": "いいね",
+    "chip_playlists": "プレイリスト",
+    "chip_stream": "フィード",
+    "chip_history": "履歴",
+    "hero_tag": "今週のトップ",
     "listen_now": "今すぐ聴く",
     "queue_title": "再生キュー",
     "select_track": "再生するトラックを選択してください",
     "auth_title": "SoundCloudにログイン",
-    "btn_import": "⚡ 1クリックログイン (Chromiumから)",
+    "btn_import": "1クリックログイン (Chromiumから)",
     "auth_help_head": "手動トークン不要のログイン:",
     "auth_help_body": "ChromiumまたはChromeで既にsoundcloud.comにログインしている場合は、上のボタンをクリックして自動接続できます！",
-    "btn_open_sc": "🌐 ブラウザでSoundCloudのログインページを開く",
+    "btn_open_sc": "ブラウザでSoundCloudのログインページを開く",
     "auth_divider": "またはセッショントークンを手動で入力",
     "btn_submit_token": "アカウントを接続",
     "theme_title": "テーマ (10種類のAMOLEDパレット)",
@@ -533,7 +533,7 @@
     "btn_cancel_sleep": "タイマーを解除",
     "fx_title": "オーディオFXスタジオ",
     "radar_hint": "3D立体音響効果を楽しむにはヘッドフォンの使用を推奨します",
-    "fx_speed_title": "⚡ 速度とピッチ",
+    "fx_speed_title": "速度とピッチ",
     "speed_norm": "標準",
     "looper_title": "A-Bプレシジョンルーパー",
     "looper_desc": "曲の特定の部分（ギターソロ、ドロップ、サビ）をシームレスに無限ループ再生します。",
@@ -545,8 +545,8 @@
     "btn_copy_card": "クリップボードにコピー",
     "btn_download_card": "PNGを保存",
     "dropdown_lang": "言語: 日本語",
-    "lang_modal_title": "🌐 言語を選択",
-    "toast_lang": "🇯🇵 言語を日本語に設定しました",
+    "lang_modal_title": "言語を選択",
+    "toast_lang": "言語を日本語に設定しました",
     "toast_liked": "SoundCloudのお気に入りに追加されました",
     "toast_unliked": "SoundCloudのお気に入りから削除されました",
     "toast_liked_guest": "ローカルのお気に入りに追加されました • 同期するにはログインしてください",
@@ -554,7 +554,7 @@
     "toast_guest_follow": "アーティストをフォローするにはSoundCloudにログインしてください",
     "toast_guest_comment": "コメントを投稿するにはSoundCloudにログインしてください",
     "no_likes_guest_title": "ローカルのお気に入りは空です",
-    "no_likes_guest_desc": "任意のトラックの❤️をタップして保存するか、ログインしてください。",
+    "no_likes_guest_desc": "任意のトラックのをタップして保存するか、ログインしてください。",
     "no_history_title": "再生履歴はまだありません",
     "no_history_desc": "再生したトラックがここに自動的に表示されます。",
     "stream_guest_title": "ストリームにはアカウントが必要です",
@@ -583,7 +583,7 @@
     "subtitle_local_history": "ローカル履歴",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "履歴を消去",
-    "toast_history_cleared": "🗑️ 履歴を消去しました",
+    "toast_history_cleared": "履歴を消去しました",
     "no_tracks_found": "トラックが見つかりません",
     "no_playlists_found": "プレイリストが見つかりません",
     "txt_stat_tracks": "曲数",
@@ -604,8 +604,8 @@
     "ext_card_desc": "SNS共有用の美しいAMOLEDトラックカードをワンクリックで生成。",
     "guest_user": "ゲスト",
     "drop_lang_header": "表示言語",
-    "dropdown_login": "⚡ SoundCloudにログイン",
-    "toast_lang_switched": "🇯🇵 表示言語を日本語に変更しました"
+    "dropdown_login": "SoundCloudにログイン",
+    "toast_lang_switched": "表示言語を日本語に変更しました"
   },
   "uk": {
     "search_placeholder": "Пошук треків, виконавців, альбомів...",
@@ -614,20 +614,20 @@
     "login_btn": "Увійти в акаунт",
     "my_profile": "Мій профіль",
     "logout": "Вийти",
-    "chip_trending": "🔥 У тренді",
-    "chip_likes": "❤️ Мої Лайки",
-    "chip_playlists": "📂 Мої Плейлисти",
-    "chip_stream": "📡 Моя Стрічка",
-    "chip_history": "🕒 Історія",
-    "hero_tag": "🔥 Топ тижня",
+    "chip_trending": "У тренді",
+    "chip_likes": "Мої Лайки",
+    "chip_playlists": "Мої Плейлисти",
+    "chip_stream": "Моя Стрічка",
+    "chip_history": "Історія",
+    "hero_tag": "Топ тижня",
     "listen_now": "Слухати зараз",
     "queue_title": "Черга відтворення",
     "select_track": "Оберіть трек для відтворення",
     "auth_title": "Вхід в акаунт SoundCloud",
-    "btn_import": "⚡ Авторизація в 1 клік (з Chromium)",
+    "btn_import": "Авторизація в 1 клік (з Chromium)",
     "auth_help_head": "Вхід без ручного введення токенів:",
     "auth_help_body": "Якщо ви вже увійшли на soundcloud.com у Chromium, натисніть кнопку вище — застосунок автоматично підключить ваш акаунт!",
-    "btn_open_sc": "🌐 Відкрити сторінку входу SoundCloud у браузері",
+    "btn_open_sc": "Відкрити сторінку входу SoundCloud у браузері",
     "auth_divider": "або введіть токен сесії вручну",
     "btn_submit_token": "Підключити акаунт",
     "theme_title": "Теми оформлення (10 AMOLED палітр)",
@@ -647,7 +647,7 @@
     "btn_cancel_sleep": "Вимкнути активний таймер",
     "fx_title": "Студія звукових ефектів FX",
     "radar_hint": "Рекомендується слухати в навушниках для ефекту 3D-орбіти",
-    "fx_speed_title": "⚡ Швидкість і Тональність",
+    "fx_speed_title": "Швидкість і Тональність",
     "speed_norm": "Звичайна",
     "looper_title": "A-B Looper (Зациклення фрагмента)",
     "looper_desc": "Дозволяє безперервно відтворювати обраний фрагмент треку (соло, дроп, приспів).",
@@ -659,8 +659,8 @@
     "btn_copy_card": "Скопіювати зображення",
     "btn_download_card": "Завантажити PNG",
     "dropdown_lang": "Мова: Українська",
-    "lang_modal_title": "🌐 Оберіть мову",
-    "toast_lang": "🇺🇦 Мову інтерфейсу змінено на українську",
+    "lang_modal_title": "Оберіть мову",
+    "toast_lang": "Мову інтерфейсу змінено на українську",
     "toast_liked": "Додано до вподобань SoundCloud",
     "toast_unliked": "Вилучено з вподобань SoundCloud",
     "toast_liked_guest": "Додано до локальних вподобань • Увійдіть для синхронізації",
@@ -668,7 +668,7 @@
     "toast_guest_follow": "Увійдіть у SoundCloud, щоб підписатися",
     "toast_guest_comment": "Увійдіть у SoundCloud, щоб залишати коментарі",
     "no_likes_guest_title": "Ваші локальні вподобання порожні",
-    "no_likes_guest_desc": "Натисніть ❤️ на будь-якому треку, щоб зберегти його, або увійдіть в акаунт.",
+    "no_likes_guest_desc": "Натисніть на будь-якому треку, щоб зберегти його, або увійдіть в акаунт.",
     "no_history_title": "Історія прослуховувань порожня",
     "no_history_desc": "Прослухані треки автоматично з'являтимуться тут.",
     "stream_guest_title": "Особиста стрічка доступна після входу",
@@ -697,7 +697,7 @@
     "subtitle_local_history": "Локальна історія",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Очистити історію",
-    "toast_history_cleared": "🗑️ Історію очищено",
+    "toast_history_cleared": "Історію очищено",
     "no_tracks_found": "Треків не знайдено",
     "no_playlists_found": "Плейлістів не знайдено",
     "txt_stat_tracks": "Треків",
@@ -718,8 +718,8 @@
     "ext_card_desc": "Створення стильних AMOLED-карток треку для публікації в соцмережах.",
     "guest_user": "Гість",
     "drop_lang_header": "Мова інтерфейсу",
-    "dropdown_login": "⚡ Увійти до SoundCloud",
-    "toast_lang_switched": "🇺🇦 Мову інтерфейсу змінено на Українську"
+    "dropdown_login": "Увійти до SoundCloud",
+    "toast_lang_switched": "Мову інтерфейсу змінено на Українську"
   },
   "pl": {
     "search_placeholder": "Szukaj utworów, wykonawców, albumów...",
@@ -728,20 +728,20 @@
     "login_btn": "Zaloguj się",
     "my_profile": "Mój profil",
     "logout": "Wyloguj się",
-    "chip_trending": "🔥 Na czasie",
-    "chip_likes": "❤️ Polubione",
-    "chip_playlists": "📂 Playlisty",
-    "chip_stream": "📡 Ostatnie",
-    "chip_history": "🕒 Historia",
-    "hero_tag": "🔥 Hit tygodnia",
+    "chip_trending": "Na czasie",
+    "chip_likes": "Polubione",
+    "chip_playlists": "Playlisty",
+    "chip_stream": "Ostatnie",
+    "chip_history": "Historia",
+    "hero_tag": "Hit tygodnia",
     "listen_now": "Słuchaj teraz",
     "queue_title": "Kolejka odtwarzania",
     "select_track": "Wybierz utwór do odtworzenia",
     "auth_title": "Zaloguj się do SoundCloud",
-    "btn_import": "⚡ Logowanie jednym kliknięciem (z Chromium)",
+    "btn_import": "Logowanie jednym kliknięciem (z Chromium)",
     "auth_help_head": "Logowanie bez ręcznego wprowadzania tokenów:",
     "auth_help_body": "Jeśli jesteś już zalogowany na soundcloud.com w Chromium / Chrome, kliknij powyższy przycisk, aby połączyć się automatycznie!",
-    "btn_open_sc": "🌐 Otwórz stronę logowania SoundCloud w przeglądarce",
+    "btn_open_sc": "Otwórz stronę logowania SoundCloud w przeglądarce",
     "auth_divider": "lub wprowadź token sesji ręcznie",
     "btn_submit_token": "Połącz konto",
     "theme_title": "Motywy (10 palet AMOLED)",
@@ -761,7 +761,7 @@
     "btn_cancel_sleep": "Anuluj aktywny timer",
     "fx_title": "Studio efektów audio FX",
     "radar_hint": "Zalecane słuchawki dla efektu 3D dźwięku binauralnego",
-    "fx_speed_title": "⚡ Prędkość i tonacja",
+    "fx_speed_title": "Prędkość i tonacja",
     "speed_norm": "Normalna",
     "looper_title": "Precyzyjny pętlik A-B",
     "looper_desc": "Odtwarzaj w nieskończonej pętli dowolny fragment utworu (solówkę, drop, refren).",
@@ -773,8 +773,8 @@
     "btn_copy_card": "Kopiuj do schowka",
     "btn_download_card": "Pobierz PNG",
     "dropdown_lang": "Język: Polski",
-    "lang_modal_title": "🌐 Wybierz język",
-    "toast_lang": "🇵🇱 Język interfejsu: Polski",
+    "lang_modal_title": "Wybierz język",
+    "toast_lang": "Język interfejsu: Polski",
     "toast_liked": "Dodano do polubionych SoundCloud",
     "toast_unliked": "Usunięto z polubionych SoundCloud",
     "toast_liked_guest": "Dodano do lokalnych ulubionych • Zaloguj się, aby zsynchronizować",
@@ -782,7 +782,7 @@
     "toast_guest_follow": "Zaloguj się do SoundCloud, aby obserwować twórców",
     "toast_guest_comment": "Zaloguj się do SoundCloud, aby komentować",
     "no_likes_guest_title": "Twoje lokalne ulubione są puste",
-    "no_likes_guest_desc": "Dotknij ❤️ na dowolnym utworze, aby go zapisać, lub zaloguj się.",
+    "no_likes_guest_desc": "Dotknij na dowolnym utworze, aby go zapisać, lub zaloguj się.",
     "no_history_title": "Brak historii odtwarzania",
     "no_history_desc": "Odtwarzane utwory pojawią się tutaj automatycznie.",
     "stream_guest_title": "Twój strumień wymaga konta",
@@ -811,7 +811,7 @@
     "subtitle_local_history": "Lokalna historia",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Wyczyść historię",
-    "toast_history_cleared": "🗑️ Historia wyczyszczona",
+    "toast_history_cleared": "Historia wyczyszczona",
     "no_tracks_found": "Nie znaleziono utworów",
     "no_playlists_found": "Nie znaleziono playlist",
     "txt_stat_tracks": "Utworów",
@@ -832,8 +832,8 @@
     "ext_card_desc": "Generuj estetyczne karty AMOLED z metadanymi i falami dźwiękowymi do mediów społecznościowych.",
     "guest_user": "Gość",
     "drop_lang_header": "Język interfejsu",
-    "dropdown_login": "⚡ Zaloguj się do SoundCloud",
-    "toast_lang_switched": "🇵🇱 Język zmieniony na Polski"
+    "dropdown_login": "Zaloguj się do SoundCloud",
+    "toast_lang_switched": "Język zmieniony na Polski"
   },
   "hy": {
     "search_placeholder": "Որոնել երգեր, կատարողներ, ալբոմներ...",
@@ -842,20 +842,20 @@
     "login_btn": "Մուտք գործել",
     "my_profile": "Իմ պրոֆիլը",
     "logout": "Ելք",
-    "chip_trending": "🔥 Թրենդային",
-    "chip_likes": "❤️ Հավանածներ",
-    "chip_playlists": "📂 Երգացանկեր",
-    "chip_stream": "📡 Լրահոս",
-    "chip_history": "🕒 Պատմություն",
-    "hero_tag": "🔥 Շաբաթվա լավագույնը",
+    "chip_trending": "Թրենդային",
+    "chip_likes": "Հավանածներ",
+    "chip_playlists": "Երգացանկեր",
+    "chip_stream": "Լրահոս",
+    "chip_history": "Պատմություն",
+    "hero_tag": "Շաբաթվա լավագույնը",
     "listen_now": "Լսել հիմա",
     "queue_title": "Նվագարկման հերթ",
     "select_track": "Ընտրեք երգ նվագարկելու համար",
     "auth_title": "Մուտք SoundCloud-ի հաշիվ",
-    "btn_import": "⚡ Մուտք 1 սեղմումով (Chromium-ից)",
+    "btn_import": "Մուտք 1 սեղմումով (Chromium-ից)",
     "auth_help_head": "Մուտք առանց ձեռքով թոքեն մուտքագրելու.",
     "auth_help_body": "Եթե արդեն մուտք եք գործել soundcloud.com Chromium-ում, սեղմեք վերևի կոճակը՝ ավտոմատ միանալու համար:",
-    "btn_open_sc": "🌐 Բացել SoundCloud-ի մուտքի էջը բրաուզերում",
+    "btn_open_sc": "Բացել SoundCloud-ի մուտքի էջը բրաուզերում",
     "auth_divider": "կամ մուտքագրեք սեսիայի թոքենը ձեռքով",
     "btn_submit_token": "Միացնել հաշիվը",
     "theme_title": "Ձևավորման թեմաներ (10 AMOLED գունապնակ)",
@@ -875,7 +875,7 @@
     "btn_cancel_sleep": "Անջատել ժամաչափը",
     "fx_title": "Աուդիո FX Ստուդիա",
     "radar_hint": "3D ուղեծրային էֆեկտի համար խորհուրդ է տրվում լսել ականջակալներով",
-    "fx_speed_title": "⚡ Արագություն և Տոնայնություն",
+    "fx_speed_title": "Արագություն և Տոնայնություն",
     "speed_norm": "Սովորական",
     "looper_title": "A-B Ճշգրիտ Լուպեր",
     "looper_desc": "Անվերջ կրկնեք երգի ցանկացած հատված (սոլո, դրոփ, կրկներգ):",
@@ -887,8 +887,8 @@
     "btn_copy_card": "Պատճենել նկարը",
     "btn_download_card": "Ներբեռնել PNG",
     "dropdown_lang": "Լեզու՝ Հայերեն",
-    "lang_modal_title": "🌐 Ընտրեք լեզուն",
-    "toast_lang": "🇦🇲 Ինտերֆեյսի լեզուն փոխվեց հայերենի",
+    "lang_modal_title": "Ընտրեք լեզուն",
+    "toast_lang": "Ինտերֆեյսի լեզուն փոխվեց հայերենի",
     "toast_liked": "Ավելացվել է SoundCloud-ի հավանածներում",
     "toast_unliked": "Հեռացվել է SoundCloud-ի հավանածներից",
     "toast_liked_guest": "Ավելացվել է տեղական ընտրյալներում • Մուտք գործեք համաժամեցման համար",
@@ -896,7 +896,7 @@
     "toast_guest_follow": "Մուտք գործեք SoundCloud՝ կատարողներին հետևելու համար",
     "toast_guest_comment": "Մուտք գործեք SoundCloud՝ մեկնաբանություններ թողնելու համար",
     "no_likes_guest_title": "Ձեր տեղական ընտրյալները դատարկ են",
-    "no_likes_guest_desc": "Սեղմեք ❤️ ցանկացած թրեքի վրա՝ պահպանելու համար, կամ մուտք գործեք:",
+    "no_likes_guest_desc": "Սեղմեք ցանկացած թրեքի վրա՝ պահպանելու համար, կամ մուտք գործեք:",
     "no_history_title": "Նվագարկման պատմությունը դատարկ է",
     "no_history_desc": "Ձեր լսած թրեքներն ինքնաբերաբար կհայտնվեն այստեղ:",
     "stream_guest_title": "Անձնական հոսքի համար անհրաժեշտ է մուտք գործել",
@@ -925,7 +925,7 @@
     "subtitle_local_history": "Տեղական պատմություն",
     "subtitle_sc_history": "SoundCloud",
     "btn_clear_history": "Մաքրել պատմությունը",
-    "toast_history_cleared": "🗑️ Պատմությունը մաքրվեց",
+    "toast_history_cleared": "Պատմությունը մաքրվեց",
     "no_tracks_found": "Երգեր չեն գտնվել",
     "no_playlists_found": "Երգացանկեր չեն գտնվել",
     "txt_stat_tracks": "Երգեր",
@@ -946,8 +946,8 @@
     "ext_card_desc": "Ստեղծեք ընթացիկ երգի բարձր որակի AMOLED քարտ՝ սոցիալական ցանցերում կիսվելու համար:",
     "guest_user": "Հյուր",
     "drop_lang_header": "Ինտերֆեյսի լեզու",
-    "dropdown_login": "⚡ Մուտք գործել SoundCloud",
-    "toast_lang_switched": "🇦🇲 Ինտերֆեյսի լեզուն փոխվել է Հայերեն"
+    "dropdown_login": "Մուտք գործել SoundCloud",
+    "toast_lang_switched": "Ինտերֆեյսի լեզուն փոխվել է Հայերեն"
   }
 };
 
@@ -975,7 +975,7 @@
     } else if (currentTab.type === 'search') {
       gridTitle.innerHTML = `${t.search_results_title}: <span>"${escapeHtml(currentSearchQuery)}"</span>`;
     } else if (currentTab.type === 'radio') {
-      gridTitle.innerHTML = `📻 ${t.radio_station_title}: <span>"${escapeHtml(currentRadioTrackTitle)}"</span>`;
+      gridTitle.innerHTML = `${t.radio_station_title}: <span>"${escapeHtml(currentRadioTrackTitle)}"</span>`;
     }
   }
 
@@ -1319,7 +1319,7 @@
     visArt.src = art;
     visTitle.textContent = track.title;
     visArtist.textContent = track.artist;
-    document.title = `🎵 ${track.title} • ${track.artist} | SoundCloud`;
+    document.title = `${track.title} • ${track.artist} | SoundCloud`;
 
     dockLikeBtn.classList.toggle('liked', isTrackLiked(track.id, track.liked));
     syncRightPanel(track);
@@ -1470,7 +1470,7 @@
       audio.pause();
       isPlaying = false;
       updatePlayButtonUI(false);
-      showToast('🌙 Sleep timer: track finished, music stopped');
+      showToast('Sleep timer: track finished, music stopped');
       return;
     }
 
@@ -1794,10 +1794,10 @@
 
       if (willLike) {
         localLikes.unshift(track);
-        showToast('❤️ ' + (TRANSLATIONS[currentLang]?.toast_liked_guest || 'Added to Local Favorites • Sign in to sync'));
+        showToast('' + (TRANSLATIONS[currentLang]?.toast_liked_guest || 'Added to Local Favorites • Sign in to sync'));
       } else {
         localLikes = localLikes.filter(t => t.id !== track.id);
-        showToast('🤍 ' + (TRANSLATIONS[currentLang]?.toast_unliked_guest || 'Removed from Local Favorites'));
+        showToast('' + (TRANSLATIONS[currentLang]?.toast_unliked_guest || 'Removed from Local Favorites'));
       }
       saveLocalLikes(localLikes);
 
@@ -1861,7 +1861,7 @@
     try {
       const method = willLike ? 'POST' : 'DELETE';
       await fetch(`/api/tracks/${track.id}/like`, { method });
-      showToast(willLike ? '❤️ ' + (TRANSLATIONS[currentLang]?.toast_liked || 'Added to SoundCloud Likes') : '🤍 ' + (TRANSLATIONS[currentLang]?.toast_unliked || 'Removed from SoundCloud Likes'));
+      showToast(willLike ? '' + (TRANSLATIONS[currentLang]?.toast_liked || 'Added to SoundCloud Likes') : '' + (TRANSLATIONS[currentLang]?.toast_unliked || 'Removed from SoundCloud Likes'));
     } catch (e) {
       console.warn('Like toggle failed:', e);
     }
@@ -1922,7 +1922,7 @@
       profName.textContent = data.username;
       profAvatar.src = data.avatar_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="%23FF5500"%3E%3Ccircle cx="50" cy="50" r="50"/%3E%3C/svg%3E';
       const locParts = [data.city, data.country].filter(Boolean);
-      profLoc.textContent = locParts.length > 0 ? `📍 ${locParts.join(', ')}` : '📍 SoundCloud Universe';
+      profLoc.textContent = locParts.length > 0 ? `${locParts.join(', ')}` : 'SoundCloud Universe';
       profDesc.textContent = data.description || 'Artist has not added a bio yet.';
 
       profStatTracks.textContent = formatCount(data.track_count);
@@ -1958,7 +1958,7 @@
             <div class="track-title" title="${t.title}">${t.title}</div>
             <div class="track-artist" title="${t.artist}">${t.artist}</div>
             <div class="track-meta">
-              <span>⏱ ${formatDurationMs(t.duration_ms)}</span>
+              <span>${formatDurationMs(t.duration_ms)}</span>
               <button class="like-btn ${t.liked ? 'liked' : ''}" title="Like">
                 <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
               </button>
@@ -1989,7 +1989,7 @@
           card.innerHTML = `
             <div class="artwork-wrapper" style="position: relative;">
               <img class="track-artwork" src="${art}" loading="lazy" alt="${pl.title}">
-              <div class="playlist-badge">📂 ${pl.track_count} tracks</div>
+              <div class="playlist-badge">${pl.track_count} tracks</div>
             </div>
             <div class="track-title" title="${pl.title}">${pl.title}</div>
             <div class="track-artist" title="${pl.artist}">${pl.artist}</div>
@@ -2010,7 +2010,7 @@
 
   function updateFollowBtnUI(following) {
     if (following) {
-      profFollowBtn.textContent = '✓ Following';
+      profFollowBtn.textContent = 'Following';
       profFollowBtn.classList.add('following');
     } else {
       profFollowBtn.textContent = '+ Follow';
@@ -2020,7 +2020,7 @@
 
   profFollowBtn.addEventListener('click', async () => {
     if (!currentUser) {
-      showToast('ℹ️ ' + (TRANSLATIONS[currentLang]?.toast_guest_follow || 'Sign in to SoundCloud to follow artists'));
+      showToast(TRANSLATIONS[currentLang]?.toast_guest_follow || 'Sign in to SoundCloud to follow artists');
       return;
     }
     if (!currentViewingArtist) return;
@@ -2120,7 +2120,7 @@
       track = currentIndex >= 0 ? queue[currentIndex] : null;
     }
     if (!track) {
-      showToast('⚠️ Please play a track first to view comments');
+      showToast('Please play a track first to view comments');
       return;
     }
 
@@ -2156,7 +2156,7 @@
         <div class="comment-content">
           <div class="comment-user-row">
             <span class="comment-username" style="cursor: pointer;">${escapeHtml(c.username)}</span>
-            ${timeStr ? `<span class="comment-timestamp-chip" data-time="${c.timestamp_ms / 1000}">⏱ ${timeStr}</span>` : ''}
+            ${timeStr ? `<span class="comment-timestamp-chip" data-time="${c.timestamp_ms / 1000}">${timeStr}</span>` : ''}
           </div>
           <div class="comment-body">${escapeHtml(c.body)}</div>
         </div>
@@ -2187,7 +2187,7 @@
 
   async function postNewComment() {
     if (!currentUser) {
-      showToast('ℹ️ ' + (TRANSLATIONS[currentLang]?.toast_guest_comment || 'Sign in to SoundCloud to post comments'));
+      showToast(TRANSLATIONS[currentLang]?.toast_guest_comment || 'Sign in to SoundCloud to post comments');
       return;
     }
     if (!currentViewingTrackForComments) return;
@@ -2218,14 +2218,14 @@
         <div class="comment-content">
           <div class="comment-user-row">
             <span class="comment-username">${escapeHtml(newComment.username)}</span>
-            ${timeStr ? `<span class="comment-timestamp-chip">⏱ ${timeStr}</span>` : ''}
+            ${timeStr ? `<span class="comment-timestamp-chip">${timeStr}</span>` : ''}
           </div>
           <div class="comment-body">${escapeHtml(newComment.body)}</div>
         </div>
       `;
       commentsList.insertBefore(row, commentsList.firstChild);
     } catch (e) {
-      showToast('⚠️ Error sending comment: ' + e);
+      showToast('Error sending comment: ' + e);
     } finally {
       btnSendComment.textContent = 'Send';
       btnSendComment.disabled = false;
@@ -2247,7 +2247,7 @@
   // 8. In-App Track Radio / Station (100% In-App)
   async function startTrackRadio() {
     if (currentIndex < 0 || !queue[currentIndex]) {
-      showToast('⚠️ Please play a track first to start a radio station');
+      showToast('Please play a track first to start a radio station');
       return;
     }
     const track = queue[currentIndex];
@@ -2269,7 +2269,7 @@
         renderTracks(queue);
         playerTitle.textContent = track.title;
       } else {
-        showToast('ℹ️ No similar tracks found for radio station');
+        showToast('No similar tracks found for radio station');
         playerTitle.textContent = track.title;
       }
     } catch (e) {
@@ -2412,14 +2412,14 @@
           authModalOverlay.classList.remove('open');
           await checkAuthStatus();
           await syncUserData();
-          showToast('✨ Signed in from Chromium!');
+          showToast('Signed in from Chromium!');
         } else {
-          showToast('⚠️ Session not found: ' + (data.error || 'sign in to soundcloud.com in Chromium / Chrome'));
+          showToast('Session not found: ' + (data.error || 'sign in to soundcloud.com in Chromium / Chrome'));
         }
       } catch(e) {
-        showToast('⚠️ Import error: ' + e);
+        showToast('Import error: ' + e);
       } finally {
-        btnImportBrowser.textContent = '⚡ 1-Click Sign In (from Chromium)';
+        btnImportBrowser.textContent = '1-Click Sign In (from Chromium)';
       }
     });
   }
@@ -2444,12 +2444,12 @@
         authModalOverlay.classList.remove('open');
         await checkAuthStatus();
         await syncUserData();
-        showToast('✨ Signed in successfully!');
+        showToast('Signed in successfully!');
       } else {
-        showToast('⚠️ ' + (data.error || 'Invalid token. Please check and try again.'));
+        showToast('' + (data.error || 'Invalid token. Please check and try again.'));
       }
     } catch (e) {
-      showToast('⚠️ Connection error: ' + e);
+      showToast('Connection error: ' + e);
     } finally {
       btnSubmitToken.textContent = 'Connect Account';
     }
@@ -2473,12 +2473,12 @@
           authModalOverlay.classList.remove('open');
           await checkAuthStatus();
           await syncUserData();
-          showToast('✨ Connected to profile!');
+          showToast('Connected to profile!');
         } else {
-          showToast('⚠️ ' + (data.error || 'Profile not found.'));
+          showToast('' + (data.error || 'Profile not found.'));
         }
       } catch (e) {
-        showToast('⚠️ Connection error: ' + e);
+        showToast('Connection error: ' + e);
       } finally {
         btnSubmitPublic.textContent = 'Connect by Username';
       }
@@ -2487,7 +2487,13 @@
 
   userBadge.addEventListener('click', (e) => {
     e.stopPropagation();
-    userDropdown.classList.toggle('open');
+    if (currentUser && currentUser.id) {
+      navigateTo('view-profile');
+      renderProfileView();
+    } else {
+      authModalOverlay.classList.add('open');
+      authModalOverlay.style.display = 'flex';
+    }
   });
 
   if (userDropdown) {
@@ -2502,10 +2508,9 @@
 
   if (btnViewMyProfile) {
     btnViewMyProfile.addEventListener('click', () => {
-      if (currentUser && currentUser.id) {
-        userDropdown.classList.remove('open');
-        openArtistProfile(currentUser.id);
-      }
+      userDropdown.classList.remove('open');
+      navigateTo('view-profile');
+      renderProfileView();
     });
   }
 
@@ -2514,7 +2519,7 @@
     await fetch('/api/auth/logout', { method: 'POST' });
     await checkAuthStatus();
     navigateTo('view-home');
-    showToast('👋 ' + (TRANSLATIONS[currentLang]?.logout || 'Signed Out'));
+    showToast('' + (TRANSLATIONS[currentLang]?.logout || 'Signed Out'));
   });
 
   // 10. Bento Grid Rendering (Tracks & Playlists)
@@ -2555,7 +2560,7 @@
         <div class="track-title" title="${track.title}">${track.title}</div>
         <div class="track-artist" title="${track.artist}" style="cursor: pointer;">${track.artist}</div>
         <div class="track-meta">
-          <span>⏱ ${formatDurationMs(track.duration_ms)}</span>
+          <span>${formatDurationMs(track.duration_ms)}</span>
           <button class="like-btn ${isLiked ? 'liked' : ''}" title="Like">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2601,7 +2606,7 @@
       card.innerHTML = `
         <div class="artwork-wrapper" style="position: relative;">
           <img class="track-artwork" src="${art}" loading="lazy" alt="${pl.title}">
-          <div class="playlist-badge">📂 ${pl.track_count} tracks</div>
+          <div class="playlist-badge">${pl.track_count} tracks</div>
         </div>
         <div class="track-title" title="${pl.title}">${pl.title}</div>
         <div class="track-artist" title="${pl.artist}">${pl.artist}</div>
@@ -2620,15 +2625,15 @@
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     tracksGrid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-        <div style="font-size: 48px; margin-bottom: 12px;">❤️</div>
+        <div style="font-size: 48px; margin-bottom: 12px;"></div>
         <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
           ${t.no_likes_guest_title || 'Your Local Favorites is empty'}
         </div>
         <div style="font-size: 13px; max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
-          ${t.no_likes_guest_desc || 'Tap the ❤️ icon on any track to save it here, or sign in to sync with your SoundCloud account.'}
+          ${t.no_likes_guest_desc || 'Tap the icon on any track to save it here, or sign in to sync with your SoundCloud account.'}
         </div>
         <button class="action-btn" id="btn-empty-likes-signin" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
-          ⚡ ${t.login_btn || 'Sign In to SoundCloud'}
+          ${t.login_btn || 'Sign In to SoundCloud'}
         </button>
       </div>
     `;
@@ -2641,7 +2646,7 @@
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     tracksGrid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-        <div style="font-size: 48px; margin-bottom: 12px;">📡</div>
+        <div style="font-size: 48px; margin-bottom: 12px;"></div>
         <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
           ${t.stream_guest_title || 'Personal Stream requires an account'}
         </div>
@@ -2649,7 +2654,7 @@
           ${t.stream_guest_desc || 'Stream shows updates from artists you follow on SoundCloud. You can listen freely to Trending, Liked Tracks, Playlists, and Search without an account, or sign in whenever you wish!'}
         </div>
         <button class="action-btn" id="btn-empty-stream-signin" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 9999px; background: var(--orange-neon); color: #fff; font-weight: 700; border: none; cursor: pointer;">
-          ⚡ ${t.login_btn || 'Sign In to SoundCloud'}
+          ${t.login_btn || 'Sign In to SoundCloud'}
         </button>
       </div>
     `;
@@ -2662,7 +2667,7 @@
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     tracksGrid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-        <div style="font-size: 48px; margin-bottom: 12px;">🕒</div>
+        <div style="font-size: 48px; margin-bottom: 12px;"></div>
         <div style="font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px;">
           ${t.no_history_title || 'No playback history yet'}
         </div>
@@ -2680,7 +2685,7 @@
     clearBar.style.cssText = 'grid-column: 1 / -1; display: flex; justify-content: flex-end; margin-bottom: 8px;';
     clearBar.innerHTML = `
       <button id="btn-clear-history-action" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-dim); padding: 6px 14px; border-radius: 9999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
-        🗑️ ${t.btn_clear_history || 'Clear History'}
+        ${t.btn_clear_history || 'Clear History'}
       </button>
     `;
     tracksGrid.insertBefore(clearBar, tracksGrid.firstChild);
@@ -3108,7 +3113,7 @@
       card.addEventListener('click', () => {
         const id = card.dataset.themeId;
         applyTheme(id);
-        showToast(`🎨 Color theme applied: ${card.querySelector('.theme-title span')?.textContent || id}`);
+        showToast(`Color theme applied: ${card.querySelector('.theme-title span')?.textContent || id}`);
       });
     });
 
@@ -3208,7 +3213,7 @@
     activeLyricIndex = -1;
     const container = document.getElementById('lyrics-container');
     const badge = document.getElementById('lyrics-source-badge');
-    container.innerHTML = '<div class="lyrics-empty">⚡ Searching lyrics in LRCLIB database...</div>';
+    container.innerHTML = '<div class="lyrics-empty">Searching lyrics in LRCLIB database...</div>';
 
     try {
       const cleanTitle = track.title.replace(/\([^)]*\)|\[[^\]]*\]/g, '').trim();
@@ -3218,12 +3223,12 @@
         const data = await res.json();
         if (data.syncedLyrics) {
           parseLrc(data.syncedLyrics);
-          if (badge) badge.textContent = '⚡ Synced LRCLIB';
+          if (badge) badge.textContent = 'Synced LRCLIB';
           renderLyricsLines();
           return;
         } else if (data.plainLyrics) {
           generateTimedLinesFromPlain(data.plainLyrics, track.duration_ms ? track.duration_ms / 1000 : 180);
-          if (badge) badge.textContent = '📜 Plain Lyrics Timed';
+          if (badge) badge.textContent = 'Plain Lyrics Timed';
           renderLyricsLines();
           return;
         }
@@ -3234,7 +3239,7 @@
 
     // Fallback: Rhythmic karaoke sequence
     generateFallbackLyrics(track);
-    if (badge) badge.textContent = '✨ Acoustic Rhythm Mode';
+    if (badge) badge.textContent = 'Acoustic Rhythm Mode';
     renderLyricsLines();
   }
 
@@ -3271,18 +3276,18 @@
   function generateFallbackLyrics(track) {
     const totalDuration = track.duration_ms ? track.duration_ms / 1000 : (audio.duration || 180);
     const phrases = [
-      `♪ [Intro — ${track.artist}] ♪`,
+      ` [Intro — ${track.artist}] `,
       `Lost in the frequencies, crystalline sound`,
       `Neon light waves cutting through the night city`,
       `Pure sub-bass pulsing to the rhythm`,
       `SoundCloud Ultimate • Lossless stream active`,
-      `♪ [Main Beat & Drop] ♪`,
+      ` [Main Beat & Drop] `,
       `Turn the volume up, dissolving in the melody`,
       `Studio-grade balance, pure harmonics`,
-      `♪ [Bridge & Harmonic Progression] ♪`,
+      ` [Bridge & Harmonic Progression] `,
       `Echoes in the silence, frequencies align`,
       `Music speaks louder than words`,
-      `♪ [Outro — Fade Out] ♪`
+      ` [Outro — Fade Out] `
     ];
     const step = Math.max(8, totalDuration / (phrases.length + 1));
     lyricsLines = phrases.map((text, i) => ({
@@ -3368,7 +3373,7 @@
         badge.style.display = 'inline-flex';
       }
       if (cancelBtn) cancelBtn.style.display = 'block';
-      showToast('🌙 Music will stop after the current track finishes');
+      showToast('Music will stop after the current track finishes');
       return;
     }
 
@@ -3391,7 +3396,7 @@
         isPlaying = false;
         updatePlayButtonUI(false);
         setVolume(preFadeVolume || 0.8);
-        showToast('🌙 Sleep timer triggered: music stopped');
+        showToast('Sleep timer triggered: music stopped');
       } else {
         const totalSec = Math.floor(remainingMs / 1000);
         const m = Math.floor(totalSec / 60);
@@ -3405,7 +3410,7 @@
       }
     }, 1000);
 
-    showToast(`🌙 Sleep timer set for ${mins} minutes`);
+    showToast(`Sleep timer set for ${mins} minutes`);
   }
 
   function cancelSleepTimer() {
@@ -3450,7 +3455,7 @@
 
     document.getElementById('btn-cancel-sleep')?.addEventListener('click', () => {
       cancelSleepTimer();
-      showToast('🌙 Sleep timer cancelled');
+      showToast('Sleep timer cancelled');
     });
   }
 
@@ -3487,12 +3492,12 @@
         orbitAnimId = requestAnimationFrame(animateOrbit);
       }
       orbitAnimId = requestAnimationFrame(animateOrbit);
-      showToast('🎧 8D Audio enabled (360° binaural spatial rotation)');
+      showToast('8D Audio enabled (360° binaural spatial rotation)');
     } else {
       if (orbitAnimId) cancelAnimationFrame(orbitAnimId);
       if (stereoPanner && audioCtx) stereoPanner.pan.setValueAtTime(0, audioCtx.currentTime);
       if (dot) dot.style.transform = 'translate(-50%, -50%)';
-      showToast('🎧 8D Audio disabled');
+      showToast('8D Audio disabled');
     }
   }
 
@@ -3534,7 +3539,7 @@
         chip.classList.add('active');
         const spd = parseFloat(chip.dataset.speed);
         setPlaybackSpeed(spd);
-        showToast(`⚡ Speed changed: ${spd}x`);
+        showToast(`Speed changed: ${spd}x`);
       });
     });
   }
@@ -3550,19 +3555,19 @@
     loopPointA = audio.currentTime;
     document.getElementById('loop-time-a').textContent = formatTime(loopPointA);
     updateLoopMarkersUI();
-    showToast(`🔁 Loop point [A] set: ${formatTime(loopPointA)}`);
+    showToast(`Loop point [A] set: ${formatTime(loopPointA)}`);
   }
 
   function setLoopB() {
     loopPointB = audio.currentTime;
     document.getElementById('loop-time-b').textContent = formatTime(loopPointB);
     updateLoopMarkersUI();
-    showToast(`🔁 Loop point [B] set: ${formatTime(loopPointB)}`);
+    showToast(`Loop point [B] set: ${formatTime(loopPointB)}`);
   }
 
   function toggleLoopActive() {
     if (loopPointA === null || loopPointB === null) {
-      showToast('⚠️ Please set both loop points [A] and [B] first');
+      showToast('Please set both loop points [A] and [B] first');
       return;
     }
     if (loopPointA >= loopPointB) {
@@ -3578,20 +3583,20 @@
     if (isLoopActive) {
       if (btn) {
         btn.classList.add('active');
-        btn.innerHTML = '🔁 Loop Active';
+        btn.innerHTML = 'Loop Active';
       }
       if (dockBtn) dockBtn.style.color = '#00FF66';
       if (audio.currentTime < loopPointA || audio.currentTime > loopPointB) {
         audio.currentTime = loopPointA;
       }
-      showToast('🔁 A-B Looper active!');
+      showToast('A-B Looper active!');
     } else {
       if (btn) {
         btn.classList.remove('active');
-        btn.innerHTML = '🔁 Enable Loop';
+        btn.innerHTML = 'Enable Loop';
       }
       if (dockBtn) dockBtn.style.color = '';
-      showToast('🔁 A-B Looper disabled');
+      showToast('A-B Looper disabled');
     }
     updateLoopMarkersUI();
   }
@@ -3605,12 +3610,12 @@
     const btn = document.getElementById('btn-toggle-loop-active');
     if (btn) {
       btn.classList.remove('active');
-      btn.innerHTML = '🔁 Enable Loop';
+      btn.innerHTML = 'Enable Loop';
     }
     const dockBtn = document.getElementById('btn-looper-toggle');
     if (dockBtn) dockBtn.style.color = '';
     updateLoopMarkersUI();
-    showToast('🔁 Loop points cleared');
+    showToast('Loop points cleared');
   }
 
   function updateLoopMarkersUI() {
@@ -3737,7 +3742,7 @@
 
       ctx.fillStyle = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
       ctx.font = 'bold 13px -apple-system, sans-serif';
-      ctx.fillText('⚡ SOUNDCLOUD ULTIMATE', w - 230, 68);
+      ctx.fillText('SOUNDCLOUD ULTIMATE', w - 230, 68);
 
       // Track Title
       ctx.fillStyle = '#FFFFFF';
@@ -3842,13 +3847,13 @@
           navigator.clipboard.write([
             new ClipboardItem({ 'image/png': blob })
           ]).then(() => {
-            showToast('📋 Card copied to clipboard!');
+            showToast('Card copied to clipboard!');
           }).catch(e => {
             console.warn('Clipboard write failed:', e);
-            showToast('⚠️ Could not copy, please use "Download PNG"');
+            showToast('Could not copy, please use "Download PNG"');
           });
         } catch (e) {
-          showToast('⚠️ Please save via "Download PNG"');
+          showToast('Please save via "Download PNG"');
         }
       });
     });
@@ -3860,7 +3865,7 @@
       link.download = `SoundCloud-Card-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast('💾 Card image saved!');
+      showToast('Card image saved!');
     });
   }
 
@@ -4047,10 +4052,10 @@
 
       // Update dropdown items
       const txtDropLangHeader = document.getElementById("txt-drop-lang-header");
-      if (txtDropLangHeader) txtDropLangHeader.textContent = "🌐 " + (t.drop_lang_header || "Language / Язык");
+      if (txtDropLangHeader) txtDropLangHeader.textContent = "" + (t.drop_lang_header || "Language / Язык");
 
       const txtDropLogin = document.getElementById("txt-dropdown-login");
-      if (txtDropLogin) txtDropLogin.textContent = t.dropdown_login || "⚡ Sign In / Войти";
+      if (txtDropLogin) txtDropLogin.textContent = t.dropdown_login || "Sign In / Войти";
 
       const txtMyProf = document.getElementById("txt-my-profile");
       if (txtMyProf) txtMyProf.textContent = t.my_profile;
@@ -4958,6 +4963,9 @@
       case 'view-history':
         renderHistoryView();
         break;
+      case 'view-profile':
+        renderProfileView();
+        break;
       case 'view-settings':
         renderSettingsView(params.section || 'general');
         break;
@@ -4968,18 +4976,18 @@
 
   // 3. Search View Engine
   const GENRE_CATEGORIES = [
-    { name: 'Phonk / Drift', query: 'phonk drift', gradient: 'linear-gradient(135deg, #FF5500, #991B1B)', icon: '🏎️' },
-    { name: 'Hip-Hop & Rap', query: 'hip hop rap', gradient: 'linear-gradient(135deg, #EA580C, #7C2D12)', icon: '🎤' },
-    { name: 'Hyperpop & Glitch', query: 'hyperpop glitchcore', gradient: 'linear-gradient(135deg, #EC4899, #7C3AED)', icon: '⚡' },
-    { name: 'Electronic & EDM', query: 'electronic edm club', gradient: 'linear-gradient(135deg, #06B6D4, #2563EB)', icon: '🎛️' },
-    { name: 'Dark Trap', query: 'dark trap bass', gradient: 'linear-gradient(135deg, #7E22CE, #18181B)', icon: '⛓️' },
-    { name: 'Lo-Fi & Chill', query: 'lo-fi beats chillhop', gradient: 'linear-gradient(135deg, #059669, #064E3B)', icon: '☕' },
-    { name: 'Rock & Alternative', query: 'rock alternative indie', gradient: 'linear-gradient(135deg, #DC2626, #450A0A)', icon: '🎸' },
-    { name: 'Drum & Bass', query: 'drum and bass jungle dnb', gradient: 'linear-gradient(135deg, #D97706, #92400E)', icon: '🥁' },
-    { name: 'Synthwave', query: 'synthwave retrowave 80s', gradient: 'linear-gradient(135deg, #D946EF, #4C1D95)', icon: '🌆' },
-    { name: 'R&B & Soul', query: 'r&b soul neo-soul', gradient: 'linear-gradient(135deg, #8B5CF6, #3730A3)', icon: '🎷' },
-    { name: 'Night Drive', query: 'night drive phonk dark synth', gradient: 'linear-gradient(135deg, #3B82F6, #1E1B4B)', icon: '🌃' },
-    { name: 'Workout Bass', query: 'workout gym bass hardstyle', gradient: 'linear-gradient(135deg, #EF4444, #7F1D1D)', icon: '💥' }
+    { name: 'Phonk / Drift', query: 'phonk drift', gradient: 'linear-gradient(135deg, #FF5500, #991B1B)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
+    { name: 'Hip-Hop & Rap', query: 'hip hop rap', gradient: 'linear-gradient(135deg, #EA580C, #7C2D12)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>' },
+    { name: 'Hyperpop & Glitch', query: 'hyperpop glitchcore', gradient: 'linear-gradient(135deg, #EC4899, #7C3AED)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+    { name: 'Electronic & EDM', query: 'electronic edm club', gradient: 'linear-gradient(135deg, #06B6D4, #2563EB)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="4"/></svg>' },
+    { name: 'Dark Trap', query: 'dark trap bass', gradient: 'linear-gradient(135deg, #7E22CE, #18181B)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' },
+    { name: 'Lo-Fi & Chill', query: 'lo-fi beats chillhop', gradient: 'linear-gradient(135deg, #059669, #064E3B)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>' },
+    { name: 'Rock & Alternative', query: 'rock alternative indie', gradient: 'linear-gradient(135deg, #DC2626, #450A0A)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>' },
+    { name: 'Drum & Bass', query: 'drum and bass jungle dnb', gradient: 'linear-gradient(135deg, #D97706, #92400E)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="9" rx="7" ry="3"/><path d="M5 9v6c0 1.66 3.13 3 7 3s7-1.34 7-3V9"/></svg>' },
+    { name: 'Synthwave', query: 'synthwave retrowave 80s', gradient: 'linear-gradient(135deg, #D946EF, #4C1D95)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
+    { name: 'R&B & Soul', query: 'r&b soul neo-soul', gradient: 'linear-gradient(135deg, #8B5CF6, #3730A3)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
+    { name: 'Night Drive', query: 'night drive phonk dark synth', gradient: 'linear-gradient(135deg, #3B82F6, #1E1B4B)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' },
+    { name: 'Workout Bass', query: 'workout gym bass hardstyle', gradient: 'linear-gradient(135deg, #EF4444, #7F1D1D)', icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="6" y1="18" x2="18" y2="18"/><line x1="6" y1="6" x2="18" y2="6"/><line x1="9" y1="6" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="18"/><rect x="3" y="10" width="3" height="4"/><rect x="18" y="10" width="3" height="4"/></svg>' }
   ];
 
   function renderGenreCategories() {
@@ -5054,7 +5062,7 @@
         if (totalCount === 0) {
           resultsContent.innerHTML = `
             <div style="text-align: center; padding: 60px 20px;">
-              <div style="font-size: 36px; margin-bottom: 12px;">🔍</div>
+              <div style="font-size: 36px; margin-bottom: 12px;"></div>
               <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 6px;">No results found for "${escapeHtml(trimmed)}"</h3>
               <p style="color: var(--text-muted); font-size: 13px;">Please check spelling or try a broader keyword like "phonk", "ambient", or artist name.</p>
             </div>
@@ -5398,7 +5406,7 @@
       tbody.innerHTML = `
         <tr>
           <td colspan="5" style="text-align: center; padding: 60px 20px;">
-            <div style="font-size: 40px; margin-bottom: 12px;">💜</div>
+            <div style="font-size: 40px; margin-bottom: 12px;"></div>
             <h3 style="font-size: 17px; color: var(--text-primary); margin-bottom: 6px;">No liked tracks yet</h3>
             <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 18px;">Click the heart icon on any track to add it to your personal favorites.</p>
             <button class="primary-pill-btn" onclick="window.navigateToView('view-home')">Discover Music</button>
@@ -5491,7 +5499,7 @@
       if (likes.length === 0 && playlists.length === 0) {
         container.innerHTML = `
           <div style="text-align: center; padding: 60px 20px;">
-            <div style="font-size: 36px; margin-bottom: 12px;">📁</div>
+            <div style="font-size: 36px; margin-bottom: 12px;"></div>
             <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 6px;">Your Library is Empty</h3>
             <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 18px;">Start listening to tracks or like them to build your personal library collection.</p>
             <button class="primary-pill-btn" onclick="window.navigateToView('view-home')">Browse Popular Music</button>
@@ -5696,7 +5704,7 @@
         <td style="color: var(--text-secondary);">${escapeHtml(t.artist)}</td>
         <td style="text-align: right; color: var(--text-muted); font-size: 12px;">${formatDurationMs(t.duration_ms)}</td>
         <td class="table-actions-cell">
-          <button class="table-icon-btn" data-act="remove" title="Remove track">✕</button>
+          <button class="table-icon-btn" data-act="remove" title="Remove track">&times;</button>
         </td>
       `;
       tr.addEventListener('click', (e) => {
@@ -6013,7 +6021,7 @@
     if (history.length === 0) {
       list.innerHTML = `
         <div style="text-align: center; padding: 60px 20px;">
-          <div style="font-size: 36px; margin-bottom: 12px;">🕒</div>
+          <div style="font-size: 36px; margin-bottom: 12px;"></div>
           <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 6px;">No Listening History</h3>
           <p style="color: var(--text-muted); font-size: 13px;">Tracks you listen to will automatically be documented here chronologically.</p>
         </div>
@@ -6126,7 +6134,7 @@
         <div class="playlists-grid">
           <div class="media-card" id="sm-mix-1">
             <div class="media-card-art-wrap" style="background: linear-gradient(135deg, #A855F7 0%, #3B82F6 100%); display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 32px;">🔥</span>
+              <span style="font-size: 32px;"></span>
               <button class="media-card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
             </div>
             <div class="media-card-title">Daily Mix 1: Heavy Rotation</div>
@@ -6134,7 +6142,7 @@
           </div>
           <div class="media-card" id="sm-mix-2">
             <div class="media-card-art-wrap" style="background: linear-gradient(135deg, #10B981 0%, #06B6D4 100%); display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 32px;">☕</span>
+              <span style="font-size: 32px;"></span>
               <button class="media-card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
             </div>
             <div class="media-card-title">Daily Mix 2: Chill & Focus</div>
@@ -6142,7 +6150,7 @@
           </div>
           <div class="media-card" id="sm-mix-3">
             <div class="media-card-art-wrap" style="background: linear-gradient(135deg, #EF4444 0%, #F59E0B 100%); display: flex; align-items: center; justify-content: center;">
-              <span style="font-size: 32px;">🏎️</span>
+              <span style="font-size: 32px;"></span>
               <button class="media-card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
             </div>
             <div class="media-card-title">Daily Mix 3: Night Drive Phonk</div>
@@ -6204,7 +6212,7 @@
         </div>
         <div class="settings-card" style="text-align: center;">
           <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Streak</div>
-          <div style="font-size: 28px; font-weight: 800; color: #22C55E; margin-top: 6px;">${stats.streakDays || 1} 🔥</div>
+          <div style="font-size: 28px; font-weight: 800; color: #22C55E; margin-top: 6px;">${stats.streakDays || 1} </div>
           <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Consecutive days</div>
         </div>
       </div>
@@ -6252,48 +6260,70 @@
     });
   }
 
-  // 13. Plugins View Engine
+  // 13. Plugins View Engine (Pure Add-ons Engine - Zero Built-in Plugins)
   function renderPluginsView() {
     const grid = document.getElementById('plugins-view-grid');
     if (!grid) return;
 
-    const plugins = [
-      { id: 'p-discord', name: 'Discord Rich Presence', version: '2.1.0', desc: 'Real-time rich presence display on Discord profile with artwork & timestamps', enabled: true },
-      { id: 'p-equalizer', name: 'Parametric Equalizer Pro', version: '1.4.0', desc: '10-band audio frequency equalizer with bass boost & preamp gain', enabled: true },
-      { id: 'p-normalizer', name: 'Volume Peak Normalizer', version: '1.2.0', desc: 'Real-time dynamic range normalization and loudness leveling', enabled: true },
-      { id: 'p-lyrics', name: 'Karaoke Synced Lyrics', version: '1.2.0', desc: 'Real-time scrolling lyrics synchronization with verse highlights', enabled: true },
-      { id: 'p-audiofx', name: 'Spatial 8D Audio Processor', version: '1.1.0', desc: 'Binaural 360-degree audio panning and playback speed adjuster', enabled: false },
-      { id: 'p-scrobbler', name: 'Last.fm Scrobbler', version: '1.0.0', desc: 'Scrobble tracks to Last.fm and Libre.fm accounts', enabled: false }
-    ];
-
-    let html = '';
-    plugins.forEach(p => {
-      html += `
-        <div class="settings-card" style="display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-              <span style="font-weight: 700; color: var(--text-primary); font-size: 14.5px;">${escapeHtml(p.name)}</span>
-              <label class="toggle-switch">
-                <input type="checkbox" ${p.enabled ? 'checked' : ''} data-plugin="${p.id}">
-                <span class="toggle-slider"></span>
-              </label>
+    fetch('/api/addons')
+      .then(r => r.json())
+      .then(data => {
+        const addons = data.addons || [];
+        if (addons.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; border: 1px dashed var(--border-subtle); border-radius: 12px; color: var(--text-muted);">
+              <div style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">No add-ons installed</div>
+              <div style="font-size: 13px; margin-bottom: 16px;">Add-ons are loaded dynamically from ~/.config/soundcloud-ultimate/addons/.</div>
+              <button class="secondary-pill-btn" onclick="fetch('/api/addons/open-folder', { method: 'POST' })">Open Add-ons Folder</button>
             </div>
-            <div style="font-size: 11px; color: var(--accent-primary); margin-bottom: 8px;">v${p.version} • Verified Plugin</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.4;">${escapeHtml(p.desc)}</div>
-          </div>
-          <div style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px; display: flex; justify-content: flex-end;">
-            <button class="secondary-pill-btn" style="padding: 4px 12px; font-size: 12px;">Configure</button>
-          </div>
-        </div>
-      `;
-    });
-    grid.innerHTML = html;
+          `;
+          return;
+        }
 
-    grid.querySelectorAll('input[type="checkbox"]').forEach(ch => {
-      ch.addEventListener('change', (e) => {
-        showToast(e.target.checked ? 'Plugin activated' : 'Plugin disabled');
+        let html = '';
+        addons.forEach(p => {
+          html += `
+            <div class="settings-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-weight: 700; color: var(--text-primary); font-size: 14.5px;">${escapeHtml(p.name)}</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" ${p.enabled ? 'checked' : ''} data-plugin="${p.id}">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div style="font-size: 11px; color: var(--accent-primary); margin-bottom: 8px;">v${p.version || '1.0.0'} • Add-on</div>
+                <div style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.4;">${escapeHtml(p.desc || p.description || '')}</div>
+              </div>
+              <div style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px; display: flex; justify-content: flex-end;">
+                <button class="secondary-pill-btn" style="padding: 4px 12px; font-size: 12px;">Configure</button>
+              </div>
+            </div>
+          `;
+        });
+        grid.innerHTML = html;
+
+        grid.querySelectorAll('input[type="checkbox"]').forEach(ch => {
+          ch.addEventListener('change', async (e) => {
+            const pluginId = e.target.getAttribute('data-plugin');
+            await fetch('/api/addons/toggle', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: pluginId, enabled: e.target.checked })
+            });
+            showToast(`${pluginId} ${e.target.checked ? 'enabled' : 'disabled'}`);
+          });
+        });
+      })
+      .catch(() => {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; border: 1px dashed var(--border-subtle); border-radius: 12px; color: var(--text-muted);">
+            <div style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">No add-ons installed</div>
+            <div style="font-size: 13px; margin-bottom: 16px;">Add-ons are loaded dynamically from ~/.config/soundcloud-ultimate/addons/.</div>
+            <button class="secondary-pill-btn" onclick="fetch('/api/addons/open-folder', { method: 'POST' })">Open Add-ons Folder</button>
+          </div>
+        `;
       });
-    });
   }
 
   // 14. Settings View Engine
@@ -6335,20 +6365,207 @@
               <span class="settings-row-hint">Current: ${currentLang.toUpperCase()}</span>
             </div>
             <select id="settings-lang-select" class="dropdown-select">
-              <option value="en" ${currentLang==='en'?'selected':''}>English 🇺🇸</option>
-              <option value="ru" ${currentLang==='ru'?'selected':''}>Русский 🇷🇺</option>
-              <option value="de" ${currentLang==='de'?'selected':''}>Deutsch 🇩🇪</option>
-              <option value="fr" ${currentLang==='fr'?'selected':''}>Français 🇫🇷</option>
-              <option value="ja" ${currentLang==='ja'?'selected':''}>日本語 🇯🇵</option>
-              <option value="es" ${currentLang==='es'?'selected':''}>Español 🇪🇸</option>
-              <option value="zh" ${currentLang==='zh'?'selected':''}>中文 🇨🇳</option>
-              <option value="pt" ${currentLang==='pt'?'selected':''}>Português 🇧🇷</option>
+              <option value="en" ${currentLang==='en'?'selected':''}>English [EN]</option>
+              <option value="ru" ${currentLang==='ru'?'selected':''}>Русский [RU]</option>
+              <option value="de" ${currentLang==='de'?'selected':''}>Deutsch [DE]</option>
+              <option value="fr" ${currentLang==='fr'?'selected':''}>Français [FR]</option>
+              <option value="ja" ${currentLang==='ja'?'selected':''}>日本語 [JA]</option>
+              <option value="es" ${currentLang==='es'?'selected':''}>Español [ES]</option>
+              <option value="zh" ${currentLang==='zh'?'selected':''}>中文 [ZH]</option>
+              <option value="pt" ${currentLang==='pt'?'selected':''}>Português [PT]</option>
             </select>
           </div>
         </div>
       `;
       pane.querySelector('#settings-lang-select')?.addEventListener('change', (e) => {
         applyLanguage(e.target.value);
+      });
+    } else if (section === 'themes') {
+      pane.innerHTML = `
+        <div class="settings-card">
+          <div class="settings-card-title">Installed Themes</div>
+          <div class="settings-card-desc">Color themes loaded dynamically from ~/.config/soundcloud-ultimate/themes/</div>
+          <div id="themes-list-container" style="display: flex; flex-direction: column; gap: 8px; margin: 16px 0;">Loading themes...</div>
+          <div style="display: flex; gap: 12px; margin-top: 14px;">
+            <button class="secondary-pill-btn" id="btn-open-themes-folder">Open Themes Folder</button>
+            <button class="secondary-pill-btn" id="btn-import-theme-json">Import Theme (.json)</button>
+            <input type="file" id="input-import-theme" accept=".json" style="display: none;">
+          </div>
+        </div>
+
+        <div class="settings-card" style="margin-top: 20px;">
+          <div class="settings-card-title">Theme Creator</div>
+          <div class="settings-card-desc">Create your own custom palette and save to your themes directory</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0;">
+            <div class="settings-row"><span class="settings-row-label">Window BG</span><input type="color" id="thm-bg-window" value="#09090B"></div>
+            <div class="settings-row"><span class="settings-row-label">Surface BG</span><input type="color" id="thm-bg-surface" value="#121215"></div>
+            <div class="settings-row"><span class="settings-row-label">Elevated BG</span><input type="color" id="thm-bg-elevated" value="#18181B"></div>
+            <div class="settings-row"><span class="settings-row-label">Accent Color</span><input type="color" id="thm-accent" value="#FF5500"></div>
+            <div class="settings-row"><span class="settings-row-label">Accent Hover</span><input type="color" id="thm-accent-hover" value="#FF6B1A"></div>
+            <div class="settings-row"><span class="settings-row-label">Primary Text</span><input type="color" id="thm-text-primary" value="#FAFAFA"></div>
+            <div class="settings-row"><span class="settings-row-label">Muted Text</span><input type="color" id="thm-text-muted" value="#A1A1AA"></div>
+            <div class="settings-row"><span class="settings-row-label">Player BG</span><input type="color" id="thm-player-bg" value="#0D0D10"></div>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <input type="text" id="thm-new-name" class="table-search-input" placeholder="New Theme Name (e.g. Cyberpunk)" style="width: 240px;">
+            <button class="primary-pill-btn" id="btn-save-custom-theme">Save as New Theme</button>
+          </div>
+        </div>
+      `;
+
+      fetch('/api/themes')
+        .then(r => r.json())
+        .then(data => {
+          const container = pane.querySelector('#themes-list-container');
+          if (!container) return;
+          const themes = data.themes || [];
+          let html = '';
+          themes.forEach(t => {
+            html += `
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <div>
+                  <div style="font-weight: 600; color: var(--text-primary);">${escapeHtml(t.name)}</div>
+                  <div style="font-size: 11px; color: var(--text-muted);">by ${escapeHtml(t.author || 'SoundCloud Ultimate')}</div>
+                </div>
+                <button class="secondary-pill-btn btn-apply-theme" data-id="${t.id}">Apply</button>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+          container.querySelectorAll('.btn-apply-theme').forEach((btn, idx) => {
+            btn.onclick = () => {
+              const th = themes[idx];
+              if (th && th.variables) {
+                applyThemeVariables(th.variables);
+                showToast(`Applied theme: ${th.name}`);
+              }
+            };
+          });
+        });
+
+      pane.querySelector('#btn-open-themes-folder')?.addEventListener('click', () => {
+        fetch('/api/themes/open-folder', { method: 'POST' });
+      });
+
+      const importBtn = pane.querySelector('#btn-import-theme-json');
+      const importInput = pane.querySelector('#input-import-theme');
+      if (importBtn && importInput) {
+        importBtn.onclick = () => importInput.click();
+        importInput.onchange = () => {
+          const file = importInput.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+              try {
+                const parsed = JSON.parse(e.target.result);
+                if (parsed.id && parsed.name && parsed.variables) {
+                  await fetch('/api/themes/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(parsed)
+                  });
+                  applyThemeVariables(parsed.variables);
+                  showToast('Theme imported and applied');
+                  renderSettingsView('themes');
+                } else {
+                  showToast('Invalid theme.json format');
+                }
+              } catch (err) {
+                showToast('Failed to parse theme JSON: ' + err);
+              }
+            };
+            reader.readAsText(file);
+          }
+        };
+      }
+
+      pane.querySelector('#btn-save-custom-theme')?.addEventListener('click', async () => {
+        const name = pane.querySelector('#thm-new-name')?.value.trim();
+        if (!name) { showToast('Please enter a theme name'); return; }
+        const id = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        const vars = {
+          bg_window: pane.querySelector('#thm-bg-window').value,
+          bg_surface: pane.querySelector('#thm-bg-surface').value,
+          bg_elevated: pane.querySelector('#thm-bg-elevated').value,
+          accent: pane.querySelector('#thm-accent').value,
+          accent_hover: pane.querySelector('#thm-accent-hover').value,
+          text_primary: pane.querySelector('#thm-text-primary').value,
+          text_muted: pane.querySelector('#thm-text-muted').value,
+          border_subtle: 'rgba(255, 255, 255, 0.08)',
+          player_bg: pane.querySelector('#thm-player-bg').value,
+        };
+        await fetch('/api/themes/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, name, author: 'User', variables: vars })
+        });
+        applyThemeVariables(vars);
+        showToast('Custom theme saved and applied');
+        renderSettingsView('themes');
+      });
+    } else if (section === 'addons') {
+      pane.innerHTML = `
+        <div class="settings-card">
+          <div class="settings-card-title">Add-ons & Extensions Engine</div>
+          <div class="settings-card-desc">Dynamic add-ons managed from ~/.config/soundcloud-ultimate/addons/</div>
+          <div style="display: flex; gap: 12px; margin: 16px 0; align-items: center;">
+            <input type="text" id="addon-url-input" class="table-search-input" placeholder="https://github.com/user/addon-name" style="flex: 1;">
+            <button class="primary-pill-btn" id="btn-install-addon-url">Install from URL</button>
+            <button class="secondary-pill-btn" id="btn-open-addons-dir">Open Add-ons Folder</button>
+          </div>
+          <div id="addons-list-container" style="margin-top: 16px;">Loading add-ons...</div>
+        </div>
+      `;
+
+      fetch('/api/addons')
+        .then(r => r.json())
+        .then(data => {
+          const container = pane.querySelector('#addons-list-container');
+          if (!container) return;
+          const addons = data.addons || [];
+          if (addons.length === 0) {
+            container.innerHTML = `
+              <div style="text-align: center; padding: 40px 20px; border: 1px dashed var(--border-subtle); border-radius: 12px; color: var(--text-muted);">
+                <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">No add-ons installed</div>
+                <div style="font-size: 13px;">Add-ons are loaded dynamically from ~/.config/soundcloud-ultimate/addons/.</div>
+              </div>
+            `;
+            return;
+          }
+          let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+          addons.forEach(a => {
+            html += `
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <div>
+                  <div style="font-weight: 600; color: var(--text-primary);">${escapeHtml(a.name)} <span style="font-size: 11px; color: var(--text-dim);">v${escapeHtml(a.version || '1.0.0')}</span></div>
+                  <div style="font-size: 12px; color: var(--text-muted);">${escapeHtml(a.description || '')}</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" ${a.enabled ? 'checked' : ''} onchange="fetch('/api/addons/toggle', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ id: '${a.id}', enabled: this.checked }) })">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            `;
+          });
+          html += '</div>';
+          container.innerHTML = html;
+        });
+
+      pane.querySelector('#btn-open-addons-dir')?.addEventListener('click', () => {
+        fetch('/api/addons/open-folder', { method: 'POST' });
+      });
+
+      pane.querySelector('#btn-install-addon-url')?.addEventListener('click', async () => {
+        const url = pane.querySelector('#addon-url-input')?.value.trim();
+        if (!url) { showToast('Please enter an add-on URL'); return; }
+        const res = await fetch('/api/addons/install-url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        const resData = await res.json();
+        showToast(resData.message || 'Add-on installation requested');
+        renderSettingsView('addons');
       });
     } else if (section === 'appearance') {
       pane.innerHTML = `
@@ -6405,7 +6622,7 @@
     if (queue.length === 0) {
       content.innerHTML = `
         <div style="text-align: center; padding: 60px 20px;">
-          <div style="font-size: 36px; margin-bottom: 12px;">📑</div>
+          <div style="font-size: 36px; margin-bottom: 12px;"></div>
           <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 6px;">Queue is Empty</h3>
           <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 18px;">Add tracks from home, search or your library to line up your music.</p>
           <button class="primary-pill-btn" onclick="window.navigateToView('view-home')">Discover Music</button>
@@ -6473,7 +6690,7 @@
           <td style="color: var(--text-secondary);">${escapeHtml(t.artist)}</td>
           <td style="text-align: right; color: var(--text-muted); font-size: 12px;">${formatDurationMs(t.duration_ms)}</td>
           <td class="table-actions-cell">
-            <button class="table-icon-btn" data-act="remove-q" title="Remove from queue">✕</button>
+            <button class="table-icon-btn" data-act="remove-q" title="Remove from queue">&times;</button>
           </td>
         </tr>
       `;
@@ -6551,7 +6768,7 @@
     if (tabName === 'lyrics') {
       content.innerHTML = `
         <div style="font-size: 16px; line-height: 2.2; color: var(--text-secondary); font-weight: 500;">
-          <div style="color: var(--accent-primary); font-size: 18px; font-weight: 700;">♪ ${escapeHtml(cur?.title || 'Playing')} ♪</div>
+          <div style="color: var(--accent-primary); font-size: 18px; font-weight: 700;"> ${escapeHtml(cur?.title || 'Playing')} </div>
           <div>When the night comes down and the city sleeps</div>
           <div style="color: var(--text-primary); font-weight: 700;">We find our frequency in the sound waves deep</div>
           <div>Echoes through the wires, floating in the dark</div>
@@ -6864,6 +7081,639 @@
     }
   });
 
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // USER PROFILE & UPLOAD & CUSTOMIZATION ENGINE
+  // ═══════════════════════════════════════════════════════════════════════
+
+  function applyThemeVariables(vars) {
+    if (!vars) return;
+    const root = document.documentElement;
+    for (const [key, val] of Object.entries(vars)) {
+      const cssVar = "--" + key.replace(/_/g, "-");
+      root.style.setProperty(cssVar, val);
+    }
+  }
+
+  window.SCPluginAPI = {
+    version: "1.0.0",
+    _listeners: { trackChange: [], playState: [], viewChange: [] },
+    onTrackChange(cb) {
+      if (typeof cb === "function") this._listeners.trackChange.push(cb);
+    },
+    onPlayStateChange(cb) {
+      if (typeof cb === "function") this._listeners.playState.push(cb);
+    },
+    onViewChange(cb) {
+      if (typeof cb === "function") this._listeners.viewChange.push(cb);
+    },
+    getCurrentTrack() {
+      return (currentIndex >= 0 && currentIndex < queue.length) ? queue[currentIndex] : null;
+    },
+    getQueue() {
+      return [...queue];
+    },
+    getAudioContext() {
+      return audioCtx;
+    },
+    showToast(msg) {
+      showToast(msg);
+    },
+    addPlayerButton({ id, svg, tooltip, onClick }) {
+      try {
+        const dockLeft = document.querySelector(".dock-left-actions") || document.querySelector(".dock-left");
+        if (!dockLeft) return;
+        const btn = document.createElement("button");
+        btn.className = "action-icon-btn sc-plugin-btn";
+        btn.id = id;
+        btn.title = tooltip || "";
+        btn.innerHTML = svg || `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="8"/></svg>`;
+        if (onClick) btn.addEventListener("click", onClick);
+        dockLeft.appendChild(btn);
+      } catch (err) {
+        console.warn("Plugin addPlayerButton error:", err);
+      }
+    },
+    addTrackRowAction({ id, label, svg, onClick }) {
+      console.log("Registered custom track action:", id, label);
+    }
+  };
+
+  let currentProfileTab = "tracks";
+
+  async function renderProfileView(tab = currentProfileTab) {
+    currentProfileTab = tab;
+    const view = document.getElementById("view-profile");
+    if (!view) return;
+
+    if (!currentUser || !currentUser.id) {
+      try {
+        const res = await fetch("/api/me/profile");
+        const data = await res.json();
+        if (data.authenticated && data.user) {
+          currentUser = data.user;
+        }
+      } catch (err) {
+        console.warn("Profile fetch error:", err);
+      }
+    }
+
+    const user = currentUser || {
+      id: 1,
+      username: "Guest Listener",
+      description: "SoundCloud Ultimate User",
+      followers_count: 0,
+      followings_count: 0,
+      likes_count: 0,
+      track_count: 0
+    };
+
+    const avatarEl = document.getElementById("profile-avatar");
+    if (avatarEl) {
+      avatarEl.src = user.avatar_url || "assets/default_artwork.png";
+    }
+    const userEl = document.getElementById("profile-username");
+    if (userEl) userEl.textContent = user.username || "User";
+
+    const handleEl = document.getElementById("profile-handle");
+    if (handleEl) {
+      const slug = user.permalink_url ? user.permalink_url.split("/").pop() : (user.username || "user").toLowerCase().replace(/\s+/g, "");
+      handleEl.textContent = "@" + slug;
+    }
+
+    const bioEl = document.getElementById("profile-bio");
+    if (bioEl) bioEl.textContent = user.description || "No bio added yet.";
+
+    const statFollowers = document.getElementById("profile-stat-followers");
+    if (statFollowers) statFollowers.textContent = formatNumber(user.followers_count || 0);
+
+    const statFollowing = document.getElementById("profile-stat-following");
+    if (statFollowing) statFollowing.textContent = formatNumber(user.followings_count || 0);
+
+    const statTracks = document.getElementById("profile-stat-tracks");
+    const statLikes = document.getElementById("profile-stat-likes");
+
+    document.querySelectorAll(".profile-tab-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.getAttribute("data-tab") === tab);
+    });
+
+    const container = document.getElementById("profile-tab-content");
+    if (!container) return;
+
+    container.innerHTML = `<div style="color: var(--text-muted); padding: 40px; text-align: center;"><div class="skeleton-shimmer" style="height: 100px; border-radius: 12px; margin-bottom: 12px;"></div>Loading ${tab}...</div>`;
+
+    if (tab === "tracks") {
+      try {
+        const res = await fetch("/api/me/tracks");
+        const data = await res.json();
+        const tracks = data.tracks || [];
+        if (statTracks) statTracks.textContent = tracks.length.toString();
+
+        if (tracks.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px;">
+              <div style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">No Tracks Uploaded</div>
+              <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Upload your own audio creations or connect your SoundCloud account.</p>
+              <button class="primary-pill-btn" id="btn-empty-upload-trigger">Upload Track</button>
+            </div>
+          `;
+          container.querySelector("#btn-empty-upload-trigger")?.addEventListener("click", () => {
+            const m = document.getElementById("modal-upload-track");
+            if (m) { m.classList.add("open"); m.style.display = "flex"; }
+          });
+          return;
+        }
+
+        let html = `
+          <div class="tracklist-table-wrap">
+            <table class="tracklist-table">
+              <thead>
+                <tr>
+                  <th style="width: 44px; text-align: center;">#</th>
+                  <th>TITLE</th>
+                  <th>ARTIST</th>
+                  <th>GENRE</th>
+                  <th style="width: 80px; text-align: right;">TIME</th>
+                  <th style="width: 100px; text-align: right;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        tracks.forEach((t, idx) => {
+          const art = t.artwork_url || "assets/default_artwork.png";
+          const isLocal = t.stream_url && t.stream_url.startsWith("/api/local-audio");
+          html += `
+            <tr class="track-row profile-track-row" data-idx="${idx}">
+              <td class="table-idx-col">${idx + 1}</td>
+              <td>
+                <div class="table-track-cell">
+                  <img class="table-track-art" src="${art}" alt="" onerror="this.src='assets/default_artwork.png'">
+                  <span class="table-track-name" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</span>
+                </div>
+              </td>
+              <td class="table-artist-cell">${escapeHtml(t.artist || "You")}</td>
+              <td><span class="genre-pill-tag">${escapeHtml(t.genre || "Audio")}</span></td>
+              <td style="text-align: right; color: var(--text-dim);">${formatDurationMs(t.duration_ms)}</td>
+              <td style="text-align: right;">
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                  <button class="table-icon-btn btn-play-prof-track" title="Play Track" data-idx="${idx}">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  ${isLocal ? `
+                    <button class="table-icon-btn btn-del-prof-track" title="Delete Track" data-id="${t.id}" style="color: #EF4444;">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                  ` : ""}
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+
+        html += `</tbody></table></div>`;
+        container.innerHTML = html;
+
+        container.querySelectorAll(".btn-play-prof-track").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const idx = parseInt(btn.getAttribute("data-idx"), 10);
+            if (tracks[idx]) {
+              playTrack(tracks[idx], tracks, idx);
+            }
+          });
+        });
+
+        container.querySelectorAll(".btn-del-prof-track").forEach(btn => {
+          btn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+            const id = btn.getAttribute("data-id");
+            if (confirm("Are you sure you want to delete this track?")) {
+              try {
+                await fetch(`/api/me/tracks/${id}`, { method: "DELETE" });
+                showToast("Track deleted");
+                renderProfileView("tracks");
+              } catch (err) {
+                showToast("Failed to delete track");
+              }
+            }
+          });
+        });
+      } catch (err) {
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">Failed to load tracks: ${err}</div>`;
+      }
+    } else if (tab === "playlists") {
+      try {
+        const res = await fetch("/api/me/playlists");
+        const data = await res.json();
+        const playlists = data.playlists || data || [];
+        if (playlists.length === 0) {
+          container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">No playlists found.</div>`;
+          return;
+        }
+        let html = `<div class="playlists-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px;">`;
+        playlists.forEach(pl => {
+          const art = pl.artwork_url || "assets/default_artwork.png";
+          html += `
+            <div class="media-card playlist-card" data-id="${pl.id}">
+              <div class="media-card-art-wrap">
+                <img class="media-card-art" src="${art}" alt="" onerror="this.src='assets/default_artwork.png'">
+              </div>
+              <div class="media-card-title">${escapeHtml(pl.title)}</div>
+              <div class="media-card-subtitle">${pl.track_count || 0} tracks</div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+      } catch (err) {
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">Failed to load playlists: ${err}</div>`;
+      }
+    } else if (tab === "albums") {
+      try {
+        const res = await fetch("/api/me/albums");
+        const data = await res.json();
+        const albums = data.albums || [];
+        if (albums.length === 0) {
+          container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">No albums found.</div>`;
+          return;
+        }
+        let html = `<div class="playlists-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px;">`;
+        albums.forEach(alb => {
+          const art = alb.artwork_url || "assets/default_artwork.png";
+          html += `
+            <div class="media-card" data-id="${alb.id}">
+              <div class="media-card-art-wrap">
+                <img class="media-card-art" src="${art}" alt="" onerror="this.src='assets/default_artwork.png'">
+              </div>
+              <div class="media-card-title">${escapeHtml(alb.title)}</div>
+              <div class="media-card-subtitle">${alb.track_count || 0} tracks</div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+      } catch (err) {
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">Failed to load albums: ${err}</div>`;
+      }
+    } else if (tab === "likes") {
+      try {
+        const res = await fetch("/api/me/likes?limit=50");
+        const data = await res.json();
+        const liked = data.tracks || [];
+        if (statLikes) statLikes.textContent = liked.length.toString();
+        if (liked.length === 0) {
+          container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">No liked tracks yet.</div>`;
+          return;
+        }
+        let html = `
+          <div class="tracklist-table-wrap">
+            <table class="tracklist-table">
+              <thead>
+                <tr>
+                  <th style="width: 44px; text-align: center;">#</th>
+                  <th>TITLE</th>
+                  <th>ARTIST</th>
+                  <th style="width: 80px; text-align: right;">TIME</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+        liked.forEach((t, idx) => {
+          const art = t.artwork_url || "assets/default_artwork.png";
+          html += `
+            <tr class="track-row" data-idx="${idx}">
+              <td class="table-idx-col">${idx + 1}</td>
+              <td>
+                <div class="table-track-cell">
+                  <img class="table-track-art" src="${art}" alt="" onerror="this.src='assets/default_artwork.png'">
+                  <span class="table-track-name" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</span>
+                </div>
+              </td>
+              <td class="table-artist-cell">${escapeHtml(t.artist)}</td>
+              <td style="text-align: right; color: var(--text-dim);">${formatDurationMs(t.duration_ms)}</td>
+            </tr>
+          `;
+        });
+        html += `</tbody></table></div>`;
+        container.innerHTML = html;
+
+        container.querySelectorAll(".track-row").forEach(row => {
+          row.addEventListener("click", () => {
+            const idx = parseInt(row.getAttribute("data-idx"), 10);
+            if (liked[idx]) playTrack(liked[idx], liked, idx);
+          });
+        });
+      } catch (err) {
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px;">Failed to load likes: ${err}</div>`;
+      }
+    }
+  }
+
+  function initEditProfileModal() {
+    const modal = document.getElementById("modal-edit-profile");
+    const btnOpen = document.getElementById("btn-profile-edit");
+    const btnClose = document.getElementById("btn-close-edit-profile");
+    const btnCancel = document.getElementById("btn-cancel-edit-profile");
+    const btnSave = document.getElementById("btn-save-edit-profile");
+
+    const avatarPreview = document.getElementById("edit-avatar-preview");
+    const fileInput = document.getElementById("edit-avatar-file-input");
+    const urlInput = document.getElementById("edit-avatar-url-input");
+    const nameInput = document.getElementById("edit-username-input");
+    const bioInput = document.getElementById("edit-bio-input");
+    const cityInput = document.getElementById("edit-city-input");
+
+    let avatarBase64 = null;
+
+    if (btnOpen) {
+      btnOpen.addEventListener("click", () => {
+        if (currentUser) {
+          if (nameInput) nameInput.value = currentUser.username || "";
+          if (bioInput) bioInput.value = currentUser.description || "";
+          if (cityInput) cityInput.value = currentUser.city || "";
+          if (urlInput) urlInput.value = currentUser.avatar_url || "";
+          if (avatarPreview) avatarPreview.src = currentUser.avatar_url || "assets/default_artwork.png";
+        }
+        avatarBase64 = null;
+        if (modal) {
+          modal.classList.add("open");
+          modal.style.display = "flex";
+        }
+      });
+    }
+
+    function closeModal() {
+      if (modal) {
+        modal.classList.remove("open");
+        modal.style.display = "none";
+      }
+    }
+
+    if (btnClose) btnClose.addEventListener("click", closeModal);
+    if (btnCancel) btnCancel.addEventListener("click", closeModal);
+
+    if (fileInput) {
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            avatarBase64 = e.target.result;
+            if (avatarPreview) avatarPreview.src = avatarBase64;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    if (urlInput) {
+      urlInput.addEventListener("input", () => {
+        if (urlInput.value.trim() && avatarPreview) {
+          avatarPreview.src = urlInput.value.trim();
+          avatarBase64 = null;
+        }
+      });
+    }
+
+    if (btnSave) {
+      btnSave.addEventListener("click", async () => {
+        const username = nameInput ? nameInput.value.trim() : "";
+        const description = bioInput ? bioInput.value.trim() : "";
+        const city = cityInput ? cityInput.value.trim() : "";
+        const avatarUrl = urlInput ? urlInput.value.trim() : "";
+
+        btnSave.disabled = true;
+        btnSave.textContent = "Saving...";
+
+        try {
+          const res = await fetch("/api/me/profile/update", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: username || undefined,
+              description: description || undefined,
+              city: city || undefined,
+              avatar_url: avatarUrl || undefined,
+              avatar_base64: avatarBase64 || undefined
+            })
+          });
+          const data = await res.json();
+          if (data.success && data.user) {
+            currentUser = data.user;
+            if (userName) userName.textContent = currentUser.username;
+            if (userAvatar && currentUser.avatar_url) userAvatar.src = currentUser.avatar_url;
+            showToast("Profile updated successfully");
+            closeModal();
+            renderProfileView();
+          } else {
+            showToast("Failed to update profile: " + (data.error || "Unknown error"));
+          }
+        } catch (err) {
+          showToast("Update error: " + err);
+        } finally {
+          btnSave.disabled = false;
+          btnSave.textContent = "Save Changes";
+        }
+      });
+    }
+  }
+
+  function initUploadTrackModal() {
+    const modal = document.getElementById("modal-upload-track");
+    const btnOpen = document.getElementById("btn-profile-upload");
+    const btnClose = document.getElementById("btn-close-upload-modal");
+    const btnCancel = document.getElementById("btn-cancel-upload-track");
+    const btnSubmit = document.getElementById("btn-submit-upload-track");
+
+    const dropzone = document.getElementById("upload-dropzone");
+    const fileStatus = document.getElementById("upload-file-status");
+    const audioInput = document.getElementById("upload-audio-input");
+
+    const artTrigger = document.getElementById("upload-art-trigger");
+    const artInput = document.getElementById("upload-art-input");
+    const artPreview = document.getElementById("upload-art-preview");
+
+    const titleInput = document.getElementById("upload-title-input");
+    const genreInput = document.getElementById("upload-genre-input");
+    const privacySelect = document.getElementById("upload-privacy-select");
+    const tagsInput = document.getElementById("upload-tags-input");
+    const descInput = document.getElementById("upload-desc-input");
+
+    let selectedAudioFile = null;
+    let audioBase64 = null;
+    let artworkBase64 = null;
+    let detectedDurationMs = 180000;
+
+    function closeModal() {
+      if (modal) {
+        modal.classList.remove("open");
+        modal.style.display = "none";
+      }
+    }
+
+    if (btnOpen) {
+      btnOpen.addEventListener("click", () => {
+        selectedAudioFile = null;
+        audioBase64 = null;
+        artworkBase64 = null;
+        detectedDurationMs = 180000;
+        if (titleInput) titleInput.value = "";
+        if (genreInput) genreInput.value = "";
+        if (tagsInput) tagsInput.value = "";
+        if (descInput) descInput.value = "";
+        if (fileStatus) fileStatus.textContent = "Drag and drop audio file here or click to browse";
+        if (artPreview) artPreview.src = "assets/default_artwork.png";
+        if (modal) {
+          modal.classList.add("open");
+          modal.style.display = "flex";
+        }
+      });
+    }
+
+    if (btnClose) btnClose.addEventListener("click", closeModal);
+    if (btnCancel) btnCancel.addEventListener("click", closeModal);
+
+    if (dropzone && audioInput) {
+      dropzone.addEventListener("click", () => audioInput.click());
+      dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.style.borderColor = "var(--accent-primary)";
+      });
+      dropzone.addEventListener("dragleave", () => {
+        dropzone.style.borderColor = "var(--border-subtle)";
+      });
+      dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.style.borderColor = "var(--border-subtle)";
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleAudioFile(e.dataTransfer.files[0]);
+        }
+      });
+      audioInput.addEventListener("change", () => {
+        if (audioInput.files && audioInput.files[0]) {
+          handleAudioFile(audioInput.files[0]);
+        }
+      });
+    }
+
+    function handleAudioFile(file) {
+      selectedAudioFile = file;
+      if (fileStatus) fileStatus.textContent = `${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`;
+      if (titleInput && !titleInput.value) {
+        const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+        titleInput.value = nameWithoutExt;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        audioBase64 = e.target.result;
+        const tempAudio = new Audio();
+        tempAudio.src = audioBase64;
+        tempAudio.onloadedmetadata = () => {
+          if (tempAudio.duration && !Number.isNaN(tempAudio.duration)) {
+            detectedDurationMs = Math.round(tempAudio.duration * 1000);
+            if (fileStatus) fileStatus.textContent += ` • ${formatTime(tempAudio.duration)}`;
+          }
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (artTrigger && artInput) {
+      artTrigger.addEventListener("click", () => artInput.click());
+      artInput.addEventListener("change", () => {
+        if (artInput.files && artInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            artworkBase64 = e.target.result;
+            if (artPreview) artPreview.src = artworkBase64;
+          };
+          reader.readAsDataURL(artInput.files[0]);
+        }
+      });
+    }
+
+    if (btnSubmit) {
+      btnSubmit.addEventListener("click", async () => {
+        const title = titleInput ? titleInput.value.trim() : "";
+        if (!title) {
+          showToast("Please enter a track title");
+          return;
+        }
+        if (!audioBase64) {
+          showToast("Please select an audio file first");
+          return;
+        }
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Uploading...";
+
+        try {
+          const res = await fetch("/api/me/tracks/upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title,
+              genre: (genreInput && genreInput.value.trim()) || undefined,
+              privacy: privacySelect ? privacySelect.value : "public",
+              tags: (tagsInput && tagsInput.value.trim()) || undefined,
+              description: (descInput && descInput.value.trim()) || undefined,
+              duration_ms: detectedDurationMs,
+              audio_filename: selectedAudioFile ? selectedAudioFile.name : "audio.mp3",
+              audio_base64: audioBase64,
+              artwork_base64: artworkBase64 || undefined
+            })
+          });
+          const data = await res.json();
+          if (data.success) {
+            showToast("Track published successfully");
+            closeModal();
+            renderProfileView("tracks");
+          } else {
+            showToast("Upload failed: " + (data.error || "Server error"));
+          }
+        } catch (err) {
+          showToast("Upload error: " + err);
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = "Publish Track";
+        }
+      });
+    }
+  }
+
+  function initProfileEvents() {
+    document.querySelectorAll(".profile-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tab = btn.getAttribute("data-tab");
+        renderProfileView(tab);
+      });
+    });
+
+    document.getElementById("btn-profile-sync")?.addEventListener("click", async () => {
+      showToast("Syncing profile data...");
+      try {
+        const res = await fetch("/api/me/profile");
+        const data = await res.json();
+        if (data.authenticated && data.user) {
+          currentUser = data.user;
+        }
+        renderProfileView(currentProfileTab);
+        showToast("Profile synchronized");
+      } catch (e) {
+        showToast("Sync failed: " + e);
+      }
+    });
+
+    document.getElementById("btn-profile-signout")?.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      await checkAuthStatus();
+      navigateTo("view-home");
+      showToast(TRANSLATIONS[currentLang]?.logout || "Signed Out");
+    });
+  }
+
   // Expose extended functions to window.scApp
   if (window.scApp) {
     Object.assign(window.scApp, {
@@ -6883,6 +7733,7 @@
       renderAnalyticsView,
       renderPluginsView,
       renderSettingsView,
+      renderProfileView,
       renderQueueView,
       openExpandedPlayer,
       closeExpandedPlayer,
@@ -6895,6 +7746,11 @@
     });
   }
   window.navigateToView = navigateTo;
+  window.navigateTo = navigateTo;
+  window.renderProfileView = renderProfileView;
+  window.renderSettingsView = renderSettingsView;
+  window.getCurrentUser = () => currentUser;
+  window.setCurrentUser = (u) => { currentUser = u; };
 
   // Initial Views Initialization
   renderRecentlyPlayedRow();
@@ -6902,6 +7758,9 @@
   renderMoreLikeRow();
   renderHomeLikedRow();
   renderHomeArtistsRow();
+  initEditProfileModal();
+  initUploadTrackModal();
+  initProfileEvents();
 
   setVolume(currentVolume, true);
   checkSystemStatus();

@@ -28,7 +28,7 @@ fn load_icon() -> Option<Icon> {
 }
 
 pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
-    println!("🖥️  Creating native standalone window (Tao + Wry, Frameless Custom CSD)...");
+    println!("Creating native standalone window (Tao + Wry, Frameless Custom CSD)...");
     let event_loop: EventLoop<WindowAction> = EventLoopBuilder::<WindowAction>::with_user_event().build();
     let proxy = event_loop.create_proxy();
 
@@ -78,7 +78,7 @@ pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
     #[cfg(not(target_os = "linux"))]
     let _webview = webview_builder.build(&window)?;
 
-    println!("✨ Standalone frameless native desktop window created successfully.");
+    println!("Standalone frameless native desktop window created successfully.");
 
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;
@@ -92,7 +92,7 @@ pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                     window.set_maximized(!window.is_maximized());
                 }
                 WindowAction::Close => {
-                    println!("🚪 Window closed by user. Exiting application...");
+                    println!("Window closed by user. Exiting application...");
                     *control_flow = ControlFlow::Exit;
                 }
                 WindowAction::Drag => {
@@ -103,7 +103,7 @@ pub fn run_native_window(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                 event: WindowEvent::CloseRequested,
                 ..
             } => {
-                println!("🚪 Window closed by user. Exiting application...");
+                println!("Window closed by user. Exiting application...");
                 *control_flow = ControlFlow::Exit;
             }
             _ => {}
@@ -131,7 +131,7 @@ pub fn launch_desktop_window(url: &str) -> Option<Child> {
 
         for path in &candidates {
             if std::path::Path::new(path).exists() {
-                println!("🚀 Launching standalone desktop window via {}...", path);
+                println!("Launching standalone desktop window via {}...", path);
                 let child = Command::new(path)
                     .arg(format!("--app={}", url))
                     .arg(format!("--user-data-dir={}", user_data_str))
@@ -162,7 +162,7 @@ pub fn launch_desktop_window(url: &str) -> Option<Child> {
         }
 
         // Fallback: open default browser via cmd start
-        println!("⚠️ Dedicated browser not found, launching default browser...");
+        println!("Dedicated browser not found, launching default browser...");
         let _ = Command::new("cmd").args(["/C", "start", url]).spawn();
         None
     }
@@ -184,7 +184,7 @@ pub fn launch_desktop_window(url: &str) -> Option<Child> {
 
         for browser in browsers {
             if let Ok(path) = which(browser) {
-                println!("🚀 Launching standalone desktop window via {}...", browser);
+                println!("Launching standalone desktop window via {}...", browser);
                 let child = Command::new(path)
                     .arg(format!("--app={}", url))
                     .arg(format!("--user-data-dir={}", user_data_str))
@@ -201,7 +201,7 @@ pub fn launch_desktop_window(url: &str) -> Option<Child> {
         }
 
         // Fallback: system default browser via xdg-open
-        println!("⚠️ Dedicated browser not found, falling back to xdg-open...");
+        println!("Dedicated browser not found, falling back to xdg-open...");
         Command::new("xdg-open").arg(url).spawn().ok()
     }
 }

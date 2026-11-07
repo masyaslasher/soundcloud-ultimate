@@ -29,7 +29,7 @@
             <div id="mini-hud-title" class="mini-hud-track-title">No track playing</div>
             <div id="mini-hud-artist" class="mini-hud-track-artist">—</div>
           </div>
-          <button class="mini-hud-icon-btn" id="btn-mini-hud-like" title="Favorite">♡</button>
+          <button class="mini-hud-icon-btn" id="btn-mini-hud-like" title="Favorite"></button>
         </div>
 
         <div class="mini-hud-progress-row">
@@ -41,9 +41,9 @@
         </div>
 
         <div class="mini-hud-controls-row">
-          <button class="mini-ctrl-btn" id="btn-mini-prev" title="Previous">⏮</button>
+          <button class="mini-ctrl-btn" id="btn-mini-prev" title="Previous">&laquo;</button>
           <button class="mini-ctrl-btn mini-play" id="btn-mini-play" title="Play/Pause">▶</button>
-          <button class="mini-ctrl-btn" id="btn-mini-next" title="Next">⏭</button>
+          <button class="mini-ctrl-btn" id="btn-mini-next" title="Next">&raquo;</button>
         </div>
       </div>
     `;
@@ -121,7 +121,7 @@
     if (!miniContainer) return;
     const playBtn = miniContainer.querySelector('#btn-mini-play');
     if (playBtn) {
-      playBtn.textContent = isPlaying ? '⏸' : '▶';
+      playBtn.textContent = isPlaying ? 'Pause' : 'Play';
     }
   }
 

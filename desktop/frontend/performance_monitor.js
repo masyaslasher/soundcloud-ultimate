@@ -203,7 +203,7 @@
         </div>
 
         <div class="sc-perf-footer">
-          <button class="btn-secondary" id="btn-perf-trim-cache">🧹 Trim Cache & Reset Latency</button>
+          <button class="btn-secondary" id="btn-perf-trim-cache">Trim Cache & Reset Latency</button>
           <button class="btn-primary" id="btn-perf-dismiss">Close</button>
         </div>
       </div>

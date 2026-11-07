@@ -465,7 +465,7 @@ impl SoundCloudClient {
             let resp = match req.send().await {
                 Ok(r) => r,
                 Err(e) => {
-                    eprintln!("⚠️ Error fetching likes page {}: {}", page, e);
+                    eprintln!("Error fetching likes page {}: {}", page, e);
                     break;
                 }
             };
@@ -501,7 +501,7 @@ impl SoundCloudClient {
                 }
         }
 
-        println!("✨ Retrieved {} total liked tracks across {} pages", tracks.len(), page);
+        println!("Retrieved {} total liked tracks across {} pages", tracks.len(), page);
         Ok(tracks)
     }
 

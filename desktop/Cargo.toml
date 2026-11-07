@@ -5,8 +5,9 @@ edition = "2024"
 
 [dependencies]
 sc-core = { path = "../crates/sc-core" }
-axum = "0.8.9"
-image = { version = "0.25", default-features = false, features = ["png"] }
+axum = { version = "0.8.9", features = ["multipart"] }
+base64 = "0.22"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
 mime_guess = "2.0.5"
 regex = "1.13.1"
 reqwest = { version = "0.13.5", features = ["json", "stream"] }
