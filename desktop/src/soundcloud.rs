@@ -1,5 +1,5 @@
 use crate::models::{
-    ArtistProfile, AuthStatus, CommentItem, HomeFeedResponse, PlaylistItem, PostCommentPayload,
+    ArtistProfile, AuthStatus, CommentItem, HomeFeedResponse, PersonalMix, PlaylistItem, PostCommentPayload,
     SearchResponse, StreamResponse, TrackItem, UserProfile,
 };
 use regex::Regex;
@@ -641,47 +641,267 @@ impl SoundCloudClient {
         Ok((user_playlists, user_albums))
     }
 
-    pub async fn get_home_feed(&self) -> Result<HomeFeedResponse, String> {
-        let recently_played = self.get_my_history(15).await.unwrap_or_default();
+    pub async fn get_home_mixes(&self) -> Result<Vec<PersonalMix>, String> {
+        let feed = self.get_home_feed().await?;
+        Ok(feed.mixed_for_you)
+    }
 
-        let mut more_of_what_you_like = Vec::new();
-        if let Ok(likes) = self.get_my_likes(10, 0).await {
-            for liked in likes.iter().take(3) {
-                if let Ok(related) = self.get_related_tracks(liked.id, 8).await {
-                    for t in related {
-                        if !more_of_what_you_like.iter().any(|existing: &TrackItem| existing.id == t.id) {
-                            more_of_what_you_like.push(t);
-                        }
-                    }
+    pub async fn generate_personal_mixes(
+        &self,
+        likes: &[TrackItem],
+        followings: &[UserProfile],
+        recent: &[TrackItem],
+    ) -> Vec<PersonalMix> {
+        let mut mixes = Vec::new();
+
+        // 1. Daily Mix 1: Top followed artists (or top liked artists) + related tracks
+        let mut mix1_tracks = Vec::new();
+        let top_artists: Vec<String> = if !followings.is_empty() {
+            followings.iter().take(3).map(|f| f.username.clone()).collect()
+        } else {
+            let mut a_names = Vec::new();
+            for l in likes.iter().take(10) {
+                if !a_names.contains(&l.artist) && !l.artist.is_empty() {
+                    a_names.push(l.artist.clone());
                 }
-                if more_of_what_you_like.len() >= 12 {
+                if a_names.len() >= 3 {
                     break;
                 }
             }
+            a_names
+        };
+
+        for l in likes {
+            if top_artists.iter().any(|a| a.eq_ignore_ascii_case(&l.artist))
+                && !mix1_tracks.iter().any(|t: &TrackItem| t.id == l.id) {
+                    mix1_tracks.push(l.clone());
+                }
         }
 
-        let mut from_artists_you_follow = Vec::new();
-        if let Ok(followings) = self.get_my_followings(6).await {
-            for artist in followings.iter().take(3) {
-                if let Ok(profile) = self.get_artist_profile(artist.id).await {
-                    for t in profile.tracks.into_iter().take(4) {
-                        if !from_artists_you_follow.iter().any(|existing: &TrackItem| existing.id == t.id) {
-                            from_artists_you_follow.push(t);
-                        }
+        if let Some(seed) = mix1_tracks.first().cloned().or_else(|| likes.first().cloned())
+            && let Ok(rel) = self.get_related_tracks(seed.id, 15).await {
+                for r in rel {
+                    if !mix1_tracks.iter().any(|t: &TrackItem| t.id == r.id) {
+                        mix1_tracks.push(r);
                     }
                 }
+            }
+        if mix1_tracks.is_empty() {
+            let trending = self.get_trending(Some("phonk"), 15).await.unwrap_or_default();
+            mix1_tracks = trending;
+        }
+
+        let mix1_art = mix1_tracks.first().and_then(|t| t.artwork_url.clone()).unwrap_or_default();
+        mixes.push(PersonalMix {
+            id: "daily-mix-1".to_string(),
+            title: "Daily Mix 1".to_string(),
+            subtitle: format_artist_names(&mix1_tracks),
+            badge: "DAILY MIX".to_string(),
+            artwork_url: mix1_art,
+            accent_color: "#A855F7".to_string(),
+            tracks: mix1_tracks,
+        });
+
+        // 2. Daily Mix 2: Fresh Likes + related tracks
+        let mut mix2_tracks = Vec::new();
+        for l in likes.iter().take(12) {
+            mix2_tracks.push(l.clone());
+        }
+        if let Some(seed) = likes.get(1).or_else(|| likes.first())
+            && let Ok(rel) = self.get_related_tracks(seed.id, 15).await {
+                for r in rel {
+                    if !mix2_tracks.iter().any(|t: &TrackItem| t.id == r.id) {
+                        mix2_tracks.push(r);
+                    }
+                }
+            }
+        if mix2_tracks.is_empty() {
+            let trending = self.get_trending(Some("electronic"), 15).await.unwrap_or_default();
+            mix2_tracks = trending;
+        }
+        let mix2_art = mix2_tracks.get(1).or_else(|| mix2_tracks.first()).and_then(|t| t.artwork_url.clone()).unwrap_or_default();
+        mixes.push(PersonalMix {
+            id: "daily-mix-2".to_string(),
+            title: "Daily Mix 2".to_string(),
+            subtitle: format_artist_names(&mix2_tracks),
+            badge: "DAILY MIX".to_string(),
+            artwork_url: mix2_art,
+            accent_color: "#3B82F6".to_string(),
+            tracks: mix2_tracks,
+        });
+
+        // 3. Artist Station: Top followed artist or top artist from likes
+        let mut station_tracks = Vec::new();
+        let (station_artist_name, station_avatar) = if let Some(top_f) = followings.first() {
+            (top_f.username.clone(), top_f.avatar_url.clone())
+        } else if let Some(first_like) = likes.first() {
+            (first_like.artist.clone(), first_like.artwork_url.clone())
+        } else {
+            ("Featured Artist".to_string(), None)
+        };
+
+        for l in likes {
+            if l.artist.eq_ignore_ascii_case(&station_artist_name) {
+                station_tracks.push(l.clone());
+            }
+        }
+        if let Some(seed) = station_tracks.first().cloned().or_else(|| likes.first().cloned())
+            && let Ok(rel) = self.get_related_tracks(seed.id, 20).await {
+                for r in rel {
+                    if !station_tracks.iter().any(|t: &TrackItem| t.id == r.id) {
+                        station_tracks.push(r);
+                    }
+                }
+            }
+        if station_tracks.is_empty() {
+            let trending = self.get_trending(Some("hiphop"), 15).await.unwrap_or_default();
+            station_tracks = trending;
+        }
+        let station_art = station_avatar.or_else(|| station_tracks.first().and_then(|t| t.artwork_url.clone())).unwrap_or_default();
+        mixes.push(PersonalMix {
+            id: "artist-station".to_string(),
+            title: format!("{} Station", station_artist_name),
+            subtitle: format!("Featuring {} and similar artists", station_artist_name),
+            badge: "ARTIST STATION".to_string(),
+            artwork_url: station_art,
+            accent_color: "#10B981".to_string(),
+            tracks: station_tracks,
+        });
+
+        // 4. Liked & Replay Mix: Concentrated favorites in smart shuffle
+        let replay_tracks: Vec<TrackItem> = if !likes.is_empty() {
+            let mut shuffled_likes = likes.to_vec();
+            let len = shuffled_likes.len();
+            for i in 0..len {
+                let j = (i * 7 + 3) % len;
+                shuffled_likes.swap(i, j);
+            }
+            shuffled_likes.into_iter().take(25).collect()
+        } else if !recent.is_empty() {
+            recent.to_vec()
+        } else {
+            self.get_trending(None, 20).await.unwrap_or_default()
+        };
+        let replay_art = replay_tracks.first().and_then(|t| t.artwork_url.clone()).unwrap_or_default();
+        mixes.push(PersonalMix {
+            id: "liked-replay-mix".to_string(),
+            title: "Liked & Replay Mix".to_string(),
+            subtitle: "Your all-time favorites on repeat".to_string(),
+            badge: "REPLAY".to_string(),
+            artwork_url: replay_art,
+            accent_color: "#EC4899".to_string(),
+            tracks: replay_tracks,
+        });
+
+        // 5. Discovery Radar: Underground & fresh tracks related to taste, excluding already liked tracks
+        let mut discovery_tracks = Vec::new();
+        let seeds: Vec<TrackItem> = recent.iter().take(3).cloned()
+            .chain(likes.iter().take(2).cloned())
+            .collect();
+
+        for s in seeds {
+            if let Ok(rel) = self.get_related_tracks(s.id, 10).await {
+                for r in rel {
+                    let in_likes = likes.iter().any(|l| l.id == r.id);
+                    let already_in = discovery_tracks.iter().any(|t: &TrackItem| t.id == r.id);
+                    if !in_likes && !already_in {
+                        discovery_tracks.push(r);
+                    }
+                }
+            }
+            if discovery_tracks.len() >= 25 {
+                break;
+            }
+        }
+        if discovery_tracks.is_empty() {
+            let trending = self.get_trending(Some("ambient"), 15).await.unwrap_or_default();
+            discovery_tracks = trending;
+        }
+        let discovery_art = discovery_tracks.first().and_then(|t| t.artwork_url.clone()).unwrap_or_default();
+        mixes.push(PersonalMix {
+            id: "discovery-radar".to_string(),
+            title: "Discovery Radar".to_string(),
+            subtitle: "Fresh underground discoveries based on your taste".to_string(),
+            badge: "DISCOVERY".to_string(),
+            artwork_url: discovery_art,
+            accent_color: "#F59E0B".to_string(),
+            tracks: discovery_tracks,
+        });
+
+        mixes
+    }
+
+    pub async fn get_home_feed(&self) -> Result<HomeFeedResponse, String> {
+        let recently_played = self.get_my_history(15).await.unwrap_or_default();
+        let likes = self.get_my_likes(30, 0).await.unwrap_or_default();
+        let followings = self.get_my_followings(10).await.unwrap_or_default();
+
+        // 1. More of What You Like:
+        // Pick 4-5 real seed tracks from latest likes + recently played
+        let mut seed_tracks = Vec::new();
+        for t in likes.iter().take(4) {
+            seed_tracks.push(t.clone());
+        }
+        for t in recently_played.iter().take(3) {
+            if !seed_tracks.iter().any(|s| s.id == t.id) {
+                seed_tracks.push(t.clone());
+            }
+        }
+        if seed_tracks.is_empty() {
+            let trending = self.get_trending(None, 5).await.unwrap_or_default();
+            seed_tracks = trending;
+        }
+
+        // Fetch related tracks for each seed
+        let mut related_buckets: Vec<Vec<TrackItem>> = Vec::new();
+        for seed in seed_tracks.iter().take(5) {
+            if let Ok(rel) = self.get_related_tracks(seed.id, 10).await
+                && !rel.is_empty() {
+                    related_buckets.push(rel);
+                }
+        }
+
+        // Interleave related buckets, avoiding duplicates & user's top likes
+        let mut more_of_what_you_like = Vec::new();
+        let max_len = related_buckets.iter().map(|b| b.len()).max().unwrap_or(0);
+        for idx in 0..max_len {
+            for bucket in &related_buckets {
+                if let Some(track) = bucket.get(idx) {
+                    let in_top_likes = likes.iter().take(10).any(|l| l.id == track.id);
+                    let already_added = more_of_what_you_like.iter().any(|existing: &TrackItem| existing.id == track.id);
+                    if !in_top_likes && !already_added {
+                        more_of_what_you_like.push(track.clone());
+                    }
+                }
+            }
+            if more_of_what_you_like.len() >= 24 {
+                break;
             }
         }
 
         let trending = self.get_trending(None, 20).await.unwrap_or_default();
-
         if more_of_what_you_like.is_empty() {
-            more_of_what_you_like = trending.iter().take(10).cloned().collect();
+            more_of_what_you_like = trending.iter().take(16).cloned().collect();
+        }
+
+        // 2. Personal Mixes (Mixed for You):
+        let mixed_for_you = self.generate_personal_mixes(&likes, &followings, &recently_played).await;
+
+        let mut from_artists_you_follow = Vec::new();
+        for artist in followings.iter().take(4) {
+            if let Ok(profile) = self.get_artist_profile(artist.id).await {
+                for t in profile.tracks.into_iter().take(4) {
+                    if !from_artists_you_follow.iter().any(|existing: &TrackItem| existing.id == t.id) {
+                        from_artists_you_follow.push(t);
+                    }
+                }
+            }
         }
 
         Ok(HomeFeedResponse {
             recently_played,
             more_of_what_you_like,
+            mixed_for_you,
             from_artists_you_follow,
             trending,
         })
@@ -1059,6 +1279,25 @@ fn auto_import_browser_token_sync() -> Option<String> {
     }
 }
 
+
+fn format_artist_names(tracks: &[TrackItem]) -> String {
+    let mut names: Vec<String> = Vec::new();
+    for t in tracks {
+        if !names.contains(&t.artist) && !t.artist.is_empty() {
+            names.push(t.artist.clone());
+        }
+        if names.len() >= 3 {
+            break;
+        }
+    }
+    if names.is_empty() {
+        "SoundCloud Curated Mix".to_string()
+    } else if names.len() == 1 {
+        format!("{}, and similar artists", names[0])
+    } else {
+        format!("{}, {} and more", names[0], names[1])
+    }
+}
 
 fn parse_track_collection(val: &Value) -> Vec<TrackItem> {
     let mut tracks = Vec::new();

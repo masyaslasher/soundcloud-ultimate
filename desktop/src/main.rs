@@ -93,6 +93,7 @@ fn create_router(state: AppState) -> Router {
         .route("/api/me/stream", get(api_me_stream))
         .route("/api/me/history", get(api_me_history))
         .route("/api/home/feed", get(api_home_feed))
+        .route("/api/home/mixes", get(api_home_mixes))
         .route("/api/tracks/{id}/like", post(api_track_like))
         .route("/api/tracks/{id}/like", delete(api_track_unlike))
         // Artist & Profile API
@@ -381,6 +382,13 @@ async fn api_me_followings(State(state): State<AppState>) -> impl IntoResponse {
 async fn api_home_feed(State(state): State<AppState>) -> impl IntoResponse {
     match state.sc.get_home_feed().await {
         Ok(feed) => (StatusCode::OK, Json(feed)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
+    }
+}
+
+async fn api_home_mixes(State(state): State<AppState>) -> impl IntoResponse {
+    match state.sc.get_home_mixes().await {
+        Ok(mixes) => (StatusCode::OK, Json(serde_json::json!({ "mixes": mixes }))).into_response(),
         Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e }))).into_response(),
     }
 }

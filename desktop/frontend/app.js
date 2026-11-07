@@ -2307,16 +2307,6 @@
       const data = await res.json();
       if (data.authenticated && data.user) {
         currentUser = data.user;
-        if (btnLoginTrigger) {
-          btnLoginTrigger.style.display = 'inline-flex';
-          btnLoginTrigger.classList.add('logged-in');
-          btnLoginTrigger.title = `Signed in as ${currentUser.username}`;
-          const avatarUrl = currentUser.avatar_url || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23A1A1AA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E";
-          btnLoginTrigger.innerHTML = `
-            <img src="${avatarUrl}" style="width:16px;height:16px;border-radius:50%;object-fit:cover;flex-shrink:0;">
-            <span id="txt-header-login">${escapeHtml(currentUser.username)}</span>
-          `;
-        }
         userBadge.style.display = 'flex';
         userName.textContent = currentUser.username;
         if (userRoleLabel) userRoleLabel.textContent = currentUser.city || 'SoundCloud Listener';
@@ -2329,15 +2319,6 @@
         syncUserData();
       } else {
         currentUser = null;
-        if (btnLoginTrigger) {
-          btnLoginTrigger.style.display = 'inline-flex';
-          btnLoginTrigger.classList.remove('logged-in');
-          btnLoginTrigger.title = 'Sign In to SoundCloud';
-          btnLoginTrigger.innerHTML = `
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span id="txt-header-login">${t.sign_in || 'Sign In'}</span>
-          `;
-        }
         userBadge.style.display = 'flex';
         userName.textContent = t.guest_user || 'Guest';
         if (userRoleLabel) userRoleLabel.textContent = 'Free Listener';
@@ -2349,15 +2330,6 @@
     } catch (e) {
       console.warn('Auth status check failed:', e);
       currentUser = null;
-      if (btnLoginTrigger) {
-        btnLoginTrigger.style.display = 'inline-flex';
-        btnLoginTrigger.classList.remove('logged-in');
-        btnLoginTrigger.title = 'Sign In to SoundCloud';
-        btnLoginTrigger.innerHTML = `
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          <span id="txt-header-login">${t.sign_in || 'Sign In'}</span>
-        `;
-      }
       userBadge.style.display = 'flex';
       userName.textContent = t.guest_user || 'Guest';
       if (userRoleLabel) userRoleLabel.textContent = 'Free Listener';
@@ -2784,9 +2756,9 @@
   searchInput.addEventListener('input', (e) => {
     clearTimeout(searchTimeout);
     const q = e.target.value.trim();
-    const btnClear = document.getElementById('btn-search-clear');
+    const btnClear = document.getElementById('btn-search-clear') || document.getElementById('search-clear-btn');
     if (btnClear) {
-      btnClear.style.display = e.target.value ? 'block' : 'none';
+      btnClear.style.display = e.target.value ? 'flex' : 'none';
     }
     searchTimeout = setTimeout(() => {
       if (!q) {
@@ -4574,6 +4546,84 @@
     setupShelfNavigation('btn-recent-prev', 'btn-recent-next', 'recently-played-row');
   }
 
+  async function renderMixedForYouRow() {
+    const row = document.getElementById('mixed-for-you-row');
+    if (!row) return;
+    row.innerHTML = '';
+
+    let mixes = [];
+    try {
+      const res = await fetch('/api/home/mixes');
+      if (res.ok) {
+        const data = await res.json();
+        mixes = data.mixes || [];
+      }
+    } catch (_) {}
+
+    if (mixes.length === 0) {
+      try {
+        const res = await fetch('/api/home/feed');
+        if (res.ok) {
+          const data = await res.json();
+          mixes = data.mixed_for_you || [];
+        }
+      } catch (_) {}
+    }
+
+    mixes.forEach((mix) => {
+      const card = document.createElement('div');
+      card.className = 'mix-card';
+      const art = mix.artwork_url || 'assets/default_artwork.png';
+      const accent = mix.accent_color || '#A855F7';
+      const badge = mix.badge || 'MIX';
+
+      card.innerHTML = `
+        <div class="mix-card-art-wrap">
+          <span class="mix-badge">${escapeHtml(badge)}</span>
+          <img class="mix-card-art" src="${art}" alt="${escapeHtml(mix.title)}" onerror="this.src='assets/default_artwork.png'">
+          <div class="mix-accent-bar" style="background: ${accent};"></div>
+          <button class="mix-play-btn" title="Play ${escapeHtml(mix.title)}">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <div class="mix-title" title="${escapeHtml(mix.title)}">${escapeHtml(mix.title)}</div>
+        <div class="mix-subtitle" title="${escapeHtml(mix.subtitle)}">${escapeHtml(mix.subtitle)}</div>
+      `;
+
+      // Play button instant playback
+      const playBtn = card.querySelector('.mix-play-btn');
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (mix.tracks && mix.tracks.length > 0) {
+          queue = mix.tracks;
+          currentIndex = 0;
+          playTrack(mix.tracks[0], 0);
+        }
+      });
+
+      // Card click opens playlist/mix detail view
+      card.addEventListener('click', () => {
+        if (mix.tracks && mix.tracks.length > 0) {
+          const syntheticPlaylist = {
+            id: mix.id,
+            title: mix.title,
+            description: mix.subtitle,
+            artwork_url: mix.artwork_url,
+            tracks: mix.tracks,
+            track_count: mix.tracks.length,
+            user: { username: 'SoundCloud Curated Mix' }
+          };
+          renderPlaylistDetail(syntheticPlaylist);
+          navigateTo('view-playlist-detail', { playlist: syntheticPlaylist });
+        }
+      });
+
+      row.appendChild(card);
+    });
+
+    setupShelfNavigation('btn-mixes-prev', 'btn-mixes-next', 'mixed-for-you-row');
+  }
+
   async function renderMoreLikeRow() {
     const row = document.getElementById('more-like-row');
     if (!row) return;
@@ -4584,7 +4634,9 @@
       const res = await fetch('/api/home/feed');
       if (res.ok) {
         const data = await res.json();
-        if (data.recommendations && data.recommendations.length > 0) {
+        if (data.more_of_what_you_like && data.more_of_what_you_like.length > 0) {
+          items = data.more_of_what_you_like;
+        } else if (data.recommendations && data.recommendations.length > 0) {
           items = data.recommendations;
         } else if (data.trending && data.trending.length > 0) {
           items = data.trending.slice(10, 24);
@@ -4602,7 +4654,7 @@
       } catch (_) {}
     }
 
-    items.slice(0, 14).forEach((t, idx) => {
+    items.slice(0, 16).forEach((t, idx) => {
       row.appendChild(createShelfTrackCard(t, idx, items));
     });
     setupShelfNavigation('btn-more-prev', 'btn-more-next', 'more-like-row');
@@ -4874,6 +4926,7 @@
     switch (viewId) {
       case 'view-home':
         renderRecentlyPlayedRow();
+        renderMixedForYouRow();
         renderMoreLikeRow();
         renderHomeLikedRow();
         renderHomeArtistsRow();
@@ -4914,20 +4967,44 @@
 
 
   // 3. Search View Engine
-  function getRecentSearches() {
-    try {
-      return JSON.parse(localStorage.getItem('sc_recent_searches') || '[]');
-    } catch (_) { return []; }
-  }
+  const GENRE_CATEGORIES = [
+    { name: 'Phonk / Drift', query: 'phonk drift', gradient: 'linear-gradient(135deg, #FF5500, #991B1B)', icon: '🏎️' },
+    { name: 'Hip-Hop & Rap', query: 'hip hop rap', gradient: 'linear-gradient(135deg, #EA580C, #7C2D12)', icon: '🎤' },
+    { name: 'Hyperpop & Glitch', query: 'hyperpop glitchcore', gradient: 'linear-gradient(135deg, #EC4899, #7C3AED)', icon: '⚡' },
+    { name: 'Electronic & EDM', query: 'electronic edm club', gradient: 'linear-gradient(135deg, #06B6D4, #2563EB)', icon: '🎛️' },
+    { name: 'Dark Trap', query: 'dark trap bass', gradient: 'linear-gradient(135deg, #7E22CE, #18181B)', icon: '⛓️' },
+    { name: 'Lo-Fi & Chill', query: 'lo-fi beats chillhop', gradient: 'linear-gradient(135deg, #059669, #064E3B)', icon: '☕' },
+    { name: 'Rock & Alternative', query: 'rock alternative indie', gradient: 'linear-gradient(135deg, #DC2626, #450A0A)', icon: '🎸' },
+    { name: 'Drum & Bass', query: 'drum and bass jungle dnb', gradient: 'linear-gradient(135deg, #D97706, #92400E)', icon: '🥁' },
+    { name: 'Synthwave', query: 'synthwave retrowave 80s', gradient: 'linear-gradient(135deg, #D946EF, #4C1D95)', icon: '🌆' },
+    { name: 'R&B & Soul', query: 'r&b soul neo-soul', gradient: 'linear-gradient(135deg, #8B5CF6, #3730A3)', icon: '🎷' },
+    { name: 'Night Drive', query: 'night drive phonk dark synth', gradient: 'linear-gradient(135deg, #3B82F6, #1E1B4B)', icon: '🌃' },
+    { name: 'Workout Bass', query: 'workout gym bass hardstyle', gradient: 'linear-gradient(135deg, #EF4444, #7F1D1D)', icon: '💥' }
+  ];
 
-  function addRecentSearch(q) {
-    if (!q || !q.trim()) return;
-    try {
-      let list = getRecentSearches().filter(x => x.toLowerCase() !== q.toLowerCase());
-      list.unshift(q.trim());
-      if (list.length > 10) list = list.slice(0, 10);
-      localStorage.setItem('sc_recent_searches', JSON.stringify(list));
-    } catch (_) {}
+  function renderGenreCategories() {
+    const grid = document.getElementById('genre-cards-grid');
+    if (!grid || grid.children.length > 0) return;
+    grid.innerHTML = '';
+
+    GENRE_CATEGORIES.forEach(genre => {
+      const card = document.createElement('div');
+      card.className = 'genre-card';
+      card.style.background = genre.gradient;
+      card.innerHTML = `
+        <div class="genre-card-title">${escapeHtml(genre.name)}</div>
+        <div class="genre-card-art">${genre.icon}</div>
+      `;
+
+      card.addEventListener('click', () => {
+        searchInput.value = genre.name;
+        const btnClear = document.getElementById('btn-search-clear') || document.getElementById('search-clear-btn');
+        if (btnClear) btnClear.style.display = 'flex';
+        renderSearchView(genre.query, activeSearchCategory);
+      });
+
+      grid.appendChild(card);
+    });
   }
 
   function renderSearchView(query = '', category = 'all') {
@@ -4937,38 +5014,13 @@
     const resultsContent = document.getElementById('search-results-content');
     const queryDisplay = document.getElementById('search-query-display');
     const countBadge = document.getElementById('search-count-badge');
-    const recentRow = document.getElementById('recent-searches-row');
 
     // Update active category pill
     document.querySelectorAll('.search-cat-pill').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-cat') === category);
     });
 
-    // Render recent search tags
-    if (recentRow) {
-      const recent = getRecentSearches();
-      recentRow.innerHTML = '';
-      if (recent.length === 0) {
-        recentRow.innerHTML = '<span style="color: var(--text-muted); font-size: 13px;">No recent searches yet</span>';
-      } else {
-        recent.forEach(q => {
-          const tag = document.createElement('span');
-          tag.className = 'search-tag-chip';
-          tag.innerHTML = `<span>🕒 ${escapeHtml(q)}</span><span class="remove-tag-btn">&times;</span>`;
-          tag.querySelector('span:first-child').addEventListener('click', () => {
-            searchInput.value = q;
-            renderSearchView(q, activeSearchCategory);
-          });
-          tag.querySelector('.remove-tag-btn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            let updated = getRecentSearches().filter(x => x !== q);
-            localStorage.setItem('sc_recent_searches', JSON.stringify(updated));
-            renderSearchView(query, activeSearchCategory);
-          });
-          recentRow.appendChild(tag);
-        });
-      }
-    }
+    renderGenreCategories();
 
     const trimmed = (query || '').trim();
     if (!trimmed) {
@@ -4977,7 +5029,6 @@
       return;
     }
 
-    addRecentSearch(trimmed);
     if (preSection) preSection.style.display = 'none';
     if (resultsSection) resultsSection.style.display = 'block';
     if (queryDisplay) queryDisplay.textContent = trimmed;
@@ -6731,35 +6782,26 @@
     });
   });
 
-  // Trending Genre Search Chips
-  document.querySelectorAll('#trending-searches-row .search-tag-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const q = chip.getAttribute('data-q');
-      if (!q) return;
-      document.querySelectorAll('#trending-searches-row .search-tag-chip').forEach(c => { c.classList.remove('active'); });
-      chip.classList.add('active');
-      searchInput.value = q;
-      const btnClear = document.getElementById('btn-search-clear');
-      if (btnClear) btnClear.style.display = 'block';
-      if (currentActiveViewId !== 'view-search') {
-        navigateTo('view-search', { query: q });
-      } else {
-        renderSearchView(q, activeSearchCategory);
-      }
-    });
-  });
-
   // Search Clear Button
-  const btnSearchClear = document.getElementById('btn-search-clear');
+  const btnSearchClear = document.getElementById('btn-search-clear') || document.getElementById('search-clear-btn');
   if (btnSearchClear) {
     btnSearchClear.addEventListener('click', () => {
       searchInput.value = '';
       btnSearchClear.style.display = 'none';
-      document.querySelectorAll('#trending-searches-row .search-tag-chip').forEach(c => { c.classList.remove('active'); });
       if (currentActiveViewId === 'view-search') {
         renderSearchView('', activeSearchCategory);
       }
       searchInput.focus();
+    });
+  }
+
+  // Back to All Categories Button
+  const btnBackCategories = document.getElementById('btn-back-categories');
+  if (btnBackCategories) {
+    btnBackCategories.addEventListener('click', () => {
+      searchInput.value = '';
+      if (btnSearchClear) btnSearchClear.style.display = 'none';
+      renderSearchView('', activeSearchCategory);
     });
   }
 
@@ -6856,6 +6898,7 @@
 
   // Initial Views Initialization
   renderRecentlyPlayedRow();
+  renderMixedForYouRow();
   renderMoreLikeRow();
   renderHomeLikedRow();
   renderHomeArtistsRow();

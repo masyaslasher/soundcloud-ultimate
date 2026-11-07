@@ -26,17 +26,12 @@
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
         </svg>
         <input type="text" id="search-input" class="search-input" placeholder="Search SoundCloud..." autocomplete="off">
-        <span class="search-kbd-badge">Ctrl + K</span>
-        <button class="search-clear-btn" id="btn-search-clear" style="display: none;">&times;</button>
+        <button class="search-clear-btn" id="btn-search-clear" style="display: none;" title="Clear search">&times;</button>
       </div>
     </div>
 
-    <!-- Right Controls: Auth, Panel Toggle & Window Buttons -->
+    <!-- Right Controls: Panel Toggle & Window Buttons -->
     <div class="titlebar-right-actions">
-      <button class="top-auth-btn" id="btn-login-trigger" title="Sign In to SoundCloud">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        <span id="txt-header-login">Sign In</span>
-      </button>
       <button class="action-icon-pill" id="btn-toggle-right-panel" title="Toggle Now Playing & Queue Panel">
         <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-2h4V7h-4v10z"/></svg>
       </button>
@@ -63,14 +58,6 @@
       
       <!-- 1. LEFT SIDEBAR -->
       <aside class="app-sidebar" id="app-sidebar">
-        <!-- Brand Logo -->
-        <div class="sidebar-brand" id="brand-home" title="SoundCloud Ultimate">
-          <svg viewBox="0 0 24 24" class="sidebar-logo-icon">
-            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
-          </svg>
-          <span class="sidebar-brand-title">SoundCloud</span>
-        </div>
-
         <!-- Main Navigation Links -->
         <nav class="sidebar-nav">
           <button class="nav-item active" id="nav-item-home" title="Home">
@@ -223,7 +210,24 @@
               </div>
             </section>
 
-            <!-- 2. More of What You Like Shelf -->
+            <!-- 2. Mixed for You Shelf -->
+            <section class="content-section shelf-section" id="section-mixed-for-you">
+              <div class="section-header-row">
+                <div class="section-title-wrap">
+                  <h2 class="section-title">Mixed for You</h2>
+                  <p class="section-subtitle">Personalized mixes curated from your likes and favorite artists</p>
+                </div>
+                <div class="shelf-nav-actions">
+                  <button class="shelf-nav-btn shelf-prev" id="btn-mixes-prev" title="Scroll Left">‹</button>
+                  <button class="shelf-nav-btn shelf-next" id="btn-mixes-next" title="Scroll Right">›</button>
+                </div>
+              </div>
+              <div class="shelf-carousel-track" id="mixed-for-you-row">
+                <!-- Rendered dynamically -->
+              </div>
+            </section>
+
+            <!-- 3. More of What You Like Shelf -->
             <section class="content-section shelf-section" id="section-more-like">
               <div class="section-header-row">
                 <div class="section-title-wrap">
@@ -240,7 +244,7 @@
               </div>
             </section>
 
-            <!-- 3. Your Liked Tracks Shelf -->
+            <!-- 4. Your Liked Tracks Shelf -->
             <section class="content-section shelf-section" id="section-home-liked">
               <div class="section-header-row">
                 <div class="section-title-wrap">
@@ -257,7 +261,7 @@
               </div>
             </section>
 
-            <!-- 4. Artists You Follow Shelf -->
+            <!-- 5. Artists You Follow Shelf -->
             <section class="content-section shelf-section" id="section-home-artists">
               <div class="section-header-row">
                 <div class="section-title-wrap">
@@ -288,29 +292,16 @@
             </div>
 
             <div class="search-pre-content" id="search-pre-content">
-              <!-- Recent Searches -->
-              <div class="content-section" id="search-history-section">
+              <!-- Browse All / Genres & Moods Grid -->
+              <div class="content-section" id="search-browse-section">
                 <div class="section-header-row">
-                  <h2 class="section-title">Recent searches</h2>
-                  <button class="section-link-btn" id="btn-clear-recent-searches">Clear all</button>
+                  <div class="section-title-wrap">
+                    <h2 class="section-title">Browse All / Жанры и настроения</h2>
+                    <p class="section-subtitle">Explore popular genres, moods, and curated soundscapes</p>
+                  </div>
                 </div>
-                <div class="search-tags-row" id="recent-searches-row"></div>
-              </div>
-
-              <!-- Trending Searches -->
-              <div class="content-section">
-                <div class="section-header-row">
-                  <h2 class="section-title">Trending searches</h2>
-                </div>
-                <div class="search-tags-row" id="trending-searches-row">
-                  <span class="search-tag-chip" data-q="Phonk">🔥 Phonk</span>
-                  <span class="search-tag-chip" data-q="Hip-Hop">🎤 Hip-Hop</span>
-                  <span class="search-tag-chip" data-q="Electronic">⚡ Electronic</span>
-                  <span class="search-tag-chip" data-q="Rock">🎸 Rock</span>
-                  <span class="search-tag-chip" data-q="Pop">✨ Pop</span>
-                  <span class="search-tag-chip" data-q="Chill">🎧 Chill</span>
-                  <span class="search-tag-chip" data-q="Synthwave">🌆 Synthwave</span>
-                  <span class="search-tag-chip" data-q="Ambient">🌌 Ambient</span>
+                <div class="genre-cards-grid" id="genre-cards-grid">
+                  <!-- 12 Large Genre Cards rendered dynamically -->
                 </div>
               </div>
             </div>
@@ -318,7 +309,10 @@
             <!-- Search Results Section -->
             <div class="search-results-section" id="search-results-section" style="display: none;">
               <div class="section-header-row">
-                <h2 class="section-title" id="search-results-title">Results for "<span id="search-query-display"></span>"</h2>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                  <button class="back-to-categories-btn" id="btn-back-categories" title="Back to All Categories">← Все категории</button>
+                  <h2 class="section-title" id="search-results-title">Results for "<span id="search-query-display"></span>"</h2>
+                </div>
                 <span class="search-count-badge" id="search-count-badge">0 results</span>
               </div>
               <div class="search-results-content" id="search-results-content"></div>

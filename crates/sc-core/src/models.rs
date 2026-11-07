@@ -122,9 +122,22 @@ pub struct PostCommentPayload {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PersonalMix {
+    pub id: String,
+    pub title: String,
+    pub subtitle: String,
+    pub badge: String,
+    pub artwork_url: String,
+    pub accent_color: String,
+    pub tracks: Vec<TrackItem>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HomeFeedResponse {
     pub recently_played: Vec<TrackItem>,
     pub more_of_what_you_like: Vec<TrackItem>,
+    #[serde(default)]
+    pub mixed_for_you: Vec<PersonalMix>,
     pub from_artists_you_follow: Vec<TrackItem>,
     pub trending: Vec<TrackItem>,
 }

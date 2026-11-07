@@ -412,6 +412,29 @@ impl SoundCloudApi {
         parse_single_track(&val).ok_or_else(|| "Failed to parse track data".to_string())
     }
 
+    pub async fn get_related_tracks(&self, track_id: u64, limit: usize) -> Result<Vec<TrackItem>, String> {
+        let client_id = self.get_client_id().await;
+        let token = self.config.read().await.oauth_token.clone();
+        let url = format!(
+            "https://api-v2.soundcloud.com/tracks/{}/related?client_id={}&limit={}",
+            track_id, client_id, limit
+        );
+
+        let req = self.client.get(&url);
+        let req = self.apply_auth(req, token.as_deref());
+        let resp = req.send().await.map_err(|e| e.to_string())?;
+
+        let val: Value = resp.json().await.map_err(|e| e.to_string())?;
+        let collection = val.get("collection").and_then(|c| c.as_array()).cloned().unwrap_or_default();
+
+        let tracks = collection
+            .into_iter()
+            .filter_map(|v| parse_single_track(&v))
+            .collect();
+
+        Ok(tracks)
+    }
+
     pub async fn get_playlist_by_id(&self, playlist_id: u64) -> Result<PlaylistItem, String> {
         let client_id = self.get_client_id().await;
         let token = self.config.read().await.oauth_token.clone();
